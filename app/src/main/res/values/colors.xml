@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">@color/coral</color>
+    <color name="colorPrimary">@color/IUT</color>
+    <color name="colorPrimaryDark">@color/blue_dark</color>
+
+    <color name="IUT">#0e4194</color>
+    <color name="black_p50">#7f000000</color>
+    <color name="blue">#1a237e</color>
+    <color name="blue_dark">#1a237e</color>
+    <color name="blue_opaque">#bb1946ba</color>
+    <color name="coral">#f44336</color>
+    <color name="dark_grass_green">#ff417505</color>
+    <color name="dark_sky_blue">#0288d1</color>
+    <color name="greyish_brown">#ff4a4a4a</color>
+    <color name="light_grey">#ececec</color>
+    <color name="light_grey_transparent">#55fafafa</color>
+    <color name="main_text_black">#ff212121</color>
+    <color name="darkish_red">#b71c1c</color>
+    <color name="slime_green">#ff94d600</color>
+    <color name="bubble_colour">#0047ba</color>
+    <color name="transparent_20">#00000000</color>
+    <color name="transparent_black">#66000000</color>
+    <color name="ultralight_grey">#ffefefef</color>
+    <color name="warm_grey">#ff9b9b9b</color>
+    <color name="white_opacity_50">#88ffffff</color>
+    <color name="white">#ffffffff</color>
+</resources>
