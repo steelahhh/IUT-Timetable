@@ -82,6 +82,8 @@ dependencies {
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     implementation "com.afollestad.material-dialogs:core:2.0.0-beta4"
 
     testImplementation 'junit:junit:4.12'

@@ -22,8 +22,18 @@ class PickGroupActivity : BaseActivity<ActivityPickGroupBinding, PickGroupViewMo
         PickGroupViewModel()
     }
 
+//    private val fastAdapter = FastItemAdapter<GroupItem>().apply {
+//        withOnClickListener { _, _, item, _ ->
+//            Timber.i("Selected item ${item.id}")
+//            true
+//        }
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        binding.itemAdapter = fastAdapter
+//        binding.groupRv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+//        fastAdapter.set(data)
     }
 
     companion object {
