@@ -3,6 +3,8 @@ package com.alefimenko.iuttimetable.util
 import android.graphics.Typeface
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import com.alefimenko.iuttimetable.core.arch.AutoDisposable
+import io.reactivex.disposables.Disposable
 
 /*
  * Created by Alexander Efimenko on 21/11/18.
@@ -16,4 +18,8 @@ fun Toolbar.changeToolbarFont() {
             break
         }
     }
+}
+
+fun Disposable.addTo(autoDisposable: AutoDisposable) {
+    autoDisposable.add(this)
 }
