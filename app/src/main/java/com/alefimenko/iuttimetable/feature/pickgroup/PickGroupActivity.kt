@@ -4,11 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.alefimenko.iuttimetable.BR
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.arch.ViewModelFactory
 import com.alefimenko.iuttimetable.core.base.BaseActivity
 import com.alefimenko.iuttimetable.databinding.ActivityPickGroupBinding
+import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupItem
+import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import timber.log.Timber
 
 /*
  * Created by Alexander Efimenko on 22/11/18.
