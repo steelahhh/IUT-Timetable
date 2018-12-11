@@ -13,8 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_group_id"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/selectable_white_item">
+        android:layout_height="wrap_content">
 
         <TextView
             style="@style/AppText.Large"
@@ -22,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:padding="4dp"
+            android:textColor="?android:textColorPrimary"
             android:text="@{group.label}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
