@@ -10,8 +10,8 @@ object Versions {
     val appVersionCode = 3000
     val appVersionName = "2.2.0"
 
-    val kotlin = "1.3.10"
-    val androidPlugin = "3.4.0-alpha06"
+    val kotlin = "1.3.11"
+    val androidPlugin = "3.4.0-alpha07"
 
     val aac = "2.0.0"
     val room = "2.1.0-alpha02"
@@ -20,7 +20,7 @@ object Versions {
     val gson = "2.8.5"
     val dagger = "2.11"
     val timber = "4.7.1"
-    val materialDialogs = "2.0.0-rc1"
+    val materialDialogs = "2.0.0-rc3"
     val junit = "4.12"
     val testRunner = "1.1.0"
     val espresso = "3.1.0"
@@ -32,6 +32,8 @@ object Deps {
     val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
     val material = "com.google.android.material:material:1.0.0"
     val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
+
+    val multidex = "com.android.support:multidex:1.0.3"
 
     val databindingCompiler = "com.android.databinding:compiler:${Versions.androidPlugin}"
 
@@ -47,6 +49,8 @@ object Deps {
     val fastAdapterCommons = "com.mikepenz:fastadapter-commons:${Versions.fastadapter}"
 
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    val retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
     val gson = "com.google.code.gson:gson:${Versions.gson}"
 
     val dagger = "com.google.dagger:dagger:${Versions.dagger}"

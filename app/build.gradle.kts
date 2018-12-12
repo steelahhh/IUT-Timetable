@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-    implementation("com.android.support:multidex:1.0.3")
+    implementation(Deps.multidex)
     implementation(kotlin("stdlib-jdk7", Versions.kotlin))
     implementation(Deps.appcompat)
     implementation(Deps.androidxCore)
@@ -73,6 +73,8 @@ dependencies {
     implementation(Deps.fastAdapterCommons)
 
     implementation(Deps.retrofit)
+    implementation(Deps.retrofitGson)
+    implementation(Deps.retrofitRxJava)
     implementation(Deps.gson)
 
     implementation(Deps.dagger)
