@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -28,8 +29,6 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BasePreferencesViewModel>
     protected abstract val viewModelClass: Class<VM>
     protected abstract fun viewModelFactory(): ViewModelProvider.Factory
 
-    protected var useAltTheme = true
-
     protected var lastClickTime: Long = 0
 
     protected inline fun debouncedAction(action: () -> Unit) {
@@ -47,6 +46,12 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BasePreferencesViewModel>
         binding = DataBindingUtil.setContentView(this, layoutId)
         binding.setLifecycleOwner(this)
         binding.setVariable(vmId, vm)
+
+        if (vm.isNightMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -16,7 +16,6 @@ import timber.log.Timber
 class IUTApplication: MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         MainComponent.instance = DaggerMainComponent.builder()
             .contextModule(ContextModule(applicationContext))

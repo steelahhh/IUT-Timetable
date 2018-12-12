@@ -11,6 +11,7 @@ import java.util.*
  */
 
 object Constants {
+    const val PREFS_NAME = "MyPrefsFile"
 
     const val EMPTY_ENTRY = "0"
 
@@ -35,16 +36,4 @@ object Constants {
         )
     }
 
-    object PreferenceKeys {
-
-        const val PREFS_NAME = "MyPrefsFile"
-
-        const val SCHEDULE_INFO = "SCHEDULE_INFO"
-        const val FORM_ID = "FORM_ID"
-        const val GROUP_ID = "GROUP_ID"
-        const val GROUP_NAME = "GROUP_NAME"
-        const val INSTITUTE_ID = "INSTITUTE_ID"
-        const val INSTITUTE_NAME = "INSTITUTE_NAME"
-        const val THEME_MODE = "THEME_MODE"
-    }
 }

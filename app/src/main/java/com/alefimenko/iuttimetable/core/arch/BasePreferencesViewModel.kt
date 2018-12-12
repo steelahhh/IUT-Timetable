@@ -10,4 +10,8 @@ import javax.inject.Inject
 
 open class BasePreferencesViewModel @Inject constructor(
     protected val preferences: LocalPreferences
-) : ViewModel()
+) : ViewModel() {
+
+    val isNightMode: Boolean
+        get() = preferences.isNightMode
+}

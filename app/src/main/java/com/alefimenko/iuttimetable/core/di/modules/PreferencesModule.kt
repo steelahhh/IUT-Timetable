@@ -16,5 +16,5 @@ class PreferencesModule {
     @Provides
     @Singleton
     fun providePreferences(context: Context): LocalPreferences =
-        LocalPreferences(context.getSharedPreferences(Constants.PreferenceKeys.PREFS_NAME, Context.MODE_PRIVATE))
+        LocalPreferences(context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE))
 }
