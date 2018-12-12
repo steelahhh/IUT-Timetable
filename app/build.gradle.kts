@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation("com.android.support:multidex:1.0.3")
     implementation(kotlin("stdlib-jdk7", Versions.kotlin))
     implementation(Deps.appcompat)
     implementation(Deps.androidxCore)

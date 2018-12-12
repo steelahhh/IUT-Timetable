@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary</item>
         <item name="colorAccent">@color/accent</item>
-        <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="android:windowBackground">@color/backgroundDark</item>
         <item name="background_color">@color/backgroundLight</item>
         <item name="android:textColorPrimary">@color/black</item>
         <item name="android:statusBarColor">@color/backgroundDark</item>
@@ -17,27 +16,6 @@
         <item name="md_corner_radius">8dp</item>
     </style>
 
-    <style name="AppThemeDark" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary</item>
-        <item name="colorAccent">@color/accent</item>
-        <item name="android:windowBackground">@color/backgroundDark</item>
-        <item name="background_color">@color/backgroundDark</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:statusBarColor">@color/backgroundDark</item>
-
-        <item name="md_font_title">@font/manrope_bold</item>
-        <item name="md_font_body">@font/manrope_regular</item>
-        <item name="md_font_button">@font/manrope_semibold</item>
-        <item name="md_background_color">@color/backgroundDark</item>
-        <item name="md_corner_radius">8dp</item>
-    </style>
-
-    <style name="AppTheme.Splash" parent="AppTheme.NoActionBar">
-        <item name="android:statusBarColor">@color/primary</item>
-        <item name="android:windowBackground">@drawable/splash</item>
-    </style>
-
     <style name="MaterialTextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textAppearance">@style/AppText.Larger</item>
         <item name="backgroundTint">@color/transparent</item>
@@ -45,5 +23,4 @@
         <item name="android:textAllCaps">false</item>
         <item name="rippleColor">@color/primary</item>
     </style>
-
 </resources>
