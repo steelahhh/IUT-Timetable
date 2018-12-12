@@ -1,8 +1,10 @@
 package com.alefimenko.iuttimetable.util
 
 import android.graphics.Typeface
+import android.os.Build
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.MutableLiveData
 import com.alefimenko.iuttimetable.core.arch.AutoDisposable
 import io.reactivex.disposables.Disposable
 
@@ -17,6 +19,18 @@ fun Toolbar.changeToolbarFont() {
             view.typeface = Typeface.createFromAsset(view.context.assets, "manrope_bold.otf")
             break
         }
+    }
+}
+
+fun <T> MutableLiveData<T>.default(value: T): MutableLiveData<T> {
+    this.value = value
+    return this
+}
+
+
+inline fun withLollipop(action: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        action()
     }
 }
 
