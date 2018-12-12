@@ -2,15 +2,17 @@ package com.alefimenko.iuttimetable.core.base
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.alefimenko.iuttimetable.R
+import com.alefimenko.iuttimetable.core.arch.BasePreferencesViewModel
 import com.alefimenko.iuttimetable.util.changeToolbarFont
 
 /*
@@ -18,7 +20,7 @@ import com.alefimenko.iuttimetable.util.changeToolbarFont
  */
 
 @SuppressLint("Registered")
-abstract class BaseActivity<DB : ViewDataBinding, VM : ViewModel> : AppCompatActivity() {
+abstract class BaseActivity<DB : ViewDataBinding, VM : BasePreferencesViewModel> : AppCompatActivity() {
     protected lateinit var binding: DB
     protected abstract val layoutId: Int
 
@@ -27,6 +29,16 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : ViewModel> : AppCompatAct
     protected abstract val viewModelClass: Class<VM>
     protected abstract fun viewModelFactory(): ViewModelProvider.Factory
 
+    protected var lastClickTime: Long = 0
+
+    protected inline fun debouncedAction(action: () -> Unit) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 2000) {
+            return
+        }
+        lastClickTime = SystemClock.elapsedRealtime()
+        action()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vm = ViewModelProviders.of(this, viewModelFactory())[viewModelClass]
@@ -34,6 +46,12 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : ViewModel> : AppCompatAct
         binding = DataBindingUtil.setContentView(this, layoutId)
         binding.setLifecycleOwner(this)
         binding.setVariable(vmId, vm)
+
+        if (vm.isNightMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
