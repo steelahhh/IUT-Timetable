@@ -23,16 +23,16 @@ data class ScheduleRoomModel @JvmOverloads constructor(
     @ColumnInfo(name = "institutename")
     var instituteName: String = "",
     @ColumnInfo(name = "schedule")
-    var schedule: String = "",
+    var scheduleStr: String = "",
     @ColumnInfo(name = "rawSchedule")
-    var rawSchedule: String = ""
+    var rawScheduleStr: String = ""
 ) : Parcelable {
 
-    val scheduleEntity: ScheduleEntity
-        get() = Gson().fromJson(schedule, ScheduleEntity::class.java)
+    val schedule: ScheduleEntity
+        get() = Gson().fromJson(scheduleStr, ScheduleEntity::class.java)
 
-    val rawScheduleEntity: ScheduleEntity
-        get() = Gson().fromJson(rawSchedule, ScheduleEntity::class.java)
+    val rawSchedule: ScheduleEntity
+        get() = Gson().fromJson(rawScheduleStr, ScheduleEntity::class.java)
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -49,8 +49,8 @@ data class ScheduleRoomModel @JvmOverloads constructor(
         parcel.writeString(groupName)
         parcel.writeInt(instituteId)
         parcel.writeString(instituteName)
-        parcel.writeString(schedule)
-        parcel.writeString(rawSchedule)
+        parcel.writeString(scheduleStr)
+        parcel.writeString(rawScheduleStr)
     }
 
     override fun describeContents(): Int {
