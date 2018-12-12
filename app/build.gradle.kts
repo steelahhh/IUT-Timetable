@@ -65,6 +65,9 @@ dependencies {
     implementation(Deps.lifecycleReactive)
     kapt(Deps.lifecycleCompiler)
 
+    implementation(Deps.rxKotlin)
+    implementation(Deps.rxAndroid)
+
     implementation(Deps.room)
     kapt(Deps.roomCompiler)
     implementation(Deps.roomRxJava)

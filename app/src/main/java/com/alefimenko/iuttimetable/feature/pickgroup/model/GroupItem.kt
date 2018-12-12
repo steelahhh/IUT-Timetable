@@ -21,14 +21,16 @@ data class GroupItem(
 
     class VH(view: View): FastAdapter.ViewHolder<GroupItem>(view) {
 
-        var binding: ItemGroupBinding? = DataBindingUtil.bind(view)
+        private var binding: ItemGroupBinding? = DataBindingUtil.bind(view)
 
         override fun bindView(item: GroupItem, payloads: MutableList<Any>) {
             binding?.group = item
+            binding?.executePendingBindings()
         }
 
         override fun unbindView(item: GroupItem) {
-
+            binding?.group = null
+            binding?.executePendingBindings()
         }
 
     }
