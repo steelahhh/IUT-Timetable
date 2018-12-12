@@ -1,6 +1,7 @@
 package com.alefimenko.iuttimetable.core
 
-import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.multidex.MultiDexApplication
 import com.alefimenko.iuttimetable.BuildConfig
 import timber.log.Timber
 
@@ -9,10 +10,10 @@ import timber.log.Timber
  */
 
 @Suppress("unused")
-class IUTApplication: Application() {
-
+class IUTApplication: MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
