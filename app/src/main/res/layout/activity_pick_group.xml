@@ -8,32 +8,80 @@
             name="viewModel"
             type="com.alefimenko.iuttimetable.feature.pickgroup.PickGroupViewModel" />
 
-        <!--<variable-->
-        <!--name="itemAdapter"-->
-        <!--type="com.mikepenz.fastadapter.commons.adapters.FastItemAdapter" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="?background_color">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_layout"
-            android:layout_width="match_parent"
+
+        <RadioGroup
+            android:id="@+id/formRadioGroup"
+            style="@style/AppText.Larger"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="24dp"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:onCheckedChanged="@{(rb, isChecked) -> viewModel.onFormChecked(isChecked)}"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pickInstitute"
+            app:layout_constraintVertical_chainStyle="packed">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <RadioButton
+                android:id="@+id/eduFormZaochny"
+                style="@style/AppText.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Заочная форма"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/eduFormOchny"
+                style="@style/AppText.Large"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="16dp"
+                android:checked="true"
+                android:text="Очная форма"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="18sp" />
+        </RadioGroup>
 
-        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/pickInstitute"
+            style="@style/MaterialTextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.openInstitutePicker()}"
+            android:padding="20dp"
+            android:text="Выберите институт"
+            android:textColor="?android:textColorPrimary"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toTopOf="@id/formRadioGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.68"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/nextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:onClick="@{() -> viewModel.onNextButtonClicked()}"
+            android:src="@drawable/ic_arrow_forward"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

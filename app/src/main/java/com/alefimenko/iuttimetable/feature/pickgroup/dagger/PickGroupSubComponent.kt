@@ -1,9 +1,11 @@
 package com.alefimenko.iuttimetable.feature.pickgroup.dagger
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import com.alefimenko.iuttimetable.core.arch.EventDispatcher
 import com.alefimenko.iuttimetable.core.arch.ViewModelFactory
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
+import com.alefimenko.iuttimetable.core.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupViewModel
 import dagger.Module
 import dagger.Provides
@@ -24,10 +26,12 @@ interface PickGroupSubComponent {
 
         @Provides
         fun provideViewModel(
+            context: Context,
             preferences: LocalPreferences,
+            scheduleService: ScheduleService,
             @Named("dispatcher") mainExecutor: Executor
         ): ViewModelProvider.Factory = ViewModelFactory {
-            PickGroupViewModel(preferences, EventDispatcher(mainExecutor))
+            PickGroupViewModel(context, preferences, scheduleService, EventDispatcher(mainExecutor))
         }
     }
 
