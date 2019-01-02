@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import com.alefimenko.iuttimetable.core.arch.AutoDisposable
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -16,6 +17,14 @@ import io.reactivex.schedulers.Schedulers
 /*
  * Created by Alexander Efimenko on 21/11/18.
  */
+
+fun FloatingActionButton.show(state: Boolean) {
+    if (state) {
+        show()
+    } else {
+        hide()
+    }
+}
 
 fun Toolbar.changeToolbarFont() {
     for (i in 0 until childCount) {

@@ -11,7 +11,7 @@ object Versions {
     const val appVersionName = "2.2.0"
 
     const val kotlin = "1.3.11"
-    const val androidPlugin = "3.4.0-alpha07"
+    const val androidPlugin = "3.4.0-alpha09"
 
     const val aac = "2.0.0"
     const val rxKotlin = "2.2.0"
