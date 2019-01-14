@@ -11,7 +11,6 @@ plugins {
 android {
     compileSdkVersion(Versions.compileSdk)
 
-    dataBinding.isEnabled = true
     androidExtensions.isExperimental = true
     
     defaultConfig {
@@ -58,8 +57,6 @@ dependencies {
     implementation(Deps.constraint)
     implementation(Deps.material)
     implementation(Deps.materialDialogs)
-
-    kapt(Deps.databindingCompiler)
 
     implementation(Deps.lifecycleExtensions)
     implementation(Deps.lifecycleReactive)

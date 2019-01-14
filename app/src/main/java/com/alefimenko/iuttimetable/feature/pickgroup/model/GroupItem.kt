@@ -1,9 +1,8 @@
 package com.alefimenko.iuttimetable.feature.pickgroup.model
 
 import android.view.View
-import androidx.databinding.DataBindingUtil
+import android.widget.TextView
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.databinding.ItemGroupBinding
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 
@@ -20,17 +19,14 @@ data class GroupItem(
     override fun getLayoutRes() = R.layout.item_group
 
     class VH(view: View): FastAdapter.ViewHolder<GroupItem>(view) {
-
-        private var binding: ItemGroupBinding? = DataBindingUtil.bind(view)
+        val title = itemView.findViewById<TextView>(R.id.group_title)
 
         override fun bindView(item: GroupItem, payloads: MutableList<Any>) {
-            binding?.group = item
-            binding?.executePendingBindings()
+            title.text = item.label
         }
 
         override fun unbindView(item: GroupItem) {
-            binding?.group = null
-            binding?.executePendingBindings()
+            title.text = null
         }
 
     }

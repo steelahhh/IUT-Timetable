@@ -7,51 +7,48 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.arch.BasePreferencesViewModel
 import com.alefimenko.iuttimetable.util.changeToolbarFont
+import com.alefimenko.iuttimetable.util.createBinder
 
 /*
  * Created by Alexander Efimenko on 21/11/18.
  */
 
 @SuppressLint("Registered")
-abstract class BaseActivity<DB : ViewDataBinding, VM : BasePreferencesViewModel> : AppCompatActivity() {
-    protected lateinit var binding: DB
+abstract class BaseActivity<VM : BasePreferencesViewModel> : AppCompatActivity() {
     protected abstract val layoutId: Int
 
-    protected abstract val vmId: Int
     protected lateinit var vm: VM
     protected abstract val viewModelClass: Class<VM>
     protected abstract fun viewModelFactory(): ViewModelProvider.Factory
 
+    protected val bind = createBinder()
+
     protected var lastClickTime: Long = 0
 
-    protected inline fun debouncedAction(action: () -> Unit) {
-        if (SystemClock.elapsedRealtime() - lastClickTime < 2000) {
-            return
-        }
-        lastClickTime = SystemClock.elapsedRealtime()
-        action()
-    }
+    abstract fun setup()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(layoutId)
         vm = ViewModelProviders.of(this, viewModelFactory())[viewModelClass]
 
-        binding = DataBindingUtil.setContentView(this, layoutId)
-        binding.setLifecycleOwner(this)
-        binding.setVariable(vmId, vm)
+        setup()
 
         if (vm.isNightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bind.resetViews()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -64,6 +61,14 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BasePreferencesViewModel>
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    protected inline fun debouncedAction(action: () -> Unit) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 2000) {
+            return
+        }
+        lastClickTime = SystemClock.elapsedRealtime()
+        action()
     }
 
     fun setupToolbar(homeAsUp: Boolean = false) {

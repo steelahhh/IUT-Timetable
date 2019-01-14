@@ -31,7 +31,6 @@ class PickGroupViewModel @Inject constructor(
 
     init {
         dispatcher.dispatchEvent { changeFabVisibility(visible = false) }
-        fetchInstitutes()
     }
 
     val autoDisposable = AutoDisposable()
@@ -42,14 +41,7 @@ class PickGroupViewModel @Inject constructor(
     val selectedForm: LiveData<Int>
         get() = _selectedForm
 
-    val institutes: LiveData<List<GroupModel>> = Transformations.map(_institutes) { result ->
-        result.getOrElse { Constants.institutes }
-    }
-
-    val instituteProgressVisibility: LiveData<Boolean>
-        get() = Transformations.map(_institutes) { result -> !result.isSuccess || !result.isFailure }
-
-    private fun fetchInstitutes() {
+    fun fetchInstitutes() {
         if (NetworkUtils.isNetworkAvailable(context)) {
             scheduleService.fetchInstitutes().ioMainSchedulers()
                 .subscribe({
@@ -71,8 +63,8 @@ class PickGroupViewModel @Inject constructor(
 
     fun onFormChecked(checkedId: Int) {
         when (checkedId) {
-            R.id.eduFormOchny -> _selectedForm.postValue(0)
-            R.id.eduFormZaochny -> _selectedForm.postValue(1)
+            R.id.edu_form_ochny -> _selectedForm.postValue(0)
+            R.id.edu_form_zaochny -> _selectedForm.postValue(1)
         }
     }
 

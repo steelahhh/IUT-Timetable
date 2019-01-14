@@ -1,88 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.alefimenko.iuttimetable.feature.pickgroup.PickGroupViewModel" />
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:background="?background_color">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="?background_color">
 
 
-        <RadioGroup
-            android:id="@+id/formRadioGroup"
-            style="@style/AppText.Larger"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_height="wrap_content"
-            android:onCheckedChanged="@{(rb, isChecked) -> viewModel.onFormChecked(isChecked)}"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pickInstitute"
-            app:layout_constraintVertical_chainStyle="packed">
+    <RadioGroup
+        android:id="@+id/form_radio_group"
+        style="@style/AppText.Larger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pick_institute_button"
+        app:layout_constraintVertical_chainStyle="packed">
 
-            <RadioButton
-                android:id="@+id/eduFormZaochny"
-                style="@style/AppText.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Заочная форма"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="18sp" />
-
-            <RadioButton
-                android:id="@+id/eduFormOchny"
-                style="@style/AppText.Large"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="16dp"
-                android:checked="true"
-                android:text="Очная форма"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="18sp" />
-        </RadioGroup>
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/pickInstitute"
-            style="@style/MaterialTextButton"
+        <RadioButton
+            android:id="@+id/edu_form_zaochny"
+            style="@style/AppText.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.openInstitutePicker()}"
-            android:padding="20dp"
-            android:text="Выберите институт"
+            android:layout_weight="1"
+            android:text="Заочная форма"
             android:textColor="?android:textColorPrimary"
-            app:cornerRadius="8dp"
-            app:layout_constraintBottom_toTopOf="@id/formRadioGroup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.68"
-            app:layout_constraintVertical_chainStyle="packed" />
+            android:textSize="18sp" />
 
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/nextButton"
-            android:layout_width="wrap_content"
+        <RadioButton
+            android:id="@+id/edu_form_ochny"
+            style="@style/AppText.Large"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:onClick="@{() -> viewModel.onNextButtonClicked()}"
-            android:src="@drawable/ic_arrow_forward"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="16dp"
+            android:checked="true"
+            android:text="Очная форма"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="18sp" />
+    </RadioGroup>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</layout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pick_institute_button"
+        style="@style/MaterialTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Выберите институт"
+        android:textColor="?android:textColorPrimary"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toTopOf="@id/form_radio_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.68"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_arrow_forward"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
