@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable.util
 
-import com.alefimenko.iuttimetable.core.data.models.GroupModel
+import com.alefimenko.iuttimetable.model.GroupModel
 import java.util.*
 
 /**

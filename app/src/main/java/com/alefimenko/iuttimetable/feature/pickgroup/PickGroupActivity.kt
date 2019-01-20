@@ -11,7 +11,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseActivity
-import com.alefimenko.iuttimetable.core.data.models.GroupModel
+import com.alefimenko.iuttimetable.model.GroupModel
 import com.alefimenko.iuttimetable.core.di.MainComponent
 import com.alefimenko.iuttimetable.util.Constants
 import com.alefimenko.iuttimetable.util.show

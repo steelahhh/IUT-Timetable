@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable.core.data.remote
 
-import com.alefimenko.iuttimetable.core.data.models.GroupModel
+import com.alefimenko.iuttimetable.model.GroupModel
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.http.GET

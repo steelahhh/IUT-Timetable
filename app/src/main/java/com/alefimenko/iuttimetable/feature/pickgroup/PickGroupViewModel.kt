@@ -3,13 +3,12 @@ package com.alefimenko.iuttimetable.feature.pickgroup
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.arch.AutoDisposable
 import com.alefimenko.iuttimetable.core.arch.BasePreferencesViewModel
 import com.alefimenko.iuttimetable.core.arch.EventDispatcher
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
-import com.alefimenko.iuttimetable.core.data.models.GroupModel
+import com.alefimenko.iuttimetable.model.GroupModel
 import com.alefimenko.iuttimetable.core.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.util.*
 import javax.inject.Inject

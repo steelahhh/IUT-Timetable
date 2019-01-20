@@ -2,7 +2,7 @@ package com.alefimenko.iuttimetable.core.di.modules
 
 import com.google.gson.Gson
 import dagger.Module
-import dagger.Provides
+import javax.inject.Singleton
 
 /*
  * Created by Alexander Efimenko on 2018-12-12.
@@ -10,6 +10,6 @@ import dagger.Provides
 
 @Module
 class ApplicationModule {
-    @Provides
+    @Singleton
     fun provideGson(): Gson = Gson()
 }

@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.os.Build
-import com.alefimenko.iuttimetable.core.data.models.ScheduleRoomModel
+import com.alefimenko.iuttimetable.model.ScheduleRoomModel
 
 /*
  * Created by Alexander Efimenko on 2018-12-12.

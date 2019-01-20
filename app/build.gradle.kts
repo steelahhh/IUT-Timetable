@@ -1,5 +1,6 @@
 import com.android.build.gradle.api.ApplicationVariant
 import org.gradle.kotlin.dsl.*
+import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
 
 plugins {
     id("com.android.application")
@@ -10,9 +11,12 @@ plugins {
 
 android {
     compileSdkVersion(Versions.compileSdk)
+    androidExtensions {
+        configure(delegateClosureOf<AndroidExtensionsExtension> {
+            isExperimental = true
+        })
+    }
 
-    androidExtensions.isExperimental = true
-    
     defaultConfig {
         applicationId = ApplicationID.default
         minSdkVersion(Versions.minSdk)
@@ -76,6 +80,8 @@ dependencies {
     implementation(Deps.retrofitGson)
     implementation(Deps.retrofitRxJava)
     implementation(Deps.gson)
+
+    implementation(Deps.jsoup)
 
     implementation(Deps.dagger)
     kapt(Deps.daggerCompiler)

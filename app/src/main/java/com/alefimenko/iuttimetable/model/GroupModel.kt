@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.core.data.models
+package com.alefimenko.iuttimetable.model
 
 import com.google.gson.annotations.SerializedName
 

@@ -2,7 +2,7 @@ package com.alefimenko.iuttimetable.core.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.alefimenko.iuttimetable.core.data.models.ScheduleRoomModel
+import com.alefimenko.iuttimetable.model.ScheduleRoomModel
 
 /*
  * Created by Alexander Efimenko on 2018-12-12.

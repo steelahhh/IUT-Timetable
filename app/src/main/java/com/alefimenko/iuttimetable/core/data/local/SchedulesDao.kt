@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.alefimenko.iuttimetable.core.data.models.ScheduleRoomModel
+import com.alefimenko.iuttimetable.model.ScheduleRoomModel
 import io.reactivex.Maybe
 import io.reactivex.Single
 

@@ -17,7 +17,8 @@ object Versions {
     const val rxKotlin = "2.2.0"
     const val rxAndroid = "2.0.2"
     const val room = "2.1.0-alpha02"
-    
+
+    const val jsoup = "1.11.3"
     const val fastadapter = "3.3.1"
     const val retrofit = "2.4.0"
     const val gson = "2.8.5"
@@ -58,6 +59,8 @@ object Deps {
     const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
     const val retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
     const val gson = "com.google.code.gson:gson:${Versions.gson}"
+
+    const val jsoup = "org.jsoup:jsoup:${Versions.jsoup}"
 
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
