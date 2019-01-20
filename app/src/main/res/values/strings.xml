@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">IUT Timetable</string>
+
+    <string name="str_choose_email_client" translatable="false">Choose email client</string>
+
 </resources>

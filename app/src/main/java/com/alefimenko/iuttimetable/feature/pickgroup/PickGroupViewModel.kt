@@ -41,14 +41,12 @@ class PickGroupViewModel @Inject constructor(
         get() = _selectedForm
 
     fun fetchInstitutes() {
-        if (NetworkUtils.isNetworkAvailable(context)) {
-            scheduleService.fetchInstitutes().ioMainSchedulers()
-                .subscribe({
-                    _institutes.postValue(Result.success(it))
-                }, {
-                    _institutes.postValue(Result.failure(it))
-                }).addTo(autoDisposable)
-        }
+        scheduleService.fetchInstitutes().ioMainSchedulers()
+            .subscribe({
+                _institutes.postValue(Result.success(it))
+            }, {
+                _institutes.postValue(Result.failure(it))
+            }).addTo(autoDisposable)
     }
 
     fun selectInstitute(institute: GroupModel) {

@@ -7,10 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-/*
- * Created by Alexander Efimenko on 2018-12-12.
- */
-
 /**
  * IUT Timetable
  * Copyright (C) 2018  Alexander Efimenko
@@ -28,7 +24,7 @@ interface ScheduleService {
     @GET("/{form}/bin/groups.py?act=json_groups")
     fun fetchGroups(
         @Path(value = "form") form: String,
-        @Query("id_inst") instituteId: Int
+        @Query(value = "id_inst") instituteId: Int
     ): Single<List<GroupModel>>
 
     @GET("/wp-content/plugins/tsogu_schedule/schedule.php?selService=yes&type=0")
@@ -37,7 +33,7 @@ interface ScheduleService {
     @GET("{form}/bin/groups.py?act=show&print=json")
     fun fetchSchedule(
         @Path(value = "form") form: String,
-        @Query("sgroup") groupId: Int
+        @Query(value = "sgroup") groupId: Int
     ): Single<ResponseBody>
 
     companion object {
