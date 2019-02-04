@@ -13,10 +13,11 @@ import javax.inject.Singleton
  */
 
 @Module
-class DataModule {
+object DataModule {
 
     @Singleton
     @Provides
+    @JvmStatic
     internal fun provideDb(context: Context): SchedulesDatabase {
         return Room.databaseBuilder(
             context,
@@ -28,6 +29,7 @@ class DataModule {
 
     @Singleton
     @Provides
+    @JvmStatic
     internal fun provideSchedulesDao(database: SchedulesDatabase): SchedulesDao {
         return database.schedulesDao
     }

@@ -7,11 +7,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
-import com.alefimenko.iuttimetable.core.arch.AutoDisposable
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 /*
@@ -47,11 +45,6 @@ inline fun withLollipop(action: () -> Unit) {
         action()
     }
 }
-
-fun Disposable.addTo(autoDisposable: AutoDisposable) {
-    autoDisposable.add(this)
-}
-
 
 fun Completable.ioMainSchedulers() = this
     .subscribeOn(Schedulers.io())

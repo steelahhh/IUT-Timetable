@@ -11,7 +11,7 @@ object Versions {
     const val appVersionName = "2.2.0"
 
     const val kotlin = "1.3.11"
-    const val androidPlugin = "3.4.0-alpha10"
+    const val androidPlugin = "3.4.0-beta03"
 
     const val aac = "2.0.0"
     const val rxKotlin = "2.2.0"
@@ -22,7 +22,7 @@ object Versions {
     const val fastadapter = "3.3.1"
     const val retrofit = "2.4.0"
     const val gson = "2.8.5"
-    const val dagger = "2.11"
+    const val dagger = "2.21"
     const val timber = "4.7.1"
     const val materialDialogs = "2.0.0-rc3"
     const val junit = "4.12"
@@ -63,6 +63,7 @@ object Deps {
     const val jsoup = "org.jsoup:jsoup:${Versions.jsoup}"
 
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
+    const val daggerAndroid = "com.google.dagger:dagger-android-support:${Versions.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
 
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"

@@ -1,11 +1,10 @@
 package com.alefimenko.iuttimetable.core
 
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 import com.alefimenko.iuttimetable.BuildConfig
+import com.alefimenko.iuttimetable.core.di.DaggerComponentProvider
 import com.alefimenko.iuttimetable.core.di.DaggerMainComponent
 import com.alefimenko.iuttimetable.core.di.MainComponent
-import com.alefimenko.iuttimetable.core.di.modules.ContextModule
 import timber.log.Timber
 
 /*
@@ -13,14 +12,16 @@ import timber.log.Timber
  */
 
 @Suppress("unused")
-class IUTApplication: MultiDexApplication() {
+class IUTApplication: MultiDexApplication(), DaggerComponentProvider {
+
+    override val component: MainComponent by lazy {
+        DaggerMainComponent.builder()
+            .applicationContext(applicationContext)
+            .build()
+    }
+
     override fun onCreate() {
         super.onCreate()
-
-        MainComponent.instance = DaggerMainComponent.builder()
-            .contextModule(ContextModule(applicationContext))
-            .build()
-
         setup()
     }
 

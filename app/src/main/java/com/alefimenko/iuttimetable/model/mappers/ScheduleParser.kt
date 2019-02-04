@@ -21,6 +21,12 @@ class ScheduleParser {
     val document: Document
         get() = _doc ?: throw RuntimeException("Document should not be null")
 
+    val weeksCount: Int
+        get() = document.weeks.size
+
+    val semester: String
+        get() = document.semester
+
     fun initialize(document: Document) {
         _doc = document
     }
@@ -38,12 +44,6 @@ class ScheduleParser {
             return schedule
         }
     }
-
-    val weeksCount: Int
-        get() = document.weeks.size
-
-    val semester: String
-        get() = document.semester
 
     private fun Document.getDaySchedule(week: Int, day: Int): List<ClassEntry> =
         getWeekRow(week).fold(mutableListOf()) { acc, element ->
@@ -145,6 +145,7 @@ class ScheduleParser {
             val loc = substring(indexOf("),") + 2).trim()
             return "${loc.substring(0, loc.indexOf('('))} ${loc.substring(loc.indexOf('('))}"
         }
+
     private val String.classType: String
         get() = when {
             contains("(пр)".toRegex()) -> "прак"

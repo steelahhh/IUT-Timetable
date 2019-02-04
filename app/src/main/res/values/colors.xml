@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="accent">#0e4194</color>
-    <color name="primary">#0e4194</color>
-    <color name="primaryDark">#0e4194</color>
+    <color name="accent">#C62828</color>
+    <color name="primary">#C62828</color>
+    <color name="primaryDark">#C62828</color>
 
     <color name="backgroundDark">#222121</color>
     <color name="backgroundLight">#ffefefef</color>
@@ -14,6 +14,7 @@
     <color name="darkRed">#b71c1c</color>
     <color name="lightBlue">#0288d1</color>
     <color name="warmGray">#ff9b9b9b</color>
+    <color name="iutColor">#0e4194</color>
 
     <color name="transparent">#00ffffff</color>
     <color name="transparentBlack">#66000000</color>

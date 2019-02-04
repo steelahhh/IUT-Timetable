@@ -23,7 +23,7 @@
     </style>
 
     <style name="AppTheme.Splash" parent="AppTheme.NoActionBar">
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/primary</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/iutColor</item>
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>

@@ -12,8 +12,9 @@ import javax.inject.Named
  */
 
 @Module
-class DispatcherModule {
+object DispatcherModule {
     @Provides
+    @JvmStatic
     @Named("dispatcher")
     fun provideMainThreadExecutor(): Executor {
         val handler = Handler(Looper.getMainLooper())

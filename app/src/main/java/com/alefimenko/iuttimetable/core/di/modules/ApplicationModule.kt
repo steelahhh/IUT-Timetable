@@ -2,6 +2,7 @@ package com.alefimenko.iuttimetable.core.di.modules
 
 import com.google.gson.Gson
 import dagger.Module
+import dagger.Provides
 import javax.inject.Singleton
 
 /*
@@ -9,7 +10,9 @@ import javax.inject.Singleton
  */
 
 @Module
-class ApplicationModule {
+object ApplicationModule {
+    @Provides
     @Singleton
+    @JvmStatic
     fun provideGson(): Gson = Gson()
 }

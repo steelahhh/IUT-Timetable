@@ -12,9 +12,10 @@ import javax.inject.Singleton
  */
 
 @Module
-class PreferencesModule {
+object PreferencesModule {
     @Provides
     @Singleton
+    @JvmStatic
     fun providePreferences(context: Context): LocalPreferences =
         LocalPreferences(context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE))
 }

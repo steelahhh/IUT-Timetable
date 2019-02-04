@@ -7,10 +7,10 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.core.arch.BasePreferencesViewModel
 import com.alefimenko.iuttimetable.util.changeToolbarFont
 import com.alefimenko.iuttimetable.util.createBinder
 
@@ -19,31 +19,16 @@ import com.alefimenko.iuttimetable.util.createBinder
  */
 
 @SuppressLint("Registered")
-abstract class BaseActivity<VM : BasePreferencesViewModel> : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
     protected abstract val layoutId: Int
-
-    protected lateinit var vm: VM
-    protected abstract val viewModelClass: Class<VM>
-    protected abstract fun viewModelFactory(): ViewModelProvider.Factory
 
     protected val bind = createBinder()
 
     protected var lastClickTime: Long = 0
 
-    abstract fun setup()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
-        vm = ViewModelProviders.of(this, viewModelFactory())[viewModelClass]
-
-        setup()
-
-        if (vm.isNightMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
     }
 
     override fun onDestroy() {
