@@ -13,10 +13,13 @@ object Versions {
     const val kotlin = "1.3.11"
     const val androidPlugin = "3.4.0-beta03"
 
+    const val badoo = "1.1.4"
     const val aac = "2.0.0"
     const val rxKotlin = "2.2.0"
     const val rxAndroid = "2.0.2"
     const val room = "2.1.0-alpha02"
+
+    const val leakCanary = "1.6.3"
 
     const val jsoup = "1.11.3"
     const val fastadapter = "3.3.1"
@@ -44,10 +47,10 @@ object Deps {
     const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.aac}"
     const val lifecycleReactive = "androidx.lifecycle:lifecycle-reactivestreams:${Versions.aac}"
     const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.aac}"
-    
+
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
-    
+
     const val room = "androidx.room:room-runtime:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val roomRxJava = "androidx.room:room-rxjava2:${Versions.room}"
@@ -65,6 +68,12 @@ object Deps {
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     const val daggerAndroid = "com.google.dagger:dagger-android-support:${Versions.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+
+    const val mviCore = "com.github.badoo.mvicore:mvicore:${Versions.badoo}"
+    const val mviCoreAndroid = "com.github.badoo.mvicore:mvicore-android:${Versions.badoo}"
+
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
+    const val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:${Versions.leakCanary}"
 
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     const val materialDialogs = "com.afollestad.material-dialogs:core:${Versions.materialDialogs}"

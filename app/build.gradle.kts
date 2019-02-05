@@ -1,4 +1,3 @@
-import com.android.build.gradle.api.ApplicationVariant
 import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
 
@@ -15,6 +14,11 @@ android {
         configure(delegateClosureOf<AndroidExtensionsExtension> {
             isExperimental = true
         })
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
@@ -87,6 +91,12 @@ dependencies {
     kapt(Deps.daggerCompiler)
 
     implementation(Deps.timber)
+
+    implementation(Deps.mviCore)
+    implementation(Deps.mviCoreAndroid)
+
+    debugImplementation(Deps.leakCanary)
+    releaseImplementation(Deps.leakCanaryNoOp)
 
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)
