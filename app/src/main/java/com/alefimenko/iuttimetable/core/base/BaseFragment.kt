@@ -1,5 +1,7 @@
 package com.alefimenko.iuttimetable.core.base
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.alefimenko.iuttimetable.util.createBinder
 
@@ -8,5 +10,17 @@ import com.alefimenko.iuttimetable.util.createBinder
  */
 
 open class BaseFragment: Fragment() {
+
     val bind = createBinder()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity() as BaseActivity).updateNavigationColor()
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        bind.resetViews()
+    }
+
 }

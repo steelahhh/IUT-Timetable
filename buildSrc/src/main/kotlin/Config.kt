@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 object ApplicationID {
     const val default = "com.alefimenko.iuttimetable"
     const val develop = "com.alefimenko.iuttimetable.develop"
@@ -10,8 +12,8 @@ object Versions {
     const val appVersionCode = 3000
     const val appVersionName = "2.2.0"
 
-    const val kotlin = "1.3.11"
-    const val androidPlugin = "3.4.0-beta03"
+    const val kotlin = "1.3.21"
+    const val androidPlugin = "3.5.0-alpha03"
 
     const val badoo = "1.1.4"
     const val aac = "2.0.0"
@@ -27,7 +29,7 @@ object Versions {
     const val gson = "2.8.5"
     const val dagger = "2.21"
     const val timber = "4.7.1"
-    const val materialDialogs = "2.0.0-rc3"
+    const val materialDialogs = "2.0.0"
     const val junit = "4.12"
     const val testRunner = "1.1.0"
     const val espresso = "3.1.0"
@@ -37,7 +39,7 @@ object Deps {
     const val appcompat = "androidx.appcompat:appcompat:1.0.2"
     const val androidxCore = "androidx.core:core-ktx:1.0.1"
     const val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
-    const val material = "com.google.android.material:material:1.0.0"
+    const val material = "com.google.android.material:material:1.1.0-alpha03"
     const val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
 
     const val multidex = "com.android.support:multidex:1.0.3"

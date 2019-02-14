@@ -1,17 +1,14 @@
 package com.alefimenko.iuttimetable.core.base
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
+import android.util.TypedValue
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.core.content.ContextCompat
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.util.changeToolbarFont
 import com.alefimenko.iuttimetable.util.createBinder
 
 /*
@@ -48,23 +45,34 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    protected inline fun debouncedAction(action: () -> Unit) {
-        if (SystemClock.elapsedRealtime() - lastClickTime < 2000) {
-            return
+    fun updateNavigationColor() {
+        val typedValueAttr = TypedValue()
+        theme.resolveAttribute(R.attr.background_color, typedValueAttr, true)
+        val color = ContextCompat.getColor(this, typedValueAttr.resourceId)
+        val darkColor = ContextCompat.getColor(this, R.color.backgroundDark)
+        val isDark = color == darkColor
+
+        var newNavigationColor = color
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.apply {
+                statusBarColor = color
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !isDark) {
+                    var flags = decorView.systemUiVisibility
+                    flags = flags xor View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                    decorView.systemUiVisibility = flags
+                } else {
+                    newNavigationColor = ContextCompat.getColor(
+                        this@BaseActivity,
+                        if (isDark) {
+                            R.color.backgroundDark
+                        } else {
+                            android.R.color.black
+                        }
+                    )
+                }
+                navigationBarColor = newNavigationColor
+            }
         }
-        lastClickTime = SystemClock.elapsedRealtime()
-        action()
-    }
-
-    fun setupToolbar(homeAsUp: Boolean = false) {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar)
-
-            toolbar.changeToolbarFont()
-        }
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(homeAsUp)
     }
 }
