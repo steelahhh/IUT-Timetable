@@ -10,7 +10,7 @@ import com.alefimenko.iuttimetable.model.ScheduleRoomModel
  * Created by Alexander Efimenko on 2019-01-20.
  */
 
-class FeedbackService(val context: Context) {
+class FeedbackService(private val context: Context) {
 
     fun sendFeedback(throwable: Throwable?, schedule: ScheduleRoomModel) {
         sendFeedback(

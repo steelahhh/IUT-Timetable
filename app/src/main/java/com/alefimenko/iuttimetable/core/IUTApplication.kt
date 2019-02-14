@@ -6,13 +6,11 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import androidx.multidex.MultiDexApplication
 import com.alefimenko.iuttimetable.BuildConfig
-import com.alefimenko.iuttimetable.core.di.DaggerComponentProvider
-import com.alefimenko.iuttimetable.core.di.DaggerMainComponent
-import com.alefimenko.iuttimetable.core.di.MainComponent
+import com.alefimenko.iuttimetable.core.di.modules.applicationModule
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
 /*
@@ -20,18 +18,12 @@ import timber.log.Timber
  */
 
 @Suppress("unused")
-class IUTApplication : MultiDexApplication(), DaggerComponentProvider {
+class IUTApplication : Application() {
 
     lateinit var refWatcher: RefWatcher
-
-    override val component: MainComponent by lazy {
-        DaggerMainComponent.builder()
-            .applicationContext(applicationContext)
-            .build()
-    }
-
     override fun onCreate() {
         super.onCreate()
+        startKoin(this, applicationModule)
         setup()
         initializeLeakCanary()
     }

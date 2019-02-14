@@ -7,11 +7,8 @@ import android.view.ViewGroup
 import android.widget.RadioGroup
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseFragment
-import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
-import com.alefimenko.iuttimetable.core.di.injector
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import javax.inject.Inject
 
 /*
  * Created by Alexander Efimenko on 2019-02-04.
@@ -32,11 +29,6 @@ class PickGroupFragment : BaseFragment() {
     }
 
     companion object {
-
-        fun newInstance() = PickGroupFragment().apply {
-            arguments = Bundle().apply {
-
-            }
-        }
+        fun newInstance() = PickGroupFragment()
     }
 }

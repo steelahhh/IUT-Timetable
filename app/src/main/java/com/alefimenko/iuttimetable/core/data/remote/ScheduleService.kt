@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable.core.data.remote
 
-import com.alefimenko.iuttimetable.model.GroupModel
+import com.alefimenko.iuttimetable.model.GroupResponse
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.http.GET
@@ -14,7 +14,7 @@ import retrofit2.http.Query
  * Github: github.com/steelahhh
  */
 
-typealias InstituteEntity = GroupModel
+typealias InstituteResponse = GroupResponse
 
 interface ScheduleService {
 
@@ -25,10 +25,10 @@ interface ScheduleService {
     fun fetchGroups(
         @Path(value = "form") form: String,
         @Query(value = "id_inst") instituteId: Int
-    ): Single<List<GroupModel>>
+    ): Single<List<GroupResponse>>
 
     @GET("/wp-content/plugins/tsogu_schedule/schedule.php?selService=yes&type=0")
-    fun fetchInstitutes(): Single<List<InstituteEntity>>
+    fun fetchInstitutes(): Single<List<InstituteResponse>>
 
     @GET("{form}/bin/groups.py?act=show&print=json")
     fun fetchSchedule(

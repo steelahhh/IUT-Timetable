@@ -4,9 +4,6 @@ import android.graphics.Typeface
 import android.os.Build
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.MutableLiveData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,12 +30,6 @@ fun Toolbar.changeToolbarFont() {
         }
     }
 }
-
-fun <T> MutableLiveData<T>.default(value: T): MutableLiveData<T> {
-    this.value = value
-    return this
-}
-
 
 inline fun withLollipop(action: () -> Unit) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -77,23 +68,3 @@ fun <T> Maybe<T>.ioMainSchedulers() = this
 fun <T> Maybe<T>.ioSchedulers() = this
     .subscribeOn(Schedulers.io())
     .observeOn(Schedulers.io())
-
-fun <T> Flowable<T>.toLiveData(): LiveData<T> {
-    return LiveDataReactiveStreams.fromPublisher(this)
-}
-
-fun <T> Observable<T>.toLiveData(backPressureStrategy: BackpressureStrategy): LiveData<T> {
-    return LiveDataReactiveStreams.fromPublisher(this.toFlowable(backPressureStrategy))
-}
-
-fun <T> Single<T>.toLiveData(): LiveData<T> {
-    return LiveDataReactiveStreams.fromPublisher(this.toFlowable())
-}
-
-fun <T> Maybe<T>.toLiveData(): LiveData<T> {
-    return LiveDataReactiveStreams.fromPublisher(this.toFlowable())
-}
-
-fun <T> Completable.toLiveData(): LiveData<T> {
-    return LiveDataReactiveStreams.fromPublisher(this.toFlowable())
-}

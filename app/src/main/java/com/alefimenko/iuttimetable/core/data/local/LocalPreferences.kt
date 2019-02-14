@@ -3,14 +3,13 @@ package com.alefimenko.iuttimetable.core.data.local
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import com.alefimenko.iuttimetable.util.Constants.ITEM_DOESNT_EXIST
-import javax.inject.Inject
 
 /*
  * Created by Alexander Efimenko on 2018-12-12.
  */
 
 @SuppressLint("ApplySharedPref")
-class LocalPreferences @Inject constructor(private val prefs: SharedPreferences) {
+class LocalPreferences constructor(private val prefs: SharedPreferences) {
 
     var isNightMode: Boolean
         get() = prefs.getBoolean(NIGHT_MODE, true)

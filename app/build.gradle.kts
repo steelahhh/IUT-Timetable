@@ -66,10 +66,6 @@ dependencies {
     implementation(Deps.material)
     implementation(Deps.materialDialogs)
 
-    implementation(Deps.lifecycleExtensions)
-    implementation(Deps.lifecycleReactive)
-    kapt(Deps.lifecycleCompiler)
-
     implementation(Deps.rxKotlin)
     implementation(Deps.rxAndroid)
 
@@ -87,8 +83,11 @@ dependencies {
 
     implementation(Deps.jsoup)
 
-    implementation(Deps.dagger)
-    kapt(Deps.daggerCompiler)
+    implementation(Deps.koin.core)
+    implementation(Deps.koin.ext)
+    testImplementation(Deps.koin.test)
+    implementation(Deps.koin.android)
+    implementation(Deps.koin.androidScope)
 
     implementation(Deps.timber)
 

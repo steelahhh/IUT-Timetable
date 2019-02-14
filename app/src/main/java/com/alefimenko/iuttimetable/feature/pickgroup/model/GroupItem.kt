@@ -19,7 +19,7 @@ data class GroupItem(
     override fun getLayoutRes() = R.layout.item_group
 
     class VH(view: View): FastAdapter.ViewHolder<GroupItem>(view) {
-        val title = itemView.findViewById<TextView>(R.id.group_title)
+        private val title = itemView.findViewById<TextView>(R.id.group_title)
 
         override fun bindView(item: GroupItem, payloads: MutableList<Any>) {
             title.text = item.label
@@ -28,6 +28,5 @@ data class GroupItem(
         override fun unbindView(item: GroupItem) {
             title.text = null
         }
-
     }
 }

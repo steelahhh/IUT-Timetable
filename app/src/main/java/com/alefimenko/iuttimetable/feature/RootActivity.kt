@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseActivity
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
-import com.alefimenko.iuttimetable.core.di.injector
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFragment
-import timber.log.Timber
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 /*
  * Created by Alexander Efimenko on 22/11/18.
@@ -17,22 +15,25 @@ import javax.inject.Inject
 class RootActivity : BaseActivity() {
     override val layoutId: Int = R.layout.activity_root
 
-    @Inject
-    lateinit var sharedPreferences: LocalPreferences
+    private val sharedPreferences: LocalPreferences by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injector.inject(this)
+        updateTheme()
         super.onCreate(savedInstanceState)
+        val fraggo = supportFragmentManager.findFragmentById(R.id.content)
+
+        if (fraggo == null) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.content, PickGroupFragment.newInstance(), "pickgroup")
+                .commitNow()
+        }
+    }
+
+    private fun updateTheme() {
         if (sharedPreferences.isNightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
-
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.content, PickGroupFragment.newInstance())
-                .commitNow()
-
-        Timber.d("Night mode: ${sharedPreferences.isNightMode}")
     }
 }

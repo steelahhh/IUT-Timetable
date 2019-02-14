@@ -1,37 +1,24 @@
 package com.alefimenko.iuttimetable.core.di.modules
 
-import android.content.Context
 import androidx.room.Room
-import com.alefimenko.iuttimetable.core.data.local.SchedulesDao
 import com.alefimenko.iuttimetable.core.data.local.SchedulesDatabase
-import dagger.Module
-import dagger.Provides
-import javax.inject.Singleton
+import com.google.gson.GsonBuilder
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module.module
 
 /*
  * Created by Alexander Efimenko on 2018-12-12.
  */
 
-@Module
-object DataModule {
-
-    @Singleton
-    @Provides
-    @JvmStatic
-    internal fun provideDb(context: Context): SchedulesDatabase {
-        return Room.databaseBuilder(
-            context,
+val dataModule = module {
+    factory {
+        Room.databaseBuilder(
+            androidContext(),
             SchedulesDatabase::class.java, "Schedules"
-        )
-            .fallbackToDestructiveMigration()
-            .build()
+        ).fallbackToDestructiveMigration().build()
     }
 
-    @Singleton
-    @Provides
-    @JvmStatic
-    internal fun provideSchedulesDao(database: SchedulesDatabase): SchedulesDao {
-        return database.schedulesDao
-    }
+    factory { get<SchedulesDatabase>().schedulesDao }
 
+    single { GsonBuilder().enableComplexMapKeySerialization().create() }
 }

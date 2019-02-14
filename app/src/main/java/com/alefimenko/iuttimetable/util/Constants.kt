@@ -1,7 +1,7 @@
 package com.alefimenko.iuttimetable.util
 
-import com.alefimenko.iuttimetable.model.GroupModel
-import java.util.*
+import com.alefimenko.iuttimetable.model.GroupResponse
+import java.util.LinkedList
 
 /**
  * IUT Timetable
@@ -12,26 +12,24 @@ import java.util.*
 
 object Constants {
     const val PREFS_NAME = "MyPrefsFile"
-
     const val EMPTY_ENTRY = "0"
-
     const val MAX_GROUPS_AMOUNT = 10
     const val ITEM_DOESNT_EXIST = -1
 
     @JvmStatic
-    val institutes: List<GroupModel> = LinkedList<GroupModel>().apply {
+    val institutes: List<GroupResponse> = LinkedList<GroupResponse>().apply {
         addAll(
             listOf(
-                GroupModel(35, "ИСОУ"),
-                GroupModel(36, "СТРОИН"),
-                GroupModel(37, "АРХИД"),
-                GroupModel(27, "ИГиН"),
-                GroupModel(25, "ИМиБ"),
-                GroupModel(26, "ИПТИ"),
-                GroupModel(2, "ИТ"),
-                GroupModel(33, "КОТИС"),
-                GroupModel(34, "НК"),
-                GroupModel(3, "ВИШ")
+                GroupResponse(35, "ИСОУ"),
+                GroupResponse(36, "СТРОИН"),
+                GroupResponse(37, "АРХИД"),
+                GroupResponse(27, "ИГиН"),
+                GroupResponse(25, "ИМиБ"),
+                GroupResponse(26, "ИПТИ"),
+                GroupResponse(2, "ИТ"),
+                GroupResponse(33, "КОТИС"),
+                GroupResponse(34, "НК"),
+                GroupResponse(3, "ВИШ")
             )
         )
     }
