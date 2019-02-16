@@ -37,8 +37,8 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
         getByName("debug") {
-            isMinifyEnabled = true
-            isUseProguard = true
+            isMinifyEnabled = false
+            isUseProguard = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }

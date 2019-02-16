@@ -2,16 +2,31 @@ package com.alefimenko.iuttimetable.util
 
 import android.graphics.Typeface
 import android.os.Build
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import io.reactivex.*
+import io.reactivex.Completable
+import io.reactivex.Maybe
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 /*
  * Created by Alexander Efimenko on 21/11/18.
  */
+
+val View.isVisible: Boolean get() = visibility == View.VISIBLE
+val View.isGone: Boolean get() = visibility == View.GONE
+val View.isInvisible: Boolean get() = visibility == View.INVISIBLE
+fun View.setVisible(visible: Boolean = true) {
+    visibility = if (visible) View.VISIBLE else View.INVISIBLE
+}
+
+fun View.setGone(gone: Boolean = true) {
+    visibility = if (gone) View.GONE else View.VISIBLE
+}
 
 fun FloatingActionButton.show(state: Boolean) {
     if (state) {

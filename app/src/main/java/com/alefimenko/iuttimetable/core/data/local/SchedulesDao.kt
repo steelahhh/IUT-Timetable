@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.alefimenko.iuttimetable.model.ScheduleRoomModel
+import com.alefimenko.iuttimetable.model.ScheduleEntity
 import io.reactivex.Maybe
 import io.reactivex.Single
 
@@ -16,16 +16,16 @@ import io.reactivex.Single
 interface SchedulesDao {
 
     @get:Query("SELECT * FROM Schedules")
-    val schedules: Single<MutableList<ScheduleRoomModel>>
+    val schedules: Single<MutableList<ScheduleEntity>>
 
     @Query("SELECT * FROM Schedules WHERE groupid = :groupId")
-    fun getScheduleByGroupId(groupId: Int): Maybe<ScheduleRoomModel>
+    fun getScheduleByGroupId(groupId: Int): Maybe<ScheduleEntity>
 
     @Query("DELETE FROM Schedules WHERE groupid = :groupId")
     fun deleteScheduleByGroupId(groupId: Int): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSchedule(schedule: ScheduleRoomModel): Long
+    fun insertSchedule(schedule: ScheduleEntity): Long
 
     @Query("DELETE FROM Schedules")
     fun deleteAllSchedules(): Int

@@ -10,7 +10,6 @@ import org.jsoup.select.Elements
 import java.lang.RuntimeException
 import java.util.*
 
-
 /*
  * Created by Alexander Efimenko on 2019-01-16.
  */

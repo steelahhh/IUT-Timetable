@@ -26,15 +26,13 @@ data class ClassEntry(
     val innerGroup: String = "",
     val hidden: Boolean = false
 ) : Parcelable, Comparable<ClassEntry> {
-
     override fun compareTo(other: ClassEntry): Int {
         val EQUAL = 0
         return if (this === other) EQUAL else this.time.start.compareTo(other.time.start)
     }
-
 }
 
-data class ScheduleEntity(
+data class Schedule(
     val semester: String = "",
     val weeks: List<String> = mutableListOf(),
     val schedule: Map<Int, WeekSchedule> = mapOf()

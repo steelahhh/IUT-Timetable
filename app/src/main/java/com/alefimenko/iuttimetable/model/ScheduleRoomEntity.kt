@@ -1,11 +1,10 @@
 package com.alefimenko.iuttimetable.model
 
-import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import kotlinx.android.parcel.Parcelize
 
 /*
@@ -14,7 +13,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity(tableName = "schedules")
-data class ScheduleRoomModel @JvmOverloads constructor(
+data class ScheduleEntity @JvmOverloads constructor(
     @ColumnInfo(name = "formid")
     var formId: Int = 0,
     @PrimaryKey @ColumnInfo(name = "groupid") var groupId: Int = -1,
@@ -30,10 +29,10 @@ data class ScheduleRoomModel @JvmOverloads constructor(
     var rawScheduleStr: String = ""
 ) : Parcelable {
 
-    val schedule: ScheduleEntity
-        get() = Gson().fromJson(scheduleStr, ScheduleEntity::class.java)
+    val schedule: Schedule
+        get() = GsonBuilder().enableComplexMapKeySerialization().create().fromJson(scheduleStr, Schedule::class.java)
 
-    val rawSchedule: ScheduleEntity
-        get() = Gson().fromJson(rawScheduleStr, ScheduleEntity::class.java)
+    val rawSchedule: Schedule
+        get() = GsonBuilder().enableComplexMapKeySerialization().create().fromJson(rawScheduleStr, Schedule::class.java)
 
 }

@@ -13,7 +13,7 @@ object Versions {
     const val appVersionName = "2.2.0"
 
     const val kotlin = "1.3.21"
-    const val androidPlugin = "3.5.0-alpha03"
+    const val androidPlugin = "3.5.0-alpha04"
 
     const val badoo = "1.1.4"
     const val aac = "2.0.0"

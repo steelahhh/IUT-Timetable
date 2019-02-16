@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.model.ScheduleRoomModel
+import com.alefimenko.iuttimetable.model.ScheduleEntity
 
 /*
  * Created by Alexander Efimenko on 2019-01-20.
@@ -12,7 +12,7 @@ import com.alefimenko.iuttimetable.model.ScheduleRoomModel
 
 class FeedbackService(private val context: Context) {
 
-    fun sendFeedback(throwable: Throwable?, schedule: ScheduleRoomModel) {
+    fun sendFeedback(throwable: Throwable?, schedule: ScheduleEntity) {
         sendFeedback(
             throwable,
             schedule.formId, schedule.groupId,
