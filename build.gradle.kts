@@ -20,12 +20,32 @@ buildscript {
 }
 
 allprojects {
+    val ktlint = configurations.create("ktlint")
+
     repositories {
         google()
         jcenter()
         maven {
             url = uri("https://jitpack.io/")
         }
+    }
+
+    dependencies {
+        ktlint("com.github.shyiko:ktlint:0.30.0")
+    }
+
+    task<JavaExec>("ktlintCheck") {
+        description = "Check Kotlin code style."
+        classpath = ktlint
+        main = "com.github.shyiko.ktlint.Main"
+        args = listOf("src/**/*.kt", "src/**/*Test.kt", "-a")
+    }
+
+    task<JavaExec>("ktlintFormat") {
+        description = "Fix Kotlin code style deviations."
+        classpath = ktlint
+        main = "com.github.shyiko.ktlint.Main"
+        args = listOf("src/**/*.kt", "src/**/*Test.kt", "-a", "-F")
     }
 }
 
