@@ -22,29 +22,3 @@ open class BaseFragment : Fragment() {
         bind.resetViews()
     }
 }
-
-//open class BaseFragment<T> : Fragment(), ObservableSource<T> {
-//
-//    val bind = createBinder()
-//
-//    private val source = PublishSubject.create<T>()
-//
-//    protected fun onNext(t: T) {
-//        source.onNext(t)
-//    }
-//
-//    override fun subscribe(observer: Observer<in T>) {
-//        source.subscribe(observer)
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        (requireActivity() as BaseActivity).updateNavigationColor()
-//        super.onViewCreated(view, savedInstanceState)
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        bind.resetViews()
-//    }
-//
-//}

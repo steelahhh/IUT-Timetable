@@ -66,8 +66,13 @@ dependencies {
     implementation(Deps.material)
     implementation(Deps.materialDialogs)
 
+    implementation(Deps.roxie)
+
+    implementation(Deps.lifecycleExtensions)
     implementation(Deps.rxKotlin)
     implementation(Deps.rxAndroid)
+    implementation(Deps.rxBinding.core)
+    implementation(Deps.rxBinding.material)
 
     implementation(Deps.room)
     kapt(Deps.roomCompiler)
@@ -90,9 +95,6 @@ dependencies {
     implementation(Deps.koin.androidScope)
 
     implementation(Deps.timber)
-
-    implementation(Deps.mviCore)
-    implementation(Deps.mviCoreAndroid)
 
     debugImplementation(Deps.leakCanary)
     releaseImplementation(Deps.leakCanaryNoOp)

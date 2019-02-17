@@ -1,5 +1,6 @@
 package com.alefimenko.iuttimetable.util
 
+import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.model.GroupResponse
 import java.util.LinkedList
 
@@ -33,5 +34,8 @@ object Constants {
             )
         )
     }
+
+    @JvmStatic
+    val institutesUi = institutes.map { InstituteUi.fromResponse(it) }
 
 }

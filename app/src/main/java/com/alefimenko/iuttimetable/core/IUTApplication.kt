@@ -10,6 +10,7 @@ import com.alefimenko.iuttimetable.BuildConfig
 import com.alefimenko.iuttimetable.core.di.modules.applicationModule
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import com.ww.roxie.Roxie
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
@@ -21,6 +22,7 @@ import timber.log.Timber
 class IUTApplication : Application() {
 
     lateinit var refWatcher: RefWatcher
+
     override fun onCreate() {
         super.onCreate()
         startKoin(this, applicationModule)
@@ -32,6 +34,11 @@ class IUTApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+        Roxie.enableLogging(object : Roxie.Logger {
+            override fun log(msg: String) {
+                Timber.tag("Roxie").d(msg)
+            }
+        })
     }
 
     private fun initializeLeakCanary() {
