@@ -1,4 +1,3 @@
-import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
 
 plugins {
@@ -43,7 +42,7 @@ android {
         }
     }
 
-    flavorDimensions ("default")
+    flavorDimensions("default")
 
     productFlavors {
         create("stable") {
@@ -100,4 +99,18 @@ dependencies {
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.espresso)
+}
+
+detekt {
+    filters = ".*/resources/.*,.*/build/.*"
+    config = files("../detekt-config.yml")
+    val userHome = System.getProperty("user.home")
+
+    idea {
+        path = "$userHome/.idea"
+        codeStyleScheme = "$userHome/.idea/idea-code-style.xml"
+        inspectionsProfile = "$userHome/.idea/inspect.xml"
+        report = "project.projectDir/reports"
+        mask = "*.kt"
+    }
 }
