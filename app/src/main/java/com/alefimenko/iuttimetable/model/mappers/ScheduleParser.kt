@@ -36,7 +36,7 @@ class ScheduleParser {
             val schedule = mutableMapOf<Int, WeekSchedule>()
             for (week in 0 until weeksNumber) {
                 schedule[week] = mutableListOf()
-                (2..7).forEach { day ->
+                for (day in 2..7) {
                     schedule[week]?.add(getDaySchedule(week, day))
                 }
             }
