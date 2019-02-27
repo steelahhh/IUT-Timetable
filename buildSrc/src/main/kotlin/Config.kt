@@ -13,9 +13,9 @@ object Versions {
     const val appVersionName = "2.2.0"
 
     const val kotlin = "1.3.21"
-    const val androidPlugin = "3.5.0-alpha04"
+    const val androidPlugin = "3.5.0-alpha05"
 
-    const val roxie = "0.4.0"
+    const val mviCore = "1.1.6"
     const val aac = "2.0.0"
 
     const val rxBinding = "3.0.0-alpha2"
@@ -90,7 +90,12 @@ object Deps {
         const val material = "com.jakewharton.rxbinding3:rxbinding-material:${Versions.rxBinding}"
     }
 
-    const val roxie = "com.ww:roxie:${Versions.roxie}"
+   val mviCore = MviCore
+
+    object MviCore {
+        const val core = "com.github.badoo.mvicore:mvicore:${Versions.mviCore}"
+        const val android = "com.github.badoo.mvicore:mvicore-android:${Versions.mviCore}"
+    }
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
     const val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:${Versions.leakCanary}"

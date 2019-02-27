@@ -6,10 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RadioGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.R
@@ -18,16 +15,16 @@ import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.RootActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.ext.android.bindScope
 import org.koin.androidx.scope.ext.android.getOrCreateScope
+import org.koin.core.parameter.parametersOf
 
 /*
  * Created by Alexander Efimenko on 2019-02-04.
  */
 
-class PickInstituteFragment : BaseFragment() {
-
+class PickInstituteFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFeature.ViewModel>() {
     private val pickInstituteButton by bind<MaterialButton>(R.id.pick_institute_button)
     private val formRadioGroup by bind<RadioGroup>(R.id.form_radio_group)
     private val nextButton by bind<FloatingActionButton>(R.id.next_button)
@@ -37,84 +34,35 @@ class PickInstituteFragment : BaseFragment() {
 
     private val scope = getOrCreateScope(Scopes.PICK_GROUP)
 
-    private lateinit var vm: PickGroupViewModel
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable(STATE_BUNDLE, vm.observableState.value)
-    }
+    private val bindings: PickGroupBindings by inject { parametersOf(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        bindings.setup(this)
         bindScope(scope)
         dialog = MaterialDialog(requireContext()).apply {
             title(text = "Выберите институт")
-            positiveButton(text = "OK")
         }
         return inflater.inflate(R.layout.fragment_pick_group, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val initialState = savedInstanceState?.getParcelable<State>(STATE_BUNDLE)
-
-        vm = ViewModelProviders.of(
-            this,
-            PickGroupViewModelFactory(initialState, get(scope = scope))
-        )[PickGroupViewModel::class.java]
-
-        vm.dispatch(Action.LoadInstitutes)
-
         formRadioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
-                R.id.edu_form_ochny -> vm.dispatch(Action.FormClicked(0))
-                R.id.edu_form_zaochny -> vm.dispatch(Action.FormClicked(1))
+                R.id.edu_form_ochny -> dispatch(PickGroupFeature.UiEvent.FormClicked(0))
+                R.id.edu_form_zaochny -> dispatch(PickGroupFeature.UiEvent.FormClicked(1))
             }
         }
 
-        vm.observableState.observe(this, Observer { state ->
-            state?.let {
-                renderState(it)
-            }
-        })
+        dispatch(PickGroupFeature.UiEvent.LoadInstitutesClicked)
 
         nextButton.setOnClickListener {
-            vm.repository.updateTheme()
+            dispatch(PickGroupFeature.UiEvent.NextButtonClicked)
             (requireActivity() as RootActivity).recreate()
-        }
-    }
-
-    private fun renderState(state: State) {
-        with(state) {
-            when {
-                isLoading -> progressBar.isVisible = true
-                isError && institutes.isEmpty() -> {
-                    progressBar.isVisible = false
-                    Toast.makeText(requireContext(), "Ошибочка", Toast.LENGTH_LONG).show()
-                }
-                institutes.isNotEmpty() -> {
-                    progressBar.isVisible = false
-                    pickInstituteButton.setOnClickListener {
-                        val selected = institutes.indexOf(institute)
-
-                        dialog?.listItemsSingleChoice(
-                            items = institutes.map { it.label },
-                            initialSelection = selected
-                        ) { _, index, _ ->
-                            vm.dispatch(Action.InstituteClicked(institutes[index]))
-                        }
-                        dialog?.show()
-                    }
-                    if (institute != null && form != -1) {
-                        pickInstituteButton.text = "Институт: ${institute.label}"
-                        nextButton.show()
-                    }
-                }
-            }
         }
     }
 
@@ -129,9 +77,34 @@ class PickInstituteFragment : BaseFragment() {
         scope.close()
     }
 
-    companion object {
-        const val STATE_BUNDLE = "BUNDLE_KEY"
+    override fun accept(viewmodel: PickGroupFeature.ViewModel) {
+        with(viewmodel) {
+            try {
+                progressBar.isVisible = isLoading
+                if (institutes.isNotEmpty()) {
+                    pickInstituteButton.setOnClickListener {
+                        val selected = institutes.indexOf(institute)
+                        dialog?.listItemsSingleChoice(
+                            items = institutes.map { it.label },
+                            initialSelection = selected
+                        ) { dialog, index, _ ->
+                            dispatch(PickGroupFeature.UiEvent.InstituteClicked(institutes[index]))
+                            dialog.dismiss()
+                        }
+                        dialog?.show()
+                    }
+                }
+                if (institute != null && form != -1) {
+                    pickInstituteButton.text = "Институт: ${institute.label}"
+                    nextButton.show()
+                }
+            } catch (e: Exception) {
 
+            }
+        }
+    }
+
+    companion object {
         fun newInstance() = PickInstituteFragment()
     }
 }

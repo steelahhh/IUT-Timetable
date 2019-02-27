@@ -66,7 +66,8 @@ dependencies {
     implementation(Deps.material)
     implementation(Deps.materialDialogs)
 
-    implementation(Deps.roxie)
+    implementation(Deps.mviCore.core)
+    implementation(Deps.mviCore.android)
 
     implementation(Deps.lifecycleExtensions)
     implementation(Deps.rxKotlin)

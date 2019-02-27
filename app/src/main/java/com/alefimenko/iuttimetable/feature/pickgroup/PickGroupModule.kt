@@ -11,4 +11,12 @@ val pickGroupModule = module {
     scope(Scopes.PICK_GROUP) {
         PickGroupRepository(get(), get(), get(), get(), get())
     }
+
+    single {
+        PickGroupFeature(repository = get())
+    }
+
+    scope(Scopes.PICK_GROUP) { (view: PickInstituteFragment) ->
+        PickGroupBindings(view, get())
+    }
 }
