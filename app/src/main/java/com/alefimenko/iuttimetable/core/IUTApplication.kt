@@ -21,6 +21,7 @@ import timber.log.Timber
 class IUTApplication : Application() {
 
     lateinit var refWatcher: RefWatcher
+
     override fun onCreate() {
         super.onCreate()
         startKoin(this, applicationModule)

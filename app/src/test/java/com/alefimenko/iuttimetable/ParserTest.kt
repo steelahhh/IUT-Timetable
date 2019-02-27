@@ -39,7 +39,6 @@ class ParserTest {
         assert(scheduleParser.getSchedule()[0]?.size == 6)
         assert(scheduleParser.getSchedule()[1]?.size == 6)
     }
-
 }
 
 private val HTML = """

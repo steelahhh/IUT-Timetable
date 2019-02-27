@@ -13,10 +13,12 @@ object Versions {
     const val appVersionName = "2.2.0"
 
     const val kotlin = "1.3.21"
-    const val androidPlugin = "3.5.0-alpha04"
+    const val androidPlugin = "3.5.0-alpha05"
 
-    const val badoo = "1.1.4"
+    const val mviCore = "1.1.6"
     const val aac = "2.0.0"
+
+    const val rxBinding = "3.0.0-alpha2"
     const val rxKotlin = "2.2.0"
     const val rxAndroid = "2.0.2"
     const val room = "2.1.0-alpha02"
@@ -77,8 +79,23 @@ object Deps {
         const val androidScope = "org.koin:koin-androidx-scope:${Versions.koin}"
     }
 
-    const val mviCore = "com.github.badoo.mvicore:mvicore:${Versions.badoo}"
-    const val mviCoreAndroid = "com.github.badoo.mvicore:mvicore-android:${Versions.badoo}"
+    val rxBinding = RxBinding
+
+    object RxBinding {
+        const val core = "com.jakewharton.rxbinding3:rxbinding-core:${Versions.rxBinding}"
+        const val appCompat = "com.jakewharton.rxbinding3:rxbinding-appcompat:${Versions.rxBinding}"
+        const val leanBack = "com.jakewharton.rxbinding3:rxbinding-leanback:${Versions.rxBinding}"
+        const val recycler = "com.jakewharton.rxbinding3:rxbinding-recyclerview:${Versions.rxBinding}"
+        const val viewPager = "com.jakewharton.rxbinding3:rxbinding-viewpager:${Versions.rxBinding}"
+        const val material = "com.jakewharton.rxbinding3:rxbinding-material:${Versions.rxBinding}"
+    }
+
+   val mviCore = MviCore
+
+    object MviCore {
+        const val core = "com.github.badoo.mvicore:mvicore:${Versions.mviCore}"
+        const val android = "com.github.badoo.mvicore:mvicore-android:${Versions.mviCore}"
+    }
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
     const val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:${Versions.leakCanary}"

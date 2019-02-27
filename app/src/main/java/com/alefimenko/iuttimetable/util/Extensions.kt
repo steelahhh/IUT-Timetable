@@ -17,17 +17,6 @@ import io.reactivex.schedulers.Schedulers
  * Created by Alexander Efimenko on 21/11/18.
  */
 
-val View.isVisible: Boolean get() = visibility == View.VISIBLE
-val View.isGone: Boolean get() = visibility == View.GONE
-val View.isInvisible: Boolean get() = visibility == View.INVISIBLE
-fun View.setVisible(visible: Boolean = true) {
-    visibility = if (visible) View.VISIBLE else View.INVISIBLE
-}
-
-fun View.setGone(gone: Boolean = true) {
-    visibility = if (gone) View.GONE else View.VISIBLE
-}
-
 fun FloatingActionButton.show(state: Boolean) {
     if (state) {
         show()

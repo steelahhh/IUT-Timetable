@@ -2,6 +2,7 @@ package com.alefimenko.iuttimetable.feature
 
 import android.content.IntentFilter
 import android.net.ConnectivityManager
+import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import com.alefimenko.iuttimetable.R
@@ -28,16 +29,17 @@ class RootActivity : BaseActivity() {
 
         if (fraggo == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.content, PickInstituteFragment.newInstance(), "pickgroup")
-                .commitNow()
+                .replace(R.id.content, PickInstituteFragment.newInstance(), "pickgroup")
+                .commit()
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onResume() {
         super.onResume()
         registerReceiver(
             networkStatusReceiver,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            IntentFilter(CONNECTIVITY_ACTION)
         )
     }
 

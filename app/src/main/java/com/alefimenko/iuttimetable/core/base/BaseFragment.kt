@@ -4,12 +4,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.alefimenko.iuttimetable.util.createBinder
+import io.reactivex.ObservableSource
+import io.reactivex.functions.Consumer
+import io.reactivex.subjects.PublishSubject
 
 /*
  * Created by Alexander Efimenko on 2019-02-04.
  */
 
-open class BaseFragment : Fragment() {
+abstract class BaseFragment<Event, ViewModel>(
+    private val events: PublishSubject<Event> = PublishSubject.create()
+) : Fragment(), Consumer<ViewModel>, ObservableSource<Event> by events {
+
     val bind = createBinder()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -17,34 +23,12 @@ open class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    fun dispatch(event: Event) {
+        events.onNext(event)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         bind.resetViews()
     }
 }
-
-//open class BaseFragment<T> : Fragment(), ObservableSource<T> {
-//
-//    val bind = createBinder()
-//
-//    private val source = PublishSubject.create<T>()
-//
-//    protected fun onNext(t: T) {
-//        source.onNext(t)
-//    }
-//
-//    override fun subscribe(observer: Observer<in T>) {
-//        source.subscribe(observer)
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        (requireActivity() as BaseActivity).updateNavigationColor()
-//        super.onViewCreated(view, savedInstanceState)
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        bind.resetViews()
-//    }
-//
-//}
