@@ -19,21 +19,26 @@ class ParserTest {
     }
 
     @Test
-    fun `should be two weeks`() {
+    fun `Should be two weeks`() {
         assert(scheduleParser.getSchedule().keys.size == 2)
     }
 
     @Test
-    fun `should contain spring`() {
+    fun `Should contain spring`() {
         assert(scheduleParser.semester == "весенний семестр 2018-2019")
     }
 
     @Test
-    fun `should not be empty`() {
+    fun `Should not be empty`() {
         assert(scheduleParser.getSchedule()[0]?.isNotEmpty() == true)
         assert(scheduleParser.getSchedule()[1]?.isNotEmpty() == true)
     }
 
+    @Test
+    fun `Should contain 6 days`() {
+        assert(scheduleParser.getSchedule()[0]?.size == 6)
+        assert(scheduleParser.getSchedule()[1]?.size == 6)
+    }
 }
 
 private val HTML = """
