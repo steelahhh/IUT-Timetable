@@ -6,7 +6,6 @@
     android:animateLayoutChanges="true"
     android:background="?background_color">
 
-
     <RadioGroup
         android:id="@+id/form_radio_group"
         style="@style/AppText.Larger"
@@ -26,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Заочная форма"
+            android:text="@string/zaochnaya_form"
             android:textColor="?android:textColorPrimary"
             android:textSize="18sp" />
 
@@ -37,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:checked="true"
-            android:text="Очная форма"
+            android:text="@string/ochnaya_form"
             android:textColor="?android:textColorPrimary"
             android:textSize="18sp" />
     </RadioGroup>
@@ -49,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:text="Выбрать институт"
+        android:text="@string/pick_institute"
         android:textColor="?android:textColorPrimary"
         app:cornerRadius="8dp"
         app:icon="@drawable/ic_arrow_down"

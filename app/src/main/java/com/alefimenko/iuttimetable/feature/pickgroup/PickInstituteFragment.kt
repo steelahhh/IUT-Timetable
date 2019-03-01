@@ -102,8 +102,13 @@ class PickInstituteFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFe
                     }
                 }
                 if (institute != null && form != -1) {
-                    pickInstituteButton.icon = null
-                    pickInstituteButton.text = "Институт: ${institute.label}"
+                    pickInstituteButton.apply {
+                        icon = null
+                        text = String.format(
+                            getString(R.string.selected_institute),
+                            institute.label
+                        )
+                    }
                     nextButton.show()
                 }
             } catch (e: Exception) {
