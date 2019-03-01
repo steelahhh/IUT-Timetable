@@ -35,7 +35,6 @@
             style="@style/AppText.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
             android:layout_marginTop="16dp"
             android:checked="true"
             android:text="Очная форма"
@@ -46,13 +45,16 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/pick_institute_button"
-        style="@style/MaterialTextButton"
+        style="@style/OutlineMaterialButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:text="Выберите институт"
+        android:text="Выбрать институт"
         android:textColor="?android:textColorPrimary"
         app:cornerRadius="8dp"
+        app:icon="@drawable/ic_arrow_down"
+        app:iconGravity="start"
+        app:iconTint="?android:textColorPrimary"
         app:layout_constraintBottom_toTopOf="@id/form_radio_group"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,8 +76,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:visibility="gone"
         android:src="@drawable/ic_arrow_forward"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

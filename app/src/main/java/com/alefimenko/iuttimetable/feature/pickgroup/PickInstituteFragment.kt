@@ -66,6 +66,13 @@ class PickInstituteFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFe
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        if (dialog?.isShowing == true) {
+            dialog?.dismiss()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         dialog?.dismiss()
@@ -95,11 +102,11 @@ class PickInstituteFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFe
                     }
                 }
                 if (institute != null && form != -1) {
+                    pickInstituteButton.icon = null
                     pickInstituteButton.text = "Институт: ${institute.label}"
                     nextButton.show()
                 }
             } catch (e: Exception) {
-
             }
         }
     }

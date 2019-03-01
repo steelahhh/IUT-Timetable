@@ -13,7 +13,7 @@ object Versions {
     const val appVersionName = "2.2.0"
 
     const val kotlin = "1.3.21"
-    const val androidPlugin = "3.5.0-alpha05"
+    const val androidPlugin = "3.5.0-alpha06"
 
     const val mviCore = "1.1.6"
     const val aac = "2.0.0"
@@ -31,79 +31,81 @@ object Versions {
     const val gson = "2.8.5"
     const val koin = "1.0.2"
     const val timber = "4.7.1"
-    const val materialDialogs = "2.0.0"
+    const val materialDialogs = "2.0.3"
     const val junit = "4.12"
     const val testRunner = "1.1.0"
     const val espresso = "3.1.0"
 }
 
 object Deps {
+    val vers = Versions
+
     const val appcompat = "androidx.appcompat:appcompat:1.0.2"
     const val androidxCore = "androidx.core:core-ktx:1.0.1"
     const val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
-    const val material = "com.google.android.material:material:1.1.0-alpha03"
+    const val material = "com.google.android.material:material:1.1.0-alpha04"
     const val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
 
     const val multidex = "com.android.support:multidex:1.0.3"
 
-    const val databindingCompiler = "com.android.databinding:compiler:${Versions.androidPlugin}"
+    const val databindingCompiler = "com.android.databinding:compiler:${vers.androidPlugin}"
 
-    const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.aac}"
-    const val lifecycleReactive = "androidx.lifecycle:lifecycle-reactivestreams:${Versions.aac}"
-    const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.aac}"
+    const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${vers.aac}"
+    const val lifecycleReactive = "androidx.lifecycle:lifecycle-reactivestreams:${vers.aac}"
+    const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${vers.aac}"
 
-    const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
-    const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
+    const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${vers.rxKotlin}"
+    const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${vers.rxAndroid}"
 
-    const val room = "androidx.room:room-runtime:${Versions.room}"
-    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
-    const val roomRxJava = "androidx.room:room-rxjava2:${Versions.room}"
+    const val room = "androidx.room:room-runtime:${vers.room}"
+    const val roomCompiler = "androidx.room:room-compiler:${vers.room}"
+    const val roomRxJava = "androidx.room:room-rxjava2:${vers.room}"
 
-    const val fastAdapterCore = "com.mikepenz:fastadapter:${Versions.fastadapter}"
-    const val fastAdapterCommons = "com.mikepenz:fastadapter-commons:${Versions.fastadapter}"
+    const val fastAdapterCore = "com.mikepenz:fastadapter:${vers.fastadapter}"
+    const val fastAdapterCommons = "com.mikepenz:fastadapter-commons:${vers.fastadapter}"
 
-    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
-    const val retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
-    const val gson = "com.google.code.gson:gson:${Versions.gson}"
+    const val retrofit = "com.squareup.retrofit2:retrofit:${vers.retrofit}"
+    const val retrofitGson = "com.squareup.retrofit2:converter-gson:${vers.retrofit}"
+    const val retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava2:${vers.retrofit}"
+    const val gson = "com.google.code.gson:gson:${vers.gson}"
 
-    const val jsoup = "org.jsoup:jsoup:${Versions.jsoup}"
+    const val jsoup = "org.jsoup:jsoup:${vers.jsoup}"
 
     val koin = Koin
 
     object Koin {
-        const val core = "org.koin:koin-core:${Versions.koin}"
-        const val ext = "org.koin:koin-core-ext:${Versions.koin}"
-        const val test = "org.koin:koin-test:${Versions.koin}"
-        const val android = "org.koin:koin-android:${Versions.koin}"
-        const val androidScope = "org.koin:koin-androidx-scope:${Versions.koin}"
+        const val core = "org.koin:koin-core:${vers.koin}"
+        const val ext = "org.koin:koin-core-ext:${vers.koin}"
+        const val test = "org.koin:koin-test:${vers.koin}"
+        const val android = "org.koin:koin-android:${vers.koin}"
+        const val androidScope = "org.koin:koin-androidx-scope:${vers.koin}"
     }
 
     val rxBinding = RxBinding
 
     object RxBinding {
-        const val core = "com.jakewharton.rxbinding3:rxbinding-core:${Versions.rxBinding}"
-        const val appCompat = "com.jakewharton.rxbinding3:rxbinding-appcompat:${Versions.rxBinding}"
-        const val leanBack = "com.jakewharton.rxbinding3:rxbinding-leanback:${Versions.rxBinding}"
-        const val recycler = "com.jakewharton.rxbinding3:rxbinding-recyclerview:${Versions.rxBinding}"
-        const val viewPager = "com.jakewharton.rxbinding3:rxbinding-viewpager:${Versions.rxBinding}"
-        const val material = "com.jakewharton.rxbinding3:rxbinding-material:${Versions.rxBinding}"
+        const val core = "com.jakewharton.rxbinding3:rxbinding-core:${vers.rxBinding}"
+        const val appCompat = "com.jakewharton.rxbinding3:rxbinding-appcompat:${vers.rxBinding}"
+        const val leanBack = "com.jakewharton.rxbinding3:rxbinding-leanback:${vers.rxBinding}"
+        const val recycler = "com.jakewharton.rxbinding3:rxbinding-recyclerview:${vers.rxBinding}"
+        const val viewPager = "com.jakewharton.rxbinding3:rxbinding-viewpager:${vers.rxBinding}"
+        const val material = "com.jakewharton.rxbinding3:rxbinding-material:${vers.rxBinding}"
     }
 
-   val mviCore = MviCore
+    val mviCore = MviCore
 
     object MviCore {
-        const val core = "com.github.badoo.mvicore:mvicore:${Versions.mviCore}"
-        const val android = "com.github.badoo.mvicore:mvicore-android:${Versions.mviCore}"
+        const val core = "com.github.badoo.mvicore:mvicore:${vers.mviCore}"
+        const val android = "com.github.badoo.mvicore:mvicore-android:${vers.mviCore}"
     }
 
-    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
-    const val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:${Versions.leakCanary}"
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${vers.leakCanary}"
+    const val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:${vers.leakCanary}"
 
-    const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
-    const val materialDialogs = "com.afollestad.material-dialogs:core:${Versions.materialDialogs}"
+    const val timber = "com.jakewharton.timber:timber:${vers.timber}"
+    const val materialDialogs = "com.afollestad.material-dialogs:core:${vers.materialDialogs}"
 
-    const val junit = "junit:junit:${Versions.junit}"
-    const val testRunner = "androidx.test:runner:${Versions.testRunner}"
-    const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val junit = "junit:junit:${vers.junit}"
+    const val testRunner = "androidx.test:runner:${vers.testRunner}"
+    const val espresso = "androidx.test.espresso:espresso-core:${vers.espresso}"
 }
