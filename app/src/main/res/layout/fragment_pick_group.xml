@@ -47,6 +47,7 @@
         style="@style/OutlineMaterialButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
         android:padding="20dp"
         android:text="@string/pick_institute"
         android:textColor="?android:textColorPrimary"
