@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:enabled="false"
             android:text="@string/zaochnaya_form"
             android:textColor="?android:textColorPrimary"
             android:textSize="18sp" />
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:checked="true"
+            android:enabled="false"
             android:text="@string/ochnaya_form"
             android:textColor="?android:textColorPrimary"
             android:textSize="18sp" />

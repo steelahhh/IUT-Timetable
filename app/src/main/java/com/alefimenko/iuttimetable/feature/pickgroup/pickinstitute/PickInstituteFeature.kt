@@ -50,7 +50,9 @@ class PickInstituteFeature(
         val institutes: List<InstituteUi> = listOf(),
         val institute: InstituteUi? = null,
         val form: Int = 0,
-        val isLoading: Boolean
+        val isLoading: Boolean,
+        val isInstitutePicked: Boolean,
+        val isInstitutesLoaded: Boolean
     )
 
     @Parcelize

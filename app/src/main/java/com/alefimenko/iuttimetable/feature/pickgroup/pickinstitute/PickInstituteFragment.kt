@@ -13,6 +13,7 @@ import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseFragment
 import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.UiEvent
+import com.alefimenko.iuttimetable.util.enableAll
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.android.ext.android.inject
@@ -53,16 +54,8 @@ class PickInstituteFragment : BaseFragment<UiEvent, PickInstituteFeature.ViewMod
         super.onViewCreated(view, savedInstanceState)
         formRadioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
-                R.id.edu_form_ochny -> dispatch(
-                    UiEvent.FormClicked(
-                        0
-                    )
-                )
-                R.id.edu_form_zaochny -> dispatch(
-                    UiEvent.FormClicked(
-                        1
-                    )
-                )
+                R.id.edu_form_ochny -> dispatch(UiEvent.FormClicked(0))
+                R.id.edu_form_zaochny -> dispatch(UiEvent.FormClicked(1))
             }
         }
 
@@ -95,25 +88,24 @@ class PickInstituteFragment : BaseFragment<UiEvent, PickInstituteFeature.ViewMod
         with(viewmodel) {
             try {
                 progressBar.isVisible = isLoading
-                if (institutes.isNotEmpty()) {
-                    pickInstituteButton.isEnabled = true
+                pickInstituteButton.isEnabled = !isLoading
+
+                if (isInstitutesLoaded) {
                     pickInstituteButton.setOnClickListener {
                         val selected = institutes.indexOf(institute)
                         dialog?.listItemsSingleChoice(
                             items = institutes.map { it.label },
                             initialSelection = selected
                         ) { dialog, index, _ ->
-                            dispatch(
-                                UiEvent.InstituteClicked(
-                                    institutes[index]
-                                )
-                            )
+                            dispatch(UiEvent.InstituteClicked(institutes[index]))
                             dialog.dismiss()
                         }
                         dialog?.show()
                     }
                 }
-                if (institute != null && form != -1) {
+
+                if (isInstitutePicked) {
+                    institute ?: return
                     pickInstituteButton.apply {
                         icon = null
                         text = String.format(
@@ -122,6 +114,10 @@ class PickInstituteFragment : BaseFragment<UiEvent, PickInstituteFeature.ViewMod
                         )
                     }
                     nextButton.show()
+                }
+
+                if (!isLoading) {
+                    formRadioGroup.enableAll()
                 }
             } catch (e: Exception) {
             }

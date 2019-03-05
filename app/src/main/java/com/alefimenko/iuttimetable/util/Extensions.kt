@@ -2,7 +2,8 @@ package com.alefimenko.iuttimetable.util
 
 import android.graphics.Typeface
 import android.os.Build
-import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,6 +23,12 @@ fun FloatingActionButton.show(state: Boolean) {
         show()
     } else {
         hide()
+    }
+}
+
+fun RadioGroup.enableAll() {
+    for (child in 0..childCount) {
+        (getChildAt(child) as RadioButton).isEnabled = true
     }
 }
 
