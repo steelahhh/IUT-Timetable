@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="?background_color">
+    android:background="?attr/backgroundColor">
 
     <RadioGroup
         android:id="@+id/form_radio_group"

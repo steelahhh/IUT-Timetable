@@ -47,7 +47,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun updateNavigationColor() {
         val typedValueAttr = TypedValue()
-        theme.resolveAttribute(R.attr.background_color, typedValueAttr, true)
+        theme.resolveAttribute(R.attr.backgroundColor, typedValueAttr, true)
         val color = ContextCompat.getColor(this, typedValueAttr.resourceId)
         val darkColor = ContextCompat.getColor(this, R.color.backgroundDark)
         val isDark = color == darkColor
