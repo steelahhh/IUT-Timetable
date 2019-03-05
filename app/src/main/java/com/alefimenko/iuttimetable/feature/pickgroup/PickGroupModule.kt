@@ -1,6 +1,9 @@
 package com.alefimenko.iuttimetable.feature.pickgroup
 
 import com.alefimenko.iuttimetable.core.di.Scopes
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteBindings
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment
 import org.koin.dsl.module.module
 
 /*
@@ -13,10 +16,13 @@ val pickGroupModule = module {
     }
 
     single {
-        PickGroupFeature(repository = get())
+        PickInstituteFeature(
+            repository = get(),
+            navigator = get()
+        )
     }
 
     scope(Scopes.PICK_GROUP) { (view: PickInstituteFragment) ->
-        PickGroupBindings(view, get())
+        PickInstituteBindings(view, get())
     }
 }

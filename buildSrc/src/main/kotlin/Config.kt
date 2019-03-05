@@ -13,7 +13,7 @@ object Versions {
     const val appVersionName = "2.2.0"
 
     const val kotlin = "1.3.21"
-    const val androidPlugin = "3.5.0-alpha06"
+    const val androidPlugin = "3.4.0-beta05"
 
     const val mviCore = "1.1.6"
     const val aac = "2.0.0"
@@ -97,6 +97,13 @@ object Deps {
     object MviCore {
         const val core = "com.github.badoo.mvicore:mvicore:${vers.mviCore}"
         const val android = "com.github.badoo.mvicore:mvicore-android:${vers.mviCore}"
+    }
+
+    val navigation = Navigation
+
+    object Navigation {
+        const val fragment = "android.arch.navigation:navigation-fragment-ktx:1.0.0-rc02"
+        const val ui = "android.arch.navigation:navigation-ui-ktx:1.0.0-rc02"
     }
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${vers.leakCanary}"

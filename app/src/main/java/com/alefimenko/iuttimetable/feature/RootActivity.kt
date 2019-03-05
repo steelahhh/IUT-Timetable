@@ -1,15 +1,15 @@
 package com.alefimenko.iuttimetable.feature
 
 import android.content.IntentFilter
-import android.net.ConnectivityManager
 import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.findNavController
 import com.alefimenko.iuttimetable.R
+import com.alefimenko.iuttimetable.core.navigation.Navigator
 import com.alefimenko.iuttimetable.core.base.BaseActivity
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
-import com.alefimenko.iuttimetable.feature.pickgroup.PickInstituteFragment
 import org.koin.android.ext.android.inject
 
 /*
@@ -21,22 +21,17 @@ class RootActivity : BaseActivity() {
 
     private val sharedPreferences: LocalPreferences by inject()
     private val networkStatusReceiver: NetworkStatusReceiver by inject()
+    private val navigator: Navigator by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         updateTheme()
         super.onCreate(savedInstanceState)
-        val fraggo = supportFragmentManager.findFragmentById(R.id.content)
-
-        if (fraggo == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.content, PickInstituteFragment.newInstance(), "pickgroup")
-                .commit()
-        }
     }
 
     @Suppress("DEPRECATION")
     override fun onResume() {
         super.onResume()
+        navigator.bind(findNavController(R.id.nav_host_fragment))
         registerReceiver(
             networkStatusReceiver,
             IntentFilter(CONNECTIVITY_ACTION)
@@ -44,8 +39,9 @@ class RootActivity : BaseActivity() {
     }
 
     override fun onPause() {
-        super.onPause()
         unregisterReceiver(networkStatusReceiver)
+        navigator.unbind()
+        super.onPause()
     }
 
     private fun updateTheme() {
@@ -53,6 +49,12 @@ class RootActivity : BaseActivity() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (!findNavController(R.id.nav_host_fragment).navigateUp()) {
+            super.onBackPressed()
         }
     }
 }

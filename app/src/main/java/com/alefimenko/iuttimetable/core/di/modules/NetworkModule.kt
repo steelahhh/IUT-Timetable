@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
  */
 
 private const val BASE_URL = "https://www.tyuiu.ru/"
-private const val CONNECT_TIMEOUT_IN_MS = 3000L
+private const val CONNECT_TIMEOUT_IN_MS = 300L
 
 val networkModule = module {
     single {
