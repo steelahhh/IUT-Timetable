@@ -9,6 +9,7 @@ import com.alefimenko.iuttimetable.feature.pickgroup.pickGroupModule
 val applicationModule = listOf(
     dataModule,
     dispatcherModule,
+    navigationModule,
     networkModule,
     preferencesModule
 ) + listOf(

@@ -1,11 +1,13 @@
-package com.alefimenko.iuttimetable.feature.pickgroup
+package com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute
 
 import android.os.Parcelable
-import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.Effect
-import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.News
-import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.State
-import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.Wish
+import com.alefimenko.iuttimetable.core.navigation.Navigator
+import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupRepository
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.Effect
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.News
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.State
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.Wish
 import com.alefimenko.iuttimetable.util.Constants
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.element.Actor
@@ -21,19 +23,23 @@ import kotlinx.android.parcel.Parcelize
  * Created by Alexander Efimenko on 2019-02-17.
  */
 
-class PickGroupFeature(
+class PickInstituteFeature(
     repository: PickGroupRepository,
+    navigator: Navigator,
     timeCapsule: AndroidTimeCapsule? = null
 ) : ActorReducerFeature<Wish, Effect, State, News>(
-    initialState = timeCapsule?.get(PickGroupFeature::class) ?: State(),
-    actor = ActorImpl(repository),
+    initialState = timeCapsule?.get(PickInstituteFeature::class) ?: State(),
+    actor = ActorImpl(
+        repository,
+        navigator
+    ),
     reducer = ReducerImpl(),
 //    bootstrapper = BootStrapperImpl(),
     newsPublisher = NewsPublisherImpl()
 ) {
 
     init {
-        timeCapsule?.register(PickGroupFeature::class) {
+        timeCapsule?.register(PickInstituteFeature::class) {
             state.copy(
                 isLoading = false
             )
@@ -88,7 +94,10 @@ class PickGroupFeature(
         override fun invoke(): Observable<Wish> = just(Wish.LoadInstitutes)
     }
 
-    class ActorImpl(private val repository: PickGroupRepository) : Actor<State, Wish, Effect> {
+    class ActorImpl(
+        private val repository: PickGroupRepository,
+        private val navigator: Navigator
+    ) : Actor<State, Wish, Effect> {
         override fun invoke(state: State, wish: Wish): Observable<Effect> = when (wish) {
             is Wish.LoadGroups -> just(Effect.StartedLoading)
             is Wish.LoadInstitutes -> repository.getInstitutes()
@@ -98,8 +107,8 @@ class PickGroupFeature(
             is Wish.SelectForm -> just(Effect.FormSelected(wish.id))
             is Wish.SelectInstitute -> just(Effect.InstituteSelected(wish.institute))
             is Wish.NavigateToPickGroup -> Observable.fromCallable {
-                repository.changeTheme()
-                return@fromCallable Effect.ScreenChanged // todo think about a better naming and args?
+                navigator.openPickGroup(state.form, state.institute!!)
+                return@fromCallable Effect.ScreenChanged
             }
         }
     }
@@ -123,14 +132,13 @@ class PickGroupFeature(
             is Effect.InstituteSelected -> state.copy(
                 institute = effect.institute
             )
-            Effect.ScreenChanged -> state.copy()
+            is Effect.ScreenChanged -> state.copy()
         }
     }
 
     class NewsPublisherImpl : NewsPublisher<Wish, Effect, State, News> {
         override fun invoke(wish: Wish, effect: Effect, state: State): News? = when (effect) {
             is Effect.ErrorLoading -> News.ErrorExecutingRequest(effect.throwable)
-            is Effect.ScreenChanged -> null
             else -> null
         }
     }

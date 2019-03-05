@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.feature.pickgroup
+package com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseFragment
 import com.alefimenko.iuttimetable.core.di.Scopes
-import com.alefimenko.iuttimetable.feature.RootActivity
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.UiEvent
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.android.ext.android.inject
@@ -24,7 +24,7 @@ import org.koin.core.parameter.parametersOf
  * Created by Alexander Efimenko on 2019-02-04.
  */
 
-class PickInstituteFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFeature.ViewModel>() {
+class PickInstituteFragment : BaseFragment<UiEvent, PickInstituteFeature.ViewModel>() {
     private val pickInstituteButton by bind<MaterialButton>(R.id.pick_institute_button)
     private val formRadioGroup by bind<RadioGroup>(R.id.form_radio_group)
     private val nextButton by bind<FloatingActionButton>(R.id.next_button)
@@ -34,7 +34,7 @@ class PickInstituteFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFe
 
     private val scope = getOrCreateScope(Scopes.PICK_GROUP)
 
-    private val bindings: PickGroupBindings by inject { parametersOf(this) }
+    private val bindings: PickInstituteBindings by inject { parametersOf(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,23 +46,30 @@ class PickInstituteFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFe
         dialog = MaterialDialog(requireContext()).apply {
             title(text = "Выберите институт")
         }
-        return inflater.inflate(R.layout.fragment_pick_group, container, false)
+        return inflater.inflate(R.layout.fragment_pick_institute, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         formRadioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
-                R.id.edu_form_ochny -> dispatch(PickGroupFeature.UiEvent.FormClicked(0))
-                R.id.edu_form_zaochny -> dispatch(PickGroupFeature.UiEvent.FormClicked(1))
+                R.id.edu_form_ochny -> dispatch(
+                    UiEvent.FormClicked(
+                        0
+                    )
+                )
+                R.id.edu_form_zaochny -> dispatch(
+                    UiEvent.FormClicked(
+                        1
+                    )
+                )
             }
         }
 
-        dispatch(PickGroupFeature.UiEvent.LoadInstitutesClicked)
+        dispatch(UiEvent.LoadInstitutesClicked)
 
         nextButton.setOnClickListener {
-            dispatch(PickGroupFeature.UiEvent.NextButtonClicked)
-            (requireActivity() as RootActivity).recreate()
+            dispatch(UiEvent.NextButtonClicked)
         }
     }
 
@@ -84,18 +91,23 @@ class PickInstituteFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFe
         scope.close()
     }
 
-    override fun accept(viewmodel: PickGroupFeature.ViewModel) {
+    override fun accept(viewmodel: PickInstituteFeature.ViewModel) {
         with(viewmodel) {
             try {
                 progressBar.isVisible = isLoading
                 if (institutes.isNotEmpty()) {
+                    pickInstituteButton.isEnabled = true
                     pickInstituteButton.setOnClickListener {
                         val selected = institutes.indexOf(institute)
                         dialog?.listItemsSingleChoice(
                             items = institutes.map { it.label },
                             initialSelection = selected
                         ) { dialog, index, _ ->
-                            dispatch(PickGroupFeature.UiEvent.InstituteClicked(institutes[index]))
+                            dispatch(
+                                UiEvent.InstituteClicked(
+                                    institutes[index]
+                                )
+                            )
                             dialog.dismiss()
                         }
                         dialog?.show()
@@ -114,9 +126,5 @@ class PickInstituteFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFe
             } catch (e: Exception) {
             }
         }
-    }
-
-    companion object {
-        fun newInstance() = PickInstituteFragment()
     }
 }

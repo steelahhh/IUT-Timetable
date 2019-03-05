@@ -5,6 +5,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     kotlin("android.extensions")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -95,6 +96,9 @@ dependencies {
     implementation(Deps.koin.androidScope)
 
     implementation(Deps.timber)
+
+    implementation(Deps.navigation.fragment)
+    implementation(Deps.navigation.ui)
 
     debugImplementation(Deps.leakCanary)
     releaseImplementation(Deps.leakCanaryNoOp)

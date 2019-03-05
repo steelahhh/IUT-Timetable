@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/pickInstituteFragment">
+
+    <fragment
+        android:id="@+id/pickInstituteFragment"
+        android:name="com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment"
+        android:label="PickInstituteFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/pickGroupFragment"
+        android:name="com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFragment"
+        android:label="fragment_pick_group"
+        tools:layout="@layout/fragment_pick_group">
+    </fragment>
+</navigation>
