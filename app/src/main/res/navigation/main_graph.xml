@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/pickInstituteFragment"
         android:name="com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment"
-        android:label="PickInstituteFragment">
-    </fragment>
+        android:label="PickInstituteFragment" />
 
     <fragment
         android:id="@+id/pickGroupFragment"

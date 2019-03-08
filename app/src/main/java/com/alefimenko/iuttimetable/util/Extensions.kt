@@ -1,11 +1,13 @@
 package com.alefimenko.iuttimetable.util
 
+import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -41,6 +43,20 @@ fun Toolbar.changeToolbarFont() {
         }
     }
 }
+
+fun Context.convertDpToPixel(dp: Float): Float {
+    val metrics = resources.displayMetrics
+    val px = dp * (metrics.densityDpi / 160f)
+    return Math.round(px).toFloat()
+}
+
+inline fun <reified T : Any, F : Fragment> F.getArg(key: String): T {
+    return (arguments?.get(key) ?: NullPointerException(
+        "No argument for key [$key] in ${this::class.java.simpleName}"
+    )) as T
+}
+
+inline fun <reified T : Any, F : Fragment> F.arg(key: String) = lazy { getArg<T, F>(key) }
 
 inline fun withLollipop(action: () -> Unit) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

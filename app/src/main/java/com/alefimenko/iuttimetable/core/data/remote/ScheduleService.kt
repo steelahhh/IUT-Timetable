@@ -40,5 +40,9 @@ interface ScheduleService {
         const val ZAOCHNY_FORM = "shedule_new_z"
         const val OCHNY_FORM = "shedule_new"
     }
+}
 
+fun Int.toFormPath() = when (this) {
+    0 -> ScheduleService.OCHNY_FORM
+    else -> ScheduleService.ZAOCHNY_FORM
 }

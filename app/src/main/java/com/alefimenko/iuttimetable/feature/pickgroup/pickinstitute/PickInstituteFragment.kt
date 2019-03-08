@@ -42,8 +42,8 @@ class PickInstituteFragment : BaseFragment<UiEvent, PickInstituteFeature.ViewMod
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bindings.setup(this)
         bindScope(scope)
+        bindings.setup(this)
         dialog = MaterialDialog(requireContext()).apply {
             title(text = "Выберите институт")
         }
@@ -77,11 +77,6 @@ class PickInstituteFragment : BaseFragment<UiEvent, PickInstituteFeature.ViewMod
         super.onDestroyView()
         dialog?.dismiss()
         dialog = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        scope.close()
     }
 
     override fun accept(viewmodel: PickInstituteFeature.ViewModel) {

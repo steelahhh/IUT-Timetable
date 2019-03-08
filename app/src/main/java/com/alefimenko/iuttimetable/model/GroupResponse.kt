@@ -1,5 +1,6 @@
 package com.alefimenko.iuttimetable.model
 
+import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.google.gson.annotations.SerializedName
 
 /*
@@ -12,3 +13,5 @@ data class GroupResponse(
     @SerializedName("name", alternate = ["label"])
     val name: String
 )
+
+fun GroupResponse.toUi() = GroupUi(id, name)

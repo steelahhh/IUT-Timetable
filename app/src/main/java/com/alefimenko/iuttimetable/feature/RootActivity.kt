@@ -6,10 +6,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.core.navigation.Navigator
 import com.alefimenko.iuttimetable.core.base.BaseActivity
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
+import com.alefimenko.iuttimetable.core.navigation.Navigator
 import org.koin.android.ext.android.inject
 
 /*

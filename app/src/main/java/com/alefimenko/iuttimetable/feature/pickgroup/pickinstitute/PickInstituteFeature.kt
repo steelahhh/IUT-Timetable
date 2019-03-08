@@ -72,7 +72,6 @@ class PickInstituteFeature(
     }
 
     sealed class Wish {
-        object LoadGroups : Wish()
         object LoadInstitutes : Wish()
         data class SelectInstitute(val institute: InstituteUi) : Wish()
         data class SelectForm(val id: Int) : Wish()
@@ -101,7 +100,6 @@ class PickInstituteFeature(
         private val navigator: Navigator
     ) : Actor<State, Wish, Effect> {
         override fun invoke(state: State, wish: Wish): Observable<Effect> = when (wish) {
-            is Wish.LoadGroups -> just(Effect.StartedLoading)
             is Wish.LoadInstitutes -> repository.getInstitutes()
                 .map<Effect> { Effect.InstitutesLoaded(it) }
                 .onErrorReturn { Effect.ErrorLoading(it) }
