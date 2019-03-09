@@ -100,6 +100,11 @@ dependencies {
     implementation(Deps.navigation.fragment)
     implementation(Deps.navigation.ui)
 
+    implementation(Deps.conductor.core)
+    implementation(Deps.conductor.rx2)
+    implementation(Deps.conductor.support)
+    implementation(Deps.conductor.lifecycle)
+
     debugImplementation(Deps.leakCanary)
     releaseImplementation(Deps.leakCanaryNoOp)
 

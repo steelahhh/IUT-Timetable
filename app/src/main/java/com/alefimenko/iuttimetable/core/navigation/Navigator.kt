@@ -1,9 +1,11 @@
 package com.alefimenko.iuttimetable.core.navigation
 
-import androidx.navigation.NavController
-import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFragment
+import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.feature.schedule.ScheduleFragment
+import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
 
 /*
  * Created by Alexander Efimenko on 2019-03-01.
@@ -11,22 +13,42 @@ import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 
 class Navigator {
 
-    private var navController: NavController? = null
+    private var navController: Router? = null
 
-    fun bind(navController: NavController) {
+    fun bind(navController: Router) {
         this.navController = navController
     }
 
     fun openPickInstitute() {
-        if (navController?.currentDestination?.id == R.id.pickInstituteFragment) return
-        navController?.navigate(R.id.pickInstituteFragment)
+        navController?.setRoot(
+            RouterTransaction.with(
+                PickInstituteFragment()
+            )
+        )
     }
 
     fun openPickGroup(form: Int, institute: InstituteUi) {
-        if (navController?.currentDestination?.id == R.id.pickGroupFragment) return
-        navController?.navigate(
-            R.id.pickGroupFragment,
-            PickGroupFragment.createBundle(form, institute)
+        if (navController?.backstackSize ?: 1 < 2) {
+            navController?.pushController(
+                RouterTransaction.with(
+                    PickGroupFragment(
+                        PickGroupFragment.createBundle(
+                            form = form,
+                            institute = institute
+                        )
+                    )
+                )
+            )
+        }
+    }
+
+    fun openSchedule(group: GroupUi) {
+        navController?.setRoot(
+            RouterTransaction.with(
+                ScheduleFragment(
+                    group.toString()
+                )
+            )
         )
     }
 

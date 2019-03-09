@@ -82,6 +82,7 @@ class PickGroupFeature(
                 .onErrorReturn { Effect.ErrorLoading(it) }
                 .startWith(Effect.StartedLoading)
             is Wish.SelectGroup -> Observable.fromCallable {
+                navigator.openSchedule(wish.group)
                 return@fromCallable Effect.GroupSelected(wish.group)
             }
         }

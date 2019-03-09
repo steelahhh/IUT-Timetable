@@ -13,7 +13,7 @@ object Versions {
     const val appVersionName = "2.2.0"
 
     const val kotlin = "1.3.21"
-    const val androidPlugin = "3.4.0-beta05"
+    const val androidPlugin = "3.4.0-rc01"
 
     const val mviCore = "1.1.6"
     const val aac = "2.0.0"
@@ -22,6 +22,8 @@ object Versions {
     const val rxKotlin = "2.2.0"
     const val rxAndroid = "2.0.2"
     const val room = "2.1.0-alpha02"
+
+    const val conductor = "3.0.0-rc1"
 
     const val leakCanary = "1.6.3"
 
@@ -97,6 +99,15 @@ object Deps {
     object MviCore {
         const val core = "com.github.badoo.mvicore:mvicore:${vers.mviCore}"
         const val android = "com.github.badoo.mvicore:mvicore-android:${vers.mviCore}"
+    }
+
+    val conductor = Conductor
+
+    object Conductor {
+        const val core = "com.bluelinelabs:conductor:${vers.conductor}"
+        const val support = "com.bluelinelabs:conductor-support:${vers.conductor}"
+        const val rx2 = "com.bluelinelabs:conductor-rxlifecycle2:${vers.conductor}"
+        const val lifecycle = "com.bluelinelabs:conductor-archlifecycle:${vers.conductor}"
     }
 
     val navigation = Navigation
