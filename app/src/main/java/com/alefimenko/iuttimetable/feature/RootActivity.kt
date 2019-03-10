@@ -10,8 +10,8 @@ import com.alefimenko.iuttimetable.core.base.BaseActivity
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
 import com.alefimenko.iuttimetable.core.navigation.Navigator
-import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment
-import com.alefimenko.iuttimetable.feature.schedule.ScheduleFragment
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteController
+import com.alefimenko.iuttimetable.feature.schedule.ScheduleController
 import com.alefimenko.iuttimetable.util.Constants.ITEM_DOESNT_EXIST
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
@@ -29,7 +29,7 @@ class RootActivity : BaseActivity() {
     private val networkStatusReceiver: NetworkStatusReceiver by inject()
     private val navigator: Navigator by inject()
 
-    private val container by bind<FrameLayout>(R.id.nav_host_fragment)
+    private val container by bind<FrameLayout>(R.id.container)
 
     private lateinit var router: Router
 
@@ -41,10 +41,12 @@ class RootActivity : BaseActivity() {
 
         navigator.bind(router)
         if (!router.hasRootController()) {
-            when (sharedPreferences.currentGroup) {
-                ITEM_DOESNT_EXIST -> router.setRoot(RouterTransaction.with(PickInstituteFragment()))
-                else -> router.setRoot(RouterTransaction.with(ScheduleFragment()))
-            }
+            router.setRoot(
+                when (sharedPreferences.currentGroup) {
+                    ITEM_DOESNT_EXIST -> RouterTransaction.with(PickInstituteController())
+                    else -> RouterTransaction.with(ScheduleController())
+                }
+            )
         }
     }
 

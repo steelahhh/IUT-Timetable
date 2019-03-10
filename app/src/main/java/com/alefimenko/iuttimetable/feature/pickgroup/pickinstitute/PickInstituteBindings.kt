@@ -12,10 +12,10 @@ import com.badoo.mvicore.binder.using
  */
 
 class PickInstituteBindings(
-    view: PickInstituteFragment,
+    view: PickInstituteController,
     val feature: PickInstituteFeature
-) : AndroidBindings<PickInstituteFragment>(view) {
-    override fun setup(view: PickInstituteFragment) {
+) : AndroidBindings<PickInstituteController>(view) {
+    override fun setup(view: PickInstituteController) {
         binder.bind(feature to view using ViewModelTransformer())
         binder.bind(view to feature using UiEventTransformer())
     }

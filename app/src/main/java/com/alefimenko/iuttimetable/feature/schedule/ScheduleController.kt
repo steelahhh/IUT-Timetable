@@ -17,7 +17,7 @@ import timber.log.Timber
  * Created by Alexander Efimenko on 2019-03-08.
  */
 
-class ScheduleFragment(val text: String) : BaseController<String, String>() {
+class ScheduleController(val text: String) : BaseController<String, String>() {
 
     constructor() : this("")
 
@@ -47,6 +47,6 @@ class ScheduleFragment(val text: String) : BaseController<String, String>() {
     }
 
     companion object {
-        const val TAG = "ScheduleFragment"
+        const val TAG = "ScheduleController"
     }
 }

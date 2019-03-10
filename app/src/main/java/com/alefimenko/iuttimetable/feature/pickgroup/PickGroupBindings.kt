@@ -12,10 +12,10 @@ import com.badoo.mvicore.binder.using
  */
 
 class PickGroupBindings(
-    view: PickGroupFragment,
+    view: PickGroupController,
     val feature: PickGroupFeature
-) : AndroidBindings<PickGroupFragment>(view) {
-    override fun setup(view: PickGroupFragment) {
+) : AndroidBindings<PickGroupController>(view) {
+    override fun setup(view: PickGroupController) {
         binder.bind(feature to view using ViewModelTransformer())
         binder.bind(view to feature using UiEventTransformer())
     }

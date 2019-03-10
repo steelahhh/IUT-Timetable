@@ -1,11 +1,11 @@
 package com.alefimenko.iuttimetable.core.navigation
 
 import com.alefimenko.iuttimetable.core.base.BaseController
-import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFragment
+import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupController
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment
-import com.alefimenko.iuttimetable.feature.schedule.ScheduleFragment
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteController
+import com.alefimenko.iuttimetable.feature.schedule.ScheduleController
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
@@ -27,26 +27,26 @@ class Navigator {
 
     fun openPickInstitute() {
         router.setRoot(
-            controller = PickInstituteFragment(),
-            tag = PickInstituteFragment.TAG
+            controller = PickInstituteController(),
+            tag = PickInstituteController.TAG
         )
     }
 
     fun openPickGroup(form: Int, institute: InstituteUi) {
         router.safePush(
-            controller = PickGroupFragment(
-                PickGroupFragment.createBundle(form = form, institute = institute)
+            controller = PickGroupController(
+                PickGroupController.createBundle(form = form, institute = institute)
             ),
-            tag = PickGroupFragment.TAG
+            tag = PickGroupController.TAG
         )
     }
 
     fun openSchedule(group: GroupUi) {
         router.setRoot(
-            controller = ScheduleFragment(
+            controller = ScheduleController(
                 group.toString()
             ),
-            tag = ScheduleFragment.TAG
+            tag = ScheduleController.TAG
         )
     }
 

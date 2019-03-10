@@ -25,7 +25,7 @@ import org.koin.core.parameter.parametersOf
  */
 
 @Suppress("unused")
-class PickGroupFragment(
+class PickGroupController(
     bundle: Bundle?
 ) : BaseController<PickGroupFeature.UiEvent, PickGroupFeature.ViewModel>() {
 
@@ -97,9 +97,11 @@ class PickGroupFragment(
             try {
                 progressBar.isVisible = isLoading
                 recycler.isVisible = !isLoading
-                errorView.isVisible = isError
-                errorView.text = "Ошибка при загрузке групп"
-                errorView.onRetryClick = ::loadGroups
+                errorView.apply {
+                    isVisible = isError
+                    text = "Ошибка при загрузке групп"
+                    onRetryClick = ::loadGroups
+                }
 
                 if (isGroupsLoaded) {
                     fastAdapter.set(groups)
@@ -123,7 +125,7 @@ class PickGroupFragment(
         fun newInstance(
             form: Int,
             institute: InstituteUi
-        ): PickGroupFragment = PickGroupFragment(
+        ): PickGroupController = PickGroupController(
             Bundle().apply {
                 putInt(FORM_KEY, form)
                 putParcelable(INSTITUTE_KEY, institute)

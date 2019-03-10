@@ -97,9 +97,6 @@ dependencies {
 
     implementation(Deps.timber)
 
-    implementation(Deps.navigation.fragment)
-    implementation(Deps.navigation.ui)
-
     implementation(Deps.conductor.core)
     implementation(Deps.conductor.rx2)
     implementation(Deps.conductor.support)

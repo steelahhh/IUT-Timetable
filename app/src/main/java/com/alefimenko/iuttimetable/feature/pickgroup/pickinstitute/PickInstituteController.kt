@@ -25,7 +25,7 @@ import org.koin.core.parameter.parametersOf
  * Created by Alexander Efimenko on 2019-02-04.
  */
 
-class PickInstituteFragment : BaseController<UiEvent, PickInstituteFeature.ViewModel>() {
+class PickInstituteController : BaseController<UiEvent, PickInstituteFeature.ViewModel>() {
     private val pickInstituteButton by bind<MaterialButton>(R.id.pick_institute_button)
     private val formRadioGroup by bind<RadioGroup>(R.id.form_radio_group)
     private val nextButton by bind<FloatingActionButton>(R.id.next_button)
