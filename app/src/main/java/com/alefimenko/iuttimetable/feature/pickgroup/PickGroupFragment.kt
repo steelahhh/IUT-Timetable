@@ -30,8 +30,8 @@ class PickGroupFragment(
 
     constructor() : this(null)
 
-    private val form: Int
-    private val institute: InstituteUi?
+    private var form: Int
+    private var institute: InstituteUi?
 
     init {
         form = bundle?.getInt(FORM_KEY) ?: 0
@@ -70,13 +70,26 @@ class PickGroupFragment(
             adapter = fastAdapter
         }
         if (institute != null) {
-            dispatch(PickGroupFeature.UiEvent.LoadGroupsClicked(form, institute.id))
+            dispatch(PickGroupFeature.UiEvent.LoadGroupsClicked(form, institute?.id ?: 0))
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         scope.close()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState.apply {
+            putParcelable(INSTITUTE_KEY, institute)
+            putInt(FORM_KEY, form)
+        })
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        form = savedInstanceState[FORM_KEY] as Int
+        institute = savedInstanceState[INSTITUTE_KEY] as InstituteUi
     }
 
     override fun accept(viewModel: PickGroupFeature.ViewModel) {
@@ -94,6 +107,7 @@ class PickGroupFragment(
     }
 
     companion object {
+        const val TAG = "PickGroupScreen"
         const val FORM_KEY = "FORM"
         const val INSTITUTE_KEY = "INSTITUTE"
 

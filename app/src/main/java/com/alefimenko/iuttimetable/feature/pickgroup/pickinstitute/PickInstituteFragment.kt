@@ -1,6 +1,5 @@
 package com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute
 
-import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -99,5 +98,9 @@ class PickInstituteFragment : BaseController<UiEvent, PickInstituteFeature.ViewM
             } catch (e: Exception) {
             }
         }
+    }
+
+    companion object {
+        const val TAG = "PickInstituteScreen"
     }
 }

@@ -3,6 +3,7 @@ package com.alefimenko.iuttimetable.core.navigation
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFragment
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment
 import com.alefimenko.iuttimetable.feature.schedule.ScheduleFragment
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
@@ -13,14 +14,15 @@ import com.bluelinelabs.conductor.RouterTransaction
 
 class Navigator {
 
-    private var navController: Router? = null
+    private var _router: Router? = null
+    private val router: Router get() = _router ?: error("Router not bound")
 
     fun bind(navController: Router) {
-        this.navController = navController
+        this._router = navController
     }
 
     fun openPickInstitute() {
-        navController?.setRoot(
+        router.setRoot(
             RouterTransaction.with(
                 PickInstituteFragment()
             )
@@ -28,8 +30,8 @@ class Navigator {
     }
 
     fun openPickGroup(form: Int, institute: InstituteUi) {
-        if (navController?.backstackSize ?: 1 < 2) {
-            navController?.pushController(
+        if (!router.backstack.any { it.tag() == PickGroupFragment.TAG }) {
+            router.pushController(
                 RouterTransaction.with(
                     PickGroupFragment(
                         PickGroupFragment.createBundle(
@@ -37,13 +39,13 @@ class Navigator {
                             institute = institute
                         )
                     )
-                )
+                ).tag(PickGroupFragment.TAG)
             )
         }
     }
 
     fun openSchedule(group: GroupUi) {
-        navController?.setRoot(
+        router.setRoot(
             RouterTransaction.with(
                 ScheduleFragment(
                     group.toString()
@@ -53,6 +55,6 @@ class Navigator {
     }
 
     fun unbind() {
-        navController = null
+        _router = null
     }
 }
