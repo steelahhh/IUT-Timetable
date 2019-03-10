@@ -30,6 +30,14 @@ abstract class BaseController<Event, ViewModel>(
         events.onNext(event)
     }
 
+    final override fun accept(viewmodel: ViewModel) {
+        if (isAttached) {
+            acceptViewmodel(viewmodel)
+        }
+    }
+
+    abstract fun acceptViewmodel(viewmodel: ViewModel)
+
     override fun onAttach(view: View) {
         (activity as BaseActivity).updateNavigationColor()
         super.onAttach(view)

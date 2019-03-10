@@ -30,7 +30,7 @@ fun FloatingActionButton.show(state: Boolean) {
 
 fun RadioGroup.enableAll() {
     for (child in 0..childCount) {
-        (getChildAt(child) as RadioButton).isEnabled = true
+        (getChildAt(child) as? RadioButton)?.isEnabled = true
     }
 }
 

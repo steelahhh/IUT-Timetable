@@ -104,6 +104,7 @@ class PickGroupFeature(
                 isError = false
             )
             is Effect.ErrorLoading -> state.copy(
+                groups = listOf(),
                 isLoading = false,
                 isError = true
             )

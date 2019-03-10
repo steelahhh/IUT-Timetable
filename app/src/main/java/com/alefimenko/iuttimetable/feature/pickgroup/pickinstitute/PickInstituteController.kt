@@ -62,47 +62,44 @@ class PickInstituteController : BaseController<UiEvent, PickInstituteFeature.Vie
         }
     }
 
-    override fun accept(viewmodel: PickInstituteFeature.ViewModel) {
+    override fun acceptViewmodel(viewmodel: PickInstituteFeature.ViewModel) {
         with(viewmodel) {
-            try {
-                progressBar.isVisible = isLoading
-                pickInstituteButton.isEnabled = !isLoading
-                errorView.isVisible = isError
-                errorView.text = "Ошибка при загрузке институтов"
-                errorView.onRetryClick = {
-                    dispatch(UiEvent.LoadInstitutesClicked)
-                }
+            progressBar.isVisible = isLoading
+            pickInstituteButton.isEnabled = !isLoading
+            errorView.isVisible = isError
+            errorView.text = "Ошибка при загрузке институтов"
+            errorView.onRetryClick = {
+                dispatch(PickInstituteFeature.UiEvent.LoadInstitutesClicked)
+            }
 
-                if (isInstitutesLoaded) {
-                    pickInstituteButton.setOnClickListener {
-                        val selected = institutes.indexOf(institute)
-                        dialog?.listItemsSingleChoice(
-                            items = institutes.map { it.label },
-                            initialSelection = selected
-                        ) { dialog, index, _ ->
-                            dispatch(UiEvent.InstituteClicked(institutes[index]))
-                            dialog.dismiss()
-                        }
-                        dialog?.show()
+            if (isInstitutesLoaded) {
+                pickInstituteButton.setOnClickListener {
+                    val selected = institutes.indexOf(institute)
+                    dialog?.listItemsSingleChoice(
+                        items = institutes.map { it.label },
+                        initialSelection = selected
+                    ) { dialog, index, _ ->
+                        dispatch(PickInstituteFeature.UiEvent.InstituteClicked(institutes[index]))
+                        dialog.dismiss()
                     }
+                    dialog?.show()
                 }
+            }
 
-                if (isInstitutePicked) {
-                    institute ?: return
-                    pickInstituteButton.apply {
-                        icon = null
-                        text = String.format(
-                            view?.context?.getString(R.string.selected_institute) ?: "",
-                            institute.label
-                        )
-                    }
-                    nextButton.show()
+            if (isInstitutePicked) {
+                institute ?: return
+                pickInstituteButton.apply {
+                    icon = null
+                    text = kotlin.String.format(
+                        view?.context?.getString(R.string.selected_institute) ?: "",
+                        institute.label
+                    )
                 }
+                nextButton.show()
+            }
 
-                if (!isLoading) {
-                    formRadioGroup.enableAll()
-                }
-            } catch (e: Exception) {
+            if (!isLoading) {
+                formRadioGroup.enableAll()
             }
         }
     }

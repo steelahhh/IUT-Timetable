@@ -17,10 +17,9 @@ import timber.log.Timber
  * Created by Alexander Efimenko on 2019-03-08.
  */
 
-class ScheduleController(val text: String) : BaseController<String, String>() {
-
-    constructor() : this("")
-
+class ScheduleController(
+    val text: String = ""
+) : BaseController<String, String>() {
     private val textView by bind<TextView>(R.id.schedule_text)
 
     private val groupsDao: GroupsDao by inject()
@@ -43,7 +42,7 @@ class ScheduleController(val text: String) : BaseController<String, String>() {
         }
     }
 
-    override fun accept(t: String?) {
+    override fun acceptViewmodel(viewmodel: String) {
     }
 
     companion object {

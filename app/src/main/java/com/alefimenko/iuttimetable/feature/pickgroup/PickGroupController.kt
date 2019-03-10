@@ -24,13 +24,9 @@ import org.koin.core.parameter.parametersOf
  * Created by Alexander Efimenko on 2019-03-02.
  */
 
-@Suppress("unused")
 class PickGroupController(
-    bundle: Bundle?
+    bundle: Bundle? = null
 ) : BaseController<PickGroupFeature.UiEvent, PickGroupFeature.ViewModel>() {
-
-    constructor() : this(null)
-
     private var form: Int
     private var institute: InstituteUi?
 
@@ -92,21 +88,18 @@ class PickGroupController(
         institute = savedInstanceState[INSTITUTE_KEY] as InstituteUi
     }
 
-    override fun accept(viewModel: PickGroupFeature.ViewModel) {
-        with(viewModel) {
-            try {
-                progressBar.isVisible = isLoading
-                recycler.isVisible = !isLoading
-                errorView.apply {
-                    isVisible = isError
-                    text = "Ошибка при загрузке групп"
-                    onRetryClick = ::loadGroups
-                }
+    override fun acceptViewmodel(viewmodel: PickGroupFeature.ViewModel) {
+        with(viewmodel) {
+            progressBar.isVisible = isLoading
+            recycler.isVisible = !isLoading
+            errorView.apply {
+                isVisible = isError
+                text = "Ошибка при загрузке групп"
+                onRetryClick = ::loadGroups
+            }
 
-                if (isGroupsLoaded) {
-                    fastAdapter.set(groups)
-                }
-            } catch (e: Exception) {
+            if (isGroupsLoaded) {
+                fastAdapter.set(groups)
             }
         }
     }
