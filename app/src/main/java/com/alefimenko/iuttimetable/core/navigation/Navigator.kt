@@ -1,12 +1,16 @@
 package com.alefimenko.iuttimetable.core.navigation
 
+import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFragment
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment
 import com.alefimenko.iuttimetable.feature.schedule.ScheduleFragment
+import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
+import timber.log.Timber
 
 /*
  * Created by Alexander Efimenko on 2019-03-01.
@@ -23,34 +27,26 @@ class Navigator {
 
     fun openPickInstitute() {
         router.setRoot(
-            RouterTransaction.with(
-                PickInstituteFragment()
-            )
+            controller = PickInstituteFragment(),
+            tag = PickInstituteFragment.TAG
         )
     }
 
     fun openPickGroup(form: Int, institute: InstituteUi) {
-        if (!router.backstack.any { it.tag() == PickGroupFragment.TAG }) {
-            router.pushController(
-                RouterTransaction.with(
-                    PickGroupFragment(
-                        PickGroupFragment.createBundle(
-                            form = form,
-                            institute = institute
-                        )
-                    )
-                ).tag(PickGroupFragment.TAG)
-            )
-        }
+        router.safePush(
+            controller = PickGroupFragment(
+                PickGroupFragment.createBundle(form = form, institute = institute)
+            ),
+            tag = PickGroupFragment.TAG
+        )
     }
 
     fun openSchedule(group: GroupUi) {
         router.setRoot(
-            RouterTransaction.with(
-                ScheduleFragment(
-                    group.toString()
-                )
-            )
+            controller = ScheduleFragment(
+                group.toString()
+            ),
+            tag = ScheduleFragment.TAG
         )
     }
 
@@ -58,3 +54,37 @@ class Navigator {
         _router = null
     }
 }
+
+private fun Router.safePush(
+    controller: BaseController<*, *>,
+    tag: String,
+    changeHandler: ControllerChangeHandler = HorizontalChangeHandler()
+) = if (!backstack.any { it.tag() == tag }) {
+    push(controller, tag, changeHandler)
+} else {
+    Timber.d("Controller is already pushed into the backstack")
+}
+
+private fun Router.push(
+    controller: BaseController<*, *>,
+    tag: String,
+    changeHandler: ControllerChangeHandler = HorizontalChangeHandler()
+) = pushController(
+    RouterTransaction
+        .with(controller)
+        .tag(tag)
+        .pushChangeHandler(changeHandler)
+        .popChangeHandler(changeHandler)
+)
+
+private fun Router.setRoot(
+    controller: BaseController<*, *>,
+    tag: String,
+    changeHandler: ControllerChangeHandler = HorizontalChangeHandler()
+) = setRoot(
+    RouterTransaction
+        .with(controller)
+        .tag(tag)
+        .pushChangeHandler(changeHandler)
+        .popChangeHandler(changeHandler)
+)

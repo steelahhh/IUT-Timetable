@@ -34,13 +34,19 @@ class ScheduleFragment(val text: String) : BaseController<String, String>() {
     override fun onAttach(view: View) {
         super.onAttach(view)
         textView.text = text
-        groupsDao.groups.ioMainSchedulers().subscribe({
-            textView.text = it.find { it.id == prefs.currentGroup }?.toString()
-        }, {
-            Timber.e(it)
-        })
+        if (text.isEmpty()) {
+            groupsDao.groups.ioMainSchedulers().subscribe({
+                textView.text = it.find { it.id == prefs.currentGroup }?.toString()
+            }, {
+                Timber.e(it)
+            })
+        }
     }
 
     override fun accept(t: String?) {
+    }
+
+    companion object {
+        const val TAG = "ScheduleFragment"
     }
 }
