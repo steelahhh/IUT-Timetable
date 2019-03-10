@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 data class InstituteUi(
     val id: Int,
     val label: String
-): Parcelable {
+) : Parcelable {
     companion object {
         fun fromResponse(response: InstituteResponse) = InstituteUi(response.id, response.name)
     }

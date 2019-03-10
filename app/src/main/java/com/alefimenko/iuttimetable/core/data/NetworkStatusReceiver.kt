@@ -31,5 +31,4 @@ class NetworkStatusReceiver(
     private fun Context.isConnected() =
         (applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
             .activeNetworkInfo?.isConnected == true
-
 }

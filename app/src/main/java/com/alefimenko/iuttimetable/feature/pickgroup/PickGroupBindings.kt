@@ -27,6 +27,7 @@ private class ViewModelTransformer : (State) -> ViewModel {
             groups = state.groups,
             group = state.group,
             isLoading = state.isLoading,
+            isError = state.isError,
             isGroupPicked = state.group != null,
             isGroupsLoaded = state.groups.isNotEmpty()
         )

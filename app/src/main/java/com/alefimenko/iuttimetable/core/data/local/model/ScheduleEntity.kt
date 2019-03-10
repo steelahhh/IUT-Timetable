@@ -1,9 +1,10 @@
-package com.alefimenko.iuttimetable.model
+package com.alefimenko.iuttimetable.core.data.local.model
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.alefimenko.iuttimetable.model.Schedule
 import com.google.gson.GsonBuilder
 import kotlinx.android.parcel.Parcelize
 
@@ -30,9 +31,14 @@ data class ScheduleEntity @JvmOverloads constructor(
 ) : Parcelable {
 
     val schedule: Schedule
-        get() = GsonBuilder().enableComplexMapKeySerialization().create().fromJson(scheduleStr, Schedule::class.java)
+        get() = GsonBuilder()
+            .enableComplexMapKeySerialization()
+            .create()
+            .fromJson(scheduleStr, Schedule::class.java)
 
     val rawSchedule: Schedule
-        get() = GsonBuilder().enableComplexMapKeySerialization().create().fromJson(rawScheduleStr, Schedule::class.java)
-
+        get() = GsonBuilder()
+            .enableComplexMapKeySerialization()
+            .create()
+            .fromJson(rawScheduleStr, Schedule::class.java)
 }

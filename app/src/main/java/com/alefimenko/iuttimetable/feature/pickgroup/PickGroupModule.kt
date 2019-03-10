@@ -5,6 +5,8 @@ import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstitute
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment
 import org.koin.dsl.module.module
+import org.koin.experimental.builder.scope
+import org.koin.experimental.builder.single
 
 /*
  * Created by Alexander Efimenko on 2019-02-16.
@@ -12,7 +14,7 @@ import org.koin.dsl.module.module
 
 val pickGroupModule = module {
     scope(Scopes.PICK_GROUP) {
-        PickGroupRepository(get(), get(), get(), get(), get())
+        PickGroupRepository(get(), get(), get(), get(), get(), get())
     }
 
     single {

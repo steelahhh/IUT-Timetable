@@ -11,5 +11,11 @@ import org.koin.dsl.module.module
  */
 
 val preferencesModule = module {
-    single { LocalPreferences(androidContext().getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)) }
+    single {
+        LocalPreferences(
+            androidContext().getSharedPreferences(
+                Constants.PREFS_NAME, Context.MODE_PRIVATE
+            )
+        )
+    }
 }

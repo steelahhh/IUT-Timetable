@@ -9,4 +9,5 @@
     <string name="pick_institute">Выбрать институт</string>
     <string name="selected_institute">Институт: %s</string>
 
+    <string name="retry">Повторить</string>
 </resources>

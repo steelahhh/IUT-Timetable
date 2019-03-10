@@ -13,6 +13,7 @@ import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.views.ErrorStubView
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.ext.android.bindScope
@@ -44,6 +45,7 @@ class PickGroupFragment(
 
     private val recycler by bind<RecyclerView>(R.id.recycler)
     private val progressBar by bind<ProgressBar>(R.id.progress_bar)
+    private val errorView by bind<ErrorStubView>(R.id.error_view)
 
     private val fastAdapter by bind.stuff {
         FastItemAdapter<GroupUi>().apply {
@@ -69,9 +71,7 @@ class PickGroupFragment(
             layoutManager = LinearLayoutManager(view.context)
             adapter = fastAdapter
         }
-        institute?.let { inst ->
-            dispatch(PickGroupFeature.UiEvent.LoadGroupsClicked(form, inst.id))
-        }
+        loadGroups()
     }
 
     override fun onDestroy() {
@@ -97,12 +97,21 @@ class PickGroupFragment(
             try {
                 progressBar.isVisible = isLoading
                 recycler.isVisible = !isLoading
+                errorView.isVisible = isError
+                errorView.text = "Ошибка при загрузке групп"
+                errorView.onRetryClick = ::loadGroups
 
                 if (isGroupsLoaded) {
                     fastAdapter.set(groups)
                 }
             } catch (e: Exception) {
             }
+        }
+    }
+
+    private fun loadGroups() {
+        institute?.let { inst ->
+            dispatch(PickGroupFeature.UiEvent.LoadGroupsClicked(form, inst.id))
         }
     }
 

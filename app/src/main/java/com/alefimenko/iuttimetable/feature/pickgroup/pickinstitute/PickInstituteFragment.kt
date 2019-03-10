@@ -13,6 +13,7 @@ import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.UiEvent
 import com.alefimenko.iuttimetable.util.enableAll
+import com.alefimenko.iuttimetable.views.ErrorStubView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.android.ext.android.inject
@@ -29,6 +30,7 @@ class PickInstituteFragment : BaseController<UiEvent, PickInstituteFeature.ViewM
     private val formRadioGroup by bind<RadioGroup>(R.id.form_radio_group)
     private val nextButton by bind<FloatingActionButton>(R.id.next_button)
     private val progressBar by bind<ProgressBar>(R.id.progress_bar)
+    private val errorView by bind<ErrorStubView>(R.id.error_view)
 
     private var dialog: MaterialDialog? = null
 
@@ -65,6 +67,11 @@ class PickInstituteFragment : BaseController<UiEvent, PickInstituteFeature.ViewM
             try {
                 progressBar.isVisible = isLoading
                 pickInstituteButton.isEnabled = !isLoading
+                errorView.isVisible = isError
+                errorView.text = "Ошибка при загрузке институтов"
+                errorView.onRetryClick = {
+                    dispatch(UiEvent.LoadInstitutesClicked)
+                }
 
                 if (isInstitutesLoaded) {
                     pickInstituteButton.setOnClickListener {

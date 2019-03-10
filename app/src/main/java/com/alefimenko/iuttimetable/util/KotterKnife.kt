@@ -12,7 +12,6 @@ import kotlin.reflect.KProperty
 import androidx.fragment.app.DialogFragment as SupportDialogFragment
 import androidx.fragment.app.Fragment as SupportFragment
 
-
 fun <V : View> Activity.bindView(id: Int): ReadOnlyProperty<Activity, V> =
     required(id, viewFinder, null)
 
@@ -60,7 +59,8 @@ class ViewBinder(private val viewFinder: Finder) {
     private val lazyRegistry = mutableListOf<Lazy<*>>()
 
     operator fun <V : View> invoke(
-        @IdRes id: Int, viewFinder: Finder = this.viewFinder,
+        @IdRes id: Int,
+        viewFinder: Finder = this.viewFinder,
         viewInitializer: ViewInitializer<V>? = null
     ) = required(id, viewFinder, viewInitializer).register()
 
@@ -71,7 +71,8 @@ class ViewBinder(private val viewFinder: Finder) {
     ) = required(ids, viewFinder, viewInitializer).register()
 
     fun <V : View> optional(
-        @IdRes id: Int, viewFinder: Finder = this.viewFinder,
+        @IdRes id: Int,
+        viewFinder: Finder = this.viewFinder,
         viewInitializer: ViewInitializer<V?>? = null
     ) = nullable(id, viewFinder, viewInitializer).register()
 

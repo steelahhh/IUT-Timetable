@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.model.ScheduleEntity
+import com.alefimenko.iuttimetable.core.data.local.model.ScheduleEntity
 
 /*
  * Created by Alexander Efimenko on 2019-01-20.
@@ -23,11 +23,16 @@ class FeedbackService(private val context: Context) {
 
     fun sendFeedback(
         throwable: Throwable?,
-        formId: Int, groupId: Int, groupName: String,
-        instituteId: Int, instituteName: String
+        formId: Int,
+        groupId: Int,
+        groupName: String,
+        instituteId: Int,
+        instituteName: String
     ) {
-        val subject = "Обратная связь Расписание ТИУ ${if (throwable != null) "| Error report" else ""}"
-        val version = context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "2.2.0"
+        val subject =
+            "Обратная связь Расписание ТИУ ${if (throwable != null) "| Error report" else ""}"
+        val version = context.packageManager
+            .getPackageInfo(context.packageName, 0).versionName ?: "2.2.0"
         val sb = StringBuilder().apply {
             append("Место для сообщения:\n\n\n-----------------------------")
             append("\nPlease don't remove this information")

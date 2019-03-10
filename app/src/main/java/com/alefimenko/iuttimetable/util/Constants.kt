@@ -37,5 +37,4 @@ object Constants {
 
     @JvmStatic
     val institutesUi = institutes.map { InstituteUi.fromResponse(it) }
-
 }

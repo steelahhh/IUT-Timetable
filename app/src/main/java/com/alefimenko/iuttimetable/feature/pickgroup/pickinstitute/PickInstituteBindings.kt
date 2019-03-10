@@ -28,6 +28,7 @@ private class ViewModelTransformer : (State) -> ViewModel {
             institute = state.institute,
             form = state.form,
             isLoading = state.isLoading,
+            isError = state.isError,
             isInstitutePicked = state.institute != null,
             isInstitutesLoaded = state.institutes.isNotEmpty()
         )

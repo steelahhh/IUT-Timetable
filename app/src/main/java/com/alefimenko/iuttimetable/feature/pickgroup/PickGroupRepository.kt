@@ -2,6 +2,7 @@ package com.alefimenko.iuttimetable.feature.pickgroup
 
 import android.util.LruCache
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
+import com.alefimenko.iuttimetable.core.data.local.GroupsDao
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
 import com.alefimenko.iuttimetable.core.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.core.data.remote.NoNetworkException
@@ -9,9 +10,11 @@ import com.alefimenko.iuttimetable.core.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.core.data.remote.toFormPath
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.feature.pickgroup.model.toEntity
 import com.alefimenko.iuttimetable.model.mappers.ScheduleParser
 import com.alefimenko.iuttimetable.model.toUi
 import com.alefimenko.iuttimetable.util.ioMainSchedulers
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 /*
@@ -23,6 +26,7 @@ class PickGroupRepository(
     private val scheduleParser: ScheduleParser,
     private val scheduleService: ScheduleService,
     private val feedbackService: FeedbackService,
+    private val groupsDao: GroupsDao,
     private val networkStatusReceiver: NetworkStatusReceiver
 ) {
 
@@ -69,7 +73,7 @@ class PickGroupRepository(
         preferences.isNightMode = preferences.isNightMode.not()
     }
 
-    fun saveGroup(group: GroupUi) {
+    fun saveGroup(group: GroupUi): Completable = groupsDao.insertGroup(group.toEntity()).also {
         preferences.currentGroup = group.id
     }
 

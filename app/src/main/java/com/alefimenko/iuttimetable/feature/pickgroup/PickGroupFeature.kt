@@ -7,12 +7,14 @@ import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.News
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.State
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.Wish
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
+import com.alefimenko.iuttimetable.util.ioMainSchedulers
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.element.Actor
 import com.badoo.mvicore.element.NewsPublisher
 import com.badoo.mvicore.element.Reducer
 import com.badoo.mvicore.feature.ActorReducerFeature
 import io.reactivex.Observable
+import io.reactivex.Observable.just
 import kotlinx.android.parcel.Parcelize
 
 /*
@@ -38,6 +40,7 @@ class PickGroupFeature(
         val groups: List<GroupUi> = listOf(),
         val group: GroupUi? = null,
         val isLoading: Boolean,
+        val isError: Boolean,
         val isGroupPicked: Boolean,
         val isGroupsLoaded: Boolean
     )
@@ -81,11 +84,16 @@ class PickGroupFeature(
                 .map<Effect> { Effect.GroupsLoaded(it) }
                 .onErrorReturn { Effect.ErrorLoading(it) }
                 .startWith(Effect.StartedLoading)
-            is Wish.SelectGroup -> Observable.fromCallable {
+            is Wish.SelectGroup -> Observable.concat(
+                just(Effect.GroupSelected(wish.group)),
+                Observable.fromCallable {
+                    navigator.openSchedule(wish.group)
+                    return@fromCallable Effect.ScreenChanged
+                },
                 repository.saveGroup(wish.group)
-                navigator.openSchedule(wish.group)
-                return@fromCallable Effect.GroupSelected(wish.group)
-            }
+                    .ioMainSchedulers()
+                    .toObservable<Effect>()
+            )
         }
     }
 
@@ -107,7 +115,7 @@ class PickGroupFeature(
             is Effect.GroupSelected -> state.copy(
                 group = effect.group
             )
-            is Effect.ScreenChanged -> state.copy()
+            else -> state.copy()
         }
     }
 

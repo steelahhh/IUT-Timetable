@@ -11,7 +11,6 @@ import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstitute
 import com.alefimenko.iuttimetable.util.Constants
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.element.Actor
-import com.badoo.mvicore.element.Bootstrapper
 import com.badoo.mvicore.element.NewsPublisher
 import com.badoo.mvicore.element.Reducer
 import com.badoo.mvicore.feature.ActorReducerFeature
@@ -34,7 +33,6 @@ class PickInstituteFeature(
         navigator
     ),
     reducer = ReducerImpl(),
-//    bootstrapper = BootStrapperImpl(),
     newsPublisher = NewsPublisherImpl()
 ) {
 
@@ -51,6 +49,7 @@ class PickInstituteFeature(
         val institute: InstituteUi? = null,
         val form: Int = 0,
         val isLoading: Boolean,
+        val isError: Boolean,
         val isInstitutePicked: Boolean,
         val isInstitutesLoaded: Boolean
     )
@@ -91,10 +90,6 @@ class PickInstituteFeature(
         data class ErrorExecutingRequest(val throwable: Throwable) : News()
     }
 
-    class BootStrapperImpl : Bootstrapper<Wish> {
-        override fun invoke(): Observable<Wish> = just(Wish.LoadInstitutes)
-    }
-
     class ActorImpl(
         private val repository: PickGroupRepository,
         private val navigator: Navigator
@@ -116,10 +111,12 @@ class PickInstituteFeature(
     class ReducerImpl : Reducer<State, Effect> {
         override fun invoke(state: State, effect: Effect): State = when (effect) {
             is Effect.StartedLoading -> state.copy(
-                isLoading = true
+                isLoading = true,
+                isError = false
             )
             is Effect.InstitutesLoaded -> state.copy(
                 institutes = Constants.institutesUi,
+                isError = false,
                 isLoading = false
             )
             is Effect.FormSelected -> state.copy(
@@ -127,7 +124,8 @@ class PickInstituteFeature(
                 isLoading = false
             )
             is Effect.ErrorLoading -> state.copy(
-                isLoading = false
+                isLoading = false,
+                isError = true
             )
             is Effect.InstituteSelected -> state.copy(
                 institute = effect.institute
