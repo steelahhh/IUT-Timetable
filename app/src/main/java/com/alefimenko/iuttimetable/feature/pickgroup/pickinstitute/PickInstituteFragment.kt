@@ -1,6 +1,5 @@
 package com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.core.view.isVisible
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.core.base.BaseFragment
+import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.UiEvent
 import com.alefimenko.iuttimetable.util.enableAll
@@ -25,7 +24,7 @@ import org.koin.core.parameter.parametersOf
  * Created by Alexander Efimenko on 2019-02-04.
  */
 
-class PickInstituteFragment : BaseFragment<UiEvent, PickInstituteFeature.ViewModel>() {
+class PickInstituteFragment : BaseController<UiEvent, PickInstituteFeature.ViewModel>() {
     private val pickInstituteButton by bind<MaterialButton>(R.id.pick_institute_button)
     private val formRadioGroup by bind<RadioGroup>(R.id.form_radio_group)
     private val nextButton by bind<FloatingActionButton>(R.id.next_button)
@@ -37,46 +36,28 @@ class PickInstituteFragment : BaseFragment<UiEvent, PickInstituteFeature.ViewMod
 
     private val bindings: PickInstituteBindings by inject { parametersOf(this) }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         bindScope(scope)
         bindings.setup(this)
-        dialog = MaterialDialog(requireContext()).apply {
-            title(text = "Выберите институт")
-        }
         return inflater.inflate(R.layout.fragment_pick_institute, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onAttach(view: View) {
+        super.onAttach(view)
+        dialog = MaterialDialog(view.context).apply {
+            title(text = "Выберите институт")
+        }
         formRadioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
                 R.id.edu_form_ochny -> dispatch(UiEvent.FormClicked(0))
                 R.id.edu_form_zaochny -> dispatch(UiEvent.FormClicked(1))
             }
         }
-
         dispatch(UiEvent.LoadInstitutesClicked)
 
         nextButton.setOnClickListener {
             dispatch(UiEvent.NextButtonClicked)
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (dialog?.isShowing == true) {
-            dialog?.dismiss()
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        dialog?.dismiss()
-        dialog = null
     }
 
     override fun accept(viewmodel: PickInstituteFeature.ViewModel) {
@@ -104,7 +85,7 @@ class PickInstituteFragment : BaseFragment<UiEvent, PickInstituteFeature.ViewMod
                     pickInstituteButton.apply {
                         icon = null
                         text = String.format(
-                            getString(R.string.selected_institute),
+                            view?.context?.getString(R.string.selected_institute) ?: "",
                             institute.label
                         )
                     }
@@ -117,5 +98,9 @@ class PickInstituteFragment : BaseFragment<UiEvent, PickInstituteFeature.ViewMod
             } catch (e: Exception) {
             }
         }
+    }
+
+    companion object {
+        const val TAG = "PickInstituteScreen"
     }
 }

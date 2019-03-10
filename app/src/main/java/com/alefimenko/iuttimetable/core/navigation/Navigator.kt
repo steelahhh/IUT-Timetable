@@ -1,9 +1,12 @@
 package com.alefimenko.iuttimetable.core.navigation
 
-import androidx.navigation.NavController
-import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFragment
+import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment
+import com.alefimenko.iuttimetable.feature.schedule.ScheduleFragment
+import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
 
 /*
  * Created by Alexander Efimenko on 2019-03-01.
@@ -11,26 +14,47 @@ import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 
 class Navigator {
 
-    private var navController: NavController? = null
+    private var _router: Router? = null
+    private val router: Router get() = _router ?: error("Router not bound")
 
-    fun bind(navController: NavController) {
-        this.navController = navController
+    fun bind(navController: Router) {
+        this._router = navController
     }
 
     fun openPickInstitute() {
-        if (navController?.currentDestination?.id == R.id.pickInstituteFragment) return
-        navController?.navigate(R.id.pickInstituteFragment)
+        router.setRoot(
+            RouterTransaction.with(
+                PickInstituteFragment()
+            )
+        )
     }
 
     fun openPickGroup(form: Int, institute: InstituteUi) {
-        if (navController?.currentDestination?.id == R.id.pickGroupFragment) return
-        navController?.navigate(
-            R.id.pickGroupFragment,
-            PickGroupFragment.createBundle(form, institute)
+        if (!router.backstack.any { it.tag() == PickGroupFragment.TAG }) {
+            router.pushController(
+                RouterTransaction.with(
+                    PickGroupFragment(
+                        PickGroupFragment.createBundle(
+                            form = form,
+                            institute = institute
+                        )
+                    )
+                ).tag(PickGroupFragment.TAG)
+            )
+        }
+    }
+
+    fun openSchedule(group: GroupUi) {
+        router.setRoot(
+            RouterTransaction.with(
+                ScheduleFragment(
+                    group.toString()
+                )
+            )
         )
     }
 
     fun unbind() {
-        navController = null
+        _router = null
     }
 }

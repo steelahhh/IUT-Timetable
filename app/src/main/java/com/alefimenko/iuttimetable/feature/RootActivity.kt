@@ -3,6 +3,7 @@ package com.alefimenko.iuttimetable.feature
 import android.content.IntentFilter
 import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import com.alefimenko.iuttimetable.R
@@ -10,7 +11,11 @@ import com.alefimenko.iuttimetable.core.base.BaseActivity
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
 import com.alefimenko.iuttimetable.core.navigation.Navigator
+import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment
+import com.bluelinelabs.conductor.Conductor
 import org.koin.android.ext.android.inject
+import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.Router
 
 /*
  * Created by Alexander Efimenko on 22/11/18.
@@ -23,15 +28,27 @@ class RootActivity : BaseActivity() {
     private val networkStatusReceiver: NetworkStatusReceiver by inject()
     private val navigator: Navigator by inject()
 
+    private val container by bind<FrameLayout>(R.id.nav_host_fragment)
+
+    private lateinit var router: Router
+
     override fun onCreate(savedInstanceState: Bundle?) {
         updateTheme()
         super.onCreate(savedInstanceState)
+
+        router = Conductor.attachRouter(this, container, savedInstanceState)
+
+        navigator.bind(router)
+
+        if (!router.hasRootController()) {
+            router.setRoot(RouterTransaction.with(PickInstituteFragment()))
+        }
     }
 
     @Suppress("DEPRECATION")
     override fun onResume() {
         super.onResume()
-        navigator.bind(findNavController(R.id.nav_host_fragment))
+//        navigator.bind(findNavController(R.id.nav_host_fragment))
         registerReceiver(
             networkStatusReceiver,
             IntentFilter(CONNECTIVITY_ACTION)
@@ -40,7 +57,7 @@ class RootActivity : BaseActivity() {
 
     override fun onPause() {
         unregisterReceiver(networkStatusReceiver)
-        navigator.unbind()
+//        navigator.unbind()
         super.onPause()
     }
 
@@ -53,7 +70,7 @@ class RootActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (!findNavController(R.id.nav_host_fragment).navigateUp()) {
+        if (!router.handleBack()) {
             super.onBackPressed()
         }
     }

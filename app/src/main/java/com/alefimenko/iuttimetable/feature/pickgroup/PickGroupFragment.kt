@@ -9,11 +9,10 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.core.base.BaseFragment
+import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.util.arg
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.ext.android.bindScope
@@ -24,10 +23,20 @@ import org.koin.core.parameter.parametersOf
  * Created by Alexander Efimenko on 2019-03-02.
  */
 
-class PickGroupFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFeature.ViewModel>() {
+@Suppress("unused")
+class PickGroupFragment(
+    bundle: Bundle?
+) : BaseController<PickGroupFeature.UiEvent, PickGroupFeature.ViewModel>() {
 
-    private val form: Int by arg(FORM_KEY)
-    private val institute: InstituteUi by arg(INSTITUTE_KEY)
+    constructor() : this(null)
+
+    private var form: Int
+    private var institute: InstituteUi?
+
+    init {
+        form = bundle?.getInt(FORM_KEY) ?: 0
+        institute = bundle?.getParcelable(INSTITUTE_KEY)
+    }
 
     private val scope = getOrCreateScope(Scopes.PICK_GROUP)
 
@@ -47,26 +56,40 @@ class PickGroupFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFeatur
 
     override fun onCreateView(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        container: ViewGroup
     ): View {
         bindScope(scope)
         bindings.setup(this)
         return inflater.inflate(R.layout.fragment_pick_group, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onAttach(view: View) {
+        super.onAttach(view)
         recycler.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(view.context)
             adapter = fastAdapter
         }
-        dispatch(PickGroupFeature.UiEvent.LoadGroupsClicked(form, institute.id))
+        if (institute != null) {
+            dispatch(PickGroupFeature.UiEvent.LoadGroupsClicked(form, institute?.id ?: 0))
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         scope.close()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState.apply {
+            putParcelable(INSTITUTE_KEY, institute)
+            putInt(FORM_KEY, form)
+        })
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        form = savedInstanceState[FORM_KEY] as Int
+        institute = savedInstanceState[INSTITUTE_KEY] as InstituteUi
     }
 
     override fun accept(viewModel: PickGroupFeature.ViewModel) {
@@ -84,18 +107,19 @@ class PickGroupFragment : BaseFragment<PickGroupFeature.UiEvent, PickGroupFeatur
     }
 
     companion object {
+        const val TAG = "PickGroupScreen"
         const val FORM_KEY = "FORM"
         const val INSTITUTE_KEY = "INSTITUTE"
 
         fun newInstance(
             form: Int,
             institute: InstituteUi
-        ): PickGroupFragment = PickGroupFragment().apply {
-            arguments = Bundle().apply {
+        ): PickGroupFragment = PickGroupFragment(
+            Bundle().apply {
                 putInt(FORM_KEY, form)
                 putParcelable(INSTITUTE_KEY, institute)
             }
-        }
+        )
 
         fun createBundle(
             form: Int,
