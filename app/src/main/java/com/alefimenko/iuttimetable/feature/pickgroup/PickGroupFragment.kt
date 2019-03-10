@@ -69,8 +69,8 @@ class PickGroupFragment(
             layoutManager = LinearLayoutManager(view.context)
             adapter = fastAdapter
         }
-        if (institute != null) {
-            dispatch(PickGroupFeature.UiEvent.LoadGroupsClicked(form, institute?.id ?: 0))
+        institute?.let { inst ->
+            dispatch(PickGroupFeature.UiEvent.LoadGroupsClicked(form, inst.id))
         }
     }
 

@@ -13,7 +13,6 @@ import com.alefimenko.iuttimetable.model.mappers.ScheduleParser
 import com.alefimenko.iuttimetable.model.toUi
 import com.alefimenko.iuttimetable.util.ioMainSchedulers
 import io.reactivex.Observable
-import timber.log.Timber
 
 /*
  * Created by Alexander Efimenko on 2019-02-14.
@@ -30,13 +29,11 @@ class PickGroupRepository(
     private val lruCache: LruCache<String, List<InstituteUi>> = LruCache(2 * 1024 * 1024)
 
     fun getGroups(form: Int, instituteId: Int): Observable<List<GroupUi>> {
-        Timber.d("Loading groups $form $instituteId")
         return if (networkStatusReceiver.isNetworkAvailable()) {
             scheduleService.fetchGroups(form.toFormPath(), instituteId)
                 .toObservable()
                 .ioMainSchedulers()
                 .map { groups ->
-                    Timber.d("Loaded groups $groups")
                     groups.map { group ->
                         group.toUi()
                     }
@@ -70,6 +67,10 @@ class PickGroupRepository(
 
     fun changeTheme() {
         preferences.isNightMode = preferences.isNightMode.not()
+    }
+
+    fun saveGroup(group: GroupUi) {
+        preferences.currentGroup = group.id
     }
 
     companion object {

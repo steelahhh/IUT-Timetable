@@ -5,17 +5,18 @@ import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.navigation.findNavController
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseActivity
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
 import com.alefimenko.iuttimetable.core.navigation.Navigator
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFragment
+import com.alefimenko.iuttimetable.feature.schedule.ScheduleFragment
+import com.alefimenko.iuttimetable.util.Constants.ITEM_DOESNT_EXIST
 import com.bluelinelabs.conductor.Conductor
-import org.koin.android.ext.android.inject
-import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
+import org.koin.android.ext.android.inject
 
 /*
  * Created by Alexander Efimenko on 22/11/18.
@@ -39,16 +40,17 @@ class RootActivity : BaseActivity() {
         router = Conductor.attachRouter(this, container, savedInstanceState)
 
         navigator.bind(router)
-
         if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(PickInstituteFragment()))
+            when (sharedPreferences.currentGroup) {
+                ITEM_DOESNT_EXIST -> router.setRoot(RouterTransaction.with(PickInstituteFragment()))
+                else -> router.setRoot(RouterTransaction.with(ScheduleFragment()))
+            }
         }
     }
 
     @Suppress("DEPRECATION")
     override fun onResume() {
         super.onResume()
-//        navigator.bind(findNavController(R.id.nav_host_fragment))
         registerReceiver(
             networkStatusReceiver,
             IntentFilter(CONNECTIVITY_ACTION)
@@ -57,7 +59,6 @@ class RootActivity : BaseActivity() {
 
     override fun onPause() {
         unregisterReceiver(networkStatusReceiver)
-//        navigator.unbind()
         super.onPause()
     }
 
