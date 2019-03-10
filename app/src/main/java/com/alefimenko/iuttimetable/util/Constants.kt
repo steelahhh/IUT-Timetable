@@ -1,7 +1,7 @@
 package com.alefimenko.iuttimetable.util
 
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.model.GroupResponse
+import com.alefimenko.iuttimetable.core.data.remote.model.GroupResponse
 import java.util.LinkedList
 
 /**

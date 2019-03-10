@@ -1,8 +1,8 @@
-package com.alefimenko.iuttimetable.model.mappers
+package com.alefimenko.iuttimetable.core.data
 
-import com.alefimenko.iuttimetable.model.ClassEntry
-import com.alefimenko.iuttimetable.model.Time
-import com.alefimenko.iuttimetable.model.WeekSchedule
+import com.alefimenko.iuttimetable.feature.schedule.model.ClassEntry
+import com.alefimenko.iuttimetable.feature.schedule.model.Time
+import com.alefimenko.iuttimetable.feature.schedule.model.WeekSchedule
 import com.alefimenko.iuttimetable.util.Constants
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -17,7 +17,7 @@ class ScheduleParser {
     private var _doc: Document? = null
 
     val document: Document
-        get() = _doc ?: throw RuntimeException("Document should not be null")
+        get() = _doc ?: error("Document should not be null")
 
     val weeksCount: Int
         get() = document.weeks.size
@@ -56,7 +56,10 @@ class ScheduleParser {
                             subject = entry.classInfo.first,
                             teacher = entry.classInfo.second,
                             classType = entry.classType,
-                            time = Time(start = time[0], finish = time[1]),
+                            time = Time(
+                                start = time[0],
+                                finish = time[1]
+                            ),
                             location = entry.location,
                             innerGroup = 0.innerGroup,
                             date = document.getDate(week, day)
@@ -74,7 +77,10 @@ class ScheduleParser {
                                 subject = cell.classInfo.first,
                                 teacher = cell.classInfo.second,
                                 classType = cell.classType,
-                                time = Time(start = time[0], finish = time[1]),
+                                time = Time(
+                                    start = time[0],
+                                    finish = time[1]
+                                ),
                                 location = cell.location,
                                 innerGroup = (idx + 1).innerGroup,
                                 date = document.getDate(week, day)

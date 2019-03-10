@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.model
+package com.alefimenko.iuttimetable.feature.schedule.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

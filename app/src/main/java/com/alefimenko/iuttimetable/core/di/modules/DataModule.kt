@@ -3,7 +3,7 @@ package com.alefimenko.iuttimetable.core.di.modules
 import androidx.room.Room
 import com.alefimenko.iuttimetable.core.data.local.GroupDatabase
 import com.alefimenko.iuttimetable.core.data.local.SchedulesDatabase
-import com.alefimenko.iuttimetable.model.mappers.ScheduleParser
+import com.alefimenko.iuttimetable.core.data.ScheduleParser
 import com.google.gson.GsonBuilder
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module

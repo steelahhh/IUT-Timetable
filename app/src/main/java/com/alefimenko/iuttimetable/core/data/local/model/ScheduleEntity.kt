@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.alefimenko.iuttimetable.model.Schedule
+import com.alefimenko.iuttimetable.feature.schedule.model.Schedule
 import com.google.gson.GsonBuilder
 import kotlinx.android.parcel.Parcelize
 

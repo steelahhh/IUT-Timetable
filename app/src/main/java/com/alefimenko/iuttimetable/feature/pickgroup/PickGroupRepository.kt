@@ -11,8 +11,8 @@ import com.alefimenko.iuttimetable.core.data.remote.toFormPath
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.toEntity
-import com.alefimenko.iuttimetable.model.mappers.ScheduleParser
-import com.alefimenko.iuttimetable.model.toUi
+import com.alefimenko.iuttimetable.core.data.ScheduleParser
+import com.alefimenko.iuttimetable.core.data.remote.model.toUi
 import com.alefimenko.iuttimetable.util.ioMainSchedulers
 import io.reactivex.Completable
 import io.reactivex.Observable
