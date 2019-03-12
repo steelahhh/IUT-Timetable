@@ -12,7 +12,7 @@ import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.UiEvent
-import com.alefimenko.iuttimetable.util.enableAll
+import com.alefimenko.iuttimetable.util.changeEnabled
 import com.alefimenko.iuttimetable.views.ErrorStubView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -98,9 +98,7 @@ class PickInstituteController : BaseController<UiEvent, PickInstituteFeature.Vie
                 nextButton.show()
             }
 
-            if (!isLoading) {
-                formRadioGroup.enableAll()
-            }
+            formRadioGroup.changeEnabled(enabled = !isLoading)
         }
     }
 

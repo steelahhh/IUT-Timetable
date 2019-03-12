@@ -120,8 +120,7 @@ class PickInstituteFeature(
                 isLoading = false
             )
             is Effect.FormSelected -> state.copy(
-                form = effect.id,
-                isLoading = false
+                form = effect.id
             )
             is Effect.ErrorLoading -> state.copy(
                 isLoading = false,
