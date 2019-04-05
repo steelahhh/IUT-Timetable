@@ -13,5 +13,6 @@ val applicationModule = listOf(
     networkModule,
     preferencesModule
 ) + listOf(
-    pickGroupModule
+    pickGroupModule,
+    rootModule
 )

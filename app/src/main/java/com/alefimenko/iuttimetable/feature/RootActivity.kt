@@ -4,18 +4,11 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
 import android.widget.FrameLayout
-import androidx.appcompat.app.AppCompatDelegate
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseActivity
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
-import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
-import com.alefimenko.iuttimetable.core.navigation.Navigator
-import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteController
-import com.alefimenko.iuttimetable.feature.schedule.ScheduleController
-import com.alefimenko.iuttimetable.util.Constants.ITEM_DOESNT_EXIST
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
 import org.koin.android.ext.android.inject
 
 /*
@@ -25,29 +18,21 @@ import org.koin.android.ext.android.inject
 class RootActivity : BaseActivity() {
     override val layoutId: Int = R.layout.activity_root
 
-    private val sharedPreferences: LocalPreferences by inject()
+    private val interactor: RootFeature by inject()
     private val networkStatusReceiver: NetworkStatusReceiver by inject()
-    private val navigator: Navigator by inject()
 
     private val container by bind<FrameLayout>(R.id.container)
 
     private lateinit var router: Router
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        updateTheme()
+        interactor.updateTheme()
         super.onCreate(savedInstanceState)
 
         router = Conductor.attachRouter(this, container, savedInstanceState)
+        interactor.bindNavigator(router)
 
-        navigator.bind(router)
-        if (!router.hasRootController()) {
-            router.setRoot(
-                when (sharedPreferences.currentGroup) {
-                    ITEM_DOESNT_EXIST -> RouterTransaction.with(PickInstituteController())
-                    else -> RouterTransaction.with(ScheduleController())
-                }
-            )
-        }
+        interactor.setRootScreen()
     }
 
     @Suppress("DEPRECATION")
@@ -62,14 +47,6 @@ class RootActivity : BaseActivity() {
     override fun onPause() {
         unregisterReceiver(networkStatusReceiver)
         super.onPause()
-    }
-
-    private fun updateTheme() {
-        if (sharedPreferences.isNightMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
     }
 
     override fun onBackPressed() {

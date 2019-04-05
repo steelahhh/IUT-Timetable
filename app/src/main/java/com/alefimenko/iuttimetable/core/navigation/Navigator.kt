@@ -25,6 +25,17 @@ class Navigator {
         this._router = navController
     }
 
+    fun setRootScreen(screen: String) {
+        if (!router.hasRootController()) {
+            router.setRoot(
+                when (screen) {
+                    ScheduleController.TAG -> RouterTransaction.with(ScheduleController())
+                    else -> RouterTransaction.with(PickInstituteController())
+                }
+            )
+        }
+    }
+
     fun openPickInstitute() {
         router.setRoot(
             controller = PickInstituteController(),

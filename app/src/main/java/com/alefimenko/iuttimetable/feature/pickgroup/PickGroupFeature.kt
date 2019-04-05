@@ -33,7 +33,6 @@ class PickGroupFeature(
         navigator
     ),
     reducer = PickGroupFeature.ReducerImpl(),
-//    bootstrapper = BootStrapperImpl(),
     newsPublisher = PickGroupFeature.NewsPublisherImpl()
 ) {
 
