@@ -13,6 +13,7 @@ import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.views.ErrorStubView
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import org.koin.android.ext.android.inject
@@ -25,14 +26,14 @@ import org.koin.core.parameter.parametersOf
  */
 
 class PickGroupController(
-    bundle: Bundle? = null
+    bundle: Bundle = Bundle()
 ) : BaseController<PickGroupFeature.UiEvent, PickGroupFeature.ViewModel>() {
     private var form: Int
     private var institute: InstituteUi?
 
     init {
-        form = bundle?.getInt(FORM_KEY) ?: 0
-        institute = bundle?.getParcelable(INSTITUTE_KEY)
+        form = bundle.getInt(FORM_KEY)
+        institute = bundle.getParcelable(INSTITUTE_KEY)
     }
 
     private val scope = getOrCreateScope(Scopes.PICK_GROUP)
@@ -46,7 +47,15 @@ class PickGroupController(
     private val fastAdapter by bind.stuff {
         FastItemAdapter<GroupUi>().apply {
             withOnClickListener { _, _, group, _ ->
-                dispatch(PickGroupFeature.UiEvent.GroupClicked(group))
+                dispatch(
+                    PickGroupFeature.UiEvent.GroupClicked(
+                        GroupInfo(
+                            form = form,
+                            group = group,
+                            institute = institute ?: error("Institute cannot be null at this point")
+                        )
+                    )
+                )
                 false
             }
         }
@@ -94,8 +103,12 @@ class PickGroupController(
             recycler.isVisible = !isLoading
             errorView.apply {
                 isVisible = isError
-                text = "Ошибка при загрузке групп"
+                textRes = R.string.group_loading_error
                 onRetryClick = ::loadGroups
+            }
+
+            if (isError) {
+                fastAdapter.clear()
             }
 
             if (isGroupsLoaded) {

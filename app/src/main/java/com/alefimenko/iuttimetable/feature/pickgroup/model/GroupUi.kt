@@ -4,7 +4,6 @@ import android.os.Parcelable
 import android.view.View
 import android.widget.TextView
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.core.data.local.model.GroupEntity
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.parcel.Parcelize
@@ -34,5 +33,3 @@ data class GroupUi(
         }
     }
 }
-
-fun GroupUi.toEntity() = GroupEntity(id, label)

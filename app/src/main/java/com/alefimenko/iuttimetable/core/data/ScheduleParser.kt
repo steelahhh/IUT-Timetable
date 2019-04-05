@@ -19,18 +19,21 @@ class ScheduleParser {
     val document: Document
         get() = _doc ?: error("Document should not be null")
 
+    val weeks: List<String>
+        get() = document.weeks
+
     val weeksCount: Int
         get() = document.weeks.size
 
     val semester: String
         get() = document.semester
 
-    fun initialize(document: Document) {
-        _doc = document
+    fun initialize(body: String) {
+        _doc = Document(body)
     }
 
-    fun getSchedule(): Map<Int, WeekSchedule> {
-        with(document) {
+    val schedule: Map<Int, WeekSchedule>
+        get() = with(document) {
             val weeksNumber = weeks.size
             val schedule = mutableMapOf<Int, WeekSchedule>()
             for (week in 0 until weeksNumber) {
@@ -41,7 +44,6 @@ class ScheduleParser {
             }
             return schedule
         }
-    }
 
     private fun Document.getDaySchedule(week: Int, day: Int): List<ClassEntry> =
         getWeekRow(week).fold(mutableListOf()) { acc, element ->

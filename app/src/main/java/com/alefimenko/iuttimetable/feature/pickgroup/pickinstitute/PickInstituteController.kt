@@ -20,6 +20,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.ext.android.bindScope
 import org.koin.androidx.scope.ext.android.getOrCreateScope
 import org.koin.core.parameter.parametersOf
+import java.lang.String.format
 
 /*
  * Created by Alexander Efimenko on 2019-02-04.
@@ -47,7 +48,7 @@ class PickInstituteController : BaseController<UiEvent, PickInstituteFeature.Vie
     override fun onAttach(view: View) {
         super.onAttach(view)
         dialog = MaterialDialog(view.context).apply {
-            title(text = "Выберите институт")
+            title(R.string.pick_institute)
         }
         formRadioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
@@ -66,10 +67,12 @@ class PickInstituteController : BaseController<UiEvent, PickInstituteFeature.Vie
         with(viewmodel) {
             progressBar.isVisible = isLoading
             pickInstituteButton.isEnabled = !isLoading
-            errorView.isVisible = isError
-            errorView.text = "Ошибка при загрузке институтов"
-            errorView.onRetryClick = {
-                dispatch(PickInstituteFeature.UiEvent.LoadInstitutesClicked)
+            errorView.apply {
+                isVisible = isError
+                textRes = R.string.institute_loading_error
+                onRetryClick = {
+                    dispatch(PickInstituteFeature.UiEvent.LoadInstitutesClicked)
+                }
             }
 
             if (isInstitutesLoaded) {
@@ -90,8 +93,8 @@ class PickInstituteController : BaseController<UiEvent, PickInstituteFeature.Vie
                 institute ?: return
                 pickInstituteButton.apply {
                     icon = null
-                    text = kotlin.String.format(
-                        view?.context?.getString(R.string.selected_institute) ?: "",
+                    text = format(
+                        requireContext().getString(R.string.selected_institute),
                         institute.label
                     )
                 }

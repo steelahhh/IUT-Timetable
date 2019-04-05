@@ -2,10 +2,10 @@ package com.alefimenko.iuttimetable.core.navigation
 
 import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupController
-import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteController
 import com.alefimenko.iuttimetable.feature.schedule.ScheduleController
+import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
@@ -34,18 +34,17 @@ class Navigator {
 
     fun openPickGroup(form: Int, institute: InstituteUi) {
         router.safePush(
-            controller = PickGroupController(
-                PickGroupController.createBundle(form = form, institute = institute)
+            controller = PickGroupController.newInstance(
+                form = form,
+                institute = institute
             ),
             tag = PickGroupController.TAG
         )
     }
 
-    fun openSchedule(group: GroupUi) {
+    fun openSchedule(groupInfo: GroupInfo) {
         router.setRoot(
-            controller = ScheduleController(
-                group.toString()
-            ),
+            controller = ScheduleController.newInstance(groupInfo),
             tag = ScheduleController.TAG
         )
     }

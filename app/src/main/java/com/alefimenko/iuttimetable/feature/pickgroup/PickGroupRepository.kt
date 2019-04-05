@@ -2,17 +2,17 @@ package com.alefimenko.iuttimetable.feature.pickgroup
 
 import android.util.LruCache
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
-import com.alefimenko.iuttimetable.core.data.local.GroupsDao
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
+import com.alefimenko.iuttimetable.core.data.local.SchedulesDao
+import com.alefimenko.iuttimetable.core.data.local.model.ScheduleEntity
 import com.alefimenko.iuttimetable.core.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.core.data.remote.NoNetworkException
 import com.alefimenko.iuttimetable.core.data.remote.ScheduleService
+import com.alefimenko.iuttimetable.core.data.remote.model.toUi
 import com.alefimenko.iuttimetable.core.data.remote.toFormPath
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.feature.pickgroup.model.toEntity
-import com.alefimenko.iuttimetable.core.data.ScheduleParser
-import com.alefimenko.iuttimetable.core.data.remote.model.toUi
+import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.util.ioMainSchedulers
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -23,10 +23,9 @@ import io.reactivex.Observable
 
 class PickGroupRepository(
     private val preferences: LocalPreferences,
-    private val scheduleParser: ScheduleParser,
     private val scheduleService: ScheduleService,
     private val feedbackService: FeedbackService,
-    private val groupsDao: GroupsDao,
+    private val schedulesDao: SchedulesDao,
     private val networkStatusReceiver: NetworkStatusReceiver
 ) {
 
@@ -73,8 +72,16 @@ class PickGroupRepository(
         preferences.isNightMode = preferences.isNightMode.not()
     }
 
-    fun saveGroup(group: GroupUi): Completable = groupsDao.insertGroup(group.toEntity()).also {
-        preferences.currentGroup = group.id
+    fun saveGroup(groupInfo: GroupInfo): Completable = schedulesDao.insert(
+        ScheduleEntity(
+            formId = groupInfo.form,
+            groupName = groupInfo.group.label,
+            groupId = groupInfo.group.id,
+            instituteName = groupInfo.institute.label,
+            instituteId = groupInfo.institute.id
+        )
+    ).also {
+        preferences.currentGroup = groupInfo.group.id
     }
 
     companion object {

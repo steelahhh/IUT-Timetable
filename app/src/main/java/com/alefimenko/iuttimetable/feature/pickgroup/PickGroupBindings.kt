@@ -39,6 +39,6 @@ private class UiEventTransformer : (UiEvent) -> Wish? {
             event.form,
             event.instituteId
         )
-        is UiEvent.GroupClicked -> Wish.SelectGroup(event.group)
+        is UiEvent.GroupClicked -> Wish.SelectGroup(event.groupInfo)
     }
 }

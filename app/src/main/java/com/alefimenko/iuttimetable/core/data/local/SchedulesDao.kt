@@ -20,28 +20,18 @@ interface SchedulesDao {
     @get:Query("SELECT * FROM Schedules")
     val schedules: Single<MutableList<ScheduleEntity>>
 
-    @Query("SELECT * FROM Schedules WHERE groupid = :groupId")
-    fun getScheduleByGroupId(groupId: Int): Maybe<ScheduleEntity>
+    @get:Query("SELECT groupId, groupName FROM SCHEDULES ")
+    val groups: Single<List<GroupEntity>>
 
-    @Query("DELETE FROM Schedules WHERE groupid = :groupId")
-    fun deleteScheduleByGroupId(groupId: Int): Int
+    @Query("SELECT * FROM Schedules WHERE groupId = :groupId")
+    fun getByGroupId(groupId: Int): Maybe<ScheduleEntity>
+
+    @Query("DELETE FROM Schedules WHERE groupId = :id")
+    fun deleteByGroupId(id: Int): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSchedule(schedule: ScheduleEntity): Long
+    fun insert(schedule: ScheduleEntity): Completable
 
     @Query("DELETE FROM Schedules")
-    fun deleteAllSchedules(): Int
-}
-
-@Dao
-interface GroupsDao {
-
-    @get:Query("SELECT * FROM Groups")
-    val groups: Single<MutableList<GroupEntity>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertGroup(group: GroupEntity): Completable
-
-    @get:Query("SELECT COUNT(*) FROM Groups")
-    val groupsCount: Single<Int>
+    fun deleteAll(): Int
 }

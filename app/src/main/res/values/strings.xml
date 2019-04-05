@@ -10,4 +10,7 @@
     <string name="selected_institute">Институт: %s</string>
 
     <string name="retry">Повторить</string>
+
+    <string name="group_loading_error">Ошибка при загрузке групп</string>
+    <string name="institute_loading_error">Ошибка при загрузке групп</string>
 </resources>

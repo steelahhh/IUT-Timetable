@@ -1,6 +1,7 @@
 package com.alefimenko.iuttimetable.core.data.remote
 
 import com.alefimenko.iuttimetable.core.data.remote.model.GroupResponse
+import com.alefimenko.iuttimetable.core.data.remote.model.InstituteResponse
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.http.GET
@@ -13,8 +14,6 @@ import retrofit2.http.Query
  * Email: a.efimenko72@gmail.com
  * Github: github.com/steelahhh
  */
-
-typealias InstituteResponse = GroupResponse
 
 interface ScheduleService {
 

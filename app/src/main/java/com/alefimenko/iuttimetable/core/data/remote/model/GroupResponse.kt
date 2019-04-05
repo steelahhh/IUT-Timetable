@@ -15,6 +15,8 @@ data class GroupResponse(
     val name: String
 )
 
+typealias InstituteResponse = GroupResponse
+
 fun GroupResponse.toEntity() = GroupEntity(id, name)
 
 fun GroupResponse.toUi() = GroupUi(id, name)

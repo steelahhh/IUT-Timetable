@@ -15,9 +15,9 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "Groups")
 data class GroupEntity(
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "groupId")
     val id: Int,
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "groupName")
     val name: String
 ) : Parcelable
 

@@ -22,13 +22,13 @@ abstract class BaseController<Event, ViewModel>(
 
     val bind = createBinder()
 
-    override fun onLowMemory() = Unit
-
-    override fun onConfigurationChanged(newConfig: Configuration?) = Unit
-
     fun dispatch(event: Event) {
         events.onNext(event)
     }
+
+    fun requireView() = view ?: error("")
+
+    fun requireContext() = requireView().context
 
     final override fun accept(viewmodel: ViewModel) {
         if (isAttached) {
@@ -44,7 +44,11 @@ abstract class BaseController<Event, ViewModel>(
     }
 
     override fun onDestroyView(view: View) {
-        super.onDestroyView(view)
         bind.resetViews()
+        super.onDestroyView(view)
     }
+
+    override fun onLowMemory() = Unit
+
+    override fun onConfigurationChanged(newConfig: Configuration?) = Unit
 }

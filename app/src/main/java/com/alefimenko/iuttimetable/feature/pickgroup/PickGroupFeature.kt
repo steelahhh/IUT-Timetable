@@ -7,6 +7,7 @@ import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.News
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.State
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.Wish
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
+import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.util.ioMainSchedulers
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.element.Actor
@@ -55,19 +56,19 @@ class PickGroupFeature(
 
     sealed class UiEvent {
         data class LoadGroupsClicked(val form: Int, val instituteId: Int) : UiEvent()
-        data class GroupClicked(val group: GroupUi) : UiEvent()
+        data class GroupClicked(val groupInfo: GroupInfo) : UiEvent()
     }
 
     sealed class Wish {
         data class LoadGroups(val form: Int, val instituteId: Int) : Wish()
-        data class SelectGroup(val group: GroupUi) : Wish()
+        data class SelectGroup(val groupInfo: GroupInfo) : Wish()
     }
 
     sealed class Effect {
         object ScreenChanged : Effect()
         object StartedLoading : Effect()
         data class GroupsLoaded(val groups: List<GroupUi>) : Effect()
-        data class GroupSelected(val group: GroupUi) : Effect()
+        data class GroupSelected(val groupInfo: GroupInfo) : Effect()
         data class ErrorLoading(val throwable: Throwable) : Effect()
     }
 
@@ -85,12 +86,13 @@ class PickGroupFeature(
                 .onErrorReturn { Effect.ErrorLoading(it) }
                 .startWith(Effect.StartedLoading)
             is Wish.SelectGroup -> Observable.concat(
-                just(Effect.GroupSelected(wish.group)),
+                just(Effect.GroupSelected(wish.groupInfo)),
                 Observable.fromCallable {
-                    navigator.openSchedule(wish.group)
+                    navigator.openSchedule(wish.groupInfo)
                     return@fromCallable Effect.ScreenChanged
                 },
-                repository.saveGroup(wish.group)
+                // TODO This is just temporary, should remove this after implementing schedule downloading
+                repository.saveGroup(wish.groupInfo)
                     .ioMainSchedulers()
                     .toObservable<Effect>()
             )
@@ -114,7 +116,7 @@ class PickGroupFeature(
                 isError = false
             )
             is Effect.GroupSelected -> state.copy(
-                group = effect.group
+                group = effect.groupInfo.group
             )
             else -> state.copy()
         }

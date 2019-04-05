@@ -12,6 +12,7 @@
         <TextView
             android:id="@+id/schedule_text"
             style="@style/AppText.Larger"
+            android:textAlignment="center"
             android:layout_width="wrap_content"
             android:textColor="?android:textColorPrimary"
             android:layout_height="wrap_content"

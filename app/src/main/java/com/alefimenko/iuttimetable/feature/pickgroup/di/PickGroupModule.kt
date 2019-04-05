@@ -16,7 +16,7 @@ import org.koin.dsl.module.module
 
 val pickGroupModule = module {
     scope(Scopes.PICK_GROUP) {
-        PickGroupRepository(get(), get(), get(), get(), get(), get())
+        PickGroupRepository(get(), get(), get(), get(), get())
     }
 
     single {
