@@ -4,6 +4,7 @@ import com.alefimenko.iuttimetable.feature.schedule.model.ClassEntry
 import com.alefimenko.iuttimetable.feature.schedule.model.Time
 import com.alefimenko.iuttimetable.feature.schedule.model.WeekSchedule
 import com.alefimenko.iuttimetable.util.Constants
+import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
@@ -29,7 +30,7 @@ class ScheduleParser {
         get() = document.semester
 
     fun initialize(body: String) {
-        _doc = Document(body)
+        _doc = Jsoup.parse(body)
     }
 
     val schedule: Map<Int, WeekSchedule>

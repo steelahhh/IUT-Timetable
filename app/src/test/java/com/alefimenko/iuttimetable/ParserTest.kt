@@ -1,7 +1,6 @@
 package com.alefimenko.iuttimetable
 
 import com.alefimenko.iuttimetable.core.data.ScheduleParser
-import org.jsoup.Jsoup
 import org.junit.Before
 import org.junit.Test
 
@@ -15,12 +14,12 @@ class ParserTest {
 
     @Before
     fun init() {
-        scheduleParser.initialize(Jsoup.parse(HTML))
+        scheduleParser.initialize(HTML)
     }
 
     @Test
     fun `Should be two weeks`() {
-        assert(scheduleParser.getSchedule().keys.size == 2)
+        assert(scheduleParser.schedule.keys.size == 2)
     }
 
     @Test
@@ -30,14 +29,14 @@ class ParserTest {
 
     @Test
     fun `Should not be empty`() {
-        assert(scheduleParser.getSchedule()[0]?.isNotEmpty() == true)
-        assert(scheduleParser.getSchedule()[1]?.isNotEmpty() == true)
+        assert(scheduleParser.schedule[0]?.isNotEmpty() == true)
+        assert(scheduleParser.schedule[1]?.isNotEmpty() == true)
     }
 
     @Test
     fun `Should contain 6 days`() {
-        assert(scheduleParser.getSchedule()[0]?.size == 6)
-        assert(scheduleParser.getSchedule()[1]?.size == 6)
+        assert(scheduleParser.schedule[0]?.size == 6)
+        assert(scheduleParser.schedule[1]?.size == 6)
     }
 }
 
