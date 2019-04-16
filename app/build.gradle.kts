@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -11,9 +9,7 @@ plugins {
 android {
     compileSdkVersion(Versions.compileSdk)
     androidExtensions {
-        configure(delegateClosureOf<AndroidExtensionsExtension> {
-            isExperimental = true
-        })
+        isExperimental = true
     }
 
     compileOptions {
