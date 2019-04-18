@@ -38,9 +38,8 @@ class ParserTest {
         assert(scheduleParser.schedule[0]?.size == 6)
         assert(scheduleParser.schedule[1]?.size == 6)
     }
-}
 
-private val HTML = """
+    private val HTML = """
 <!-- saved from url=(0074)https://www.tyuiu.ru/shedule_new/bin/groups.py?act=show&print=&sgroup=5307 -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=KOI8-R">
         <title>Расписание</title>
@@ -580,3 +579,4 @@ private val HTML = """
 
 </body></html>
 """.trimIndent()
+}

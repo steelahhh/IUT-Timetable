@@ -93,7 +93,7 @@ complexity:
     threshold: 60
   LongParameterList:
     active: true
-    threshold: 6
+    threshold: 10
     ignoreDefaultParameters: false
   MethodOverloading:
     active: false
@@ -109,7 +109,7 @@ complexity:
     ignoreStringsRegex: '$^'
   TooManyFunctions:
     active: true
-    thresholdInFiles: 11
+    thresholdInFiles: 100
     thresholdInClasses: 11
     thresholdInInterfaces: 11
     thresholdInObjects: 11
@@ -326,7 +326,7 @@ naming:
     excludeClassPattern: '$^'
     ignoreOverriddenFunctions: true
   MatchingDeclarationName:
-    active: true
+    active: false
   MemberNameEqualsClassName:
     active: false
     ignoreOverriddenFunction: true
@@ -432,7 +432,7 @@ style:
     active: false
     maxJumpCount: 1
   MagicNumber:
-    active: true
+    active: false
     ignoreNumbers: '-1,0,1,2'
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false

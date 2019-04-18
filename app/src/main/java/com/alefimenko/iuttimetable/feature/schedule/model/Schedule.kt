@@ -27,8 +27,8 @@ data class ClassEntry(
     val hidden: Boolean = false
 ) : Parcelable, Comparable<ClassEntry> {
     override fun compareTo(other: ClassEntry): Int {
-        val EQUAL = 0
-        return if (this === other) EQUAL else this.time.start.compareTo(other.time.start)
+        val equal = 0
+        return if (this === other) equal else this.time.start.compareTo(other.time.start)
     }
 }
 

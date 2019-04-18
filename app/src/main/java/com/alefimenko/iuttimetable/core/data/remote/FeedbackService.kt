@@ -62,9 +62,7 @@ class FeedbackService(private val context: Context) {
                     putExtra(Intent.EXTRA_SUBJECT, subject)
                     putExtra(Intent.EXTRA_TEXT, text)
                 }, context.getString(R.string.str_choose_email_client)
-            ).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
 }

@@ -5,8 +5,8 @@ import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
 import com.alefimenko.iuttimetable.core.data.local.SchedulesDao
 import com.alefimenko.iuttimetable.core.data.local.model.ScheduleEntity
+import com.alefimenko.iuttimetable.core.data.remote.Exceptions
 import com.alefimenko.iuttimetable.core.data.remote.FeedbackService
-import com.alefimenko.iuttimetable.core.data.remote.NoNetworkException
 import com.alefimenko.iuttimetable.core.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.core.data.remote.model.toUi
 import com.alefimenko.iuttimetable.core.data.remote.toFormPath
@@ -42,7 +42,7 @@ class PickGroupRepository(
                     }
                 }
         } else {
-            Observable.error(NoNetworkException())
+            Observable.error(Exceptions.NoNetworkException())
         }
     }
 
@@ -63,7 +63,7 @@ class PickGroupRepository(
                         }
                     }
             } else {
-                Observable.error(NoNetworkException())
+                Observable.error(Exceptions.NoNetworkException())
             }
         }
     }

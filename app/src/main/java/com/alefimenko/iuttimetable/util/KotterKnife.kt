@@ -156,10 +156,9 @@ private fun <V : View> nullableImmediate(
 ) = ids.map { finder(it) as V? }.filterNotNull().also { viewInitializer?.invoke(it) }
 
 private class Lazy<out V>(val initializer: (String?) -> V) : ReadOnlyProperty<Any, V> {
-    @Suppress("ClassName")
-    private object EMPTY_VALUE
+    private object EmptyValue
 
-    private var value: Any? = EMPTY_VALUE
+    private var value: Any? = EmptyValue
 
     override fun getValue(thisRef: Any, property: KProperty<*>): V {
         init(property.name)
@@ -167,13 +166,13 @@ private class Lazy<out V>(val initializer: (String?) -> V) : ReadOnlyProperty<An
     }
 
     fun init(name: String? = null) {
-        if (value == EMPTY_VALUE) {
+        if (value == EmptyValue) {
             value = initializer(name)
         }
     }
 
     fun reset() {
-        value = EMPTY_VALUE
+        value = EmptyValue
     }
 }
 
