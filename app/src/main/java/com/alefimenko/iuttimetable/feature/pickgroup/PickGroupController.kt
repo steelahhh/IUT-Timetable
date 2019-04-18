@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,9 @@ import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.views.ErrorStubView
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.listeners.ItemFilterListener
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.ext.android.bindScope
 import org.koin.androidx.scope.ext.android.getOrCreateScope
@@ -43,22 +46,11 @@ class PickGroupController(
     private val recycler by bind<RecyclerView>(R.id.recycler)
     private val progressBar by bind<ProgressBar>(R.id.progress_bar)
     private val errorView by bind<ErrorStubView>(R.id.error_view)
+    private val toolbar by bind<BottomAppBar>(R.id.toolbar)
+    private val searchView by bind<SearchView>(R.id.search_view)
 
     private val fastAdapter by bind.stuff {
-        FastItemAdapter<GroupUi>().apply {
-            withOnClickListener { _, _, group, _ ->
-                dispatch(
-                    PickGroupFeature.UiEvent.GroupClicked(
-                        GroupInfo(
-                            form = form,
-                            group = group,
-                            institute = institute ?: error("Institute cannot be null at this point")
-                        )
-                    )
-                )
-                false
-            }
-        }
+        FastItemAdapter<GroupUi>()
     }
 
     override fun onCreateView(
@@ -72,10 +64,7 @@ class PickGroupController(
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        recycler.apply {
-            layoutManager = LinearLayoutManager(view.context)
-            adapter = fastAdapter
-        }
+        setupViews()
         loadGroups()
     }
 
@@ -97,12 +86,13 @@ class PickGroupController(
         institute = savedInstanceState[INSTITUTE_KEY] as InstituteUi
     }
 
-    override fun acceptViewmodel(viewmodel: PickGroupFeature.ViewModel) {
-        with(viewmodel) {
+    override fun acceptViewModel(viewModel: PickGroupFeature.ViewModel) {
+        with(viewModel) {
             progressBar.isVisible = isLoading
             recycler.isVisible = !isLoading
             errorView.apply {
                 isVisible = isError
+                retryVisible = true
                 textRes = R.string.group_loading_error
                 onRetryClick = ::loadGroups
             }
@@ -113,8 +103,77 @@ class PickGroupController(
 
             if (isGroupsLoaded) {
                 fastAdapter.set(groups)
+                if (searchView.query.isNotEmpty()) {
+                    fastAdapter.filter(searchView.query)
+                }
             }
         }
+    }
+
+    private fun setupViews() {
+        fastAdapter.apply {
+            withOnClickListener { _, _, group, _ ->
+                dispatch(
+                    PickGroupFeature.UiEvent.GroupClicked(
+                        GroupInfo(
+                            form = form,
+                            group = group,
+                            institute = institute ?: error("Institute cannot be null at this point")
+                        )
+                    )
+                )
+                false
+            }
+
+            itemFilter.withItemFilterListener(object : ItemFilterListener<GroupUi> {
+                override fun onReset() {
+                    mainHandler.post {
+                        errorView.isVisible = false
+                    }
+                }
+
+                override fun itemsFiltered(constraint: CharSequence?, results: MutableList<GroupUi>?) {
+                    mainHandler.post {
+                        errorView.apply {
+                            isVisible = results?.isEmpty() ?: false
+                            textRes = R.string.search_error
+                            retryVisible = false
+                        }
+                    }
+                }
+            })
+
+            itemFilter.withFilterPredicate { item, constraint ->
+                filterGroups(item, constraint)
+            }
+        }
+        recycler.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = fastAdapter
+        }
+
+        toolbar.setNavigationOnClickListener {
+            router.popCurrentController()
+        }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = true.also {
+                fastAdapter.filter(query)
+            }
+
+            override fun onQueryTextChange(newText: String?) = true.also {
+                fastAdapter.filter(newText)
+            }
+        })
+    }
+
+    private fun filterGroups(item: GroupUi, constraint: CharSequence?): Boolean {
+        constraint ?: return false
+        val query = constraint.toString().toLowerCase()
+        val label = item.label.toLowerCase().replace(" ", "")
+        val digits = query.replace("[a-zA-Zа-яА-Я]+".toRegex(), "").trim()
+        val name = query.replace("\\d+".toRegex(), "").trim()
+        return label.contains(query) || (label.contains(digits) && label.contains(name))
     }
 
     private fun loadGroups() {

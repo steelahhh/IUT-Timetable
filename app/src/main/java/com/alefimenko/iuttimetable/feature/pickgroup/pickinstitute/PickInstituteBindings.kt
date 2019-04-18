@@ -34,8 +34,8 @@ private class ViewModelTransformer : (State) -> ViewModel {
         )
 }
 
-private class UiEventTransformer : (UiEvent) -> PickInstituteFeature.Wish? {
-    override fun invoke(event: UiEvent): PickInstituteFeature.Wish? = when (event) {
+private class UiEventTransformer : (UiEvent) -> Wish? {
+    override fun invoke(event: UiEvent): Wish? = when (event) {
         is UiEvent.NextButtonClicked -> Wish.NavigateToPickGroup
         is UiEvent.LoadInstitutesClicked -> Wish.LoadInstitutes
         is UiEvent.FormClicked -> Wish.SelectForm(

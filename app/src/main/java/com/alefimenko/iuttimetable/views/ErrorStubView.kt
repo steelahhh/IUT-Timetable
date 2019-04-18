@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.alefimenko.iuttimetable.R
 import com.google.android.material.button.MaterialButton
 
@@ -24,15 +25,11 @@ class ErrorStubView @JvmOverloads constructor(
     private val title: TextView
     private val button: MaterialButton
 
-    init {
-        inflate(context, R.layout.stub_error, this)
-
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(R.attr.background_color, typedValue, true)
-        background = ColorDrawable(ContextCompat.getColor(context, typedValue.resourceId))
-        title = findViewById(R.id.try_again_text)
-        button = findViewById(R.id.try_again_button)
-    }
+    var retryVisible: Boolean = true
+        set(value) {
+            field = value
+            button.isVisible = field
+        }
 
     @StringRes
     var textRes: Int = -1
@@ -56,4 +53,14 @@ class ErrorStubView @JvmOverloads constructor(
                 field?.invoke()
             }
         }
+
+    init {
+        inflate(context, R.layout.stub_error, this)
+
+        val typedValue = TypedValue()
+        context.theme.resolveAttribute(R.attr.background_color, typedValue, true)
+        background = ColorDrawable(ContextCompat.getColor(context, typedValue.resourceId))
+        title = findViewById(R.id.try_again_text)
+        button = findViewById(R.id.try_again_button)
+    }
 }

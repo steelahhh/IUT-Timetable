@@ -47,7 +47,7 @@ class ScheduleController(
         }
     }
 
-    override fun acceptViewmodel(viewmodel: String) {
+    override fun acceptViewModel(viewModel: String) {
     }
 
     companion object {

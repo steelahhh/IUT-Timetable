@@ -33,7 +33,7 @@ object Versions {
     const val gson = "2.8.5"
     const val koin = "1.0.2"
     const val timber = "4.7.1"
-    const val materialDialogs = "2.0.3"
+    const val materialDialogs = "2.7.0"
     const val junit = "4.12"
     const val testRunner = "1.1.0"
     const val espresso = "3.1.0"

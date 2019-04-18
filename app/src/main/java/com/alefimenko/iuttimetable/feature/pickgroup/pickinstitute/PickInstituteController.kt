@@ -63,15 +63,15 @@ class PickInstituteController : BaseController<UiEvent, PickInstituteFeature.Vie
         }
     }
 
-    override fun acceptViewmodel(viewmodel: PickInstituteFeature.ViewModel) {
-        with(viewmodel) {
+    override fun acceptViewModel(viewModel: PickInstituteFeature.ViewModel) {
+        with(viewModel) {
             progressBar.isVisible = isLoading
             pickInstituteButton.isEnabled = !isLoading
             errorView.apply {
                 isVisible = isError
                 textRes = R.string.institute_loading_error
                 onRetryClick = {
-                    dispatch(PickInstituteFeature.UiEvent.LoadInstitutesClicked)
+                    dispatch(UiEvent.LoadInstitutesClicked)
                 }
             }
 
@@ -82,7 +82,7 @@ class PickInstituteController : BaseController<UiEvent, PickInstituteFeature.Vie
                         items = institutes.map { it.label },
                         initialSelection = selected
                     ) { dialog, index, _ ->
-                        dispatch(PickInstituteFeature.UiEvent.InstituteClicked(institutes[index]))
+                        dispatch(UiEvent.InstituteClicked(institutes[index]))
                         dialog.dismiss()
                     }
                     dialog?.show()

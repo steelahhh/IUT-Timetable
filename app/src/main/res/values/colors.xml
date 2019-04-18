@@ -5,7 +5,7 @@
     <color name="primaryDark">#C62828</color>
 
     <color name="backgroundDark">#222121</color>
-    <color name="backgroundLight">#ffefefef</color>
+    <color name="backgroundLight">#fff</color>
 
     <color name="coral">#f44336</color>
     <color name="black">#ff212121</color>

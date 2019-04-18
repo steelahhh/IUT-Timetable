@@ -2,6 +2,8 @@ package com.alefimenko.iuttimetable.core.base
 
 import android.content.ComponentCallbacks
 import android.content.res.Configuration
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import com.alefimenko.iuttimetable.util.createBinder
 import com.bluelinelabs.conductor.archlifecycle.LifecycleController
@@ -20,31 +22,37 @@ abstract class BaseController<Event, ViewModel>(
     ObservableSource<Event> by events,
     ComponentCallbacks {
 
+    val mainHandler = Handler(Looper.getMainLooper())
+
     val bind = createBinder()
 
     fun dispatch(event: Event) {
         events.onNext(event)
     }
 
-    fun requireView() = view ?: error("")
+    fun requireView() = view ?: error("There is no view bound to this controller")
 
     fun requireContext() = requireView().context
 
+    fun requireActivity() = activity ?: error("There is no activity bound to this controller")
+
     final override fun accept(viewmodel: ViewModel) {
         if (isAttached) {
-            acceptViewmodel(viewmodel)
+            acceptViewModel(viewmodel)
         }
     }
 
-    abstract fun acceptViewmodel(viewmodel: ViewModel)
+    abstract fun acceptViewModel(viewModel: ViewModel)
 
     override fun onAttach(view: View) {
         (activity as BaseActivity).updateNavigationColor()
+        (activity as BaseActivity).window.setBackgroundDrawable(null)
         super.onAttach(view)
     }
 
     override fun onDestroyView(view: View) {
         bind.resetViews()
+        mainHandler.removeCallbacksAndMessages(null)
         super.onDestroyView(view)
     }
 

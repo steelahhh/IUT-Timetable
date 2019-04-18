@@ -13,4 +13,8 @@
 
     <string name="group_loading_error">Ошибка при загрузке групп</string>
     <string name="institute_loading_error">Ошибка при загрузке групп</string>
+
+    <string name="search_error">Ничего не найдено</string>
+
+    <string name="group_search_hint">Название группы</string>
 </resources>

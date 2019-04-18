@@ -3,6 +3,7 @@ package com.alefimenko.iuttimetable.util
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
+import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -26,6 +27,22 @@ fun FloatingActionButton.show(state: Boolean) {
     } else {
         hide()
     }
+}
+
+fun View.hide() {
+    this.visibility = View.GONE
+}
+
+fun View.show() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.makeInvisible() {
+    this.visibility = View.INVISIBLE
+}
+
+fun View.isVisible(): Boolean {
+    return visibility == View.VISIBLE
 }
 
 fun RadioGroup.changeEnabled(enabled: Boolean) {
