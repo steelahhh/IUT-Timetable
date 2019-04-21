@@ -5,35 +5,54 @@
     android:layout_height="match_parent"
     android:background="?background_color">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/scheduleTabs"
+        style="@style/Widget.MaterialComponents.TabLayout.Colored"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="64dp"
+        android:background="?background_color"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:tabStripEnabled="false"
+        app:backgroundTint="?background_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewPager"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabGravity="fill"
+        app:tabIndicator="@drawable/shape_pill_indicator"
+        app:tabIndicatorColor="?colorOnBackground"
+        app:tabIndicatorGravity="stretch"
+        app:tabRippleColor="@null"
+        app:tabTextColor="?android:textColorPrimary" />
 
-        <TextView
-            android:id="@+id/schedule_text"
-            style="@style/AppText.Larger"
-            android:textAlignment="center"
-            android:layout_width="wrap_content"
-            android:textColor="?android:textColorPrimary"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/toolbarContainer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scheduleTabs" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/toolbarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewPager">
 
         <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:layout_gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </com.google.android.material.bottomappbar.BottomAppBar>
+            app:layout_constraintRight_toRightOf="parent" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

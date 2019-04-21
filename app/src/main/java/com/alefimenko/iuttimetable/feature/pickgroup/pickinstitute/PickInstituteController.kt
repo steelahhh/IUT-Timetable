@@ -13,6 +13,7 @@ import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.UiEvent
 import com.alefimenko.iuttimetable.util.changeEnabled
+import com.alefimenko.iuttimetable.util.requireContext
 import com.alefimenko.iuttimetable.views.ErrorStubView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton

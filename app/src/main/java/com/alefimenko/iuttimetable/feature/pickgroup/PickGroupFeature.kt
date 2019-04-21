@@ -8,7 +8,6 @@ import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.State
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.Wish
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
-import com.alefimenko.iuttimetable.util.ioMainSchedulers
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.element.Actor
 import com.badoo.mvicore.element.NewsPublisher
@@ -28,12 +27,12 @@ class PickGroupFeature(
     timeCapsule: AndroidTimeCapsule? = null
 ) : ActorReducerFeature<Wish, Effect, State, News>(
     initialState = timeCapsule?.get(PickGroupFeature::class) ?: State(),
-    actor = PickGroupFeature.ActorImpl(
+    actor = ActorImpl(
         repository,
         navigator
     ),
-    reducer = PickGroupFeature.ReducerImpl(),
-    newsPublisher = PickGroupFeature.NewsPublisherImpl()
+    reducer = ReducerImpl(),
+    newsPublisher = NewsPublisherImpl()
 ) {
 
     data class ViewModel(
@@ -89,11 +88,7 @@ class PickGroupFeature(
                 Observable.fromCallable {
                     navigator.openSchedule(wish.groupInfo)
                     return@fromCallable Effect.ScreenChanged
-                },
-                // TODO This is just temporary, should remove this after implementing schedule downloading
-                repository.saveGroup(wish.groupInfo)
-                    .ioMainSchedulers()
-                    .toObservable<Effect>()
+                }
             )
         }
     }

@@ -4,7 +4,6 @@ import android.util.LruCache
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
 import com.alefimenko.iuttimetable.core.data.local.SchedulesDao
-import com.alefimenko.iuttimetable.core.data.local.model.ScheduleEntity
 import com.alefimenko.iuttimetable.core.data.remote.Exceptions
 import com.alefimenko.iuttimetable.core.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.core.data.remote.ScheduleService
@@ -12,9 +11,8 @@ import com.alefimenko.iuttimetable.core.data.remote.model.toUi
 import com.alefimenko.iuttimetable.core.data.remote.toFormPath
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.util.ioMainSchedulers
-import io.reactivex.Completable
+import com.alefimenko.iuttimetable.util.mapList
 import io.reactivex.Observable
 
 /*
@@ -36,10 +34,8 @@ class PickGroupRepository(
             scheduleService.fetchGroups(form.toFormPath(), instituteId)
                 .toObservable()
                 .ioMainSchedulers()
-                .map { groups ->
-                    groups.map { group ->
-                        group.toUi()
-                    }
+                .mapList { group ->
+                    group.toUi()
                 }
         } else {
             Observable.error(Exceptions.NoNetworkException())
@@ -66,22 +62,6 @@ class PickGroupRepository(
                 Observable.error(Exceptions.NoNetworkException())
             }
         }
-    }
-
-    fun changeTheme() {
-        preferences.isNightMode = preferences.isNightMode.not()
-    }
-
-    fun saveGroup(groupInfo: GroupInfo): Completable = schedulesDao.insert(
-        ScheduleEntity(
-            formId = groupInfo.form,
-            groupName = groupInfo.group.label,
-            groupId = groupInfo.group.id,
-            instituteName = groupInfo.institute.label,
-            instituteId = groupInfo.institute.id
-        )
-    ).also {
-        preferences.currentGroup = groupInfo.group.id
     }
 
     companion object {

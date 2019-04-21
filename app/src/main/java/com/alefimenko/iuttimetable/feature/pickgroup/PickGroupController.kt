@@ -15,6 +15,7 @@ import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
+import com.alefimenko.iuttimetable.util.requireContext
 import com.alefimenko.iuttimetable.views.ErrorStubView
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter

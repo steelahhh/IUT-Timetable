@@ -4,7 +4,9 @@ import android.content.ComponentCallbacks
 import android.content.res.Configuration
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.alefimenko.iuttimetable.util.createBinder
 import com.bluelinelabs.conductor.archlifecycle.LifecycleController
 import io.reactivex.ObservableSource
@@ -22,19 +24,24 @@ abstract class BaseController<Event, ViewModel>(
     ObservableSource<Event> by events,
     ComponentCallbacks {
 
+    open var layoutRes: Int = 0
+
     val mainHandler = Handler(Looper.getMainLooper())
 
     val bind = createBinder()
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        return inflater.inflate(layoutRes, container, false).also {
+            onViewBound(it)
+        }
+    }
+
+    open fun onViewBound(view: View) {
+    }
+
     fun dispatch(event: Event) {
         events.onNext(event)
     }
-
-    fun requireView() = view ?: error("There is no view bound to this controller")
-
-    fun requireContext() = requireView().context
-
-    fun requireActivity() = activity ?: error("There is no activity bound to this controller")
 
     final override fun accept(viewmodel: ViewModel) {
         if (isAttached) {
@@ -45,8 +52,10 @@ abstract class BaseController<Event, ViewModel>(
     abstract fun acceptViewModel(viewModel: ViewModel)
 
     override fun onAttach(view: View) {
-        (activity as BaseActivity).updateNavigationColor()
-        (activity as BaseActivity).window.setBackgroundDrawable(null)
+        (activity as BaseActivity).run {
+            updateNavigationColor()
+            window.setBackgroundDrawable(null)
+        }
         super.onAttach(view)
     }
 

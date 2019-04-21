@@ -3,7 +3,6 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     kotlin("android.extensions")
-    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -84,6 +83,10 @@ dependencies {
     implementation(Deps.gson)
 
     implementation(Deps.jsoup)
+
+    implementation(Deps.klock.core)
+//    implementation(Deps.klock.jvm)
+    implementation(Deps.klock.android)
 
     implementation(Deps.koin.core)
     implementation(Deps.koin.ext)

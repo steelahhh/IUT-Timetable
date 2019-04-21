@@ -9,6 +9,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.bluelinelabs.conductor.Controller
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -51,6 +52,12 @@ fun RadioGroup.changeEnabled(enabled: Boolean) {
         (getChildAt(child) as? RadioButton)?.isClickable = enabled
     }
 }
+
+fun Controller.requireView() = view ?: error("There is no view bound to this controller")
+
+fun Controller.requireContext() = requireView().context
+
+fun Controller.requireActivity() = activity ?: error("There is no activity bound to this controller")
 
 fun Toolbar.changeToolbarFont() {
     for (i in 0 until childCount) {
@@ -113,3 +120,9 @@ fun <T> Maybe<T>.ioMainSchedulers() = this
 fun <T> Maybe<T>.ioSchedulers() = this
     .subscribeOn(Schedulers.io())
     .observeOn(Schedulers.io())
+
+fun <T, R> Observable<List<T>>.mapList(
+    mapper: (t: T) -> R
+): Observable<List<R>> = map { list ->
+    list.map(mapper)
+}
