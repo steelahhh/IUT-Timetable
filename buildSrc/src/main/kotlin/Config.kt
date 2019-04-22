@@ -27,6 +27,8 @@ object Versions {
 
     const val leakCanary = "1.6.3"
 
+    const val klock = "1.4.0"
+
     const val jsoup = "1.11.3"
     const val fastadapter = "3.3.1"
     const val retrofit = "2.4.0"
@@ -62,6 +64,14 @@ object Deps {
     const val room = "androidx.room:room-runtime:${vers.room}"
     const val roomCompiler = "androidx.room:room-compiler:${vers.room}"
     const val roomRxJava = "androidx.room:room-rxjava2:${vers.room}"
+
+    val klock = Klock
+
+    object Klock {
+        const val core = "com.soywiz:klock-metadata:${vers.klock}"
+        const val jvm = "com.soywiz:klock-jvm:${vers.klock}"
+        const val android = "com.soywiz:klock-android:${vers.klock}"
+    }
 
     const val fastAdapterCore = "com.mikepenz:fastadapter:${vers.fastadapter}"
     const val fastAdapterCommons = "com.mikepenz:fastadapter-commons:${vers.fastadapter}"

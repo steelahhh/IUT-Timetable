@@ -9,7 +9,6 @@ buildscript {
         classpath("com.android.tools.build:gradle:${Versions.androidPlugin}")
         classpath(kotlin("gradle-plugin", version = Versions.kotlin))
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0-RC13")
-        classpath("android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0-rc02")
     }
 }
 
@@ -21,6 +20,7 @@ allprojects {
         jcenter()
         maven(url = "https://jitpack.io/")
         maven(url = "https://plugins.gradle.org/m2/")
+        maven(url = "https://dl.bintray.com/soywiz/soywiz")
     }
 
     dependencies {
