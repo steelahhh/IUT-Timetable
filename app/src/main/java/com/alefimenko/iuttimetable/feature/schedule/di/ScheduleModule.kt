@@ -1,5 +1,7 @@
 package com.alefimenko.iuttimetable.feature.schedule.di
 
+import com.alefimenko.iuttimetable.core.data.DateInteractor
+import com.alefimenko.iuttimetable.core.data.DateInteractorImpl
 import com.alefimenko.iuttimetable.feature.schedule.ScheduleRepository
 import org.koin.dsl.module.module
 import org.koin.experimental.builder.single
@@ -10,4 +12,7 @@ import org.koin.experimental.builder.single
 
 val scheduleModule = module {
     single<ScheduleRepository>()
+    single<DateInteractor> {
+        DateInteractorImpl(get())
+    }
 }

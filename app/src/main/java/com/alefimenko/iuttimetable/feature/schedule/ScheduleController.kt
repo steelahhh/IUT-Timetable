@@ -2,12 +2,15 @@ package com.alefimenko.iuttimetable.feature.schedule
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.viewpager.widget.ViewPager
+import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseController
+import com.alefimenko.iuttimetable.core.data.DateInteractor
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.feature.schedule.schedulepage.SchedulePagerAdapter
+import com.google.android.material.tabs.TabLayout
+import org.koin.android.ext.android.inject
 
 /*
  * Created by Alexander Efimenko on 2019-03-08.
@@ -16,14 +19,20 @@ import com.alefimenko.iuttimetable.feature.schedule.schedulepage.SchedulePagerAd
 class ScheduleController(
     private val bundle: Bundle = Bundle()
 ) : BaseController<String, String>() {
+    override var layoutRes: Int = R.layout.fragment_schedule
+
+    private val viewPager by bind<ViewPager>(R.id.viewPager)
+    private val scheduleTabs by bind<TabLayout>(R.id.scheduleTabs)
+
+    private val dateInteractorImpl: DateInteractor by inject()
+
     private val pagerAdapter by bind.stuff {
         SchedulePagerAdapter(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        val view = ScheduleView(inflater, container, this, pagerAdapter)
-        view.setup()
-        return view.containerView ?: error(":(")
+    override fun onViewBound(view: View) {
+        setupViews()
+        selectCurrentDay(dateInteractorImpl.currentDay)
     }
 
     @SuppressLint("CheckResult")
@@ -32,7 +41,22 @@ class ScheduleController(
         val groupInfo = bundle[GROUP_INFO] as? GroupInfo
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.apply {
+            putInt(SELECTED_DAY, viewPager.currentItem)
+        }
+    }
+
     override fun acceptViewModel(viewModel: String) {
+    }
+
+    private fun setupViews() {
+        viewPager.adapter = pagerAdapter
+        scheduleTabs.setupWithViewPager(viewPager)
+    }
+
+    private fun selectCurrentDay(day: Int) {
+        scheduleTabs.getTabAt(day)?.select()
     }
 
     companion object {

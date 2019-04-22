@@ -32,7 +32,9 @@ abstract class BaseController<Event, ViewModel>(
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(layoutRes, container, false).also {
-            onViewBound(it)
+            it.post {
+                onViewBound(it)
+            }
         }
     }
 

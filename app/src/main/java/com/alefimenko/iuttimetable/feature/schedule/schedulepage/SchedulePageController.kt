@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseController
+import com.alefimenko.iuttimetable.core.data.DateInteractor
+import org.koin.android.ext.android.inject
 
 /*
  * Created by Alexander Efimenko on 2019-04-18.
@@ -14,7 +16,10 @@ import com.alefimenko.iuttimetable.core.base.BaseController
 class SchedulePageController(
     val position: Int = 0
 ) : BaseController<String, String>() {
+    private val dateInteractorImpl: DateInteractor by inject()
+
     private val text by bind<TextView>(R.id.text)
+
     override fun acceptViewModel(viewModel: String) {
     }
 
@@ -24,6 +29,6 @@ class SchedulePageController(
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        text.text = "page $position"
+        text.text = "$position page ${if (dateInteractorImpl.isWeekOdd) "Нечетная" else "четная"}"
     }
 }

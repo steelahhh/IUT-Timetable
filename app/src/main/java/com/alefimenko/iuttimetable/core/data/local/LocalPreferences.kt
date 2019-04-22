@@ -8,6 +8,7 @@ import com.alefimenko.iuttimetable.util.Constants.ITEM_DOESNT_EXIST
  * Created by Alexander Efimenko on 2018-12-12.
  */
 
+// TODO create an interface for the preferences
 @SuppressLint("ApplySharedPref")
 class LocalPreferences(private val prefs: SharedPreferences) {
 
