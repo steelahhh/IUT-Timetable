@@ -3,12 +3,15 @@ package com.alefimenko.iuttimetable.feature.schedule
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.core.data.DateInteractor
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.feature.schedule.schedulepage.SchedulePagerAdapter
+import com.alefimenko.iuttimetable.util.requireContext
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.tabs.TabLayout
 import org.koin.android.ext.android.inject
 
@@ -21,9 +24,11 @@ class ScheduleController(
 ) : BaseController<String, String>() {
     override var layoutRes: Int = R.layout.fragment_schedule
 
+    private val toolbar by bind<BottomAppBar>(R.id.toolbar)
     private val viewPager by bind<ViewPager>(R.id.viewPager)
     private val scheduleTabs by bind<TabLayout>(R.id.scheduleTabs)
 
+    // will be extracted into the ScheduleFeature later
     private val dateInteractorImpl: DateInteractor by inject()
 
     private val pagerAdapter by bind.stuff {
@@ -53,6 +58,22 @@ class ScheduleController(
     private fun setupViews() {
         viewPager.adapter = pagerAdapter
         scheduleTabs.setupWithViewPager(viewPager)
+
+        toolbar.apply {
+            replaceMenu(R.menu.schedule_menu)
+            setNavigationOnClickListener {
+            }
+            setOnMenuItemClickListener {
+                val text = when (it.itemId) {
+                    R.id.action_settings -> "Настройки"
+                    R.id.action_change_week -> "Смена недели"
+                    R.id.action_refresh -> "Обновить"
+                    else -> ""
+                }
+                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
     }
 
     private fun selectCurrentDay(day: Int) {

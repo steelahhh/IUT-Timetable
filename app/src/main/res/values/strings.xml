@@ -17,4 +17,8 @@
     <string name="search_error">Ничего не найдено</string>
 
     <string name="group_search_hint">Название группы</string>
+
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_refresh">Обновить</string>
+    <string name="menu_change_week">Сменить неделю</string>
 </resources>
