@@ -1,11 +1,6 @@
 package com.alefimenko.iuttimetable.core
 
-import android.app.Activity
 import android.app.Application
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import com.alefimenko.iuttimetable.BuildConfig
 import com.alefimenko.iuttimetable.core.di.modules.applicationModule
 import com.squareup.leakcanary.LeakCanary
@@ -19,8 +14,6 @@ import timber.log.Timber
 
 @Suppress("unused")
 class IUTApplication : Application() {
-
-    lateinit var refWatcher: RefWatcher
 
     override fun onCreate() {
         super.onCreate()
@@ -37,39 +30,10 @@ class IUTApplication : Application() {
 
     private fun initializeLeakCanary() {
         refWatcher = LeakCanary.install(this)
-        if (BuildConfig.DEBUG) {
-            registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
-                override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
-                    if (activity is FragmentActivity) {
-                        activity
-                            .supportFragmentManager
-                            .registerFragmentLifecycleCallbacks(
-                                object : FragmentManager.FragmentLifecycleCallbacks() {
-                                    override fun onFragmentDestroyed(
-                                        fm: FragmentManager,
-                                        f: Fragment
-                                    ) {
-                                        refWatcher.watch(f)
-                                    }
-                                },
-                                true
-                            )
-                    }
-                }
+    }
 
-                override fun onActivityDestroyed(activity: Activity) {
-                    refWatcher.watch(activity)
-                }
-
-                override fun onActivityPaused(activity: Activity) = Unit
-                override fun onActivityResumed(activity: Activity) = Unit
-                override fun onActivityStarted(activity: Activity) = Unit
-                override fun onActivityStopped(activity: Activity) = Unit
-                override fun onActivitySaveInstanceState(
-                    activity: Activity,
-                    outState: Bundle
-                ) = Unit
-            })
-        }
+    companion object {
+        @JvmStatic
+        var refWatcher: RefWatcher? = null
     }
 }
