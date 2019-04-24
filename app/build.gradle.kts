@@ -23,6 +23,7 @@ android {
         versionCode = Versions.appVersionCode
         versionName = Versions.appVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -54,6 +55,7 @@ android {
 dependencies {
     implementation(kotlin("stdlib-jdk7", Versions.kotlin))
     implementation(project(Modules.common))
+    implementation(project(Modules.local))
 
     implementation(Deps.multidex)
     implementation(Deps.appcompat)
@@ -65,14 +67,6 @@ dependencies {
     implementation(Deps.mviCore.android)
 
     implementation(Deps.lifecycleExtensions)
-    implementation(Deps.rxKotlin)
-    implementation(Deps.rxAndroid)
-    implementation(Deps.rxBinding.core)
-    implementation(Deps.rxBinding.material)
-
-    implementation(Deps.room)
-    kapt(Deps.roomCompiler)
-    implementation(Deps.roomRxJava)
 
     implementation(Deps.fastAdapterCore)
     implementation(Deps.fastAdapterCommons)
@@ -80,19 +74,12 @@ dependencies {
     implementation(Deps.retrofit)
     implementation(Deps.retrofitGson)
     implementation(Deps.retrofitRxJava)
-    implementation(Deps.gson)
 
     implementation(Deps.jsoup)
 
     implementation(Deps.klock.core)
 //    implementation(Deps.klock.jvm)
     implementation(Deps.klock.android)
-
-    implementation(Deps.koin.core)
-    implementation(Deps.koin.ext)
-    testImplementation(Deps.koin.test)
-    implementation(Deps.koin.android)
-    implementation(Deps.koin.androidScope)
 
     debugImplementation(Deps.leakCanary)
     releaseImplementation(Deps.leakCanaryNoOp)

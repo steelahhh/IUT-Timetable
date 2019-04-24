@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
     kotlin("android.extensions")
 }
 
@@ -39,25 +40,11 @@ android {
 
 dependencies {
     implementation(kotlin("stdlib-jdk7", Versions.kotlin))
+    implementation(project(Modules.common))
 
-    api(Deps.material)
-    api(Deps.materialDialogs)
+    api(Deps.room)
+    kapt(Deps.roomCompiler)
+    api(Deps.roomRxJava)
 
-    api(Deps.conductor.core)
-    api(Deps.conductor.rx2)
-    api(Deps.conductor.support)
-    api(Deps.conductor.lifecycle)
-
-    api(Deps.koin.core)
-    api(Deps.koin.ext)
-    api(Deps.koin.test)
-    api(Deps.koin.android)
-    api(Deps.koin.androidScope)
-
-    api(Deps.timber)
-
-    api(Deps.rxKotlin)
-    api(Deps.rxAndroid)
-    api(Deps.rxBinding.core)
-    api(Deps.rxBinding.material)
+    api(Deps.gson)
 }

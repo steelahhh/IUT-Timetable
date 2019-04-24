@@ -1,8 +1,8 @@
-package com.alefimenko.iuttimetable.core.data.local
+package com.alefimenko.iuttimetable
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
-import com.alefimenko.iuttimetable.util.Constants.ITEM_DOESNT_EXIST
+import com.alefimenko.iuttimetable.Constants.ITEM_DOESNT_EXIST
 
 /*
  * Created by Alexander Efimenko on 2018-12-12.
@@ -10,7 +10,7 @@ import com.alefimenko.iuttimetable.util.Constants.ITEM_DOESNT_EXIST
 
 // TODO create an interface for the preferences
 @SuppressLint("ApplySharedPref")
-class LocalPreferences(private val prefs: SharedPreferences) {
+class Preferences(private val prefs: SharedPreferences) {
 
     var isNightMode: Boolean
         get() = prefs.getBoolean(NIGHT_MODE, true)

@@ -1,13 +1,14 @@
 package com.alefimenko.iuttimetable.feature.pickgroup
 
 import android.util.LruCache
+import com.alefimenko.iuttimetable.schedule.SchedulesDao
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
-import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
-import com.alefimenko.iuttimetable.core.data.local.SchedulesDao
+import com.alefimenko.iuttimetable.Preferences
 import com.alefimenko.iuttimetable.core.data.remote.Exceptions
 import com.alefimenko.iuttimetable.core.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.core.data.remote.ScheduleService
-import com.alefimenko.iuttimetable.core.data.remote.model.toUi
+import com.alefimenko.iuttimetable.core.data.remote.model.toGroupUi
+import com.alefimenko.iuttimetable.core.data.remote.model.toInstituteUi
 import com.alefimenko.iuttimetable.core.data.remote.toFormPath
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
@@ -20,7 +21,7 @@ import io.reactivex.Observable
  */
 
 class PickGroupRepository(
-    private val preferences: LocalPreferences,
+    private val preferences: Preferences,
     private val scheduleService: ScheduleService,
     private val feedbackService: FeedbackService,
     private val schedulesDao: SchedulesDao,
@@ -35,7 +36,7 @@ class PickGroupRepository(
                 .toObservable()
                 .ioMainSchedulers()
                 .mapList { group ->
-                    group.toUi()
+                    group.toGroupUi()
                 }
         } else {
             Observable.error(Exceptions.NoNetworkException())
@@ -53,7 +54,7 @@ class PickGroupRepository(
                     .ioMainSchedulers()
                     .map { institutes ->
                         institutes.map { institute ->
-                            InstituteUi.fromResponse(institute)
+                            institute.toInstituteUi()
                         }.also {
                             lruCache.put(INSTITUTES, it)
                         }

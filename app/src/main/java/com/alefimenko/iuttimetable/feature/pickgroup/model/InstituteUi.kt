@@ -1,7 +1,7 @@
 package com.alefimenko.iuttimetable.feature.pickgroup.model
 
 import android.os.Parcelable
-import com.alefimenko.iuttimetable.core.data.remote.model.InstituteResponse
+import com.alefimenko.iuttimetable.model.GroupEntity
 import kotlinx.android.parcel.Parcelize
 
 /*
@@ -12,8 +12,6 @@ import kotlinx.android.parcel.Parcelize
 data class InstituteUi(
     val id: Int,
     val label: String
-) : Parcelable {
-    companion object {
-        fun fromResponse(response: InstituteResponse) = InstituteUi(response.id, response.name)
-    }
-}
+) : Parcelable
+
+fun GroupEntity.toInstituteUi() = InstituteUi(id, name)

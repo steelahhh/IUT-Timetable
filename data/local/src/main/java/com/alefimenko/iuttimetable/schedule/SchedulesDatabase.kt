@@ -1,8 +1,8 @@
-package com.alefimenko.iuttimetable.core.data.local
+package com.alefimenko.iuttimetable.schedule
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.alefimenko.iuttimetable.core.data.local.model.ScheduleEntity
+import com.alefimenko.iuttimetable.model.ScheduleEntity
 
 /*
  * Created by Alexander Efimenko on 2018-12-12.

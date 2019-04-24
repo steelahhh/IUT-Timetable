@@ -1,14 +1,15 @@
 package com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute
 
 import android.os.Parcelable
+import com.alefimenko.iuttimetable.Constants
 import com.alefimenko.iuttimetable.core.navigation.Navigator
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupRepository
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.feature.pickgroup.model.toInstituteUi
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.Effect
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.News
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.State
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.Wish
-import com.alefimenko.iuttimetable.util.Constants
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.element.Actor
 import com.badoo.mvicore.element.NewsPublisher
@@ -115,7 +116,7 @@ class PickInstituteFeature(
                 isError = false
             )
             is Effect.InstitutesLoaded -> state.copy(
-                institutes = Constants.institutesUi,
+                institutes = Constants.institutes.map { it.toInstituteUi() },
                 isError = false,
                 isLoading = false
             )

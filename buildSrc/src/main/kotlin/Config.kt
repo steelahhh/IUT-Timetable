@@ -7,8 +7,8 @@ object ApplicationID {
 
 object Modules {
     const val app = ":app"
-
     const val common = ":common"
+    const val local = ":data:local"
 }
 
 object Versions {

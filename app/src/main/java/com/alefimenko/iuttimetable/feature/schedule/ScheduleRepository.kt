@@ -2,9 +2,9 @@ package com.alefimenko.iuttimetable.feature.schedule
 
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.core.data.ScheduleParser
-import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
-import com.alefimenko.iuttimetable.core.data.local.SchedulesDao
-import com.alefimenko.iuttimetable.core.data.local.model.ScheduleEntity
+import com.alefimenko.iuttimetable.Preferences
+import com.alefimenko.iuttimetable.schedule.SchedulesDao
+import com.alefimenko.iuttimetable.model.ScheduleEntity
 import com.alefimenko.iuttimetable.core.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.core.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.core.data.remote.model.ScheduleResponse
@@ -24,7 +24,7 @@ import io.reactivex.Single
  */
 
 class ScheduleRepository(
-    private val preferences: LocalPreferences,
+    private val preferences: Preferences,
     private val gson: Gson,
     private val scheduleParser: ScheduleParser,
     private val scheduleService: ScheduleService,

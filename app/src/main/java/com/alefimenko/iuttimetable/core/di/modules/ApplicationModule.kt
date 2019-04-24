@@ -1,5 +1,6 @@
 package com.alefimenko.iuttimetable.core.di.modules
 
+import com.alefimenko.iuttimetable.di.localDataModule
 import com.alefimenko.iuttimetable.feature.pickgroup.di.pickGroupModule
 import com.alefimenko.iuttimetable.feature.schedule.di.scheduleModule
 
@@ -8,6 +9,7 @@ import com.alefimenko.iuttimetable.feature.schedule.di.scheduleModule
  */
 
 val applicationModule = listOf(
+    localDataModule,
     dataModule,
     dispatcherModule,
     navigationModule,

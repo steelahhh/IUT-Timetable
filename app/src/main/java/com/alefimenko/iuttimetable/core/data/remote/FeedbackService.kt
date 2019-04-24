@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.core.data.local.model.ScheduleEntity
+import com.alefimenko.iuttimetable.model.ScheduleEntity
 
 /*
  * Created by Alexander Efimenko on 2019-01-20.

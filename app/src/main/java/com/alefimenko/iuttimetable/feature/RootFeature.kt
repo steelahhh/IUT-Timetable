@@ -1,11 +1,11 @@
 package com.alefimenko.iuttimetable.feature
 
 import androidx.appcompat.app.AppCompatDelegate
-import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
+import com.alefimenko.iuttimetable.Constants.ITEM_DOESNT_EXIST
+import com.alefimenko.iuttimetable.Preferences
 import com.alefimenko.iuttimetable.core.navigation.Navigator
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteController
 import com.alefimenko.iuttimetable.feature.schedule.ScheduleController
-import com.alefimenko.iuttimetable.util.Constants.ITEM_DOESNT_EXIST
 import com.bluelinelabs.conductor.Router
 
 /*
@@ -13,7 +13,7 @@ import com.bluelinelabs.conductor.Router
  */
 
 class RootFeature(
-    private val sharedPreferences: LocalPreferences,
+    private val sharedPreferences: Preferences,
     private val navigator: Navigator
 ) {
 

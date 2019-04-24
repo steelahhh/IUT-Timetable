@@ -1,1 +1,1 @@
-include(Modules.app, Modules.common)
+include(Modules.app, Modules.common, Modules.local)

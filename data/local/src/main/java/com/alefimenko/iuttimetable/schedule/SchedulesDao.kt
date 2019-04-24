@@ -1,11 +1,11 @@
-package com.alefimenko.iuttimetable.core.data.local
+package com.alefimenko.iuttimetable.schedule
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.alefimenko.iuttimetable.core.data.local.model.GroupEntity
-import com.alefimenko.iuttimetable.core.data.local.model.ScheduleEntity
+import com.alefimenko.iuttimetable.model.GroupEntity
+import com.alefimenko.iuttimetable.model.ScheduleEntity
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single

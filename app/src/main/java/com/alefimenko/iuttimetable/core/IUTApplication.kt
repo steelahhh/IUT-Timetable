@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable.core
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.alefimenko.iuttimetable.BuildConfig
 import com.alefimenko.iuttimetable.core.di.modules.applicationModule
 import com.squareup.leakcanary.LeakCanary
@@ -13,7 +13,7 @@ import timber.log.Timber
  */
 
 @Suppress("unused")
-class IUTApplication : Application() {
+class IUTApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

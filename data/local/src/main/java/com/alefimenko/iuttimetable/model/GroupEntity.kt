@@ -1,14 +1,13 @@
-package com.alefimenko.iuttimetable.core.data.local.model
+package com.alefimenko.iuttimetable.model
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import kotlinx.android.parcel.Parcelize
 
 /*
- * Created by Alexander Efimenko on 2019-03-10.
+ * Created by Alexander Efimenko on 2019-04-24.
  */
 
 @Parcelize
@@ -20,5 +19,3 @@ data class GroupEntity(
     @ColumnInfo(name = "groupName")
     val name: String
 ) : Parcelable
-
-fun GroupEntity.toUi() = GroupUi(id, name)

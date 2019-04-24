@@ -1,8 +1,8 @@
 package com.alefimenko.iuttimetable.core.di.modules
 
 import android.content.Context
-import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
-import com.alefimenko.iuttimetable.util.Constants
+import com.alefimenko.iuttimetable.Constants
+import com.alefimenko.iuttimetable.Preferences
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
 
@@ -12,7 +12,7 @@ import org.koin.dsl.module.module
 
 val preferencesModule = module {
     single {
-        LocalPreferences(
+        Preferences(
             androidContext().getSharedPreferences(
                 Constants.PREFS_NAME, Context.MODE_PRIVATE
             )

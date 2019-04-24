@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable.core.data
 
-import com.alefimenko.iuttimetable.core.data.local.LocalPreferences
+import com.alefimenko.iuttimetable.Preferences
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.DayOfWeek
 import com.soywiz.klock.weekOfYear0
@@ -17,7 +17,7 @@ interface DateInteractor {
 }
 
 class DateInteractorImpl(
-    private val localPreferences: LocalPreferences
+    private val localPreferences: Preferences
 ) : DateInteractor {
     override val today: DateTime get() = DateTime.now()
 

@@ -3,7 +3,7 @@ package com.alefimenko.iuttimetable.core.data
 import com.alefimenko.iuttimetable.feature.schedule.model.ClassEntry
 import com.alefimenko.iuttimetable.feature.schedule.model.Time
 import com.alefimenko.iuttimetable.feature.schedule.model.WeekSchedule
-import com.alefimenko.iuttimetable.util.Constants
+import com.alefimenko.iuttimetable.Constants
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
