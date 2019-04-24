@@ -52,14 +52,14 @@ android {
 }
 
 dependencies {
-    implementation(Deps.multidex)
     implementation(kotlin("stdlib-jdk7", Versions.kotlin))
+    implementation(project(Modules.common))
+
+    implementation(Deps.multidex)
     implementation(Deps.appcompat)
     implementation(Deps.androidxCore)
     implementation(Deps.recyclerView)
     implementation(Deps.constraint)
-    implementation(Deps.material)
-    implementation(Deps.materialDialogs)
 
     implementation(Deps.mviCore.core)
     implementation(Deps.mviCore.android)
@@ -93,13 +93,6 @@ dependencies {
     testImplementation(Deps.koin.test)
     implementation(Deps.koin.android)
     implementation(Deps.koin.androidScope)
-
-    implementation(Deps.timber)
-
-    implementation(Deps.conductor.core)
-    implementation(Deps.conductor.rx2)
-    implementation(Deps.conductor.support)
-    implementation(Deps.conductor.lifecycle)
 
     debugImplementation(Deps.leakCanary)
     releaseImplementation(Deps.leakCanaryNoOp)

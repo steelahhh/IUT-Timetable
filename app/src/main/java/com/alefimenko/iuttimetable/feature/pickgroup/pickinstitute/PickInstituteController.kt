@@ -9,14 +9,14 @@ import androidx.core.view.isVisible
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.core.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.UiEvent
-import com.alefimenko.iuttimetable.util.changeEnabled
-import com.alefimenko.iuttimetable.util.requireContext
 import com.alefimenko.iuttimetable.views.ErrorStubView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import io.github.steelahhh.common.base.BaseController
+import io.github.steelahhh.common.extension.changeEnabled
+import io.github.steelahhh.common.extension.requireContext
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.ext.android.bindScope
 import org.koin.androidx.scope.ext.android.getOrCreateScope

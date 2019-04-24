@@ -1,6 +1,6 @@
 @file:Suppress("unused", "RedundantVisibilityModifier", "UNCHECKED_CAST")
 
-package com.alefimenko.iuttimetable.util
+package io.github.steelahhh.common
 
 import android.app.Activity
 import android.app.Dialog
@@ -112,7 +112,14 @@ private val SupportFragment.viewFinder: Finder
     get() = { (view ?: tooEarlyViewAccess(this)).findViewById(it) }
 
 private fun <V : View> required(id: Int, finder: Finder, viewInitializer: ViewInitializer<V>?) =
-    Lazy { desc -> requiredImmediate(id, finder, viewInitializer, desc) }
+    Lazy { desc ->
+        requiredImmediate(
+            id,
+            finder,
+            viewInitializer,
+            desc
+        )
+    }
 
 private fun <V : View> nullable(id: Int, finder: Finder, viewInitializer: ViewInitializer<V>?) =
     Lazy { nullableImmediate(id, finder, viewInitializer) }
@@ -121,7 +128,14 @@ private fun <V : View> required(
     ids: IntArray,
     finder: Finder,
     viewInitializer: ViewInitializer<List<V>>?
-) = Lazy { desc -> requiredImmediate(ids, finder, viewInitializer, desc) }
+) = Lazy { desc ->
+    requiredImmediate(
+        ids,
+        finder,
+        viewInitializer,
+        desc
+    )
+}
 
 private fun <V : View> nullable(
     ids: IntArray,

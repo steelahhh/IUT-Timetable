@@ -1,6 +1,5 @@
 package com.alefimenko.iuttimetable.core.navigation
 
-import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupController
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteController
@@ -10,6 +9,7 @@ import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
+import io.github.steelahhh.common.base.BaseController
 import timber.log.Timber
 
 /*

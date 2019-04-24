@@ -5,10 +5,10 @@ import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
 import android.widget.FrameLayout
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.core.base.BaseActivity
 import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
+import io.github.steelahhh.common.base.BaseActivity
 import org.koin.android.ext.android.inject
 
 /*

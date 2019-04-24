@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.core.base.BaseController
 import com.alefimenko.iuttimetable.core.data.DateInteractor
+import io.github.steelahhh.common.base.BaseController
 import org.koin.android.ext.android.inject
 
 /*

@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.util
+package io.github.steelahhh.common.extension
 
 import android.content.Context
 import android.graphics.Typeface

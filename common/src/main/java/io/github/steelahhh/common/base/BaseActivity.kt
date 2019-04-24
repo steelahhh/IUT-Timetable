@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.core.base
+package io.github.steelahhh.common.base
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -8,8 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.util.createBinder
+import io.github.steelahhh.common.R
+import io.github.steelahhh.common.createBinder
 
 /*
  * Created by Alexander Efimenko on 21/11/18.

@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.core.base
+package io.github.steelahhh.common.base
 
 import android.content.ComponentCallbacks
 import android.content.res.Configuration
@@ -7,17 +7,14 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alefimenko.iuttimetable.core.IUTApplication
-import com.alefimenko.iuttimetable.util.createBinder
-import com.bluelinelabs.conductor.ControllerChangeHandler
-import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.archlifecycle.LifecycleController
+import io.github.steelahhh.common.createBinder
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
 
 /*
- * Created by Alexander Efimenko on 2019-02-04.
+ * Created by Alexander Efimenko on 2019-04-24.
  */
 
 abstract class BaseController<Event, ViewModel>(
@@ -26,8 +23,6 @@ abstract class BaseController<Event, ViewModel>(
     Consumer<ViewModel>,
     ObservableSource<Event> by events,
     ComponentCallbacks {
-
-    private var hasExited: Boolean = false
 
     open var layoutRes: Int = 0
 
@@ -70,22 +65,6 @@ abstract class BaseController<Event, ViewModel>(
         bind.resetViews()
         mainHandler.removeCallbacksAndMessages(null)
         super.onDestroyView(view)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (hasExited) {
-            IUTApplication.refWatcher?.watch(this)
-        }
-    }
-
-    override fun onChangeEnded(changeHandler: ControllerChangeHandler, changeType: ControllerChangeType) {
-        super.onChangeEnded(changeHandler, changeType)
-
-        hasExited = !changeType.isEnter
-        if (isDestroyed) {
-            IUTApplication.refWatcher?.watch(this)
-        }
     }
 
     override fun onLowMemory() = Unit
