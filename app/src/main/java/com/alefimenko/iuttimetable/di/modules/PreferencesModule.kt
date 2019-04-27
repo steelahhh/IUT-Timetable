@@ -1,8 +1,8 @@
 package com.alefimenko.iuttimetable.di.modules
 
 import android.content.Context
-import com.alefimenko.iuttimetable.Constants
-import com.alefimenko.iuttimetable.Preferences
+import com.alefimenko.iuttimetable.local.Constants
+import com.alefimenko.iuttimetable.local.Preferences
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
 

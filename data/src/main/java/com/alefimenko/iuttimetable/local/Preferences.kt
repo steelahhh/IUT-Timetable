@@ -1,8 +1,8 @@
-package com.alefimenko.iuttimetable
+package com.alefimenko.iuttimetable.local
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
-import com.alefimenko.iuttimetable.Constants.ITEM_DOESNT_EXIST
+import com.alefimenko.iuttimetable.local.Constants.ITEM_DOESNT_EXIST
 
 /*
  * Created by Alexander Efimenko on 2018-12-12.

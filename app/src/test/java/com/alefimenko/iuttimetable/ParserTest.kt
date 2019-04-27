@@ -1,6 +1,5 @@
 package com.alefimenko.iuttimetable
 
-import com.alefimenko.iuttimetable.remote.ScheduleParser
 import org.junit.Before
 import org.junit.Test
 

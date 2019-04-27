@@ -56,8 +56,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk7", Versions.kotlin))
     implementation(project(Modules.common))
     implementation(project(Modules.coreUi))
-    implementation(project(Modules.local))
-    implementation(project(Modules.remote))
+    implementation(project(Modules.data))
 
     implementation(Deps.multidex)
 

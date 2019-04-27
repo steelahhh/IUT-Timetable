@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.model
+package com.alefimenko.iuttimetable.local.model
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

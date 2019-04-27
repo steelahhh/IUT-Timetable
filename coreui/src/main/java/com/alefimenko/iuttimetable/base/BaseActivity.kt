@@ -8,7 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import io.github.steelahhh.coreui.R
+import com.alefimenko.iuttimetable.coreui.R
 import com.alefimenko.iuttimetable.createBinder
 
 /*

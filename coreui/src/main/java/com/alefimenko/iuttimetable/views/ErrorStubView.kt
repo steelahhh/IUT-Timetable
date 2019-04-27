@@ -9,8 +9,8 @@ import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.alefimenko.iuttimetable.coreui.R
 import com.google.android.material.button.MaterialButton
-import io.github.steelahhh.coreui.R
 
 /*
  * Created by Alexander Efimenko on 2019-03-10.

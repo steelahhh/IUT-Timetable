@@ -13,10 +13,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.alefimenko.iuttimetable.coreui.R
 import com.bluelinelabs.conductor.Controller
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import io.github.steelahhh.coreui.R
 
 /*
  * Created by Alexander Efimenko on 2019-04-24.

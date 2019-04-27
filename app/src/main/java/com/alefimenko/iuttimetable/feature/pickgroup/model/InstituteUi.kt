@@ -1,7 +1,7 @@
 package com.alefimenko.iuttimetable.feature.pickgroup.model
 
 import android.os.Parcelable
-import com.alefimenko.iuttimetable.model.GroupEntity
+import com.alefimenko.iuttimetable.local.model.GroupEntity
 import kotlinx.android.parcel.Parcelize
 
 /*

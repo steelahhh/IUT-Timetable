@@ -1,7 +1,7 @@
-package com.alefimenko.iuttimetable.di
+package com.alefimenko.iuttimetable.local.di
 
 import androidx.room.Room
-import com.alefimenko.iuttimetable.schedule.SchedulesDatabase
+import com.alefimenko.iuttimetable.local.schedule.SchedulesDatabase
 import com.google.gson.GsonBuilder
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module

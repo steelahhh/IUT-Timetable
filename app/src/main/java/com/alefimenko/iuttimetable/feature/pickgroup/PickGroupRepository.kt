@@ -1,7 +1,7 @@
 package com.alefimenko.iuttimetable.feature.pickgroup
 
 import android.util.LruCache
-import com.alefimenko.iuttimetable.Preferences
+import com.alefimenko.iuttimetable.local.Preferences
 import com.alefimenko.iuttimetable.remote.Exceptions
 import com.alefimenko.iuttimetable.toGroupUi
 import com.alefimenko.iuttimetable.toInstituteUi
@@ -13,7 +13,7 @@ import com.alefimenko.iuttimetable.remote.FeedbackService
 import com.alefimenko.iuttimetable.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.remote.ScheduleService
 import com.alefimenko.iuttimetable.remote.toFormPath
-import com.alefimenko.iuttimetable.schedule.SchedulesDao
+import com.alefimenko.iuttimetable.local.schedule.SchedulesDao
 import io.reactivex.Observable
 
 /*

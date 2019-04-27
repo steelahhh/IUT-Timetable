@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.remote
+package com.alefimenko.iuttimetable
 
 import com.alefimenko.iuttimetable.remote.model.ClassEntry
 import com.alefimenko.iuttimetable.remote.model.Time

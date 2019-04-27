@@ -3,7 +3,6 @@ package com.alefimenko.iuttimetable.remote
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import io.github.steelahhh.remote.R
 
 /*
  * Created by Alexander Efimenko on 2019-01-20.

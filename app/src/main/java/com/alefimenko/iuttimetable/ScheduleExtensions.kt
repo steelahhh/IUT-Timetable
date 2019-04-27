@@ -3,8 +3,8 @@ package com.alefimenko.iuttimetable
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.remote.model.Schedule
-import com.alefimenko.iuttimetable.model.GroupEntity
-import com.alefimenko.iuttimetable.model.ScheduleEntity
+import com.alefimenko.iuttimetable.local.model.GroupEntity
+import com.alefimenko.iuttimetable.local.model.ScheduleEntity
 import com.alefimenko.iuttimetable.remote.model.GroupResponse
 import com.google.gson.GsonBuilder
 

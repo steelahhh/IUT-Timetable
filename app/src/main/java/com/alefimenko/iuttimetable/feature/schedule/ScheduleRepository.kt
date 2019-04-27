@@ -1,19 +1,19 @@
 package com.alefimenko.iuttimetable.feature.schedule
 
-import com.alefimenko.iuttimetable.Preferences
-import com.alefimenko.iuttimetable.remote.ScheduleParser
+import com.alefimenko.iuttimetable.local.Preferences
+import com.alefimenko.iuttimetable.ScheduleParser
 import com.alefimenko.iuttimetable.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
-import com.alefimenko.iuttimetable.model.ScheduleEntity
+import com.alefimenko.iuttimetable.local.model.ScheduleEntity
 import com.alefimenko.iuttimetable.remote.FeedbackService
 import com.alefimenko.iuttimetable.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.remote.ScheduleService
 import com.alefimenko.iuttimetable.remote.model.Schedule
 import com.alefimenko.iuttimetable.remote.model.ScheduleResponse
 import com.alefimenko.iuttimetable.remote.toFormPath
-import com.alefimenko.iuttimetable.schedule.SchedulesDao
+import com.alefimenko.iuttimetable.local.schedule.SchedulesDao
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Observable

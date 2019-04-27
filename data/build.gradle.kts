@@ -47,6 +47,12 @@ dependencies {
     implementation(kotlin("stdlib-jdk7", Versions.kotlin))
     implementation(project(Modules.common))
 
+    api(Deps.room)
+    kapt(Deps.roomCompiler)
+    api(Deps.roomRxJava)
+
+    api(Deps.gson)
+
     api(Deps.retrofit)
     api(Deps.retrofitGson)
     api(Deps.retrofitRxJava)
