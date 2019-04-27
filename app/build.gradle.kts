@@ -55,13 +55,10 @@ android {
 dependencies {
     implementation(kotlin("stdlib-jdk7", Versions.kotlin))
     implementation(project(Modules.common))
+    implementation(project(Modules.coreUi))
     implementation(project(Modules.local))
 
     implementation(Deps.multidex)
-    implementation(Deps.appcompat)
-    implementation(Deps.androidxCore)
-    implementation(Deps.recyclerView)
-    implementation(Deps.constraint)
 
     implementation(Deps.mviCore.core)
     implementation(Deps.mviCore.android)

@@ -12,8 +12,8 @@ import com.alefimenko.iuttimetable.core.data.remote.model.toInstituteUi
 import com.alefimenko.iuttimetable.core.data.remote.toFormPath
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
-import io.github.steelahhh.common.extension.ioMainSchedulers
-import io.github.steelahhh.common.extension.mapList
+import com.alefimenko.iuttimetable.extension.ioMainSchedulers
+import com.alefimenko.iuttimetable.extension.mapList
 import io.reactivex.Observable
 
 /*

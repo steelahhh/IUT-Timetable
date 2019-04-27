@@ -1,7 +1,7 @@
 package com.alefimenko.iuttimetable.feature.schedule.schedulepage
 
 import com.alefimenko.iuttimetable.R
-import io.github.steelahhh.common.extension.requireActivity
+import com.alefimenko.iuttimetable.extension.requireActivity
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction

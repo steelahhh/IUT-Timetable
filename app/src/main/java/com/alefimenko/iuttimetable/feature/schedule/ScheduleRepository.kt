@@ -13,7 +13,7 @@ import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.feature.schedule.model.Schedule
-import io.github.steelahhh.common.extension.ioMainSchedulers
+import com.alefimenko.iuttimetable.extension.ioMainSchedulers
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Observable

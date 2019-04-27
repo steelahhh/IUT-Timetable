@@ -1,6 +1,6 @@
 @file:Suppress("unused", "RedundantVisibilityModifier", "UNCHECKED_CAST")
 
-package io.github.steelahhh.common
+package com.alefimenko.iuttimetable
 
 import android.app.Activity
 import android.app.Dialog

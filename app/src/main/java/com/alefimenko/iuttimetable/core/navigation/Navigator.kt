@@ -9,7 +9,7 @@ import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
-import io.github.steelahhh.common.base.BaseController
+import com.alefimenko.iuttimetable.base.BaseController
 import timber.log.Timber
 
 /*
@@ -22,7 +22,7 @@ class Navigator {
     private val router: Router get() = _router ?: error("Router not bound")
 
     fun bind(navController: Router) {
-        this._router = navController
+        _router = navController
     }
 
     fun setRootScreen(screen: String) {

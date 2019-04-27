@@ -1,4 +1,4 @@
-package io.github.steelahhh.common.base
+package com.alefimenko.iuttimetable.base
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -8,8 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import io.github.steelahhh.common.R
-import io.github.steelahhh.common.createBinder
+import io.github.steelahhh.coreui.R
+import com.alefimenko.iuttimetable.createBinder
 
 /*
  * Created by Alexander Efimenko on 21/11/18.
@@ -20,8 +20,6 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract val layoutId: Int
 
     protected val bind = createBinder()
-
-    protected var lastClickTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

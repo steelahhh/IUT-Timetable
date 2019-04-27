@@ -6,13 +6,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.alefimenko.iuttimetable.R
+import com.alefimenko.iuttimetable.base.BaseController
 import com.alefimenko.iuttimetable.core.data.DateInteractor
+import com.alefimenko.iuttimetable.extension.requireContext
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.feature.schedule.schedulepage.SchedulePagerAdapter
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.tabs.TabLayout
-import io.github.steelahhh.common.base.BaseController
-import io.github.steelahhh.common.extension.requireContext
 import org.koin.android.ext.android.inject
 
 /*

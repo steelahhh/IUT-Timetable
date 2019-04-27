@@ -39,15 +39,19 @@ android {
 
 dependencies {
     implementation(kotlin("stdlib-jdk7", Versions.kotlin))
+    api(Deps.constraint)
+    api(Deps.appcompat)
+    api(Deps.androidxCore)
+    api(Deps.recyclerView)
 
-    api(Deps.koin.core)
-    api(Deps.koin.ext)
-    api(Deps.koin.test)
-    api(Deps.koin.android)
-    api(Deps.koin.androidScope)
+    api(Deps.material)
+    api(Deps.materialDialogs)
 
-    api(Deps.timber)
+    api(Deps.conductor.core)
+    api(Deps.conductor.rx2)
+    api(Deps.conductor.support)
+    api(Deps.conductor.lifecycle)
 
-    api(Deps.rxKotlin)
-    api(Deps.rxAndroid)
+    api(Deps.rxBinding.core)
+    api(Deps.rxBinding.material)
 }

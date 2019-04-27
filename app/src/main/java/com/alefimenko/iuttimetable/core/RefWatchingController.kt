@@ -2,7 +2,7 @@ package com.alefimenko.iuttimetable.core
 
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
-import io.github.steelahhh.common.base.BaseController
+import com.alefimenko.iuttimetable.base.BaseController
 
 /*
  * Created by Alexander Efimenko on 2019-02-04.

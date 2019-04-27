@@ -1,6 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">IUT Timetable</string>
-
     <string name="str_choose_email_client" translatable="false">Choose email client</string>
 
     <string name="zaochnaya_form">Заочная форма</string>
@@ -8,8 +7,6 @@
 
     <string name="pick_institute">Выбрать институт</string>
     <string name="selected_institute">Институт: %s</string>
-
-    <string name="retry">Повторить</string>
 
     <string name="group_loading_error">Ошибка при загрузке групп</string>
     <string name="institute_loading_error">Ошибка при загрузке групп</string>

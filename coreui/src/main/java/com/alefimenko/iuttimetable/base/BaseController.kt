@@ -1,4 +1,4 @@
-package io.github.steelahhh.common.base
+package com.alefimenko.iuttimetable.base
 
 import android.content.ComponentCallbacks
 import android.content.res.Configuration
@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.archlifecycle.LifecycleController
-import io.github.steelahhh.common.createBinder
+import com.alefimenko.iuttimetable.createBinder
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject

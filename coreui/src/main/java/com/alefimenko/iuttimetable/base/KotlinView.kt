@@ -1,4 +1,4 @@
-package io.github.steelahhh.common.base
+package com.alefimenko.iuttimetable.base
 
 import android.view.LayoutInflater
 import android.view.View

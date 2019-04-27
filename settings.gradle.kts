@@ -1,1 +1,6 @@
-include(Modules.app, Modules.common, Modules.local)
+include(
+    Modules.app,
+    Modules.common,
+    Modules.coreUi,
+    Modules.local
+)

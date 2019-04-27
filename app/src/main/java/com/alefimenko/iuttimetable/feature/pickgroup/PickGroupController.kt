@@ -10,7 +10,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alefimenko.iuttimetable.R
+import com.alefimenko.iuttimetable.base.BaseController
 import com.alefimenko.iuttimetable.core.di.Scopes
+import com.alefimenko.iuttimetable.extension.requireContext
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
@@ -18,8 +20,6 @@ import com.alefimenko.iuttimetable.views.ErrorStubView
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.fastadapter.listeners.ItemFilterListener
-import io.github.steelahhh.common.base.BaseController
-import io.github.steelahhh.common.extension.requireContext
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.ext.android.bindScope
 import org.koin.androidx.scope.ext.android.getOrCreateScope
