@@ -39,6 +39,7 @@ android {
 
 dependencies {
     implementation(kotlin("stdlib-jdk7", Versions.kotlin))
+    implementation(project(Modules.common))
     api(Deps.constraint)
     api(Deps.appcompat)
     api(Deps.androidxCore)

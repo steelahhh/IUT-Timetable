@@ -42,7 +42,6 @@ dependencies {
 
     api(Deps.koin.core)
     api(Deps.koin.ext)
-    api(Deps.koin.test)
     api(Deps.koin.android)
     api(Deps.koin.androidScope)
 
@@ -50,4 +49,6 @@ dependencies {
 
     api(Deps.rxKotlin)
     api(Deps.rxAndroid)
+
+    testApi(Deps.koin.test)
 }

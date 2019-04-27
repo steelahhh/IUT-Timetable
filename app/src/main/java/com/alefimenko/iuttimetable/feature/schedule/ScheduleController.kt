@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.base.BaseController
 import com.alefimenko.iuttimetable.core.data.DateInteractor
+import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.extension.requireContext
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.feature.schedule.schedulepage.SchedulePagerAdapter
@@ -73,6 +74,7 @@ class ScheduleController(
                 Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
                 true
             }
+            changeMenuColors()
         }
     }
 
