@@ -49,6 +49,4 @@ dependencies {
 
     api(Deps.rxKotlin)
     api(Deps.rxAndroid)
-
-    testApi(Deps.koin.test)
 }

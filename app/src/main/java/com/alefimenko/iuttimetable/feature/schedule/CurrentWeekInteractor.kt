@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable.feature.schedule
 
-import com.alefimenko.iuttimetable.core.data.DateInteractor
+import com.alefimenko.iuttimetable.DateInteractor
 import io.reactivex.subjects.BehaviorSubject
 
 /*

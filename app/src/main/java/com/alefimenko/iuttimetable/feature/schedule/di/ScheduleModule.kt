@@ -1,7 +1,7 @@
 package com.alefimenko.iuttimetable.feature.schedule.di
 
-import com.alefimenko.iuttimetable.core.data.DateInteractor
-import com.alefimenko.iuttimetable.core.data.DateInteractorImpl
+import com.alefimenko.iuttimetable.DateInteractor
+import com.alefimenko.iuttimetable.DateInteractorImpl
 import com.alefimenko.iuttimetable.feature.schedule.CurrentWeekInteractor
 import com.alefimenko.iuttimetable.feature.schedule.ScheduleRepository
 import org.koin.dsl.module.module

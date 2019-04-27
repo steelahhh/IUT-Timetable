@@ -10,6 +10,7 @@ object Modules {
     const val common = ":common"
     const val coreUi = ":coreui"
     const val local = ":data:local"
+    const val remote = ":data:remote"
 }
 
 object Versions {

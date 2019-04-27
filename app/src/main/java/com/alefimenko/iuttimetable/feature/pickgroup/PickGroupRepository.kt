@@ -1,19 +1,19 @@
 package com.alefimenko.iuttimetable.feature.pickgroup
 
 import android.util.LruCache
-import com.alefimenko.iuttimetable.schedule.SchedulesDao
-import com.alefimenko.iuttimetable.core.data.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.Preferences
-import com.alefimenko.iuttimetable.core.data.remote.Exceptions
-import com.alefimenko.iuttimetable.core.data.remote.FeedbackService
-import com.alefimenko.iuttimetable.core.data.remote.ScheduleService
-import com.alefimenko.iuttimetable.core.data.remote.model.toGroupUi
-import com.alefimenko.iuttimetable.core.data.remote.model.toInstituteUi
-import com.alefimenko.iuttimetable.core.data.remote.toFormPath
-import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
-import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.remote.Exceptions
+import com.alefimenko.iuttimetable.toGroupUi
+import com.alefimenko.iuttimetable.toInstituteUi
 import com.alefimenko.iuttimetable.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.extension.mapList
+import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
+import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.remote.FeedbackService
+import com.alefimenko.iuttimetable.NetworkStatusReceiver
+import com.alefimenko.iuttimetable.remote.ScheduleService
+import com.alefimenko.iuttimetable.remote.toFormPath
+import com.alefimenko.iuttimetable.schedule.SchedulesDao
 import io.reactivex.Observable
 
 /*

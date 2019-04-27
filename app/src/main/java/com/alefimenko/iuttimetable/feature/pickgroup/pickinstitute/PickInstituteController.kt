@@ -10,7 +10,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.base.BaseController
-import com.alefimenko.iuttimetable.core.di.Scopes
+import com.alefimenko.iuttimetable.di.Scopes
 import com.alefimenko.iuttimetable.extension.changeEnabled
 import com.alefimenko.iuttimetable.extension.requireContext
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteFeature.UiEvent

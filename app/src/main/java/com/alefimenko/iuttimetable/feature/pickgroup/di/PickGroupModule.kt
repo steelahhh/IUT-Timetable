@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable.feature.pickgroup.di
 
-import com.alefimenko.iuttimetable.core.di.Scopes
+import com.alefimenko.iuttimetable.di.Scopes
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupBindings
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupController

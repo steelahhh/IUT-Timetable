@@ -3,7 +3,7 @@ package com.alefimenko.iuttimetable.feature
 import androidx.appcompat.app.AppCompatDelegate
 import com.alefimenko.iuttimetable.Constants.ITEM_DOESNT_EXIST
 import com.alefimenko.iuttimetable.Preferences
-import com.alefimenko.iuttimetable.core.navigation.Navigator
+import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteController
 import com.alefimenko.iuttimetable.feature.schedule.ScheduleController
 import com.bluelinelabs.conductor.Router

@@ -57,6 +57,7 @@ dependencies {
     implementation(project(Modules.common))
     implementation(project(Modules.coreUi))
     implementation(project(Modules.local))
+    implementation(project(Modules.remote))
 
     implementation(Deps.multidex)
 
@@ -68,12 +69,6 @@ dependencies {
     implementation(Deps.fastAdapterCore)
     implementation(Deps.fastAdapterCommons)
 
-    implementation(Deps.retrofit)
-    implementation(Deps.retrofitGson)
-    implementation(Deps.retrofitRxJava)
-
-    implementation(Deps.jsoup)
-
     implementation(Deps.klock.core)
 //    implementation(Deps.klock.jvm)
     implementation(Deps.klock.android)
@@ -84,6 +79,7 @@ dependencies {
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.espresso)
+    testImplementation(Deps.koin.test)
 }
 
 detekt {

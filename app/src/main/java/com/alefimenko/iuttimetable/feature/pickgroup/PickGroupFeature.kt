@@ -1,7 +1,7 @@
 package com.alefimenko.iuttimetable.feature.pickgroup
 
 import android.os.Parcelable
-import com.alefimenko.iuttimetable.core.navigation.Navigator
+import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.Effect
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.News
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.State

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.base.BaseController
-import com.alefimenko.iuttimetable.core.di.Scopes
+import com.alefimenko.iuttimetable.di.Scopes
 import com.alefimenko.iuttimetable.extension.requireContext
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi

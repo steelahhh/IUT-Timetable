@@ -2,7 +2,7 @@ package com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute
 
 import android.os.Parcelable
 import com.alefimenko.iuttimetable.Constants
-import com.alefimenko.iuttimetable.core.navigation.Navigator
+import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupRepository
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.toInstituteUi

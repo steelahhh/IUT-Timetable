@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.alefimenko.iuttimetable.R
 import com.alefimenko.iuttimetable.base.BaseController
-import com.alefimenko.iuttimetable.core.data.DateInteractor
+import com.alefimenko.iuttimetable.DateInteractor
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.extension.requireContext
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
