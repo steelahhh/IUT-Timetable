@@ -1,14 +1,9 @@
 plugins {
     id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
 }
 
 android {
     compileSdkVersion(Versions.compileSdk)
-    androidExtensions {
-        isExperimental = true
-    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -38,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk7", Versions.kotlin))
+    api(kotlin("stdlib-jdk7", Versions.kotlin))
 
     api(Deps.koin.core)
     api(Deps.koin.ext)

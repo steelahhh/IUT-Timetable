@@ -53,7 +53,6 @@ android {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk7", Versions.kotlin))
     implementation(project(Modules.common))
     implementation(project(Modules.coreUi))
     implementation(project(Modules.data))
