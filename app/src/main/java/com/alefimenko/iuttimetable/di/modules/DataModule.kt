@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable.di.modules
 
-import com.alefimenko.iuttimetable.ScheduleParser
+import com.alefimenko.iuttimetable.data.ScheduleParser
 import org.koin.dsl.module.module
 import org.koin.experimental.builder.single
 

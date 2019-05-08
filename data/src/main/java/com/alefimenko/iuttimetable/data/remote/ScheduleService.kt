@@ -1,7 +1,7 @@
-package com.alefimenko.iuttimetable.remote
+package com.alefimenko.iuttimetable.data.remote
 
-import com.alefimenko.iuttimetable.remote.model.GroupResponse
-import com.alefimenko.iuttimetable.remote.model.InstituteResponse
+import com.alefimenko.iuttimetable.data.remote.model.GroupResponse
+import com.alefimenko.iuttimetable.data.remote.model.InstituteResponse
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.http.GET

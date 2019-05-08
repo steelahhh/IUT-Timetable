@@ -4,7 +4,7 @@ import android.os.Parcelable
 import android.view.View
 import android.widget.TextView
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.local.model.GroupEntity
+import com.alefimenko.iuttimetable.data.local.model.GroupEntity
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.parcel.Parcelize

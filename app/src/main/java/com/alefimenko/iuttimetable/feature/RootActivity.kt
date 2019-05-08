@@ -5,7 +5,7 @@ import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
 import android.widget.FrameLayout
 import com.alefimenko.iuttimetable.R
-import com.alefimenko.iuttimetable.NetworkStatusReceiver
+import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.alefimenko.iuttimetable.base.BaseActivity

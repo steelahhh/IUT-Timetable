@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.extension
+package com.alefimenko.iuttimetable.common.extension
 
 import android.os.Build
 

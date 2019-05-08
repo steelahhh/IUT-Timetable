@@ -1,8 +1,8 @@
-package com.alefimenko.iuttimetable
+package com.alefimenko.iuttimetable.data
 
-import com.alefimenko.iuttimetable.remote.model.ClassEntry
-import com.alefimenko.iuttimetable.remote.model.Time
-import com.alefimenko.iuttimetable.remote.model.WeekSchedule
+import com.alefimenko.iuttimetable.data.remote.model.ClassEntry
+import com.alefimenko.iuttimetable.data.remote.model.Time
+import com.alefimenko.iuttimetable.data.remote.model.WeekSchedule
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element

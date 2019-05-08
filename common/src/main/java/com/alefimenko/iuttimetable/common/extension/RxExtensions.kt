@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.extension
+package com.alefimenko.iuttimetable.common.extension
 
 import io.reactivex.Completable
 import io.reactivex.Maybe

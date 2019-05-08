@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable
 
-import com.alefimenko.iuttimetable.local.Preferences
+import com.alefimenko.iuttimetable.data.local.Preferences
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.DayOfWeek
 import com.soywiz.klock.weekOfYear0

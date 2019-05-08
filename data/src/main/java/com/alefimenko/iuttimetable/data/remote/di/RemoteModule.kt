@@ -1,8 +1,8 @@
-package com.alefimenko.iuttimetable.remote.di
+package com.alefimenko.iuttimetable.data.remote.di
 
-import com.alefimenko.iuttimetable.remote.FeedbackService
-import com.alefimenko.iuttimetable.NetworkStatusReceiver
-import com.alefimenko.iuttimetable.remote.ScheduleService
+import com.alefimenko.iuttimetable.data.remote.FeedbackService
+import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
+import com.alefimenko.iuttimetable.data.remote.ScheduleService
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module

@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable
+package com.alefimenko.iuttimetable.common
 
 import android.content.BroadcastReceiver
 import android.content.Context

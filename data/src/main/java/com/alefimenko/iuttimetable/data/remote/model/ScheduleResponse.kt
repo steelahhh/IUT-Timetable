@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.remote.model
+package com.alefimenko.iuttimetable.data.remote.model
 
 /*
  * Created by Alexander Efimenko on 2019-04-16.

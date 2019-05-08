@@ -1,8 +1,9 @@
-package com.alefimenko.iuttimetable.remote
+package com.alefimenko.iuttimetable.data.remote
 
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import com.alefimenko.iuttimetable.remote.R
 
 /*
  * Created by Alexander Efimenko on 2019-01-20.

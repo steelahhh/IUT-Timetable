@@ -2,10 +2,10 @@ package com.alefimenko.iuttimetable
 
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.remote.model.Schedule
-import com.alefimenko.iuttimetable.local.model.GroupEntity
-import com.alefimenko.iuttimetable.local.model.ScheduleEntity
-import com.alefimenko.iuttimetable.remote.model.GroupResponse
+import com.alefimenko.iuttimetable.data.remote.model.Schedule
+import com.alefimenko.iuttimetable.data.local.model.GroupEntity
+import com.alefimenko.iuttimetable.data.local.model.ScheduleEntity
+import com.alefimenko.iuttimetable.data.remote.model.GroupResponse
 import com.google.gson.GsonBuilder
 
 /*
@@ -24,7 +24,8 @@ val ScheduleEntity.rawSchedule: Schedule
         .create()
         .fromJson(rawScheduleStr, Schedule::class.java)
 
-fun GroupResponse.toEntity() = GroupEntity(id, name)
+fun GroupResponse.toEntity() =
+    GroupEntity(id, name)
 
 fun GroupResponse.toGroupUi() = GroupUi(id, name)
 fun GroupResponse.toInstituteUi() = InstituteUi(id, name)

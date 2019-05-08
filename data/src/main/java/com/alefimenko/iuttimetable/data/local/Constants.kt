@@ -1,6 +1,6 @@
-package com.alefimenko.iuttimetable.local
+package com.alefimenko.iuttimetable.data.local
 
-import com.alefimenko.iuttimetable.local.model.GroupEntity
+import com.alefimenko.iuttimetable.data.local.model.GroupEntity
 import java.util.LinkedList
 
 /*
