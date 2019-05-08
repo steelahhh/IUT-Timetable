@@ -1,6 +1,7 @@
 package com.alefimenko.iuttimetable
 
 import androidx.multidex.MultiDexApplication
+import com.alefimenko.iuttimetable.common.IUTRefWatcher
 import com.alefimenko.iuttimetable.di.modules.applicationModule
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
@@ -12,27 +13,22 @@ import timber.log.Timber
  */
 
 @Suppress("unused")
-class IUTApplication : MultiDexApplication() {
+class IUTApplication : MultiDexApplication(), IUTRefWatcher {
+
+    override var refWatcher: RefWatcher? = null
 
     override fun onCreate() {
         super.onCreate()
         startKoin(this, applicationModule)
-        setup()
+        initializeTimber()
         initializeLeakCanary()
     }
 
-    private fun setup() {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
+    private fun initializeTimber() {
+        if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
     }
 
     private fun initializeLeakCanary() {
         refWatcher = LeakCanary.install(this)
-    }
-
-    companion object {
-        @JvmStatic
-        var refWatcher: RefWatcher? = null
     }
 }

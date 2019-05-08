@@ -71,9 +71,6 @@ dependencies {
 //    implementation(Deps.klock.jvm)
     implementation(Deps.klock.android)
 
-    debugImplementation(Deps.leakCanary)
-    releaseImplementation(Deps.leakCanaryNoOp)
-
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.espresso)
