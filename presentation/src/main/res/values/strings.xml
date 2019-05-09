@@ -1,0 +1,18 @@
+<resources>
+    <string name="zaochnaya_form">Заочная форма</string>
+    <string name="ochnaya_form">Очная форма</string>
+
+    <string name="pick_institute">Выбрать институт</string>
+    <string name="selected_institute">Институт: %s</string>
+
+    <string name="group_loading_error">Ошибка при загрузке групп</string>
+    <string name="institute_loading_error">Ошибка при загрузке групп</string>
+
+    <string name="search_error">Ничего не найдено</string>
+
+    <string name="group_search_hint">Название группы</string>
+
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_refresh">Обновить</string>
+    <string name="menu_change_week">Сменить неделю</string>
+</resources>

@@ -1,6 +1,7 @@
 package com.alefimenko.iuttimetable.data.remote.model
 
 import android.os.Parcelable
+import com.alefimenko.iuttimetable.data.local.Constants.EMPTY_ENTRY
 import kotlinx.android.parcel.Parcelize
 
 /*
@@ -22,8 +23,8 @@ data class ClassEntry(
     val classType: String = "",
     val time: Time = Time(),
     val location: String = "",
-    val date: String = "",
-    val innerGroup: String = "",
+    val date: String = EMPTY_ENTRY,
+    val innerGroup: String = EMPTY_ENTRY,
     val hidden: Boolean = false
 ) : Parcelable, Comparable<ClassEntry> {
     override fun compareTo(other: ClassEntry): Int {
@@ -31,6 +32,12 @@ data class ClassEntry(
         return if (this === other) equal else this.time.start.compareTo(other.time.start)
     }
 }
+
+val ClassEntry.hasInnerGroup: Boolean
+    get() = innerGroup != EMPTY_ENTRY
+
+val ClassEntry.hasDate: Boolean
+    get() = date != EMPTY_ENTRY
 
 data class Schedule(
     val semester: String = "",
