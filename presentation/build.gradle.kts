@@ -45,19 +45,11 @@ dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.navigation))
 
-    implementation(Deps.multidex)
-
     implementation(Deps.mviCore.core)
     implementation(Deps.mviCore.android)
 
-    implementation(Deps.lifecycleExtensions)
-
     implementation(Deps.fastAdapterCore)
     implementation(Deps.fastAdapterCommons)
-
-    implementation(Deps.klock.core)
-//    implementation(Deps.klock.jvm)
-    implementation(Deps.klock.android)
 
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)

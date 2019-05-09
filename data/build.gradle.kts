@@ -58,6 +58,9 @@ dependencies {
 
     api(Deps.jsoup)
 
+    api(Deps.klock.core)
+    api(Deps.klock.android)
+
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.espresso)

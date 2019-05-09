@@ -57,25 +57,8 @@ dependencies {
     implementation(project(Modules.coreUi))
     implementation(project(Modules.data))
     implementation(project(Modules.navigation))
-
+    implementation(project(Modules.presentation))
     implementation(Deps.multidex)
-
-    implementation(Deps.mviCore.core)
-    implementation(Deps.mviCore.android)
-
-    implementation(Deps.lifecycleExtensions)
-
-    implementation(Deps.fastAdapterCore)
-    implementation(Deps.fastAdapterCommons)
-
-    implementation(Deps.klock.core)
-//    implementation(Deps.klock.jvm)
-    implementation(Deps.klock.android)
-
-    testImplementation(Deps.junit)
-    androidTestImplementation(Deps.testRunner)
-    androidTestImplementation(Deps.espresso)
-    testImplementation(Deps.koin.test)
 }
 
 detekt {

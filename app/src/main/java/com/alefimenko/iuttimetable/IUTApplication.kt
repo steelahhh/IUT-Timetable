@@ -2,7 +2,7 @@ package com.alefimenko.iuttimetable
 
 import androidx.multidex.MultiDexApplication
 import com.alefimenko.iuttimetable.common.IUTRefWatcher
-import com.alefimenko.iuttimetable.di.modules.applicationModule
+import com.alefimenko.iuttimetable.di.applicationModule
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import org.koin.android.ext.android.startKoin

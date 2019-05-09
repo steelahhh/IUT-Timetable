@@ -1,7 +1,10 @@
 package com.alefimenko.iuttimetable.data.local.di
 
+import android.content.Context
 import androidx.room.Room
 import com.alefimenko.iuttimetable.data.ScheduleParser
+import com.alefimenko.iuttimetable.data.local.Constants
+import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDatabase
 import com.google.gson.GsonBuilder
 import org.koin.android.ext.koin.androidContext
@@ -25,4 +28,12 @@ val localDataModule = module {
     single<ScheduleParser>()
 
     single { GsonBuilder().enableComplexMapKeySerialization().create() }
+
+    single {
+        Preferences(
+            androidContext().getSharedPreferences(
+                Constants.PREFS_NAME, Context.MODE_PRIVATE
+            )
+        )
+    }
 }
