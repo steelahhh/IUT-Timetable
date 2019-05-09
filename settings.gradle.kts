@@ -3,5 +3,6 @@ include(
     Modules.common,
     Modules.coreUi,
     Modules.data,
-    Modules.navigation
+    Modules.navigation,
+    Modules.presentation
 )

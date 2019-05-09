@@ -11,6 +11,7 @@ object Modules {
     const val coreUi = ":coreui"
     const val data = ":data"
     const val navigation = ":navigation"
+    const val presentation = ":presentation"
 }
 
 object Versions {
