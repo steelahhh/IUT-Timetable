@@ -1,11 +1,10 @@
 package com.alefimenko.iuttimetable.feature
 
 import androidx.appcompat.app.AppCompatDelegate
+import com.alefimenko.iuttimetable.Screens
 import com.alefimenko.iuttimetable.data.local.Constants.ITEM_DOESNT_EXIST
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.navigation.Navigator
-import com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute.PickInstituteController
-import com.alefimenko.iuttimetable.feature.schedule.ScheduleController
 import com.bluelinelabs.conductor.Router
 
 /*
@@ -22,11 +21,11 @@ class RootFeature(
     }
 
     fun setRootScreen() {
-        val rootTag = when (sharedPreferences.currentGroup) {
-            ITEM_DOESNT_EXIST -> PickInstituteController.TAG
-            else -> ScheduleController.TAG
+        val root = when (sharedPreferences.currentGroup) {
+            ITEM_DOESNT_EXIST -> Screens.PickInstituteScreen
+            else -> Screens.ScheduleScreen()
         }
-        navigator.setRootScreen(rootTag)
+        navigator.setRoot(root)
     }
 
     fun updateTheme() {

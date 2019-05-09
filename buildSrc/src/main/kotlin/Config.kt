@@ -10,6 +10,7 @@ object Modules {
     const val common = ":common"
     const val coreUi = ":coreui"
     const val data = ":data"
+    const val navigation = ":navigation"
 }
 
 object Versions {

@@ -1,6 +1,7 @@
 package com.alefimenko.iuttimetable.feature.pickgroup.pickinstitute
 
 import android.os.Parcelable
+import com.alefimenko.iuttimetable.Screens
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupRepository
@@ -103,7 +104,7 @@ class PickInstituteFeature(
             is Wish.SelectForm -> just(Effect.FormSelected(wish.id))
             is Wish.SelectInstitute -> just(Effect.InstituteSelected(wish.institute))
             is Wish.NavigateToPickGroup -> Observable.fromCallable {
-                navigator.openPickGroup(state.form, state.institute!!)
+                navigator.push(Screens.PickGroupScreen(state.form, state.institute!!))
                 return@fromCallable Effect.ScreenChanged
             }
         }

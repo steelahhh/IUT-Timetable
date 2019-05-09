@@ -1,13 +1,14 @@
 package com.alefimenko.iuttimetable.feature.pickgroup
 
 import android.os.Parcelable
-import com.alefimenko.iuttimetable.navigation.Navigator
+import com.alefimenko.iuttimetable.Screens
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.Effect
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.News
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.State
 import com.alefimenko.iuttimetable.feature.pickgroup.PickGroupFeature.Wish
 import com.alefimenko.iuttimetable.feature.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.feature.schedule.model.GroupInfo
+import com.alefimenko.iuttimetable.navigation.Navigator
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.element.Actor
 import com.badoo.mvicore.element.NewsPublisher
@@ -86,7 +87,7 @@ class PickGroupFeature(
             is Wish.SelectGroup -> Observable.concat(
                 just(Effect.GroupSelected(wish.groupInfo)),
                 Observable.fromCallable {
-                    navigator.openSchedule(wish.groupInfo)
+                    navigator.replace(Screens.ScheduleScreen(wish.groupInfo))
                     return@fromCallable Effect.ScreenChanged
                 }
             )

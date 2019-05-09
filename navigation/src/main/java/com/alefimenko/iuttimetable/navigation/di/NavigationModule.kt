@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.di.modules
+package com.alefimenko.iuttimetable.navigation.di
 
 import com.alefimenko.iuttimetable.navigation.Navigator
 import org.koin.dsl.module.module
