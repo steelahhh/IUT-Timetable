@@ -1,24 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">IUT Timetable</string>
-
-    <string name="str_choose_email_client" translatable="false">Choose email client</string>
-
-    <string name="zaochnaya_form">Заочная форма</string>
-    <string name="ochnaya_form">Очная форма</string>
-
-    <string name="pick_institute">Выбрать институт</string>
-    <string name="selected_institute">Институт: %s</string>
-
-    <string name="retry">Повторить</string>
-
-    <string name="group_loading_error">Ошибка при загрузке групп</string>
-    <string name="institute_loading_error">Ошибка при загрузке групп</string>
-
-    <string name="search_error">Ничего не найдено</string>
-
-    <string name="group_search_hint">Название группы</string>
-
-    <string name="menu_settings">Настройки</string>
-    <string name="menu_refresh">Обновить</string>
-    <string name="menu_change_week">Сменить неделю</string>
 </resources>

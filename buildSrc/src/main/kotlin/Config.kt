@@ -5,6 +5,15 @@ object ApplicationID {
     const val develop = "com.alefimenko.iuttimetable.develop"
 }
 
+object Modules {
+    const val app = ":app"
+    const val common = ":common"
+    const val coreUi = ":coreui"
+    const val data = ":data"
+    const val navigation = ":navigation"
+    const val presentation = ":presentation"
+}
+
 object Versions {
     const val minSdk = 19
     const val targetSdk = 28

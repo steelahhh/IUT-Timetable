@@ -1,7 +1,6 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
-    kotlin("kapt")
     kotlin("android.extensions")
 }
 
@@ -17,13 +16,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = ApplicationID.default
         minSdkVersion(Versions.minSdk)
         targetSdkVersion(Versions.targetSdk)
         versionCode = Versions.appVersionCode
         versionName = Versions.appVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        multiDexEnabled = true
     }
 
     buildTypes {
@@ -38,39 +35,23 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
-
-    flavorDimensions("default")
-
-    productFlavors {
-        create("stable") {
-            applicationId = ApplicationID.default
-        }
-        create("develop") {
-            applicationId = ApplicationID.develop
-            versionNameSuffix = "d"
-        }
-    }
 }
 
 dependencies {
     implementation(project(Modules.common))
-    implementation(project(Modules.coreUi))
-    implementation(project(Modules.data))
-    implementation(project(Modules.navigation))
-    implementation(project(Modules.presentation))
-    implementation(Deps.multidex)
-}
+    api(Deps.constraint)
+    api(Deps.appcompat)
+    api(Deps.androidxCore)
+    api(Deps.recyclerView)
 
-detekt {
-    filters = ".*/resources/.*,.*/build/.*"
-    config = files("../detekt-config.yml")
-    val userHome = System.getProperty("user.home")
+    api(Deps.material)
+    api(Deps.materialDialogs)
 
-    idea {
-        path = "$userHome/.idea"
-        codeStyleScheme = "$userHome/.idea/idea-code-style.xml"
-        inspectionsProfile = "$userHome/.idea/inspect.xml"
-        report = "project.projectDir/reports"
-        mask = "*.kt"
-    }
+    api(Deps.conductor.core)
+    api(Deps.conductor.rx2)
+    api(Deps.conductor.support)
+    api(Deps.conductor.lifecycle)
+
+    api(Deps.rxBinding.core)
+    api(Deps.rxBinding.material)
 }

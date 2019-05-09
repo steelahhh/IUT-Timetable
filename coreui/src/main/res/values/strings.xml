@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">IUT Timetable</string>
+
+    <string name="retry">Повторить</string>
+</resources>
