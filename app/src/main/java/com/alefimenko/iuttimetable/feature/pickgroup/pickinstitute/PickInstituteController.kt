@@ -64,6 +64,16 @@ class PickInstituteController : BaseController<UiEvent, PickInstituteFeature.Vie
         }
     }
 
+    override fun onDestroyView(view: View) {
+        errorView.onRetryClick = null
+        pickInstituteButton.setOnClickListener(null)
+        formRadioGroup.setOnCheckedChangeListener(null)
+        nextButton.setOnClickListener(null)
+        dialog = dialog?.listItemsSingleChoice(items = listOf(), initialSelection = 0, selection = null)
+        dialog = null
+        super.onDestroyView(view)
+    }
+
     override fun acceptViewModel(viewModel: PickInstituteFeature.ViewModel) {
         with(viewModel) {
             progressBar.isVisible = isLoading

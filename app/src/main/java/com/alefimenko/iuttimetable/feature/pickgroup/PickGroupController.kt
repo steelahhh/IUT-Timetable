@@ -69,6 +69,15 @@ class PickGroupController(
         loadGroups()
     }
 
+    override fun onDestroyView(view: View) {
+        fastAdapter.withOnClickListener(null)
+        recycler.adapter = null
+        errorView.onRetryClick = null
+        toolbar.setNavigationOnClickListener(null)
+        searchView.setOnQueryTextListener(null)
+        super.onDestroyView(view)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         scope.close()
@@ -98,9 +107,7 @@ class PickGroupController(
                 onRetryClick = ::loadGroups
             }
 
-            if (isError) {
-                fastAdapter.clear()
-            }
+            if (isError) fastAdapter.clear()
 
             if (isGroupsLoaded) {
                 fastAdapter.set(groups)
