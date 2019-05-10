@@ -27,6 +27,7 @@ object Versions {
     const val mviCore = "1.1.6"
     const val aac = "2.0.0"
 
+    const val rxRelay = "2.1.0"
     const val rxBinding = "3.0.0-alpha2"
     const val rxKotlin = "2.2.0"
     const val rxAndroid = "2.0.2"
@@ -37,6 +38,8 @@ object Versions {
     const val leakCanary = "1.6.3"
 
     const val klock = "1.4.0"
+
+    const val mobius = "1.2.1"
 
     const val jsoup = "1.11.3"
     const val fastadapter = "3.3.1"
@@ -67,6 +70,7 @@ object Deps {
     const val lifecycleReactive = "androidx.lifecycle:lifecycle-reactivestreams:${vers.aac}"
     const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${vers.aac}"
 
+    const val rxRelay = "com.jakewharton.rxrelay2:rxrelay:${vers.rxRelay}"
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${vers.rxKotlin}"
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${vers.rxAndroid}"
 
@@ -100,6 +104,16 @@ object Deps {
         const val test = "org.koin:koin-test:${vers.koin}"
         const val android = "org.koin:koin-android:${vers.koin}"
         const val androidScope = "org.koin:koin-androidx-scope:${vers.koin}"
+    }
+
+    val mobius = Mobius
+
+    object Mobius {
+        const val core = "com.spotify.mobius:mobius-core:${vers.mobius}"
+        const val test = "com.spotify.mobius:mobius-test:${vers.mobius}"
+        const val rx = "com.spotify.mobius:mobius-rx2:${vers.mobius}"
+        const val android = "com.spotify.mobius:mobius-android:${vers.mobius}"
+        const val extras = "com.spotify.mobius:mobius-extras:${vers.mobius}"
     }
 
     val rxBinding = RxBinding

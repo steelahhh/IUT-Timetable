@@ -15,6 +15,7 @@ import com.alefimenko.iuttimetable.presentation.schedule.schedulepage.SchedulePa
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.tabs.TabLayout
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 /*
  * Created by Alexander Efimenko on 2019-03-08.
@@ -22,7 +23,7 @@ import org.koin.android.ext.android.inject
 
 class ScheduleController(
     private val bundle: Bundle = Bundle()
-) : BaseController<String, String>() {
+) : BaseController() {
     override var layoutRes: Int = R.layout.fragment_schedule
 
     private val toolbar by bind<BottomAppBar>(R.id.toolbar)
@@ -45,15 +46,13 @@ class ScheduleController(
     override fun onAttach(view: View) {
         super.onAttach(view)
         val groupInfo = bundle[GROUP_INFO] as? GroupInfo
+        Timber.d("Received groupInfo $groupInfo")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.apply {
             putInt(SELECTED_DAY, viewPager.currentItem)
         }
-    }
-
-    override fun acceptViewModel(viewModel: String) {
     }
 
     private fun setupViews() {

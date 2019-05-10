@@ -41,6 +41,12 @@ dependencies {
     api(Deps.koin.android)
     api(Deps.koin.androidScope)
 
+    api(Deps.mobius.core)
+    api(Deps.mobius.rx)
+    api(Deps.mobius.extras)
+    api(Deps.mobius.android)
+    api(Deps.rxRelay)
+
     api(Deps.timber)
 
     api(Deps.rxKotlin)

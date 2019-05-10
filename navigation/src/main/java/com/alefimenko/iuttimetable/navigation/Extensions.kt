@@ -12,7 +12,7 @@ import timber.log.Timber
  */
 
 fun Router.setRoot(
-    controller: BaseController<*, *>,
+    controller: BaseController,
     tag: String,
     changeHandler: ControllerChangeHandler = HorizontalChangeHandler()
 ) = setRoot(
@@ -24,7 +24,7 @@ fun Router.setRoot(
 )
 
 fun Router.safePush(
-    controller: BaseController<*, *>,
+    controller: BaseController,
     tag: String,
     changeHandler: ControllerChangeHandler = HorizontalChangeHandler()
 ) = if (!backstack.any { it.tag() == tag }) {
@@ -34,7 +34,7 @@ fun Router.safePush(
 }
 
 internal fun Router.push(
-    controller: BaseController<*, *>,
+    controller: BaseController,
     tag: String,
     changeHandler: ControllerChangeHandler = HorizontalChangeHandler()
 ) = pushController(

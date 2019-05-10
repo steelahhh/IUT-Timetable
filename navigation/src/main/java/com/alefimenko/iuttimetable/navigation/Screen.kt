@@ -9,5 +9,5 @@ import com.alefimenko.iuttimetable.base.BaseController
 abstract class Screen {
     val tag: String = javaClass.simpleName ?: "EmptyScreen"
 
-    abstract fun create(): BaseController<*, *>
+    abstract fun create(): BaseController
 }

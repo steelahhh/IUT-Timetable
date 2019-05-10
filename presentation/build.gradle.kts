@@ -45,9 +45,6 @@ dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.navigation))
 
-    implementation(Deps.mviCore.core)
-    implementation(Deps.mviCore.android)
-
     implementation(Deps.fastAdapterCore)
     implementation(Deps.fastAdapterCommons)
 

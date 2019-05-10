@@ -1,126 +1,97 @@
 package com.alefimenko.iuttimetable.presentation.pickgroup
 
 import android.os.Parcelable
-import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Effect
-import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.News
-import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.State
-import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Wish
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
-import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
+import com.alefimenko.iuttimetable.common.BaseEffectHandler
+import com.alefimenko.iuttimetable.common.consumer
 import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.presentation.di.Screens
-import com.badoo.mvicore.android.AndroidTimeCapsule
-import com.badoo.mvicore.element.Actor
-import com.badoo.mvicore.element.NewsPublisher
-import com.badoo.mvicore.element.Reducer
-import com.badoo.mvicore.feature.ActorReducerFeature
-import io.reactivex.Observable
-import io.reactivex.Observable.just
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
+import com.spotify.mobius.First
+import com.spotify.mobius.First.first
+import com.spotify.mobius.Init
+import com.spotify.mobius.Next
+import com.spotify.mobius.Next.dispatch
+import com.spotify.mobius.Next.next
+import com.spotify.mobius.Update
+import com.spotify.mobius.rx2.RxMobius
+import io.reactivex.ObservableTransformer
 import kotlinx.android.parcel.Parcelize
 
 /*
  * Created by Alexander Efimenko on 2019-03-06.
  */
 
-class PickGroupFeature(
-    repository: PickGroupRepository,
-    navigator: Navigator,
-    timeCapsule: AndroidTimeCapsule? = null
-) : ActorReducerFeature<Wish, Effect, State, News>(
-    initialState = timeCapsule?.get(PickGroupFeature::class) ?: State(),
-    actor = ActorImpl(
-        repository,
-        navigator
-    ),
-    reducer = ReducerImpl(),
-    newsPublisher = NewsPublisherImpl()
-) {
-
-    data class ViewModel(
-        val groups: List<GroupUi> = listOf(),
-        val group: GroupUi? = null,
-        val isLoading: Boolean,
-        val isError: Boolean,
-        val isGroupPicked: Boolean,
-        val isGroupsLoaded: Boolean
-    )
-
+object PickGroupFeature {
     @Parcelize
-    data class State(
-        val groups: List<GroupUi> = listOf(),
+    data class Model(
+        val form: Int = 0,
+        val institute: InstituteUi? = null,
         val group: GroupUi? = null,
+        val groups: List<GroupUi> = listOf(),
         @Transient val isLoading: Boolean = false,
         @Transient val isError: Boolean = false
     ) : Parcelable
 
-    sealed class UiEvent {
-        data class LoadGroupsClicked(val form: Int, val instituteId: Int) : UiEvent()
-        data class GroupClicked(val groupInfo: GroupInfo) : UiEvent()
-    }
-
-    sealed class Wish {
-        data class LoadGroups(val form: Int, val instituteId: Int) : Wish()
-        data class SelectGroup(val groupInfo: GroupInfo) : Wish()
+    sealed class Event {
+        object StartedLoading : Event()
+        object LoadGroups : Event()
+        data class GroupSelected(val groupInfo: GroupInfo) : Event()
+        data class GroupsLoaded(val groups: List<GroupUi>) : Event()
+        data class ErrorLoading(val throwable: Throwable) : Event()
     }
 
     sealed class Effect {
-        object ScreenChanged : Effect()
-        object StartedLoading : Effect()
-        data class GroupsLoaded(val groups: List<GroupUi>) : Effect()
-        data class GroupSelected(val groupInfo: GroupInfo) : Effect()
-        data class ErrorLoading(val throwable: Throwable) : Effect()
+        data class NavigateToSchedule(val groupInfo: GroupInfo) : Effect()
+        data class LoadGroups(val form: Int, val institute: InstituteUi?) : Effect()
     }
 
-    sealed class News {
-        data class ErrorExecutingRequest(val throwable: Throwable) : News()
+    object GroupInitializer : Init<Model, Effect> {
+        override fun init(model: Model): First<Model, Effect> =
+            first(
+                model,
+                if (model.groups.isEmpty()) setOf(Effect.LoadGroups(model.form, model.institute)) else setOf()
+            )
     }
 
-    class ActorImpl(
+    object GroupUpdater : Update<Model, Event, Effect> {
+        override fun update(model: Model, event: Event): Next<Model, Effect> = when (event) {
+            Event.StartedLoading -> next(model.copy(isLoading = true, isError = false))
+            Event.LoadGroups -> dispatch(setOf(Effect.LoadGroups(model.form, model.institute)))
+            is Event.ErrorLoading -> next(model.copy(isLoading = false, isError = true))
+            is Event.GroupSelected -> next(
+                model.copy(group = event.groupInfo.group),
+                setOf(Effect.NavigateToSchedule(event.groupInfo))
+            )
+            is Event.GroupsLoaded -> next(
+                model.copy(
+                    groups = event.groups,
+                    isError = false,
+                    isLoading = false
+                )
+            )
+        }
+    }
+
+    class PickGroupEffectHandler(
         private val repository: PickGroupRepository,
         private val navigator: Navigator
-    ) : Actor<State, Wish, Effect> {
-        override fun invoke(state: State, wish: Wish): Observable<Effect> = when (wish) {
-            is Wish.LoadGroups -> repository.getGroups(wish.form, wish.instituteId)
-                .map<Effect> { Effect.GroupsLoaded(it) }
-                .onErrorReturn { Effect.ErrorLoading(it) }
-                .startWith(Effect.StartedLoading)
-            is Wish.SelectGroup -> Observable.concat(
-                just(Effect.GroupSelected(wish.groupInfo)),
-                Observable.fromCallable {
-                    navigator.replace(Screens.ScheduleScreen(wish.groupInfo))
-                    return@fromCallable Effect.ScreenChanged
+    ) : BaseEffectHandler<Effect, Event>() {
+        override fun create(): ObservableTransformer<Effect, Event> {
+            return RxMobius.subtypeEffectHandler<Effect, Event>()
+                .addTransformer(Effect.LoadGroups::class.java) { effect ->
+                    effect.flatMap {
+                        repository.getGroups(it.form, it.institute!!.id)
+                            .map<Event> { Event.GroupsLoaded(it) }
+                            .onErrorReturn { Event.ErrorLoading(it) }
+                            .startWith(Event.StartedLoading)
+                    }
                 }
-            )
-        }
-    }
-
-    class ReducerImpl : Reducer<State, Effect> {
-        override fun invoke(state: State, effect: Effect): State = when (effect) {
-            is Effect.StartedLoading -> state.copy(
-                isLoading = true,
-                isError = false
-            )
-            is Effect.ErrorLoading -> state.copy(
-                groups = listOf(),
-                isLoading = false,
-                isError = true
-            )
-            is Effect.GroupsLoaded -> state.copy(
-                groups = effect.groups,
-                isLoading = false,
-                isError = false
-            )
-            is Effect.GroupSelected -> state.copy(
-                group = effect.groupInfo.group
-            )
-            else -> state.copy()
-        }
-    }
-
-    class NewsPublisherImpl : NewsPublisher<Wish, Effect, State, News> {
-        override fun invoke(wish: Wish, effect: Effect, state: State): News? = when (effect) {
-            is Effect.ErrorLoading -> News.ErrorExecutingRequest(effect.throwable)
-            else -> null
+                .consumer(Effect.NavigateToSchedule::class.java) { effect ->
+                    navigator.replace(Screens.ScheduleScreen(effect.groupInfo))
+                }
+                .build()
         }
     }
 }

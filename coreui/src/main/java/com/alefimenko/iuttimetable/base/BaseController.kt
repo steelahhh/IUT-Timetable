@@ -13,26 +13,18 @@ import com.alefimenko.iuttimetable.extension.requireActivity
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.archlifecycle.LifecycleController
-import io.reactivex.ObservableSource
-import io.reactivex.functions.Consumer
-import io.reactivex.subjects.PublishSubject
 
 /*
  * Created by Alexander Efimenko on 2019-04-24.
  */
 
-abstract class BaseController<Event, ViewModel>(
-    private val events: PublishSubject<Event> = PublishSubject.create()
-) : LifecycleController(),
-    Consumer<ViewModel>,
-    ObservableSource<Event> by events,
-    ComponentCallbacks {
+abstract class BaseController : LifecycleController(), ComponentCallbacks {
 
     private var hasExited: Boolean = false
 
     open var layoutRes: Int = 0
 
-    val mainHandler = Handler(Looper.getMainLooper())
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     val bind = createBinder()
 
@@ -46,18 +38,6 @@ abstract class BaseController<Event, ViewModel>(
 
     open fun onViewBound(view: View) {
     }
-
-    fun dispatch(event: Event) {
-        events.onNext(event)
-    }
-
-    final override fun accept(viewmodel: ViewModel) {
-        if (isAttached) {
-            acceptViewModel(viewmodel)
-        }
-    }
-
-    abstract fun acceptViewModel(viewModel: ViewModel)
 
     override fun onAttach(view: View) {
         (activity as BaseActivity).run {
@@ -85,6 +65,10 @@ abstract class BaseController<Event, ViewModel>(
         super.onChangeEnded(changeHandler, changeType)
         hasExited = !changeType.isEnter
         if (isDestroyed) (requireActivity().application as IUTRefWatcher).refWatcher?.watch(this)
+    }
+
+    fun post(action: () -> Unit) {
+        mainHandler.post(action)
     }
 
     override fun onLowMemory() = Unit
