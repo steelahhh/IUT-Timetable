@@ -50,10 +50,14 @@ class PickInstituteController : BaseController() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable("MODEL", controller.model)
+        outState.putParcelable(MODEL, controller.model)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        controller.replaceModel(savedInstanceState["MODEL"] as Model)
+        controller.replaceModel(savedInstanceState[MODEL] as Model)
+    }
+
+    companion object {
+        const val MODEL = "MODEl"
     }
 }
