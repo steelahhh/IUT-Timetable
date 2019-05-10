@@ -1,5 +1,7 @@
 package com.alefimenko.iuttimetable.base
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +18,18 @@ abstract class KotlinView(
     container: ViewGroup
 ) : LayoutContainer {
 
+    private val mainHandler = Handler(Looper.getMainLooper())
+
     private var _containerView: View? = inflater.inflate(layoutRes, container, false)
     override val containerView: View get() = _containerView ?: error("Error inflating view")
 
     protected open fun tearDown() {
         clearFindViewByIdCache()
+        mainHandler.removeCallbacksAndMessages(null)
         _containerView = null
+    }
+
+    fun post(action: () -> Unit) {
+        mainHandler.post(action)
     }
 }

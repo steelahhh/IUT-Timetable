@@ -6,8 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.alefimenko.iuttimetable.base.BaseController
 import com.alefimenko.iuttimetable.presentation.di.Scopes
+import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.Event
+import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.InstituteEffectHandler
+import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.InstituteInitializer
+import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.InstituteUpdater
+import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.Model
 import com.spotify.mobius.MobiusLoop
-import org.koin.android.ext.android.inject
+import com.spotify.mobius.android.AndroidLogger
+import com.spotify.mobius.android.MobiusAndroid.controller
+import com.spotify.mobius.rx2.RxMobius
+import org.koin.android.ext.android.get
 import org.koin.androidx.scope.ext.android.bindScope
 import org.koin.androidx.scope.ext.android.getOrCreateScope
 
@@ -15,11 +23,17 @@ import org.koin.androidx.scope.ext.android.getOrCreateScope
  * Created by Alexander Efimenko on 2019-02-04.
  */
 
-class PickInstituteController : BaseController<Nothing, Nothing>() {
+class PickInstituteController : BaseController() {
 
     private val scope = getOrCreateScope(Scopes.PICK_GROUP)
 
-    private val controller: MobiusLoop.Controller<Model, Event> by inject()
+    private val controller: MobiusLoop.Controller<Model, Event> = controller(
+        RxMobius.loop(
+            InstituteUpdater,
+            InstituteEffectHandler(get(), get()).create()
+        ).init(InstituteInitializer).logger(AndroidLogger.tag("PIFFER")),
+        Model()
+    )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = PickInstituteView(inflater, container)
@@ -42,6 +56,4 @@ class PickInstituteController : BaseController<Nothing, Nothing>() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         controller.replaceModel(savedInstanceState["MODEL"] as Model)
     }
-
-    override fun acceptViewModel(viewModel: Nothing) = Unit
 }
