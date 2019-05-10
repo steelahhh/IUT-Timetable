@@ -17,7 +17,7 @@ abstract class KotlinView(
 ) : LayoutContainer {
 
     private var _containerView: View? = inflater.inflate(layoutRes, container, false)
-    override val containerView: View? get() = _containerView
+    override val containerView: View get() = _containerView ?: error("Error inflating view")
 
     protected open fun tearDown() {
         clearFindViewByIdCache()

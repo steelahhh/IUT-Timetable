@@ -45,8 +45,8 @@ class PickGroupController(
     private val bindings: PickGroupBindings by inject { parametersOf(this) }
 
     private val recycler by bind<RecyclerView>(R.id.recycler)
-    private val progressBar by bind<ProgressBar>(R.id.progress_bar)
-    private val errorView by bind<ErrorStubView>(R.id.error_view)
+    private val progressBar by bind<ProgressBar>(R.id.progressBar)
+    private val errorView by bind<ErrorStubView>(R.id.errorView)
     private val toolbar by bind<BottomAppBar>(R.id.toolbar)
     private val searchView by bind<SearchView>(R.id.search_view)
 

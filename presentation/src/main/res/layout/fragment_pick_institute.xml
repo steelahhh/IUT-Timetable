@@ -7,7 +7,7 @@
     android:background="?attr/background_color">
 
     <RadioGroup
-        android:id="@+id/form_radio_group"
+        android:id="@+id/formRadioGroup"
         style="@style/AppText.Larger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pick_institute_button"
+        app:layout_constraintTop_toBottomOf="@id/pickInstituteButton"
         app:layout_constraintVertical_chainStyle="packed">
 
         <RadioButton
@@ -45,7 +45,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/pick_institute_button"
+        android:id="@+id/pickInstituteButton"
         style="@style/TextMaterialButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         app:icon="@drawable/ic_arrow_down"
         app:iconGravity="start"
         app:iconTint="?android:textColorPrimary"
-        app:layout_constraintBottom_toTopOf="@id/form_radio_group"
+        app:layout_constraintBottom_toTopOf="@id/formRadioGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -66,16 +66,16 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/pick_institute_button"
-        app:layout_constraintLeft_toRightOf="@id/pick_institute_button"
-        app:layout_constraintTop_toTopOf="@id/pick_institute_button" />
+        app:layout_constraintBottom_toBottomOf="@id/pickInstituteButton"
+        app:layout_constraintLeft_toRightOf="@id/pickInstituteButton"
+        app:layout_constraintTop_toTopOf="@id/pickInstituteButton" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/next_button"
+        android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -85,7 +85,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.alefimenko.iuttimetable.views.ErrorStubView
-        android:id="@+id/error_view"
+        android:id="@+id/errorView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
