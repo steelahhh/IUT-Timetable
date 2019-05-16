@@ -39,6 +39,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="AppText.Small">
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="AppText.Title">
         <item name="android:textSize">42sp</item>
     </style>
