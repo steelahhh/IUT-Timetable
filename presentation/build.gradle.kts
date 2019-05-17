@@ -45,8 +45,15 @@ dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.navigation))
 
-    implementation(Deps.fastAdapterCore)
-    implementation(Deps.fastAdapterCommons)
+    implementation(Deps.fastAdapter.ui)
+    implementation(Deps.fastAdapter.diff)
+    implementation(Deps.fastAdapter.drag)
+    implementation(Deps.fastAdapter.scroll)
+    implementation(Deps.fastAdapter.swipe)
+    implementation(Deps.fastAdapter.utils)
+
+    implementation(Deps.groupie.core)
+    implementation(Deps.groupie.ktx)
 
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)

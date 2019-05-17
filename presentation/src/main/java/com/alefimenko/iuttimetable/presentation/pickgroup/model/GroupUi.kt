@@ -17,10 +17,10 @@ import kotlinx.android.parcel.Parcelize
 data class GroupUi(
     val id: Int,
     val label: String
-) : AbstractItem<GroupUi, GroupUi.VH>(), Parcelable {
-    override fun getType(): Int = R.id.item_group_id
+) : AbstractItem<GroupUi.VH>(), Parcelable {
+    override val type get(): Int = R.id.item_group_id
     override fun getViewHolder(v: View) = VH(v)
-    override fun getLayoutRes() = R.layout.item_group
+    override val layoutRes get() = R.layout.item_group
 
     class VH(view: View) : FastAdapter.ViewHolder<GroupUi>(view) {
         private val title = itemView.findViewById<TextView>(R.id.group_title)

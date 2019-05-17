@@ -12,7 +12,7 @@ import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Event
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Model
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.adapters.FastItemAdapter
 import com.mikepenz.fastadapter.listeners.ItemFilterListener
 import com.spotify.mobius.Connectable
 import com.spotify.mobius.Connection
@@ -34,7 +34,7 @@ class PickGroupView(
         setupViews()
         return object : Connection<Model> {
             override fun accept(value: Model) {
-                fastAdapter.withOnClickListener { _, _, group, _ ->
+                fastAdapter.onClickListener = { _, _, group, _ ->
                     output.accept(
                         PickGroupFeature.Event.GroupSelected(
                             GroupInfo(
@@ -55,14 +55,14 @@ class PickGroupView(
 
     private fun setupViews() {
         fastAdapter.apply {
-            itemFilter.withItemFilterListener(object : ItemFilterListener<GroupUi> {
+            itemFilter.itemFilterListener = object : ItemFilterListener<GroupUi> {
                 override fun onReset() {
                     post {
                         errorView.isVisible = false
                     }
                 }
 
-                override fun itemsFiltered(constraint: CharSequence?, results: MutableList<GroupUi>?) {
+                override fun itemsFiltered(constraint: CharSequence?, results: List<GroupUi>?) {
                     post {
                         errorView.apply {
                             isVisible = results?.isEmpty() ?: false
@@ -71,9 +71,9 @@ class PickGroupView(
                         }
                     }
                 }
-            })
+            }
 
-            itemFilter.withFilterPredicate { item, constraint ->
+            itemFilter.filterPredicate = { item, constraint ->
                 filterGroups(item, constraint)
             }
         }
@@ -85,11 +85,11 @@ class PickGroupView(
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?) = true.also {
-                fastAdapter.filter(query)
+                fastAdapter.filter(query.orEmpty() as CharSequence)
             }
 
             override fun onQueryTextChange(newText: String?) = true.also {
-                fastAdapter.filter(newText)
+                fastAdapter.filter(newText.orEmpty() as CharSequence)
             }
         })
     }

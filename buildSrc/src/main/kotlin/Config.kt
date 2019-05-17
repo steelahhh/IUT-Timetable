@@ -39,10 +39,12 @@ object Versions {
 
     const val klock = "1.4.0"
 
-    const val mobius = "1.2.1"
+    const val mobius = "1.2.2"
 
     const val jsoup = "1.11.3"
-    const val fastadapter = "3.3.1"
+
+    const val groupie = "2.3.0"
+    const val fastadapter = "4.0.0-rc04"
     const val retrofit = "2.4.0"
     const val gson = "2.8.5"
     const val koin = "1.0.2"
@@ -86,8 +88,23 @@ object Deps {
         const val android = "com.soywiz:klock-android:${vers.klock}"
     }
 
-    const val fastAdapterCore = "com.mikepenz:fastadapter:${vers.fastadapter}"
-    const val fastAdapterCommons = "com.mikepenz:fastadapter-commons:${vers.fastadapter}"
+    val fastAdapter = FastAdapter
+
+    object FastAdapter {
+        const val diff = "com.mikepenz:fastadapter-extensions-diff:${vers.fastadapter}"
+        const val drag = "com.mikepenz:fastadapter-extensions-drag:${vers.fastadapter}"
+        const val scroll = "com.mikepenz:fastadapter-extensions-scroll:${vers.fastadapter}"
+        const val swipe = "com.mikepenz:fastadapter-extensions-swipe:${vers.fastadapter}"
+        const val ui = "com.mikepenz:fastadapter-extensions-ui:${vers.fastadapter}"
+        const val utils = "com.mikepenz:fastadapter-extensions-utils:${vers.fastadapter}"
+    }
+
+    val groupie = Groupie
+
+    object Groupie {
+        const val core = "com.xwray:groupie:${vers.groupie}"
+        const val ktx = "com.xwray:groupie-kotlin-android-extensions:${vers.groupie}"
+    }
 
     const val retrofit = "com.squareup.retrofit2:retrofit:${vers.retrofit}"
     const val retrofitGson = "com.squareup.retrofit2:converter-gson:${vers.retrofit}"
