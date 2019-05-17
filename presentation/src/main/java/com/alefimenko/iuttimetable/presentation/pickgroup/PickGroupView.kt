@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alefimenko.iuttimetable.base.KotlinView
+import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Event
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Model
@@ -118,5 +119,6 @@ class PickGroupView(
             fastAdapter.set(groups)
             if (searchView.query.isNotEmpty()) fastAdapter.filter(searchView.query)
         }
+        toolbar.changeMenuColors()
     }
 }
