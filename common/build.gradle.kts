@@ -47,6 +47,9 @@ dependencies {
     api(Deps.mobius.android)
     api(Deps.rxRelay)
 
+    api(Deps.klock.core)
+    api(Deps.klock.android)
+
     api(Deps.timber)
 
     api(Deps.rxKotlin)
