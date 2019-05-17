@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.os.Build
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -22,12 +23,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  * Created by Alexander Efimenko on 2019-04-24.
  */
 
-fun FloatingActionButton.show(state: Boolean) {
-    if (state) {
-        show()
-    } else {
-        hide()
+fun FloatingActionButton.show(state: Boolean) = if (state) show() else hide()
+
+fun View.showSoftKeyboard() {
+    if (requestFocus()) {
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     }
+}
+
+fun View.hideSoftKeyboard() {
+    val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
 }
 
 fun View.hide() {

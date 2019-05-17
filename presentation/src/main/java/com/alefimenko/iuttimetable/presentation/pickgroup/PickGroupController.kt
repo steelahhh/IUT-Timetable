@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alefimenko.iuttimetable.base.BaseController
+import com.alefimenko.iuttimetable.extension.hideSoftKeyboard
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.di.Scopes
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Event
@@ -67,6 +68,7 @@ class PickGroupController(
     }
 
     override fun onDestroyView(view: View) {
+        view.hideSoftKeyboard()
         controller.stop()
         controller.disconnect()
         toolbar.setNavigationOnClickListener(null)
