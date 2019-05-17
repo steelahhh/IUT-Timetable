@@ -7,7 +7,6 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
-import java.util.Locale
 
 /*
  * Created by Alexander Efimenko on 2019-01-16.
@@ -49,7 +48,7 @@ class ScheduleParser {
         getWeekRow(week).fold(mutableListOf()) { acc, element ->
             val entry = element.child(day).parsed.takeIf {
                 it.isNotEmpty()
-            } ?: return@fold mutableListOf<ClassEntry>()
+            } ?: ""
             val time = element.child(1).parsed.split("-")
             if (entry.isNotEmpty()) {
                 if (!entry.hasMultipleClasses) {
@@ -122,10 +121,12 @@ class ScheduleParser {
         get() {
             val table = select("table").first().select("> tbody > tr").text().trim()
             return when {
-                table.contains(" на ") -> table.substring(
-                    table.indexOf(" на ") + 3,
-                    table.indexOf(" уч") + 1
-                ).trim()
+                table.contains(" на ") -> {
+                    table.substring(
+                        table.indexOf(" на ") + 3,
+                        table.indexOf(" уч") + 1
+                    ).trim()
+                }
                 else -> {
                     val sem = table.substring(0, table.indexOf(" учеб")).split(" ")
                     sem[sem.size - 3] + " " + sem[sem.size - 2] + " " + sem[sem.size - 1]
@@ -192,7 +193,7 @@ class ScheduleParser {
                 subjNTeach[subjNTeach.size - 1]
             }
 
-            return subject.toString().toUpperCase(Locale.US) to teacher
+            return subject.toString().capitalize() to teacher.capitalize()
         }
 
     private val String.hasVacancy: Boolean
