@@ -41,8 +41,6 @@ class Preferences(private val prefs: SharedPreferences) {
     var switchDay: Boolean
         get() = prefs.getBoolean(SWITCH_TO_DAY, true)
         set(value) {
-            // use commit() instead of apply(), because we exit out of the preferences too quick
-            // which will prevent apply() to finish
             prefs.edit().putBoolean(SWITCH_TO_DAY, value).commit()
         }
 

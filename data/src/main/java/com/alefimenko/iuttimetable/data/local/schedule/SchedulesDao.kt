@@ -23,6 +23,9 @@ interface SchedulesDao {
     @get:Query("SELECT groupId, groupName FROM SCHEDULES ")
     val groups: Single<List<GroupEntity>>
 
+    @Query("SELECT COUNT(*) FROM Schedules WHERE groupId = :groupId")
+    fun groupExists(groupId: Int): Single<Int>
+
     @Query("SELECT * FROM Schedules WHERE groupId = :groupId")
     fun getByGroupId(groupId: Int): Maybe<ScheduleEntity>
 

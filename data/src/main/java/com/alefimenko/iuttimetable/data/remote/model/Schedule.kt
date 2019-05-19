@@ -39,8 +39,9 @@ val ClassEntry.hasInnerGroup: Boolean
 val ClassEntry.hasDate: Boolean
     get() = date != EMPTY_ENTRY
 
+@Parcelize
 data class Schedule(
     val semester: String = "",
     val weeks: List<String> = mutableListOf(),
-    val schedule: Map<Int, WeekSchedule> = mapOf()
-)
+    val weekSchedule: Map<Int, WeekSchedule> = mapOf()
+) : Parcelable

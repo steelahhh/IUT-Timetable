@@ -1,19 +1,19 @@
 package com.alefimenko.iuttimetable.presentation.schedule
 
-import com.alefimenko.iuttimetable.data.local.Preferences
-import com.alefimenko.iuttimetable.data.ScheduleParser
-import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
-import com.alefimenko.iuttimetable.data.local.model.ScheduleEntity
-import com.alefimenko.iuttimetable.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
+import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
+import com.alefimenko.iuttimetable.data.ScheduleParser
+import com.alefimenko.iuttimetable.data.local.Preferences
+import com.alefimenko.iuttimetable.data.local.model.ScheduleEntity
+import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
+import com.alefimenko.iuttimetable.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.data.remote.model.Schedule
 import com.alefimenko.iuttimetable.data.remote.model.ScheduleResponse
 import com.alefimenko.iuttimetable.data.remote.toFormPath
-import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -33,8 +33,10 @@ class ScheduleRepository(
     private val networkStatusReceiver: NetworkStatusReceiver
 ) {
 
-    fun getSchedule() = schedulesDao
+    fun getSchedule(): Observable<Schedule> = schedulesDao
         .getByGroupId(preferences.currentGroup)
+        .map { gson.fromJson(it.scheduleStr, Schedule::class.java) }
+        .toObservable()
         .ioMainSchedulers()
 
     fun downloadSchedule(groupInfo: GroupInfo): Observable<Schedule> {
@@ -51,7 +53,7 @@ class ScheduleRepository(
     }
 
     fun updateSchedule(): Observable<Schedule> {
-        return getSchedule().flatMapObservable { schedule ->
+        return schedulesDao.getByGroupId(preferences.currentGroup).flatMapObservable { schedule ->
             val groupInfo = GroupInfo(
                 form = schedule.formId,
                 group = GroupUi(
@@ -96,22 +98,14 @@ class ScheduleRepository(
                 schedule = Schedule(
                     semester = scheduleParser.semester,
                     weeks = scheduleParser.weeks,
-                    schedule = scheduleParser.schedule
+                    weekSchedule = scheduleParser.schedule
                 )
             )
         }
     }
 }
 
-// should be using the gson instance from koin
-
 /*
-val ScheduleEntity.schedule: Schedule
-    get() = GsonBuilder()
-        .enableComplexMapKeySerialization()
-        .create()
-        .fromJson(scheduleStr, Schedule::class.java)
-
 val ScheduleEntity.rawSchedule: Schedule
     get() = GsonBuilder()
         .enableComplexMapKeySerialization()
