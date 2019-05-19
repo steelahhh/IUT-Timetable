@@ -19,10 +19,10 @@ import kotlinx.android.synthetic.main.item_class.view.*
 
 data class ClassUi(
     val classEntry: ClassEntry
-) : AbstractItem<ClassUi, ClassUi.VH>() {
-    override fun getType() = R.id.class_layout
+) : AbstractItem<ClassUi.VH>() {
+    override val type get() = R.id.class_layout
     override fun getViewHolder(v: View) = VH(v)
-    override fun getLayoutRes() = R.layout.item_class
+    override val layoutRes get() = R.layout.item_class
 
     class VH(view: View) : FastAdapter.ViewHolder<ClassUi>(view) {
         override fun unbindView(item: ClassUi) = with(itemView) {

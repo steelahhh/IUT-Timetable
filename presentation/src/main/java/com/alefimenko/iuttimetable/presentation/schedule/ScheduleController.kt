@@ -11,7 +11,6 @@ import com.alefimenko.iuttimetable.presentation.DateInteractor
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.extension.requireContext
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
-import com.alefimenko.iuttimetable.presentation.schedule.schedulepage.SchedulePagerAdapter
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.tabs.TabLayout
 import org.koin.android.ext.android.inject
@@ -33,10 +32,6 @@ class ScheduleController(
     // will be extracted into the ScheduleFeature later
     private val dateInteractorImpl: DateInteractor by inject()
 
-    private val pagerAdapter by bind.stuff {
-        SchedulePagerAdapter(this)
-    }
-
     override fun onViewBound(view: View) {
         setupViews()
         selectCurrentDay(dateInteractorImpl.currentDay)
@@ -56,7 +51,6 @@ class ScheduleController(
     }
 
     private fun setupViews() {
-        viewPager.adapter = pagerAdapter
         scheduleTabs.setupWithViewPager(viewPager)
 
         toolbar.apply {
