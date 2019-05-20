@@ -45,14 +45,6 @@ fun View.show() {
     this.visibility = View.VISIBLE
 }
 
-fun View.makeInvisible() {
-    this.visibility = View.INVISIBLE
-}
-
-fun View.isVisible(): Boolean {
-    return visibility == View.VISIBLE
-}
-
 fun RadioGroup.changeEnabled(enabled: Boolean) {
     for (child in 0..childCount) {
         (getChildAt(child) as? RadioButton)?.isEnabled = enabled
