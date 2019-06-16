@@ -3,6 +3,8 @@ package com.alefimenko.iuttimetable.presentation.pickgroup
 import android.os.Parcelable
 import com.alefimenko.iuttimetable.common.BaseEffectHandler
 import com.alefimenko.iuttimetable.common.consumer
+import com.alefimenko.iuttimetable.common.effectHandler
+import com.alefimenko.iuttimetable.common.transformer
 import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.presentation.di.Screens
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
@@ -15,7 +17,6 @@ import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
 import com.spotify.mobius.Update
-import com.spotify.mobius.rx2.RxMobius
 import io.reactivex.ObservableTransformer
 import kotlinx.android.parcel.Parcelize
 
@@ -79,19 +80,17 @@ object PickGroupFeature {
         private val navigator: Navigator
     ) : BaseEffectHandler<Effect, Event>() {
         override fun create(): ObservableTransformer<Effect, Event> {
-            return RxMobius.subtypeEffectHandler<Effect, Event>()
-                .addTransformer(Effect.LoadGroups::class.java) { effect ->
-                    effect.flatMap {
-                        repository.getGroups(it.form, it.institute!!.id)
-                            .map<Event> { Event.GroupsLoaded(it) }
-                            .onErrorReturn { Event.ErrorLoading(it) }
-                            .startWith(Event.StartedLoading)
-                    }
+            return effectHandler {
+                transformer(Effect.LoadGroups::class.java) { effect ->
+                    repository.getGroups(effect.form, effect.institute!!.id)
+                        .map<Event> { Event.GroupsLoaded(it) }
+                        .onErrorReturn { Event.ErrorLoading(it) }
+                        .startWith(Event.StartedLoading)
                 }
-                .consumer(Effect.NavigateToSchedule::class.java) { effect ->
+                consumer(Effect.NavigateToSchedule::class.java) { effect ->
                     navigator.replace(Screens.ScheduleScreen(effect.groupInfo))
                 }
-                .build()
+            }
         }
     }
 }

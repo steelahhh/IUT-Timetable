@@ -1,6 +1,7 @@
 package com.alefimenko.iuttimetable.common
 
 import com.spotify.mobius.rx2.RxMobius
+import io.reactivex.ObservableSource
 import io.reactivex.ObservableTransformer
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,3 +33,10 @@ inline fun <Effect, Event, HandleEffect : Effect> RxMobius.SubtypeEffectHandlerB
     scheduler: Scheduler = AndroidSchedulers.mainThread(),
     crossinline action: (effect: HandleEffect) -> Unit
 ): RxMobius.SubtypeEffectHandlerBuilder<Effect, Event> = addConsumer(effect, { action(it) }, scheduler)
+
+inline fun <Effect, Event, HandleEffect : Effect> RxMobius.SubtypeEffectHandlerBuilder<Effect, Event>.transformer(
+    effect: Class<HandleEffect>,
+    crossinline action: (effect: HandleEffect) -> ObservableSource<Event>
+): RxMobius.SubtypeEffectHandlerBuilder<Effect, Event> = addTransformer(effect) { effectObs ->
+    effectObs.flatMap { action(it) }
+}

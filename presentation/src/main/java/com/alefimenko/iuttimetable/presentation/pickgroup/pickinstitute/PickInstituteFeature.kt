@@ -3,6 +3,8 @@ package com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute
 import android.os.Parcelable
 import com.alefimenko.iuttimetable.common.BaseEffectHandler
 import com.alefimenko.iuttimetable.common.consumer
+import com.alefimenko.iuttimetable.common.effectHandler
+import com.alefimenko.iuttimetable.common.transformer
 import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.presentation.di.Screens
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupRepository
@@ -14,7 +16,6 @@ import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
 import com.spotify.mobius.Update
-import com.spotify.mobius.rx2.RxMobius
 import io.reactivex.ObservableTransformer
 import kotlinx.android.parcel.Parcelize
 
@@ -76,19 +77,17 @@ object PickInstituteFeature {
         private val navigator: Navigator
     ) : BaseEffectHandler<Effect, Event>() {
         override fun create(): ObservableTransformer<Effect, Event> {
-            return RxMobius.subtypeEffectHandler<Effect, Event>()
-                .addTransformer(Effect.LoadInstitutes::class.java) { effect ->
-                    effect.flatMap {
-                        repository.getInstitutes()
-                            .map<Event> { Event.InstitutesLoaded(it) }
-                            .onErrorReturn { Event.ErrorLoading(it) }
-                            .startWith(Event.StartedLoading)
-                    }
+            return effectHandler {
+                transformer(Effect.LoadInstitutes::class.java) {
+                    repository.getInstitutes()
+                        .map<Event> { Event.InstitutesLoaded(it) }
+                        .onErrorReturn { Event.ErrorLoading(it) }
+                        .startWith(Event.StartedLoading)
                 }
-                .consumer(Effect.NavigateToPickGroup::class.java) { effect ->
+                consumer(Effect.NavigateToPickGroup::class.java) { effect ->
                     navigator.push(Screens.PickGroupScreen(effect.form, effect.institute))
                 }
-                .build()
+            }
         }
     }
 }
