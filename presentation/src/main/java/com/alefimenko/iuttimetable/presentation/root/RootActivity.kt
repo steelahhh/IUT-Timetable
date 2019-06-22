@@ -27,6 +27,7 @@ class RootActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         interactor.updateTheme()
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
         router = Conductor.attachRouter(this, container, savedInstanceState)

@@ -31,6 +31,7 @@
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/iutColor</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 
     <style name="AppText">

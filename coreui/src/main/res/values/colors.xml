@@ -4,7 +4,7 @@
     <color name="primary">#C62828</color>
     <color name="primaryDark">#C62828</color>
 
-    <color name="backgroundDark">#111111</color>
+    <color name="backgroundDark">#141414</color>
     <color name="backgroundLight">#fff</color>
 
     <color name="coral">#f44336</color>
@@ -15,6 +15,9 @@
     <color name="lightBlue">#0288d1</color>
     <color name="warmGray">#ff9b9b9b</color>
     <color name="iutColor">#0e4194</color>
+
+    <color name="slightlyWhiteGray">#EBEBEB</color>
+    <color name="almostDark">#202020</color>
 
     <color name="transparent">#00ffffff</color>
     <color name="transparentBlack">#66000000</color>

@@ -24,6 +24,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
+        if (savedInstanceState == null) updateNavigationColor()
     }
 
     override fun onDestroy() {

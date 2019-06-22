@@ -41,7 +41,6 @@ abstract class BaseController : LifecycleController(), ComponentCallbacks {
 
     override fun onAttach(view: View) {
         (activity as BaseActivity).run {
-            updateNavigationColor()
             window.setBackgroundDrawable(null)
         }
         super.onAttach(view)

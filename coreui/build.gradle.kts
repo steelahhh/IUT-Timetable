@@ -54,4 +54,5 @@ dependencies {
 
     api(Deps.rxBinding.core)
     api(Deps.rxBinding.material)
+    api(Deps.rxBinding.appCompat)
 }
