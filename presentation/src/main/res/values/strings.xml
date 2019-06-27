@@ -15,4 +15,6 @@
     <string name="menu_settings">Настройки</string>
     <string name="menu_refresh">Обновить</string>
     <string name="menu_change_week">Сменить неделю</string>
+
+    <string name="empty_day">В этот день нет занятий</string>
 </resources>

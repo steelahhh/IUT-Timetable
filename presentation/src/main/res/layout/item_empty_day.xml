@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/empty_day_"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_xxxl"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/AppText.Larger"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="?android:textColorPrimary"
+        android:padding="8dp"
+        tools:text="Воскресенье" />
+</LinearLayout>

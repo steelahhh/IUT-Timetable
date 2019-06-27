@@ -1,83 +1,64 @@
 package com.alefimenko.iuttimetable.presentation.schedule
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
-import androidx.viewpager.widget.ViewPager
-import com.alefimenko.iuttimetable.presentation.R
+import android.view.ViewGroup
 import com.alefimenko.iuttimetable.base.BaseController
-import com.alefimenko.iuttimetable.presentation.DateInteractor
-import com.alefimenko.iuttimetable.extension.changeMenuColors
-import com.alefimenko.iuttimetable.extension.requireContext
+import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Event
+import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Model
+import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.ScheduleEffectHandler
+import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.ScheduleInitializer
+import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.ScheduleUpdater
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.tabs.TabLayout
-import org.koin.android.ext.android.inject
-import timber.log.Timber
+import com.spotify.mobius.MobiusLoop
+import com.spotify.mobius.android.AndroidLogger
+import com.spotify.mobius.android.MobiusAndroid.controller
+import com.spotify.mobius.rx2.RxMobius
+import org.koin.android.ext.android.get
 
 /*
  * Created by Alexander Efimenko on 2019-03-08.
  */
 
+interface ScheduleViewContract {
+    fun switchToCurrentDay(day: Int)
+}
+
 class ScheduleController(
-    private val bundle: Bundle = Bundle()
-) : BaseController() {
-    override var layoutRes: Int = R.layout.fragment_schedule
+    bundle: Bundle = Bundle()
+) : BaseController(), ScheduleViewContract {
 
-    private val toolbar by bind<BottomAppBar>(R.id.toolbar)
-    private val viewPager by bind<ViewPager>(R.id.viewPager)
-    private val scheduleTabs by bind<TabLayout>(R.id.scheduleTabs)
+    private val controller: MobiusLoop.Controller<Model, Event> = controller(
+        RxMobius.loop(
+            ScheduleUpdater,
+            ScheduleEffectHandler(get(), get(), get(), this).create()
+        ).init(ScheduleInitializer).logger(AndroidLogger.tag("SCHEDULE")),
+        Model(groupInfo = bundle[GROUP_INFO] as? GroupInfo)
+    )
 
-    // will be extracted into the ScheduleFeature later
-    private val dateInteractorImpl: DateInteractor by inject()
+    private var scheduleView: ScheduleView? = null
 
-    override fun onViewBound(view: View) {
-        setupViews()
-        selectCurrentDay(dateInteractorImpl.currentDay)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        return ScheduleView(inflater, container).apply {
+            controller.connect(connector)
+            controller.start()
+            scheduleView = this
+        }.containerView
     }
 
-    @SuppressLint("CheckResult")
-    override fun onAttach(view: View) {
-        super.onAttach(view)
-        val groupInfo = bundle[GROUP_INFO] as? GroupInfo
-        Timber.d("Received groupInfo $groupInfo")
+    override fun switchToCurrentDay(day: Int) = post {
+        scheduleView?.switchToCurrent(day)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.apply {
-            putInt(SELECTED_DAY, viewPager.currentItem)
-        }
-    }
-
-    private fun setupViews() {
-        scheduleTabs.setupWithViewPager(viewPager)
-
-        toolbar.apply {
-            replaceMenu(R.menu.schedule_menu)
-            setNavigationOnClickListener {
-            }
-            setOnMenuItemClickListener {
-                val text = when (it.itemId) {
-                    R.id.action_settings -> "Настройки"
-                    R.id.action_change_week -> "Смена недели"
-                    R.id.action_refresh -> "Обновить"
-                    else -> ""
-                }
-                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
-                true
-            }
-            changeMenuColors()
-        }
-    }
-
-    private fun selectCurrentDay(day: Int) {
-        scheduleTabs.getTabAt(day)?.select()
+    override fun onDestroyView(view: View) {
+        controller.stop()
+        controller.disconnect()
+        super.onDestroyView(view)
     }
 
     companion object {
         const val TAG = "ScheduleController"
-        const val SELECTED_DAY = "selected_day"
         private const val GROUP_INFO = "GROUP_INFO_KEY"
 
         fun newInstance(groupInfo: GroupInfo) =

@@ -5,36 +5,26 @@
     android:layout_height="match_parent"
     android:background="?background_color">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/scheduleTabs"
-        style="@style/Widget.MaterialComponents.TabLayout.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="?background_color"
-        android:paddingTop="8dp"
-        android:paddingBottom="16dp"
-        android:tabStripEnabled="false"
-        app:backgroundTint="?background_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewPager"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tabGravity="fill"
-        app:tabIndicator="@drawable/shape_pill_indicator"
-        app:tabIndicatorColor="?colorOnBackground"
-        app:tabIndicatorGravity="stretch"
-        app:tabRippleColor="@null"
-        app:tabTextColor="?android:textColorPrimary" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/size_xxl"
         app:layout_constraintBottom_toTopOf="@id/toolbarContainer"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scheduleTabs" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/toolbarContainer"
@@ -42,8 +32,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewPager">
+        app:layout_constraintRight_toRightOf="parent">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/toolbar"
