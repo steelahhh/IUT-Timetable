@@ -122,7 +122,12 @@ object ScheduleFeature {
             }
             transformer(Effect.DisplaySchedule::class.java) {
                 repository.getSchedule()
-                    .map<Event> { schedule -> Event.ShowSchedule(schedule, dateInteractor.currentWeek) }
+                    .map<Event> { schedule ->
+                        Event.ShowSchedule(
+                            schedule,
+                            dateInteractor.currentWeek
+                        )
+                    }
                     .onErrorReturn { error ->
                         Timber.e(error)
                         Event.ErrorLoading(error)

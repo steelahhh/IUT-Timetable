@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable.data.local
 
-import com.alefimenko.iuttimetable.data.local.model.GroupEntity
+import com.alefimenko.iuttimetable.data.local.model.InstituteEntity
 import java.util.LinkedList
 
 /*
@@ -14,19 +14,19 @@ object Constants {
     const val ITEM_DOESNT_EXIST = -1
 
     @JvmStatic
-    val institutes: List<GroupEntity> = LinkedList<GroupEntity>().apply {
+    val institutes: List<InstituteEntity> = LinkedList<InstituteEntity>().apply {
         addAll(
             listOf(
-                GroupEntity(35, "ИСОУ"),
-                GroupEntity(36, "СТРОИН"),
-                GroupEntity(37, "АРХИД"),
-                GroupEntity(27, "ИГиН"),
-                GroupEntity(25, "ИМиБ"),
-                GroupEntity(26, "ИПТИ"),
-                GroupEntity(2, "ИТ"),
-                GroupEntity(33, "КОТИС"),
-                GroupEntity(34, "НК"),
-                GroupEntity(3, "ВИШ")
+                InstituteEntity(35, "ИСОУ"),
+                InstituteEntity(36, "СТРОИН"),
+                InstituteEntity(37, "АРХИД"),
+                InstituteEntity(27, "ИГиН"),
+                InstituteEntity(25, "ИМиБ"),
+                InstituteEntity(26, "ИПТИ"),
+                InstituteEntity(2, "ИТ"),
+                InstituteEntity(33, "КОТИС"),
+                InstituteEntity(34, "НК"),
+                InstituteEntity(3, "ВИШ")
             )
         )
     }

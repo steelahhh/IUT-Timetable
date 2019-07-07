@@ -5,6 +5,9 @@ import androidx.room.Room
 import com.alefimenko.iuttimetable.data.ScheduleParser
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.data.local.Preferences
+import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
+import com.alefimenko.iuttimetable.data.local.schedule.InstitutesDao
+import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
 import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDatabase
 import com.google.gson.GsonBuilder
 import org.koin.android.ext.koin.androidContext
@@ -23,7 +26,11 @@ val localDataModule = module {
         ).fallbackToDestructiveMigration().build()
     }
 
-    single { get<SchedulesDatabase>().schedulesDao }
+    single(name = SchedulesDao.TAG) { get<SchedulesDatabase>().schedulesDao }
+
+    single(name = GroupsDao.TAG) { get<SchedulesDatabase>().groupsDao }
+
+    single(name = InstitutesDao.TAG) { get<SchedulesDatabase>().institutesDao }
 
     single<ScheduleParser>()
 

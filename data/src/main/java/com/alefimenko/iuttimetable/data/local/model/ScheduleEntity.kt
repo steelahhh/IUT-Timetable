@@ -13,17 +13,13 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "schedules")
 data class ScheduleEntity @JvmOverloads constructor(
-    @ColumnInfo(name = "formId")
-    var formId: Int = 0,
-    @PrimaryKey @ColumnInfo(name = "groupId") var groupId: Int = -1,
-    @ColumnInfo(name = "groupName")
-    var groupName: String = "",
-    @ColumnInfo(name = "instituteId")
-    var instituteId: Int = -1,
-    @ColumnInfo(name = "instituteName")
-    var instituteName: String = "",
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    var id: Long = -1,
+    @ColumnInfo(name = "group_id")
+    var groupId: Int = -1,
     @ColumnInfo(name = "schedule")
     var scheduleStr: String = "",
-    @ColumnInfo(name = "rawSchedule")
+    @ColumnInfo(name = "raw_schedule")
     var rawScheduleStr: String = ""
 ) : Parcelable

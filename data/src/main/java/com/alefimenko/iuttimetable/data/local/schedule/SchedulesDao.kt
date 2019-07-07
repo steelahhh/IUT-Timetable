@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.alefimenko.iuttimetable.data.local.model.GroupEntity
 import com.alefimenko.iuttimetable.data.local.model.ScheduleEntity
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -20,16 +19,13 @@ interface SchedulesDao {
     @get:Query("SELECT * FROM Schedules")
     val schedules: Single<MutableList<ScheduleEntity>>
 
-    @get:Query("SELECT groupId, groupName FROM SCHEDULES ")
-    val groups: Single<List<GroupEntity>>
+    @Query("SELECT EXISTS(SELECT * FROM Schedules WHERE group_id = :groupId)")
+    fun groupExists(groupId: Int): Single<Boolean>
 
-    @Query("SELECT COUNT(*) FROM Schedules WHERE groupId = :groupId")
-    fun groupExists(groupId: Int): Single<Int>
-
-    @Query("SELECT * FROM Schedules WHERE groupId = :groupId")
+    @Query("SELECT * FROM Schedules WHERE group_id = :groupId")
     fun getByGroupId(groupId: Int): Maybe<ScheduleEntity>
 
-    @Query("DELETE FROM Schedules WHERE groupId = :id")
+    @Query("DELETE FROM Schedules WHERE group_id = :id")
     fun deleteByGroupId(id: Int): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -37,4 +33,8 @@ interface SchedulesDao {
 
     @Query("DELETE FROM Schedules")
     fun deleteAll(): Int
+
+    companion object {
+        const val TAG = "dao:schedules"
+    }
 }

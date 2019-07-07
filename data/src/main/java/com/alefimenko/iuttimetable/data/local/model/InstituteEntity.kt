@@ -7,21 +7,15 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 /*
- * Created by Alexander Efimenko on 2019-04-24.
+ * Created by Alexander Efimenko on 2019-06-27.
  */
 
 @Parcelize
-@Entity(tableName = "groups")
-data class GroupEntity(
+@Entity(tableName = "institutes")
+data class InstituteEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int,
     @ColumnInfo(name = "name")
-    val name: String,
-    @ColumnInfo(name = "form_id")
-    val form: Int,
-    @ColumnInfo(name = "institute_id")
-    val instituteId: Int,
-    @ColumnInfo(name = "institute_semester")
-    val semester: String
+    val name: String
 ) : Parcelable
