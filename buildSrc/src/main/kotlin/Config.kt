@@ -21,8 +21,8 @@ object Versions {
     const val appVersionCode = 3000
     const val appVersionName = "2.2.0"
 
-    const val kotlin = "1.3.30"
-    const val androidPlugin = "3.4.0"
+    const val kotlin = "1.3.41"
+    const val androidPlugin = "3.6.0-alpha04"
 
     const val mviCore = "1.1.6"
     const val aac = "2.0.0"
