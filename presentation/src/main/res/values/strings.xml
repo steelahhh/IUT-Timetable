@@ -17,4 +17,6 @@
     <string name="menu_change_week">Сменить неделю</string>
 
     <string name="empty_day">В этот день нет занятий</string>
+
+    <string name="date_info_pattern">%s %s</string>
 </resources>

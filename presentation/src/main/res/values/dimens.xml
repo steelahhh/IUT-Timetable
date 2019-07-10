@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="appbar_padding_top">8dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="big_margin">16dp</dimen>
-    <dimen name="huge_negative_margin">-64dp</dimen>
-    <dimen name="huge_margin">64dp</dimen>
-    <dimen name="extra_big_margin">32dp</dimen>
-    <dimen name="extra_small_margin">4dp</dimen>
-    <dimen name="labels_text_size">14sp</dimen>
-    <dimen name="small_margin">8dp</dimen>
-    <dimen name="spacing_normal">24dp</dimen>
-    <dimen name="vp_nav_icon_size">56dp</dimen>
-
     <dimen name="size_xxxs">2dp</dimen>
     <dimen name="size_xxs">4dp</dimen>
     <dimen name="size_xs">8dp</dimen>
@@ -22,4 +9,8 @@
     <dimen name="size_xl">48dp</dimen>
     <dimen name="size_xxl">64dp</dimen>
     <dimen name="size_xxxl">128dp</dimen>
+
+    <dimen name="spacing_m">8dp</dimen>
+    <dimen name="spacing_xm">12dp</dimen>
+    <dimen name="spacing_h">16dp</dimen>
 </resources>
