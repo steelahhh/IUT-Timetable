@@ -15,6 +15,7 @@ import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Model
 import com.alefimenko.iuttimetable.presentation.schedule.model.EmptyDayItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.HeaderItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.Position
+import com.alefimenko.iuttimetable.presentation.schedule.model.ScheduleInfoHeader
 import com.alefimenko.iuttimetable.presentation.schedule.model.toClassUi
 import com.jakewharton.rxbinding3.appcompat.itemClicks
 import com.spotify.mobius.Connectable
@@ -75,11 +76,18 @@ class ScheduleView(
     private fun render(model: Model) = with(model) {
         recyclerView.isGone = isLoading
         itemAdapter.clear()
-        schedule?.weekSchedule?.get(currentWeek)?.let { days ->
+        val items = Section(
+            ScheduleInfoHeader(
+                model.schedule?.groupTitle ?: "",
+                model.schedule?.semester ?: "",
+                currentWeek == 0
+            )
+        )
+        schedule?.weekSchedule?.get(selectedWeek)?.let { days ->
             headerIndices.clear()
             days.forEachIndexed { index, list ->
-                headerIndices.add(itemAdapter.itemCount)
-                itemAdapter.add(Section().apply {
+                headerIndices.add(items.itemCount)
+                items.add(Section().apply {
                     setHeader(HeaderItem(index, index == currentDay))
                     if (list.isEmpty()) add(EmptyDayItem())
                     else addAll(list.mapIndexed { listIdx, classEntry ->
@@ -94,6 +102,7 @@ class ScheduleView(
                 })
             }
         }
+        itemAdapter.add(items)
         progressBar.isVisible = isLoading
     }
 

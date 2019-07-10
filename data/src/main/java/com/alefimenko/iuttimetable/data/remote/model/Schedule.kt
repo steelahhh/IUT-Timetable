@@ -42,6 +42,7 @@ val ClassEntry.hasDate: Boolean
 @Parcelize
 data class Schedule(
     val semester: String = "",
+    val groupTitle: String,
     val weeks: List<String> = mutableListOf(),
     val weekSchedule: Map<Int, WeekSchedule> = mapOf()
 ) : Parcelable

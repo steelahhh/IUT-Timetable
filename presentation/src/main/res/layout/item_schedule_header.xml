@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/scheduleHeaderTitle"
+        style="@style/AppText.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_h"
+        android:layout_marginTop="@dimen/spacing_h"
+        android:layout_marginEnd="@dimen/spacing_h"
+        android:textColor="?android:textColorPrimary"
+        app:autoSizeMaxTextSize="36sp"
+        app:autoSizeMinTextSize="24sp"
+        app:autoSizeStepGranularity="2sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ИСТ-б-16-1" />
+
+    <TextView
+        android:id="@+id/scheduleHeaderSubtitle"
+        style="@style/AppText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:layout_marginBottom="@dimen/spacing_h"
+        android:textColor="?android:textColorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/scheduleHeaderTitle"
+        app:layout_constraintStart_toStartOf="@id/scheduleHeaderTitle"
+        app:layout_constraintTop_toBottomOf="@id/scheduleHeaderTitle"
+        tools:text="Весенний семестр" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

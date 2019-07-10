@@ -43,7 +43,13 @@ class ScheduleRepository(
 
     fun getSchedule(): Observable<Schedule> = schedulesDao
         .getByGroupId(preferences.currentGroup)
-        .map { gson.fromJson(it.scheduleStr, Schedule::class.java) }
+        .zipWith(groupsDao.getById(preferences.currentGroup))
+        .map { (schedule, group) ->
+            gson.fromJson(
+                schedule.scheduleStr,
+                Schedule::class.java
+            ).copy(groupTitle = group.name)
+        }
         .toObservable()
         .ioMainSchedulers()
 
@@ -51,7 +57,7 @@ class ScheduleRepository(
         val formPath = groupInfo.form.toFormPath()
         return scheduleService.fetchSchedule(formPath, groupInfo.group.id)
             .flatMap { body ->
-                createSchedule(body.string())
+                createSchedule(body.string(), groupInfo.group.label)
             }.flatMap { response ->
                 saveSchedule(groupInfo, response)
                     .toSingleDefault(response.schedule)
@@ -116,13 +122,14 @@ class ScheduleRepository(
         )
     }
 
-    private fun createSchedule(body: String): Single<ScheduleResponse> {
+    private fun createSchedule(body: String, groupTitle: String): Single<ScheduleResponse> {
         return Single.defer {
             scheduleParser.initialize(body)
             Single.fromCallable {
                 ScheduleResponse(
                     rawBody = body,
                     schedule = Schedule(
+                        groupTitle = groupTitle,
                         semester = scheduleParser.semester,
                         weeks = scheduleParser.weeks,
                         weekSchedule = scheduleParser.schedule

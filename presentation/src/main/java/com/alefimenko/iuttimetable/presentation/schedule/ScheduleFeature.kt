@@ -8,11 +8,13 @@ import com.alefimenko.iuttimetable.common.transformer
 import com.alefimenko.iuttimetable.data.remote.model.Schedule
 import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.presentation.DateInteractor
+import com.alefimenko.iuttimetable.presentation.di.Screens
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
 import com.spotify.mobius.First
 import com.spotify.mobius.First.first
 import com.spotify.mobius.Init
 import com.spotify.mobius.Next
+import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
 import com.spotify.mobius.Update
 import io.reactivex.Observable.just
@@ -30,6 +32,7 @@ object ScheduleFeature {
     data class Model(
         val groupInfo: GroupInfo? = null,
         val currentWeek: Int = -1,
+        val selectedWeek: Int = -1,
         @Transient val currentDay: Int = 0,
         @Transient val isLoading: Boolean = false,
         @Transient val isError: Boolean = false,
@@ -69,6 +72,7 @@ object ScheduleFeature {
                     schedule = event.schedule,
                     isLoading = false,
                     isError = false,
+                    selectedWeek = event.currentWeek,
                     currentWeek = event.currentWeek
                 ),
                 setOf(Effect.SwitchToCurrentDay)
@@ -88,14 +92,14 @@ object ScheduleFeature {
             is Event.RequestWeekChange -> next(
                 model.copy(isLoading = true),
                 if (model.schedule?.weeks?.size == 2)
-                    setOf(Effect.ChangeWeek(model.currentWeek))
+                    setOf(Effect.ChangeWeek(model.selectedWeek))
                 else
                     setOf(Effect.OpenChangeWeekDialog(model.schedule?.weeks.orEmpty()))
             )
             is Event.SwitchWeek -> next(
                 model.copy(
                     isLoading = false,
-                    currentWeek = event.week
+                    selectedWeek = event.week
                 ),
                 setOf(Effect.SwitchToCurrentDay)
             )
