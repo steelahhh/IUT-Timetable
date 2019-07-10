@@ -17,7 +17,7 @@ import com.alefimenko.iuttimetable.presentation.schedule.model.HeaderItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.Position
 import com.alefimenko.iuttimetable.presentation.schedule.model.ScheduleInfoHeader
 import com.alefimenko.iuttimetable.presentation.schedule.model.toClassUi
-import com.jakewharton.rxbinding3.appcompat.itemClicks
+import com.jakewharton.rxbinding3.view.clicks
 import com.spotify.mobius.Connectable
 import com.spotify.mobius.rx2.RxConnectables
 import com.xwray.groupie.GroupAdapter
@@ -53,7 +53,7 @@ class ScheduleView(
 
         return Observable.mergeArray<Event>(
             insideEvents.hide(),
-            toolbar.itemClicks().map {
+            scheduleChangeWeekButton.clicks().map {
                 Event.RequestWeekChange
             }
         ).doOnDispose {

@@ -13,4 +13,7 @@
     <dimen name="spacing_m">8dp</dimen>
     <dimen name="spacing_xm">12dp</dimen>
     <dimen name="spacing_h">16dp</dimen>
+    <dimen name="spacing_xh">20dp</dimen>
+    <dimen name="spacing_l">32dp</dimen>
+    <dimen name="spacing_xl">42dp</dimen>
 </resources>

@@ -15,10 +15,4 @@
         android:title="@string/menu_refresh"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_change_week"
-        android:icon="@drawable/ic_pick_date"
-        android:orderInCategory="10"
-        android:title="@string/menu_change_week"
-        app:showAsAction="ifRoom" />
 </menu>
