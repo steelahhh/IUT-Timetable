@@ -46,7 +46,7 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="@dimen/size_xl"
             android:layout_gravity="bottom"
             app:hideOnScroll="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -58,6 +58,7 @@
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
+                android:gravity="center_vertical"
                 android:layout_height="wrap_content"
                 android:layoutDirection="rtl"
                 app:queryBackground="@color/transparent"
