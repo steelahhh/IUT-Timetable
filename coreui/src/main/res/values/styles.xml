@@ -41,9 +41,11 @@
     </style>
 
     <style name="AppText.Small">
-        <item name="android:fontFamily">@font/manrope_regular</item>
-        <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppText.Smaller">
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="AppText.Title">
