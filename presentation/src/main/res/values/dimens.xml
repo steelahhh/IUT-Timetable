@@ -10,6 +10,7 @@
     <dimen name="size_xxl">64dp</dimen>
     <dimen name="size_xxxl">128dp</dimen>
 
+    <dimen name="spacing_s">4dp</dimen>
     <dimen name="spacing_m">8dp</dimen>
     <dimen name="spacing_xm">12dp</dimen>
     <dimen name="spacing_h">16dp</dimen>

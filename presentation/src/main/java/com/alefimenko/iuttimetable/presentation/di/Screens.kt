@@ -6,6 +6,7 @@ import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInst
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleController
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.navigation.Screen
+import com.alefimenko.iuttimetable.presentation.settings.SettingsController
 
 /*
  * Created by Alexander Efimenko on 2019-05-09.
@@ -21,6 +22,10 @@ object Screens {
 
     object PickInstituteScreen : Screen() {
         override fun create() = PickInstituteController()
+    }
+
+    object SettingsScreen : Screen() {
+        override fun create() = SettingsController()
     }
 
     class ScheduleScreen(

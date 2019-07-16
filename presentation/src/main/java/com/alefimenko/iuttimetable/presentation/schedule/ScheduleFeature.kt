@@ -43,6 +43,7 @@ object ScheduleFeature {
         object StartedLoading : Event()
         data class ShowSchedule(val schedule: Schedule, val currentWeek: Int) : Event()
         object RequestWeekChange : Event()
+        object NavigateToSettings : Event()
         data class SwitchWeek(val week: Int) : Event()
         data class ErrorLoading(val throwable: Throwable) : Event()
     }
@@ -50,6 +51,7 @@ object ScheduleFeature {
     sealed class Effect {
         object SwitchToCurrentDay : Effect()
         object DisplaySchedule : Effect()
+        object NavigateToSettings : Effect()
         data class ChangeWeek(val week: Int) : Effect()
         data class DownloadSchedule(val groupInfo: GroupInfo) : Effect()
         data class OpenChangeWeekDialog(val weeks: List<String>) : Effect()
@@ -103,6 +105,7 @@ object ScheduleFeature {
                 ),
                 setOf(Effect.SwitchToCurrentDay)
             )
+            is Event.NavigateToSettings -> dispatch(setOf(Effect.NavigateToSettings))
         }
     }
 
@@ -142,7 +145,11 @@ object ScheduleFeature {
                 just(Event.SwitchWeek(if (effect.week == 1) 0 else 1))
             }
             action(Effect.SwitchToCurrentDay::class.java) {
-                view.switchToCurrentDay(dateInteractor.currentDay)
+                if (repository.shouldSwitchToDay)
+                    view.switchToCurrentDay(dateInteractor.currentDay)
+            }
+            action(Effect.NavigateToSettings::class.java) {
+                navigator.push(Screens.SettingsScreen)
             }
         }
     }

@@ -41,6 +41,8 @@ class ScheduleRepository(
     private val networkStatusReceiver: NetworkStatusReceiver
 ) {
 
+    val shouldSwitchToDay: Boolean get() = preferences.switchDay
+
     fun getSchedule(): Observable<Schedule> = schedulesDao
         .getByGroupId(preferences.currentGroup)
         .zipWith(groupsDao.getById(preferences.currentGroup))
@@ -52,6 +54,23 @@ class ScheduleRepository(
         }
         .toObservable()
         .ioMainSchedulers()
+
+    fun getFeedbackInfo(): Observable<FeedbackService.FeedbackInfo> =
+        groupsDao.getById(preferences.currentGroup)
+            .flatMap { group ->
+                Maybe.just(group).zipWith(instituteDao.getById(group.instituteId))
+            }
+            .map { (group, institute) ->
+                FeedbackService.FeedbackInfo(
+                    group.form,
+                    group.id,
+                    group.name,
+                    institute.id,
+                    institute.name
+                )
+            }
+            .toObservable()
+            .ioMainSchedulers()
 
     fun downloadSchedule(groupInfo: GroupInfo): Observable<Schedule> {
         val formPath = groupInfo.form.toFormPath()

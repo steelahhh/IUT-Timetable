@@ -11,14 +11,18 @@ import com.alefimenko.iuttimetable.remote.R
 
 class FeedbackService(private val context: Context) {
 
+    data class FeedbackInfo(
+        val formId: Int,
+        val groupId: Int,
+        val groupName: String,
+        val instituteId: Int,
+        val instituteName: String
+    )
+
     fun sendFeedback(
-        formId: Int,
-        groupId: Int,
-        groupName: String,
-        instituteId: Int,
-        instituteName: String,
+        info: FeedbackInfo,
         throwable: Throwable? = null
-    ) {
+    ) = with(info) {
         val subject =
             "Обратная связь Расписание ТИУ ${if (throwable != null) "| Error report" else ""}"
         val version = context.packageManager

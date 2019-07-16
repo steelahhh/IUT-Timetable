@@ -37,6 +37,8 @@ class Navigator {
         tag = screen.tag
     )
 
+    fun exit() = router.popCurrentController()
+
     fun unbind() {
         _router = null
     }

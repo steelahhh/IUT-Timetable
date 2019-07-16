@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/menu_change_week"
-        android:textAppearance="@style/AppText.Smaller"
+        android:textAppearance="@style/AppText.Small"
         app:backgroundTint="@color/iutColor"
         app:cornerRadius="@dimen/spacing_h"
         app:icon="@drawable/ic_pick_date"
