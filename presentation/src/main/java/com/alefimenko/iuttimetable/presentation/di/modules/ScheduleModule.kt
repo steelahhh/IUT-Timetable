@@ -22,7 +22,6 @@ val scheduleModule = module {
             get(),
             get(),
             get(),
-            get(),
             get(name = SchedulesDao.TAG),
             get(name = GroupsDao.TAG),
             get(name = InstitutesDao.TAG),

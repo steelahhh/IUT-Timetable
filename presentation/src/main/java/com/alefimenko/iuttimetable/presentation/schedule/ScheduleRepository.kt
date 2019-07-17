@@ -10,7 +10,6 @@ import com.alefimenko.iuttimetable.data.local.model.ScheduleEntity
 import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
 import com.alefimenko.iuttimetable.data.local.schedule.InstitutesDao
 import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
-import com.alefimenko.iuttimetable.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.data.remote.model.Schedule
 import com.alefimenko.iuttimetable.data.remote.model.ScheduleResponse
@@ -34,7 +33,6 @@ class ScheduleRepository(
     private val gson: Gson,
     private val scheduleParser: ScheduleParser,
     private val scheduleService: ScheduleService,
-    private val feedbackService: FeedbackService,
     private val schedulesDao: SchedulesDao,
     private val groupsDao: GroupsDao,
     private val instituteDao: InstitutesDao,
@@ -54,23 +52,6 @@ class ScheduleRepository(
         }
         .toObservable()
         .ioMainSchedulers()
-
-    fun getFeedbackInfo(): Observable<FeedbackService.FeedbackInfo> =
-        groupsDao.getById(preferences.currentGroup)
-            .flatMap { group ->
-                Maybe.just(group).zipWith(instituteDao.getById(group.instituteId))
-            }
-            .map { (group, institute) ->
-                FeedbackService.FeedbackInfo(
-                    group.form,
-                    group.id,
-                    group.name,
-                    institute.id,
-                    institute.name
-                )
-            }
-            .toObservable()
-            .ioMainSchedulers()
 
     fun downloadSchedule(groupInfo: GroupInfo): Observable<Schedule> {
         val formPath = groupInfo.form.toFormPath()

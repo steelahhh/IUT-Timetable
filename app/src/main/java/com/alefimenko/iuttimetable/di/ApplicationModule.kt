@@ -6,6 +6,7 @@ import com.alefimenko.iuttimetable.presentation.di.modules.scheduleModule
 import com.alefimenko.iuttimetable.data.remote.di.remoteModule
 import com.alefimenko.iuttimetable.navigation.di.navigationModule
 import com.alefimenko.iuttimetable.presentation.di.modules.rootModule
+import com.alefimenko.iuttimetable.presentation.di.modules.settingsModule
 
 /*
  * Created by Alexander Efimenko on 2018-12-12.
@@ -19,5 +20,6 @@ val applicationModule = listOf(
 ) + listOf(
     pickGroupModule,
     rootModule,
-    scheduleModule
+    scheduleModule,
+    settingsModule
 )

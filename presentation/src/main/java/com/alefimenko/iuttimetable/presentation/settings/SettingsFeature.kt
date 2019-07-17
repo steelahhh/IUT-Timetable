@@ -9,7 +9,6 @@ import com.alefimenko.iuttimetable.common.transformer
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.navigation.Navigator
-import com.alefimenko.iuttimetable.presentation.schedule.ScheduleRepository
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.LoadPreferences
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.NavigateBack
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.OpenAboutDialog
@@ -111,7 +110,7 @@ object SettingsFeature {
     class SettingsEffectHandler(
         private val preferences: Preferences,
         private val navigator: Navigator,
-        private val scheduleRepository: ScheduleRepository,
+        private val settingsRepository: SettingsRepository,
         private val feedbackService: FeedbackService,
         private val view: SettingsViewContract
     ) : BaseEffectHandler<Effect, Event>() {
@@ -132,7 +131,7 @@ object SettingsFeature {
                 view.onThemeClick()
             }
             transformer(SendFeedbackRequest::class.java) {
-                scheduleRepository.getFeedbackInfo()
+                settingsRepository.getFeedbackInfo()
                     .map {
                         Event.SendFeedbackWithSchedule(it)
                     }
