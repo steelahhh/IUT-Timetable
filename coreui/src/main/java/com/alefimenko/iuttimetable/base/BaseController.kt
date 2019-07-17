@@ -7,11 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alefimenko.iuttimetable.common.IUTRefWatcher
 import com.alefimenko.iuttimetable.createBinder
-import com.alefimenko.iuttimetable.extension.requireActivity
-import com.bluelinelabs.conductor.ControllerChangeHandler
-import com.bluelinelabs.conductor.ControllerChangeType
 import com.bluelinelabs.conductor.archlifecycle.LifecycleController
 
 /*
@@ -19,8 +15,6 @@ import com.bluelinelabs.conductor.archlifecycle.LifecycleController
  */
 
 abstract class BaseController : LifecycleController(), ComponentCallbacks {
-
-    private var hasExited: Boolean = false
 
     open var layoutRes: Int = 0
 
@@ -50,20 +44,6 @@ abstract class BaseController : LifecycleController(), ComponentCallbacks {
         bind.resetViews()
         mainHandler.removeCallbacksAndMessages(null)
         super.onDestroyView(view)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (hasExited) (requireActivity().application as IUTRefWatcher).refWatcher?.watch(this)
-    }
-
-    override fun onChangeEnded(
-        changeHandler: ControllerChangeHandler,
-        changeType: ControllerChangeType
-    ) {
-        super.onChangeEnded(changeHandler, changeType)
-        hasExited = !changeType.isEnter
-        if (isDestroyed) (requireActivity().application as IUTRefWatcher).refWatcher?.watch(this)
     }
 
     fun post(action: () -> Unit) {

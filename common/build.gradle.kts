@@ -55,6 +55,6 @@ dependencies {
     api(Deps.rxKotlin)
     api(Deps.rxAndroid)
 
+    api(Deps.leakCanary)
     debugApi(Deps.leakCanary)
-    releaseApi(Deps.leakCanaryNoOp)
 }

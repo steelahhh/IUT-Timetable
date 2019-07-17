@@ -35,7 +35,7 @@ object Versions {
 
     const val conductor = "3.0.0-rc1"
 
-    const val leakCanary = "1.6.3"
+    const val leakCanary = "2.0-alpha-2"
 
     const val klock = "1.4.0"
 
@@ -167,8 +167,8 @@ object Deps {
         const val ui = "android.arch.navigation:navigation-ui-ktx:1.0.0-rc02"
     }
 
-    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${vers.leakCanary}"
-    const val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:${vers.leakCanary}"
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
+    const val leakSentry = "com.squareup.leakcanary:leaksentry:${Versions.leakCanary}"
 
     const val timber = "com.jakewharton.timber:timber:${vers.timber}"
     const val materialDialogs = "com.afollestad.material-dialogs:core:${vers.materialDialogs}"
