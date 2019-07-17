@@ -10,11 +10,13 @@
     <dimen name="size_xxl">64dp</dimen>
     <dimen name="size_xxxl">128dp</dimen>
 
-    <dimen name="spacing_s">4dp</dimen>
-    <dimen name="spacing_m">8dp</dimen>
-    <dimen name="spacing_xm">12dp</dimen>
-    <dimen name="spacing_h">16dp</dimen>
-    <dimen name="spacing_xh">20dp</dimen>
-    <dimen name="spacing_l">32dp</dimen>
-    <dimen name="spacing_xl">42dp</dimen>
+    <dimen name="spacing_1">1dp</dimen>
+    <dimen name="spacing_2">2dp</dimen>
+    <dimen name="spacing_4">4dp</dimen>
+    <dimen name="spacing_8">8dp</dimen>
+    <dimen name="spacing_12">12dp</dimen>
+    <dimen name="spacing_16">16dp</dimen>
+    <dimen name="spacing_20">20dp</dimen>
+    <dimen name="spacing_32">32dp</dimen>
+    <dimen name="spacing_42">42dp</dimen>
 </resources>

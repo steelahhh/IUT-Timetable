@@ -42,5 +42,7 @@
         Данное приложение является личным проектом разработчика и не связано с администрацией Тюменского Индустриального Университета.
     ]]>
     </string>
+    <string name="class_entry_hidden">Class entry is hidden</string>
+    <string name="class_entry_menu">Class entry menu</string>
 
 </resources>

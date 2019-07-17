@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_h">
+        android:padding="@dimen/spacing_16">
 
         <ImageView
             android:id="@+id/settingsImage"
@@ -31,8 +31,8 @@
             android:id="@+id/settingsTextTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_h"
-            android:layout_marginEnd="@dimen/spacing_h"
+            android:layout_marginStart="@dimen/spacing_16"
+            android:layout_marginEnd="@dimen/spacing_16"
             android:ellipsize="end"
             android:lines="1"
             android:textAppearance="@style/AppText.Larger"
@@ -46,9 +46,9 @@
             android:id="@+id/settingsTextSubtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_h"
-            android:layout_marginTop="@dimen/spacing_s"
-            android:layout_marginEnd="@dimen/spacing_h"
+            android:layout_marginStart="@dimen/spacing_16"
+            android:layout_marginTop="@dimen/spacing_4"
+            android:layout_marginEnd="@dimen/spacing_16"
             android:alpha="0.75"
             android:ellipsize="end"
             android:textAppearance="@style/AppText"
