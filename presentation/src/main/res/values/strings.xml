@@ -47,4 +47,6 @@
     <string name="class_entry_restore">Восстановить</string>
     <string name="class_entry_hide">Скрыть</string>
 
+    <string name="class_header_date_title">%s – %s</string>
+
 </resources>

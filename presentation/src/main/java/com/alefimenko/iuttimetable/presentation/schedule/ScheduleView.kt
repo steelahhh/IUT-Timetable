@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import com.alefimenko.iuttimetable.base.KotlinView
+import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Event
@@ -93,7 +94,13 @@ class ScheduleView(
             days.forEachIndexed { dayIndex, list ->
                 headerIndices.add(items.itemCount)
                 items.add(Section().apply {
-                    setHeader(HeaderItem(dayIndex, dayIndex == currentDay))
+                    setHeader(
+                        HeaderItem(
+                            dayIndex,
+                            dayIndex == currentDay,
+                            list.firstOrNull()?.date ?: Constants.EMPTY_ENTRY
+                        )
+                    )
                     if (list.isEmpty()) add(EmptyDayItem())
                     else addAll(list.mapIndexed { listIdx, classEntry ->
                         val position = when {
