@@ -3,8 +3,9 @@ package com.alefimenko.iuttimetable.presentation.pickgroup.model
 import android.os.Parcelable
 import android.view.View
 import android.widget.TextView
-import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.data.local.model.GroupEntity
+import com.alefimenko.iuttimetable.data.remote.model.GroupResponse
+import com.alefimenko.iuttimetable.presentation.R
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.parcel.Parcelize
@@ -35,4 +36,6 @@ data class GroupUi(
     }
 }
 
+fun GroupResponse.toGroupUi() = GroupUi(id, name)
+fun GroupResponse.toInstituteUi() = InstituteUi(id, name)
 fun GroupEntity.toGroupUi() = GroupUi(id, name)

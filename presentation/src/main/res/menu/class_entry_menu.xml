@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/hide_class"
+        android:orderInCategory="100"
+        android:title="@string/class_entry_hide" />
+
+    <item
+        android:id="@+id/restore_class"
+        android:orderInCategory="100"
+        android:title="@string/class_entry_restore" />
+</menu>

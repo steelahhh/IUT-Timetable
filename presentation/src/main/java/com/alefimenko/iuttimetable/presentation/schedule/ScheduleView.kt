@@ -1,8 +1,9 @@
 package com.alefimenko.iuttimetable.presentation.schedule
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Event
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Model
+import com.alefimenko.iuttimetable.presentation.schedule.model.ClassUi
 import com.alefimenko.iuttimetable.presentation.schedule.model.EmptyDayItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.HeaderItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.Position
@@ -76,7 +78,6 @@ class ScheduleView(
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun render(model: Model) = with(model) {
         recyclerView.isGone = isLoading
         itemAdapter.clear()
@@ -89,10 +90,10 @@ class ScheduleView(
         )
         schedule?.weekSchedule?.get(selectedWeek)?.let { days ->
             headerIndices.clear()
-            days.forEachIndexed { index, list ->
+            days.forEachIndexed { dayIndex, list ->
                 headerIndices.add(items.itemCount)
                 items.add(Section().apply {
-                    setHeader(HeaderItem(index, index == currentDay))
+                    setHeader(HeaderItem(dayIndex, dayIndex == currentDay))
                     if (list.isEmpty()) add(EmptyDayItem())
                     else addAll(list.mapIndexed { listIdx, classEntry ->
                         val position = when {
@@ -101,25 +102,46 @@ class ScheduleView(
                             listIdx == list.size - 1 -> Position.LAST
                             else -> Position.OTHER
                         }
-                        classEntry.toClassUi(position)
+                        classEntry.toClassUi(
+                            position,
+                            onClassMenuClick = { classUi, view ->
+                                openPopupMenu(classUi, view, listIdx, dayIndex, selectedWeek)
+                            })
                     })
                 })
             }
         }
         itemAdapter.add(items)
+        itemAdapter.notifyDataSetChanged()
         progressBar.isVisible = isLoading
+    }
+
+    private fun openPopupMenu(
+        classUi: ClassUi,
+        view: View,
+        classIndex: Int,
+        dayIndex: Int,
+        weekIndex: Int
+    ) {
+        PopupMenu(view.context, view).apply {
+            menuInflater.inflate(R.menu.class_entry_menu, menu)
+            setOnMenuItemClickListener {
+                insideEvents.onNext(Event.ChangeClassVisibility(classIndex, dayIndex, weekIndex))
+                true
+            }
+            show()
+            menu.findItem(R.id.hide_class).isVisible = !classUi.hidden
+            menu.findItem(R.id.restore_class).isVisible = classUi.hidden
+        }
     }
 
     private fun setupViews() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = itemAdapter
-            setHasFixedSize(true)
         }
         toolbar.apply {
             replaceMenu(R.menu.schedule_menu)
-            setNavigationOnClickListener {
-            }
             changeMenuColors()
         }
     }

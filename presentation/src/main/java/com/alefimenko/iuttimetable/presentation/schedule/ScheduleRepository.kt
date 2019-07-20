@@ -11,8 +11,10 @@ import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
 import com.alefimenko.iuttimetable.data.local.schedule.InstitutesDao
 import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
+import com.alefimenko.iuttimetable.data.remote.model.ClassEntry
 import com.alefimenko.iuttimetable.data.remote.model.Schedule
 import com.alefimenko.iuttimetable.data.remote.model.ScheduleResponse
+import com.alefimenko.iuttimetable.data.remote.model.WeekSchedule
 import com.alefimenko.iuttimetable.data.remote.toFormPath
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
@@ -44,11 +46,8 @@ class ScheduleRepository(
     fun getSchedule(): Observable<Schedule> = schedulesDao
         .getByGroupId(preferences.currentGroup)
         .zipWith(groupsDao.getById(preferences.currentGroup))
-        .map { (schedule, group) ->
-            gson.fromJson(
-                schedule.scheduleStr,
-                Schedule::class.java
-            ).copy(groupTitle = group.name)
+        .map { (scheduleEntity, group) ->
+            scheduleEntity.schedule.copy(groupTitle = group.name)
         }
         .toObservable()
         .ioMainSchedulers()
@@ -66,7 +65,7 @@ class ScheduleRepository(
             .ioMainSchedulers()
     }
 
-    fun updateSchedule(): Observable<Schedule> {
+    fun updateCurrentSchedule(): Observable<Schedule> {
         return groupsDao.getById(preferences.currentGroup).flatMap { group ->
             Maybe.fromCallable { group }.zipWith(instituteDao.getById(group.instituteId))
         }
@@ -84,6 +83,44 @@ class ScheduleRepository(
                 )
                 downloadSchedule(groupInfo)
             }
+    }
+
+    fun hideClassAndUpdate(classIndex: Int, dayIndex: Int, weekIndex: Int): Observable<Schedule> =
+        schedulesDao.getByGroupId(preferences.currentGroup)
+            .zipWith(groupsDao.getById(preferences.currentGroup))
+            .flatMapObservable { (scheduleEntity, group) ->
+                val schedule = scheduleEntity.schedule.copy(groupTitle = group.name)
+
+                val newSchedule = schedule.copy(
+                    weekSchedule = schedule.createWithHiddenClass(weekIndex, dayIndex, classIndex)
+                )
+
+                schedulesDao.insert(scheduleEntity.copy(scheduleStr = gson.toJson(newSchedule)))
+                    .toSingleDefault(newSchedule).toObservable()
+            }
+
+    private fun Schedule.createWithHiddenClass(
+        weekIndex: Int,
+        dayIndex: Int,
+        classIndex: Int
+    ): MutableMap<Int, WeekSchedule> {
+        val newWeeksSchedule = mutableMapOf<Int, WeekSchedule>()
+        // Go over all the weeks, and hide/show the selected one
+        weekSchedule.keys.forEach { week ->
+            val newDays: MutableList<List<ClassEntry>> = mutableListOf()
+            weekSchedule.getValue(week).forEachIndexed { day, weekSchedule ->
+                newDays.add(weekSchedule.mapIndexed { index, classEntry ->
+                    val shouldChangeVisibility = week == weekIndex && day == dayIndex && index == classIndex
+                    if (shouldChangeVisibility) {
+                        classEntry.copy(hidden = !classEntry.hidden)
+                    } else {
+                        classEntry
+                    }
+                })
+            }
+            newWeeksSchedule[week] = newDays
+        }
+        return newWeeksSchedule
     }
 
     private fun saveCurrentGroup(groupInfo: GroupInfo) = Completable.fromAction {
@@ -138,12 +175,10 @@ class ScheduleRepository(
             }
         }
     }
-}
 
-/*
-val ScheduleEntity.rawSchedule: Schedule
-    get() = GsonBuilder()
-        .enableComplexMapKeySerialization()
-        .create()
-        .fromJson(rawScheduleStr, Schedule::class.java)
-*/
+    private val ScheduleEntity.schedule: Schedule
+        get() = gson.fromJson(scheduleStr, Schedule::class.java)
+
+    private val ScheduleEntity.rawSchedule: Schedule
+        get() = gson.fromJson(rawScheduleStr, Schedule::class.java)
+}

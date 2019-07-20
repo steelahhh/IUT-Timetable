@@ -44,5 +44,7 @@
     </string>
     <string name="class_entry_hidden">Class entry is hidden</string>
     <string name="class_entry_menu">Class entry menu</string>
+    <string name="class_entry_restore">Восстановить</string>
+    <string name="class_entry_hide">Скрыть</string>
 
 </resources>

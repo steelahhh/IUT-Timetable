@@ -46,12 +46,23 @@ object ScheduleFeature {
         object NavigateToSettings : Event()
         data class SwitchWeek(val week: Int) : Event()
         data class ErrorLoading(val throwable: Throwable) : Event()
+        data class ChangeClassVisibility(
+            val classIndex: Int,
+            val dayIndex: Int,
+            val weekIndex: Int
+        ) : Event()
     }
 
     sealed class Effect {
         object SwitchToCurrentDay : Effect()
         object DisplaySchedule : Effect()
         object NavigateToSettings : Effect()
+        data class ChangeClassVisibility(
+            val classIndex: Int,
+            val dayIndex: Int,
+            val weekIndex: Int
+        ) : Effect()
+
         data class ChangeWeek(val week: Int) : Effect()
         data class DownloadSchedule(val groupInfo: GroupInfo) : Effect()
         data class OpenChangeWeekDialog(val weeks: List<String>) : Effect()
@@ -106,6 +117,9 @@ object ScheduleFeature {
                 setOf(Effect.SwitchToCurrentDay)
             )
             is Event.NavigateToSettings -> dispatch(setOf(Effect.NavigateToSettings))
+            is Event.ChangeClassVisibility -> dispatch(
+                setOf(Effect.ChangeClassVisibility(event.classIndex, event.dayIndex, event.weekIndex))
+            )
         }
     }
 
@@ -116,8 +130,8 @@ object ScheduleFeature {
         private val view: ScheduleViewContract
     ) : BaseEffectHandler<Effect, Event>() {
         override fun create(): ObservableTransformer<Effect, Event> = effectHandler {
-            transformer(Effect.DownloadSchedule::class.java) { effect ->
-                repository.downloadSchedule(effect.groupInfo)
+            transformer(Effect.DownloadSchedule::class.java) { (groupInfo) ->
+                repository.downloadSchedule(groupInfo)
                     .map<Event> { schedule ->
                         Event.ShowSchedule(schedule, dateInteractor.currentWeek)
                     }
@@ -126,6 +140,10 @@ object ScheduleFeature {
                         Event.ErrorLoading(error)
                     }
                     .startWith(Event.StartedLoading)
+            }
+            transformer(Effect.ChangeClassVisibility::class.java) { (classIndex, dayIndex, weekIndex) ->
+                repository.hideClassAndUpdate(classIndex, dayIndex, weekIndex)
+                    .map { ScheduleFeature.Event.ShowSchedule(it, dateInteractor.currentWeek) }
             }
             transformer(Effect.DisplaySchedule::class.java) {
                 repository.getSchedule()

@@ -1,19 +1,19 @@
 package com.alefimenko.iuttimetable.presentation.pickgroup
 
 import android.util.LruCache
-import com.alefimenko.iuttimetable.data.local.Preferences
-import com.alefimenko.iuttimetable.data.remote.Exceptions
-import com.alefimenko.iuttimetable.presentation.schedule.model.toGroupUi
-import com.alefimenko.iuttimetable.presentation.schedule.model.toInstituteUi
+import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.common.extension.mapList
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.data.local.Preferences
+import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
+import com.alefimenko.iuttimetable.data.remote.Exceptions
 import com.alefimenko.iuttimetable.data.remote.FeedbackService
-import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.data.remote.toFormPath
-import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.toGroupUi
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.toInstituteUi
 import io.reactivex.Observable
 
 /*

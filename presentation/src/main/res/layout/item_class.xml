@@ -8,6 +8,7 @@
     android:layout_marginStart="@dimen/spacing_8"
     android:layout_marginEnd="@dimen/spacing_8">
 
+
     <ImageButton
         android:id="@+id/menuBtn"
         android:layout_width="wrap_content"
@@ -21,7 +22,7 @@
         tools:visibility="visible" />
 
     <ImageView
-        android:id="@+id/hidden"
+        android:id="@+id/hiddenIv"
         android:layout_width="@dimen/size_s"
         android:layout_height="@dimen/size_s"
         android:layout_marginTop="@dimen/spacing_8"
@@ -57,7 +58,7 @@
         android:gravity="center"
         android:textColor="?android:textColorPrimary"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/startTimeTv"
+        app:layout_constraintLeft_toLeftOf="@id/startTimeTv"
         app:layout_constraintTop_toBottomOf="@+id/startTimeTv"
         tools:text="12:20" />
 
@@ -143,7 +144,6 @@
         style="@style/AppText.Small"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_8"
         android:layout_marginEnd="@dimen/spacing_16"
         android:layout_marginBottom="@dimen/spacing_12"
         android:drawableStart="@drawable/ic_place"

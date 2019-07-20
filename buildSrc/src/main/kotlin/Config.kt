@@ -22,7 +22,7 @@ object Versions {
     const val appVersionName = "2.2.0"
 
     const val kotlin = "1.3.41"
-    const val androidPlugin = "3.6.0-alpha04"
+    const val androidPlugin = "3.6.0-alpha05"
 
     const val mviCore = "1.1.6"
     const val aac = "2.0.0"
@@ -65,8 +65,6 @@ object Deps {
     const val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
 
     const val multidex = "com.android.support:multidex:1.0.3"
-
-    const val databindingCompiler = "com.android.databinding:compiler:${vers.androidPlugin}"
 
     const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${vers.aac}"
     const val lifecycleReactive = "androidx.lifecycle:lifecycle-reactivestreams:${vers.aac}"

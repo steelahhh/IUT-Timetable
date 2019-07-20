@@ -4,12 +4,15 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Build
+import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.DimenRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.Toolbar
@@ -27,13 +30,15 @@ fun FloatingActionButton.show(state: Boolean) = if (state) show() else hide()
 
 fun View.showSoftKeyboard() {
     if (requestFocus()) {
-        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     }
 }
 
 fun View.hideSoftKeyboard() {
-    val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val inputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
 }
 
@@ -85,7 +90,8 @@ fun Controller.requireView() = view ?: error("There is no view bound to this con
 
 fun Controller.requireContext() = requireView().context
 
-fun Controller.requireActivity() = activity ?: error("There is no activity bound to this controller")
+fun Controller.requireActivity() =
+    activity ?: error("There is no activity bound to this controller")
 
 fun Toolbar.changeToolbarFont() {
     for (i in 0 until childCount) {
@@ -97,7 +103,24 @@ fun Toolbar.changeToolbarFont() {
     }
 }
 
+fun Context.getDimen(@DimenRes id: Int) = resources.getDimension(id)
+fun Context.getDimenPixelSize(@DimenRes id: Int) = resources.getDimensionPixelSize(id)
+
 fun Context.getColorCompat(id: Int) = ContextCompat.getColor(this, id)
+
+@ColorInt
+fun Context.getPrimaryTextColor(): Int {
+    val typedValue = TypedValue()
+    val theme = theme
+    theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true)
+    val arr = obtainStyledAttributes(
+        typedValue.data,
+        intArrayOf(android.R.attr.textColorPrimary)
+    )
+    val primaryColor = arr.getColor(0, -1)
+    arr.recycle()
+    return primaryColor
+}
 
 fun Context.convertDpToPixel(dp: Float): Float {
     val metrics = resources.displayMetrics
