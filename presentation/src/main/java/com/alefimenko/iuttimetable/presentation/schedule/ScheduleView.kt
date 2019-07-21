@@ -8,6 +8,8 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.base.KotlinView
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.extension.changeMenuColors
@@ -79,6 +81,19 @@ class ScheduleView(
         }
     }
 
+    fun showWeeksDialog(weeks: List<String>, selectedWeek: Int) {
+        MaterialDialog(containerView.context).show {
+            title(res = R.string.pick_week_dialog_title)
+            listItemsSingleChoice(
+                items = weeks,
+                initialSelection = selectedWeek,
+                selection = { _, index, _ ->
+                    insideEvents.onNext(Event.SwitchWeek(index))
+                }
+            )
+        }
+    }
+
     private fun render(model: Model) = with(model) {
         recyclerView.isGone = isLoading
         itemAdapter.clear()
@@ -118,6 +133,8 @@ class ScheduleView(
                 })
             }
         }
+        scheduleChangeWeekButton.text =
+            schedule?.weeks?.get(selectedWeek) ?: containerView.context.getString(R.string.menu_change_week)
         itemAdapter.add(items)
         itemAdapter.notifyDataSetChanged()
         progressBar.isVisible = isLoading

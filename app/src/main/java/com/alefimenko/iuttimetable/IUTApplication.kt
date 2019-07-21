@@ -21,5 +21,4 @@ class IUTApplication : MultiDexApplication() {
     private fun initializeTimber() {
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
     }
-
 }

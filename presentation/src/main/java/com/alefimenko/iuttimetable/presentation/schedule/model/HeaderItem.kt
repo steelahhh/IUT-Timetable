@@ -27,7 +27,7 @@ data class HeaderItem(
         val dayText = DayOfWeek[dayIdx].localName(KlockLocale.default).capitalize()
 
         title.text = if (date != Constants.EMPTY_ENTRY) {
-            context.getString(R.string.class_header_date_title, dayText, date )
+            context.getString(R.string.class_header_date_title, dayText, date)
         } else {
             dayText
         }

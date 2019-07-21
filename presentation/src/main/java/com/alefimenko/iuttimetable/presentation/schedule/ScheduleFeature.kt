@@ -3,6 +3,7 @@ package com.alefimenko.iuttimetable.presentation.schedule
 import android.os.Parcelable
 import com.alefimenko.iuttimetable.common.BaseEffectHandler
 import com.alefimenko.iuttimetable.common.action
+import com.alefimenko.iuttimetable.common.consumer
 import com.alefimenko.iuttimetable.common.effectHandler
 import com.alefimenko.iuttimetable.common.transformer
 import com.alefimenko.iuttimetable.data.remote.model.Schedule
@@ -65,7 +66,7 @@ object ScheduleFeature {
 
         data class ChangeWeek(val week: Int) : Effect()
         data class DownloadSchedule(val groupInfo: GroupInfo) : Effect()
-        data class OpenChangeWeekDialog(val weeks: List<String>) : Effect()
+        data class OpenChangeWeekDialog(val weeks: List<String>, val selectedWeek: Int) : Effect()
     }
 
     object ScheduleInitializer : Init<Model, Effect> {
@@ -102,12 +103,16 @@ object ScheduleFeature {
                     isError = true
                 )
             )
-            is Event.RequestWeekChange -> next(
-                model.copy(isLoading = true),
+            is Event.RequestWeekChange -> dispatch(
                 if (model.schedule?.weeks?.size == 2)
                     setOf(Effect.ChangeWeek(model.selectedWeek))
                 else
-                    setOf(Effect.OpenChangeWeekDialog(model.schedule?.weeks.orEmpty()))
+                    setOf(
+                        Effect.OpenChangeWeekDialog(
+                            model.schedule?.weeks.orEmpty(),
+                            model.selectedWeek
+                        )
+                    )
             )
             is Event.SwitchWeek -> next(
                 model.copy(
@@ -118,7 +123,13 @@ object ScheduleFeature {
             )
             is Event.NavigateToSettings -> dispatch(setOf(Effect.NavigateToSettings))
             is Event.ChangeClassVisibility -> dispatch(
-                setOf(Effect.ChangeClassVisibility(event.classIndex, event.dayIndex, event.weekIndex))
+                setOf(
+                    Effect.ChangeClassVisibility(
+                        event.classIndex,
+                        event.dayIndex,
+                        event.weekIndex
+                    )
+                )
             )
         }
     }
@@ -133,7 +144,10 @@ object ScheduleFeature {
             transformer(Effect.DownloadSchedule::class.java) { (groupInfo) ->
                 repository.downloadSchedule(groupInfo)
                     .map<Event> { schedule ->
-                        Event.ShowSchedule(schedule, dateInteractor.currentWeek)
+                        Event.ShowSchedule(
+                            schedule,
+                            if (schedule.weeks.size == 2) dateInteractor.currentWeek else 0
+                        )
                     }
                     .onErrorReturn { error ->
                         Timber.e(error)
@@ -143,14 +157,19 @@ object ScheduleFeature {
             }
             transformer(Effect.ChangeClassVisibility::class.java) { (classIndex, dayIndex, weekIndex) ->
                 repository.hideClassAndUpdate(classIndex, dayIndex, weekIndex)
-                    .map { ScheduleFeature.Event.ShowSchedule(it, dateInteractor.currentWeek) }
+                    .map { schedule ->
+                        ScheduleFeature.Event.ShowSchedule(
+                            schedule,
+                            if (schedule.weeks.size == 2) dateInteractor.currentWeek else 0
+                        )
+                    }
             }
             transformer(Effect.DisplaySchedule::class.java) {
                 repository.getSchedule()
                     .map<Event> { schedule ->
                         Event.ShowSchedule(
                             schedule,
-                            dateInteractor.currentWeek
+                            if (schedule.weeks.size == 2) dateInteractor.currentWeek else 0
                         )
                     }
                     .onErrorReturn { error ->
@@ -159,10 +178,13 @@ object ScheduleFeature {
                     }
                     .startWith(Event.StartedLoading)
             }
-            transformer(Effect.ChangeWeek::class.java) { effect ->
-                just(Event.SwitchWeek(if (effect.week == 1) 0 else 1))
+            transformer(Effect.ChangeWeek::class.java) { (week) ->
+                just(Event.SwitchWeek(if (week == 1) 0 else 1))
             }
-            action(Effect.SwitchToCurrentDay::class.java) {
+            consumer(Effect.OpenChangeWeekDialog::class.java) { (weeks, selectedWeek) ->
+                view.showWeeksDialog(weeks, selectedWeek)
+            }
+            consumer(Effect.SwitchToCurrentDay::class.java) {
                 if (repository.shouldSwitchToDay)
                     view.switchToCurrentDay(dateInteractor.currentDay)
             }

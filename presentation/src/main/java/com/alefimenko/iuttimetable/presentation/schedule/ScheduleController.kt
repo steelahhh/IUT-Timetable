@@ -23,6 +23,7 @@ import org.koin.android.ext.android.get
 
 interface ScheduleViewContract {
     fun switchToCurrentDay(day: Int)
+    fun showWeeksDialog(weeks: List<String>, selectedWeek: Int)
 }
 
 class ScheduleController(
@@ -47,14 +48,18 @@ class ScheduleController(
         }.containerView
     }
 
-    override fun switchToCurrentDay(day: Int) = post {
-        scheduleView?.switchToCurrent(day)
-    }
-
     override fun onDestroyView(view: View) {
         controller.stop()
         controller.disconnect()
         super.onDestroyView(view)
+    }
+
+    override fun switchToCurrentDay(day: Int) = post {
+        scheduleView?.switchToCurrent(day)
+    }
+
+    override fun showWeeksDialog(weeks: List<String>, selectedWeek: Int) {
+        scheduleView?.showWeeksDialog(weeks, selectedWeek)
     }
 
     companion object {
