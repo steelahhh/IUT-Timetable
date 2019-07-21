@@ -41,6 +41,7 @@ object ScheduleFeature {
     ) : Parcelable
 
     sealed class Event {
+        object DownloadSchedule : Event()
         object StartedLoading : Event()
         data class ShowSchedule(val schedule: Schedule, val currentWeek: Int) : Event()
         object RequestWeekChange : Event()
@@ -72,7 +73,7 @@ object ScheduleFeature {
     object ScheduleInitializer : Init<Model, Effect> {
         override fun init(model: Model): First<Model, Effect> = first(
             model,
-            if (model.groupInfo != null)
+            if (model.groupInfo != null && model.schedule == null)
                 setOf(Effect.DownloadSchedule(model.groupInfo))
             else
                 setOf(Effect.DisplaySchedule)
@@ -81,6 +82,12 @@ object ScheduleFeature {
 
     object ScheduleUpdater : Update<Model, Event, Effect> {
         override fun update(model: Model, event: Event): Next<Model, Effect> = when (event) {
+            is Event.DownloadSchedule -> dispatch(
+                if (model.groupInfo != null)
+                    setOf(Effect.DownloadSchedule(model.groupInfo))
+                else
+                    setOf()
+            )
             is Event.ShowSchedule -> next(
                 model.copy(
                     schedule = event.schedule,

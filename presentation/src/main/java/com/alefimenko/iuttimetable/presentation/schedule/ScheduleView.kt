@@ -95,7 +95,13 @@ class ScheduleView(
     }
 
     private fun render(model: Model) = with(model) {
-        recyclerView.isGone = isLoading
+        scheduleStubView.apply {
+            isVisible = isError
+            textRes = R.string.institute_loading_error
+            onRetryClick = { insideEvents.onNext(Event.DownloadSchedule) }
+        }
+
+        recyclerView.isGone = isLoading || isError
         itemAdapter.clear()
         val items = Section(
             ScheduleInfoHeader(
@@ -107,7 +113,7 @@ class ScheduleView(
         schedule?.weekSchedule?.get(selectedWeek)?.let { days ->
             headerIndices.clear()
             days.forEachIndexed { dayIndex, list ->
-                headerIndices.add(items.itemCount)
+                headerIndices.add(items.itemCount.takeIf { it != 1 } ?: 0)
                 items.add(Section().apply {
                     setHeader(
                         HeaderItem(
@@ -133,6 +139,7 @@ class ScheduleView(
                 })
             }
         }
+        scheduleChangeWeekButton.isGone = isError || isLoading
         scheduleChangeWeekButton.text =
             schedule?.weeks?.get(selectedWeek) ?: containerView.context.getString(R.string.menu_change_week)
         itemAdapter.add(items)
