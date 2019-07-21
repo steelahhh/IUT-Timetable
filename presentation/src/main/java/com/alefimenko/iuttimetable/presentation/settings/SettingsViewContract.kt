@@ -7,4 +7,5 @@ package com.alefimenko.iuttimetable.presentation.settings
 interface SettingsViewContract {
     fun onThemeClick()
     fun onAboutClick()
+    fun showUpdateDialog(updated: Boolean, error: Boolean)
 }

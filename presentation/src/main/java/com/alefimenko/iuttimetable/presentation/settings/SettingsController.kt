@@ -29,7 +29,14 @@ class SettingsController : BaseController(), SettingsViewContract {
         controller(
             RxMobius.loop(
                 SettingsFeature.SettingsUpdater,
-                SettingsFeature.SettingsEffectHandler(get(), get(), get(), get(), this).create()
+                SettingsFeature.SettingsEffectHandler(
+                    get(),
+                    get(),
+                    get(),
+                    get(),
+                    get(),
+                    this
+                ).create()
             ).init(SettingsFeature.SettingsInitializer).logger(AndroidLogger.tag("SETTINGS")),
             SettingsFeature.Model()
         )
@@ -62,6 +69,22 @@ class SettingsController : BaseController(), SettingsViewContract {
                 res = R.string.about_body,
                 html = true,
                 lineHeightMultiplier = 1.4f
+            )
+            positiveButton(res = R.string.common_ok)
+            dialog = this
+        }
+    }
+
+    override fun showUpdateDialog(updated: Boolean, error: Boolean) {
+        MaterialDialog(requireContext()).show {
+            title(text = if (error) "Ошибка" else "Обновление расписания")
+            message(
+                text = if (error)
+                    "Произошла ошибка при обновлении расписания"
+                else {
+                    if (updated) "Расписание успешно обновлено"
+                    else "Расписание в обовлении не нуждается"
+                }
             )
             positiveButton(res = R.string.common_ok)
             dialog = this

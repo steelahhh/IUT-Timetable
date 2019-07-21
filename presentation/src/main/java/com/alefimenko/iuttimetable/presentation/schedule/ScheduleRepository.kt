@@ -65,7 +65,7 @@ class ScheduleRepository(
             .ioMainSchedulers()
     }
 
-    fun updateCurrentSchedule(): Observable<Schedule> {
+    fun updateCurrentSchedule(): Observable<Boolean> {
         return groupsDao.getById(preferences.currentGroup).flatMap { group ->
             Maybe.fromCallable { group }.zipWith(instituteDao.getById(group.instituteId))
         }
@@ -81,7 +81,23 @@ class ScheduleRepository(
                         institute.name
                     )
                 )
-                downloadSchedule(groupInfo)
+                val formPath = groupInfo.form.toFormPath()
+                scheduleService.fetchSchedule(formPath, groupInfo.group.id)
+                    .flatMap { body ->
+                        createSchedule(body.string(), groupInfo.group.label)
+                    }.toObservable()
+                    .zipWith(schedulesDao.getByGroupId(preferences.currentGroup).toObservable())
+                    .flatMap { (scheduleResponse, scheduleEntity) ->
+                        val areSchedulesSame =
+                            scheduleResponse.rawBody == scheduleEntity.rawScheduleStr
+                        when {
+                            !areSchedulesSame -> saveSchedule(
+                                groupInfo,
+                                scheduleResponse
+                            ).toSingleDefault(true).toObservable()
+                            else -> Observable.just(scheduleResponse.rawBody != scheduleEntity.rawScheduleStr)
+                        }
+                    }
             }
     }
 
@@ -110,7 +126,8 @@ class ScheduleRepository(
             val newDays: MutableList<List<ClassEntry>> = mutableListOf()
             weekSchedule.getValue(week).forEachIndexed { day, weekSchedule ->
                 newDays.add(weekSchedule.mapIndexed { index, classEntry ->
-                    val shouldChangeVisibility = week == weekIndex && day == dayIndex && index == classIndex
+                    val shouldChangeVisibility =
+                        week == weekIndex && day == dayIndex && index == classIndex
                     if (shouldChangeVisibility) {
                         classEntry.copy(hidden = !classEntry.hidden)
                     } else {

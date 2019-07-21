@@ -9,6 +9,8 @@ import com.alefimenko.iuttimetable.common.transformer
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.navigation.Navigator
+import com.alefimenko.iuttimetable.presentation.schedule.ScheduleRepository
+import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.DisplayUpdateDialog
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.LoadPreferences
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.NavigateBack
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.OpenAboutDialog
@@ -17,12 +19,14 @@ import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.SendFeedback
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.SendFeedbackRequest
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.SettingsItemClick
+import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.UpdateCurrentSchedule
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Event.AboutClicked
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Event.BackClicked
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Event.FeedbackClicked
 import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey
 import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey.DarkTheme
 import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey.RelevantSchedule
+import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey.UpdateSchedule
 import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey.WeekCountDown
 import com.spotify.mobius.First
 import com.spotify.mobius.First.first
@@ -59,6 +63,8 @@ object SettingsFeature {
             val alwaysRelevantSchedule: Boolean,
             val changeWeekCountdown: Boolean
         ) : Event()
+
+        data class ScheduleUpdated(val updated: Boolean, val isError: Boolean) : Event()
     }
 
     sealed class Effect {
@@ -70,6 +76,8 @@ object SettingsFeature {
         object OpenLanguagePickerDialog : Effect()
         object RecreateApplication : Effect()
         data class SettingsItemClick(val key: SettingsItemKey) : Effect()
+        object UpdateCurrentSchedule : Effect()
+        data class DisplayUpdateDialog(val updated: Boolean, val isError: Boolean) : Effect()
     }
 
     object SettingsInitializer : Init<Model, Effect> {
@@ -88,6 +96,7 @@ object SettingsFeature {
                 when (event.key) {
                     SettingsItemKey.Language -> setOf(OpenLanguagePickerDialog)
                     DarkTheme -> setOf(RecreateApplication, SettingsItemClick(event.key))
+                    UpdateSchedule -> setOf(UpdateCurrentSchedule)
                     RelevantSchedule -> setOf(SettingsItemClick(event.key))
                     WeekCountDown -> setOf(SettingsItemClick(event.key))
                     SettingsItemKey.Feedback -> setOf(SendFeedbackRequest)
@@ -104,12 +113,21 @@ object SettingsFeature {
             is Event.SendFeedbackWithSchedule -> dispatch(
                 setOf(SendFeedback(event.info))
             )
+            is Event.ScheduleUpdated -> dispatch(
+                setOf(
+                    DisplayUpdateDialog(
+                        updated = event.updated,
+                        isError = event.isError
+                    )
+                )
+            )
         }
     }
 
     class SettingsEffectHandler(
         private val preferences: Preferences,
         private val navigator: Navigator,
+        private val scheduleRepository: ScheduleRepository,
         private val settingsRepository: SettingsRepository,
         private val feedbackService: FeedbackService,
         private val view: SettingsViewContract
@@ -135,6 +153,16 @@ object SettingsFeature {
                     .map {
                         Event.SendFeedbackWithSchedule(it)
                     }
+            }
+            transformer(UpdateCurrentSchedule::class.java) {
+                scheduleRepository.updateCurrentSchedule()
+                    .map<Event> { Event.ScheduleUpdated(updated = it, isError = false) }
+                    .onErrorReturn {
+                        Event.ScheduleUpdated(updated = false, isError = true)
+                    }
+            }
+            consumer(DisplayUpdateDialog::class.java) { (updated, isError) ->
+                view.showUpdateDialog(updated, isError)
             }
             consumer(SendFeedback::class.java) { (feedbackInfo) ->
                 feedbackService.sendFeedback(feedbackInfo)

@@ -35,6 +35,7 @@
     <string name="settings_week_countdown_subtitle">Используйте, если четность недели в приложении не совподает с таковой в университете (переход недели происходит автоматически)</string>
     <string name="settings_feedback_title">Обратная связь</string>
     <string name="settings_about_title">О приложении</string>
+    <string name="settings_update_schedule_title">Обновить текущее расписание</string>
 
     <string name="about_body"><![CDATA[
         Спроектировал и разработал <b>Александр Ефименко &copy; 2017</b><br/>

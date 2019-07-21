@@ -21,6 +21,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.screen_settings.*
+import java.util.concurrent.TimeUnit
 
 /*
  * Created by Alexander Efimenko on 2019-07-08.
@@ -49,7 +50,7 @@ class SettingsView(
         cd += models.distinctUntilChanged().subscribe(::render)
 
         return Observable.mergeArray(
-            insideEvents.hide(),
+            insideEvents.hide().throttleFirst(500, TimeUnit.MILLISECONDS),
             settingsBackButton.clicks().map { Event.BackClicked }
         ).doOnDispose {
             tearDown()
@@ -96,6 +97,12 @@ class SettingsView(
             iconRes = R.drawable.ic_pick_date,
             isChecked = changeWeekCountdown,
             switcherVisible = true
+        ),
+        SettingsItem(
+            key = SettingsItemKey.UpdateSchedule,
+            titleRes = R.string.settings_update_schedule_title,
+            iconRes = R.drawable.ic_refresh,
+            switcherVisible = false
         ),
         SettingsItem(
             key = SettingsItemKey.Feedback,
