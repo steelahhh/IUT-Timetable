@@ -43,7 +43,12 @@ object ScheduleFeature {
     sealed class Event {
         object DownloadSchedule : Event()
         object StartedLoading : Event()
-        data class ShowSchedule(val schedule: Schedule, val currentWeek: Int) : Event()
+        data class ShowSchedule(
+            val schedule: Schedule,
+            val currentWeek: Int,
+            val shouldScrollToDay: Boolean = true
+        ) : Event()
+
         object RequestWeekChange : Event()
         object NavigateToSettings : Event()
         data class SwitchWeek(val week: Int) : Event()
@@ -96,7 +101,11 @@ object ScheduleFeature {
                     selectedWeek = event.currentWeek,
                     currentWeek = event.currentWeek
                 ),
-                setOf(Effect.SwitchToCurrentDay)
+                if (event.shouldScrollToDay) {
+                    setOf(Effect.SwitchToCurrentDay)
+                } else {
+                    setOf()
+                }
             )
             Event.StartedLoading -> next(
                 model.copy(
@@ -167,7 +176,8 @@ object ScheduleFeature {
                     .map { schedule ->
                         ScheduleFeature.Event.ShowSchedule(
                             schedule,
-                            if (schedule.weeks.size == 2) dateInteractor.currentWeek else 0
+                            if (schedule.weeks.size == 2) dateInteractor.currentWeek else 0,
+                            shouldScrollToDay = false
                         )
                     }
             }
