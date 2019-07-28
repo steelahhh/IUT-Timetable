@@ -34,7 +34,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.fragment_schedule.*
+import kotlinx.android.synthetic.main.screen_schedule.*
 
 /*
  * Created by Alexander Efimenko on 2019-05-10.
@@ -43,7 +43,7 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
 class ScheduleView(
     inflater: LayoutInflater,
     container: ViewGroup
-) : KotlinView(R.layout.fragment_schedule, inflater, container) {
+) : KotlinView(R.layout.screen_schedule, inflater, container) {
 
     private val itemAdapter = GroupAdapter<ViewHolder>()
     private val insideEvents = PublishSubject.create<Event>()

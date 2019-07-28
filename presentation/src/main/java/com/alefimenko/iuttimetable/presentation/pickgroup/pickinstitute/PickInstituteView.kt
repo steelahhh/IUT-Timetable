@@ -14,7 +14,7 @@ import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInst
 import com.spotify.mobius.Connectable
 import com.spotify.mobius.Connection
 import com.spotify.mobius.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_pick_institute.*
+import kotlinx.android.synthetic.main.screen_pick_institute.*
 
 /*
  * Created by Alexander Efimenko on 2019-05-10.
@@ -24,7 +24,7 @@ class PickInstituteView(
     inflater: LayoutInflater,
     container: ViewGroup,
     private val isFromSchedule: Boolean
-) : KotlinView(R.layout.fragment_pick_institute, inflater, container), Connectable<Model, Event> {
+) : KotlinView(R.layout.screen_pick_institute, inflater, container), Connectable<Model, Event> {
     private var dialog: MaterialDialog? = null
 
     init {

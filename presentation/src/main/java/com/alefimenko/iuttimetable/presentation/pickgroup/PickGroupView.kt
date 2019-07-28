@@ -17,7 +17,7 @@ import com.mikepenz.fastadapter.listeners.ItemFilterListener
 import com.spotify.mobius.Connectable
 import com.spotify.mobius.Connection
 import com.spotify.mobius.functions.Consumer
-import kotlinx.android.synthetic.main.fragment_pick_group.*
+import kotlinx.android.synthetic.main.screen_pick_group.*
 
 /*
  * Created by Alexander Efimenko on 2019-05-10.
@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_pick_group.*
 class PickGroupView(
     inflater: LayoutInflater,
     container: ViewGroup
-) : KotlinView(R.layout.fragment_pick_group, inflater, container), Connectable<Model, Event> {
+) : KotlinView(R.layout.screen_pick_group, inflater, container), Connectable<Model, Event> {
 
     private val fastAdapter = FastItemAdapter<GroupUi>()
 
