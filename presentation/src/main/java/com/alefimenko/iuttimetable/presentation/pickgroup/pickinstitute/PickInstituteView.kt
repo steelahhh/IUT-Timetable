@@ -2,6 +2,7 @@ package com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
@@ -21,7 +22,8 @@ import kotlinx.android.synthetic.main.fragment_pick_institute.*
 
 class PickInstituteView(
     inflater: LayoutInflater,
-    container: ViewGroup
+    container: ViewGroup,
+    private val isFromSchedule: Boolean
 ) : KotlinView(R.layout.fragment_pick_institute, inflater, container), Connectable<Model, Event> {
     private var dialog: MaterialDialog? = null
 
@@ -35,6 +37,12 @@ class PickInstituteView(
         nextButton.setOnClickListener {
             output.accept(Event.NextButtonClicked)
         }
+
+        pickGroupBackButton.setOnClickListener {
+            output.accept(Event.BackClicked)
+        }
+
+        pickGroupBackButton.isGone = !isFromSchedule
 
         formRadioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {

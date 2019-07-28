@@ -22,7 +22,7 @@ class RootFeature(
 
     fun setRootScreen() {
         val root = when (sharedPreferences.currentGroup) {
-            ITEM_DOESNT_EXIST -> Screens.PickInstituteScreen
+            ITEM_DOESNT_EXIST -> Screens.PickInstituteScreen()
             else -> Screens.ScheduleScreen()
         }
         navigator.setRoot(root)

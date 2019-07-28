@@ -23,9 +23,15 @@ import org.koin.androidx.scope.ext.android.getOrCreateScope
  * Created by Alexander Efimenko on 2019-02-04.
  */
 
-class PickInstituteController : BaseController() {
-
+class PickInstituteController(
+    bundle: Bundle = Bundle()
+) : BaseController() {
+    private var isFromSchedule: Boolean = false
     private val scope = getOrCreateScope(Scopes.PICK_GROUP)
+
+    init {
+        isFromSchedule = bundle.getBoolean(IS_FROM_SCHEDULE)
+    }
 
     private val controller: MobiusLoop.Controller<Model, Event> = controller(
         RxMobius.loop(
@@ -36,7 +42,7 @@ class PickInstituteController : BaseController() {
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        val view = PickInstituteView(inflater, container)
+        val view = PickInstituteView(inflater, container, isFromSchedule)
         bindScope(scope)
         controller.connect(view)
         controller.start()
@@ -59,5 +65,14 @@ class PickInstituteController : BaseController() {
 
     companion object {
         const val MODEL = "MODEl"
+        const val IS_FROM_SCHEDULE = "is_from_schedule"
+
+        fun newInstance(
+            isFromSchedule: Boolean
+        ): PickInstituteController = PickInstituteController(
+            Bundle().apply {
+                putBoolean(IS_FROM_SCHEDULE, isFromSchedule)
+            }
+        )
     }
 }

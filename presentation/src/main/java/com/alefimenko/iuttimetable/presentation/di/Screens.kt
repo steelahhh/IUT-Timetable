@@ -1,11 +1,11 @@
 package com.alefimenko.iuttimetable.presentation.di
 
+import com.alefimenko.iuttimetable.navigation.Screen
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupController
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteController
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleController
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
-import com.alefimenko.iuttimetable.navigation.Screen
 import com.alefimenko.iuttimetable.presentation.settings.SettingsController
 
 /*
@@ -20,8 +20,10 @@ object Screens {
         override fun create() = PickGroupController.newInstance(form, institute)
     }
 
-    object PickInstituteScreen : Screen() {
-        override fun create() = PickInstituteController()
+    data class PickInstituteScreen(
+        val isFromSchedule: Boolean = false
+    ) : Screen() {
+        override fun create() = PickInstituteController.newInstance(isFromSchedule)
     }
 
     object SettingsScreen : Screen() {
@@ -31,6 +33,7 @@ object Screens {
     class ScheduleScreen(
         private val groupInfo: GroupInfo? = null
     ) : Screen() {
-        override fun create() = groupInfo?.let { ScheduleController.newInstance(it) } ?: ScheduleController()
+        override fun create() =
+            groupInfo?.let { ScheduleController.newInstance(it) } ?: ScheduleController()
     }
 }

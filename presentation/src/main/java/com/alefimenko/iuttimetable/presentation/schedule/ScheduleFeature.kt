@@ -51,6 +51,7 @@ object ScheduleFeature {
 
         object RequestWeekChange : Event()
         object NavigateToSettings : Event()
+        object NavigateToAddNewGroup : Event()
         data class SwitchWeek(val week: Int) : Event()
         data class ErrorLoading(val throwable: Throwable) : Event()
         data class ChangeClassVisibility(
@@ -63,13 +64,13 @@ object ScheduleFeature {
     sealed class Effect {
         object SwitchToCurrentDay : Effect()
         object DisplaySchedule : Effect()
-        object NavigateToSettings : Effect()
+        object OpenSettings : Effect()
+        object OpenAddGroup : Effect()
         data class ChangeClassVisibility(
             val classIndex: Int,
             val dayIndex: Int,
             val weekIndex: Int
         ) : Effect()
-
         data class ChangeWeek(val week: Int) : Effect()
         data class DownloadSchedule(val groupInfo: GroupInfo) : Effect()
         data class OpenChangeWeekDialog(val weeks: List<String>, val selectedWeek: Int) : Effect()
@@ -137,7 +138,7 @@ object ScheduleFeature {
                 ),
                 setOf(Effect.SwitchToCurrentDay)
             )
-            is Event.NavigateToSettings -> dispatch(setOf(Effect.NavigateToSettings))
+            is Event.NavigateToSettings -> dispatch(setOf(Effect.OpenSettings))
             is Event.ChangeClassVisibility -> dispatch(
                 setOf(
                     Effect.ChangeClassVisibility(
@@ -146,6 +147,9 @@ object ScheduleFeature {
                         event.weekIndex
                     )
                 )
+            )
+            is Event.NavigateToAddNewGroup -> dispatch(
+                setOf(Effect.OpenAddGroup)
             )
         }
     }
@@ -205,7 +209,10 @@ object ScheduleFeature {
                 if (repository.shouldSwitchToDay)
                     view.switchToCurrentDay(dateInteractor.currentDay)
             }
-            action(Effect.NavigateToSettings::class.java) {
+            action(Effect.OpenAddGroup::class.java) {
+                navigator.push(Screens.PickInstituteScreen(true))
+            }
+            action(Effect.OpenSettings::class.java) {
                 navigator.push(Screens.SettingsScreen)
             }
         }

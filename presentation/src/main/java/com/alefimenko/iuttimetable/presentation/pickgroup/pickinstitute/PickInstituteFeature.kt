@@ -2,6 +2,7 @@ package com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute
 
 import android.os.Parcelable
 import com.alefimenko.iuttimetable.common.BaseEffectHandler
+import com.alefimenko.iuttimetable.common.action
 import com.alefimenko.iuttimetable.common.consumer
 import com.alefimenko.iuttimetable.common.effectHandler
 import com.alefimenko.iuttimetable.common.transformer
@@ -35,6 +36,7 @@ object PickInstituteFeature {
     ) : Parcelable
 
     sealed class Event {
+        object BackClicked : Event()
         object NextButtonClicked : Event()
         object StartedLoading : Event()
         object LoadInstitutes : Event()
@@ -46,6 +48,7 @@ object PickInstituteFeature {
 
     sealed class Effect {
         object LoadInstitutes : Effect()
+        object NavigateBack : Effect()
         data class NavigateToPickGroup(val form: Int, val institute: InstituteUi) : Effect()
     }
 
@@ -62,6 +65,7 @@ object PickInstituteFeature {
             Event.LoadInstitutes -> dispatch(setOf(Effect.LoadInstitutes))
             Event.StartedLoading -> next(model.copy(isLoading = true, isError = false))
             Event.NextButtonClicked -> dispatch(setOf(Effect.NavigateToPickGroup(model.form, model.institute!!)))
+            Event.BackClicked -> dispatch(setOf(Effect.NavigateBack))
             is Event.InstitutesLoaded -> next(
                 model.copy(
                     institutes = event.institutes,
@@ -86,6 +90,9 @@ object PickInstituteFeature {
                 }
                 consumer(Effect.NavigateToPickGroup::class.java) { effect ->
                     navigator.push(Screens.PickGroupScreen(effect.form, effect.institute))
+                }
+                action(Effect.NavigateBack::class.java) {
+                    navigator.exit()
                 }
             }
         }

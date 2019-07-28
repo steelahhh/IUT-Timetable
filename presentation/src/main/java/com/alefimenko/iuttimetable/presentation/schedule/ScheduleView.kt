@@ -23,6 +23,7 @@ import com.alefimenko.iuttimetable.presentation.schedule.model.Position
 import com.alefimenko.iuttimetable.presentation.schedule.model.ScheduleInfoHeader
 import com.alefimenko.iuttimetable.presentation.schedule.model.toClassUi
 import com.jakewharton.rxbinding3.appcompat.itemClicks
+import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.spotify.mobius.Connectable
 import com.spotify.mobius.rx2.RxConnectables
@@ -59,6 +60,9 @@ class ScheduleView(
 
         return Observable.mergeArray<Event>(
             insideEvents.hide(),
+            toolbar.navigationClicks().map {
+                Event.NavigateToAddNewGroup
+            },
             toolbar.itemClicks().map {
                 Event.NavigateToSettings
             },
@@ -141,7 +145,8 @@ class ScheduleView(
         }
         scheduleChangeWeekButton.isGone = isError || isLoading
         scheduleChangeWeekButton.text =
-            schedule?.weeks?.get(selectedWeek) ?: containerView.context.getString(R.string.menu_change_week)
+            schedule?.weeks?.get(selectedWeek)
+                ?: containerView.context.getString(R.string.menu_change_week)
         itemAdapter.add(items)
         itemAdapter.notifyDataSetChanged()
         progressBar.isVisible = isLoading
