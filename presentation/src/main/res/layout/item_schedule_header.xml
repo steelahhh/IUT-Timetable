@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/scheduleHeaderTitle"
-        style="@style/AppText.Title"
+        style="@style/AppText.Title.Bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_16"

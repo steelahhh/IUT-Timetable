@@ -21,11 +21,11 @@
 
     <TextView
         android:id="@+id/settingsTitle"
-        style="@style/AppText.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_16"
         android:text="@string/settings_title"
+        android:textAppearance="@style/AppText.Title.Bold"
         android:textColor="?android:textColorPrimary"
         app:layout_constraintLeft_toRightOf="@id/settingsBackButton"
         app:layout_constraintRight_toRightOf="parent"
