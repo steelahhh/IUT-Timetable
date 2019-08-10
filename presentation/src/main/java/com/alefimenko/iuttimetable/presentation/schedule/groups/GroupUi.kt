@@ -35,6 +35,8 @@ data class GroupUi(
                 groupEntryContainer.outlineSpotShadowColor = context.getColorCompat(R.color.iutColor)
             context.getDimen(R.dimen.spacing_4)
         } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+                groupEntryContainer.outlineSpotShadowColor = context.getColorCompat(R.color.backgroundDark)
             context.getDimen(R.dimen.spacing_2)
         }
 
