@@ -66,10 +66,11 @@ class SettingsController : BaseController(), SettingsViewContract {
         MaterialDialog(requireContext()).show {
             title(text = requireContext().getString(R.string.about_title, VERSION_NAME))
             message(
-                res = R.string.about_body,
-                html = true,
-                lineHeightMultiplier = 1.4f
-            )
+                res = R.string.about_body
+            ) {
+                html()
+                lineSpacing(1.4F)
+            }
             positiveButton(res = R.string.common_ok)
             dialog = this
         }

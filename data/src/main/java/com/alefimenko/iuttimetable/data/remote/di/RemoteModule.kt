@@ -1,11 +1,11 @@
 package com.alefimenko.iuttimetable.data.remote.di
 
-import com.alefimenko.iuttimetable.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
+import com.alefimenko.iuttimetable.data.remote.FeedbackService
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

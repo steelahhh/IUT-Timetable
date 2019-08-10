@@ -19,9 +19,9 @@ import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.android.AndroidLogger
 import com.spotify.mobius.android.MobiusAndroid.controller
 import com.spotify.mobius.rx2.RxMobius
-import org.koin.android.ext.android.get
-import org.koin.androidx.scope.ext.android.bindScope
-import org.koin.androidx.scope.ext.android.getOrCreateScope
+import org.koin.android.ext.android.getKoin
+import org.koin.androidx.scope.bindScope
+import org.koin.core.qualifier.named
 
 /*
  * Created by Alexander Efimenko on 2019-03-02.
@@ -38,12 +38,12 @@ class PickGroupController(
         institute = bundle.getParcelable(INSTITUTE_KEY)
     }
 
-    private val scope = getOrCreateScope(Scopes.PICK_GROUP)
+    private val scope = getKoin().getOrCreateScope(Scopes.PICK_GROUP, named(Scopes.PICK_GROUP))
 
     private val controller: MobiusLoop.Controller<Model, Event> = controller(
         RxMobius.loop(
             GroupUpdater,
-            PickGroupEffectHandler(get(), get()).create()
+            PickGroupEffectHandler(scope.get(), scope.get()).create()
         ).init(GroupInitializer).logger(AndroidLogger.tag("PINSTER")),
         Model(form = form, institute = institute)
     )

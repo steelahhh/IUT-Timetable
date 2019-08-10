@@ -1,7 +1,7 @@
 package com.alefimenko.iuttimetable.presentation.di.modules
 
 import com.alefimenko.iuttimetable.presentation.root.RootFeature
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 import org.koin.experimental.builder.single
 
 /*

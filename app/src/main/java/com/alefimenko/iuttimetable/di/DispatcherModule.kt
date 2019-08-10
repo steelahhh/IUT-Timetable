@@ -2,7 +2,7 @@ package com.alefimenko.iuttimetable.di
 
 import android.os.Handler
 import android.os.Looper
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 import java.util.concurrent.Executor
 
 /*

@@ -2,7 +2,8 @@ package com.alefimenko.iuttimetable
 
 import androidx.multidex.MultiDexApplication
 import com.alefimenko.iuttimetable.di.applicationModule
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
 /*
@@ -14,7 +15,10 @@ class IUTApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin(this, applicationModule)
+        startKoin {
+            androidContext(applicationContext)
+            modules(applicationModule)
+        }
         initializeTimber()
     }
 

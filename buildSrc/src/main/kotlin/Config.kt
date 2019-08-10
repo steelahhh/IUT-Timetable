@@ -31,7 +31,7 @@ object Versions {
     const val rxBinding = "3.0.0-alpha2"
     const val rxKotlin = "2.2.0"
     const val rxAndroid = "2.0.2"
-    const val room = "2.1.0-alpha02"
+    const val room = "2.1.0"
 
     const val conductor = "3.0.0-rc1"
 
@@ -44,12 +44,12 @@ object Versions {
     const val jsoup = "1.11.3"
 
     const val groupie = "2.3.0"
-    const val fastadapter = "4.0.0-rc04"
+    const val fastadapter = "4.0.1"
     const val retrofit = "2.4.0"
     const val gson = "2.8.5"
-    const val koin = "1.0.2"
+    const val koin = "2.0.1"
     const val timber = "4.7.1"
-    const val materialDialogs = "2.7.0"
+    const val materialDialogs = "3.1.0"
     const val junit = "4.12"
     const val testRunner = "1.1.0"
     const val espresso = "3.1.0"
@@ -59,8 +59,8 @@ object Deps {
     val vers = Versions
 
     const val appcompat = "androidx.appcompat:appcompat:1.0.2"
-    const val androidxCore = "androidx.core:core-ktx:1.0.1"
-    const val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
+    const val androidxCore = "androidx.core:core-ktx:1.0.2"
+    const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0-beta02"
     const val material = "com.google.android.material:material:1.1.0-alpha09"
     const val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
 

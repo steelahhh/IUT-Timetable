@@ -1,7 +1,7 @@
 package com.alefimenko.iuttimetable.navigation.di
 
 import com.alefimenko.iuttimetable.navigation.Navigator
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 import org.koin.experimental.builder.single
 
 /*

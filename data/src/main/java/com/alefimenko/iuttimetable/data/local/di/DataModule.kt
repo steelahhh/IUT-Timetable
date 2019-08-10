@@ -11,7 +11,8 @@ import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
 import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDatabase
 import com.google.gson.GsonBuilder
 import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module.module
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import org.koin.experimental.builder.single
 
 /*
@@ -26,11 +27,17 @@ val localDataModule = module {
         ).fallbackToDestructiveMigration().build()
     }
 
-    single(name = SchedulesDao.TAG) { get<SchedulesDatabase>().schedulesDao }
+    single(named(SchedulesDao.TAG)) {
+        get<SchedulesDatabase>().schedulesDao
+    }
 
-    single(name = GroupsDao.TAG) { get<SchedulesDatabase>().groupsDao }
+    single(named(GroupsDao.TAG)) {
+        get<SchedulesDatabase>().groupsDao
+    }
 
-    single(name = InstitutesDao.TAG) { get<SchedulesDatabase>().institutesDao }
+    single(named(InstitutesDao.TAG)) {
+        get<SchedulesDatabase>().institutesDao
+    }
 
     single<ScheduleParser>()
 

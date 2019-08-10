@@ -15,9 +15,9 @@ import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.android.AndroidLogger
 import com.spotify.mobius.android.MobiusAndroid.controller
 import com.spotify.mobius.rx2.RxMobius
-import org.koin.android.ext.android.get
-import org.koin.androidx.scope.ext.android.bindScope
-import org.koin.androidx.scope.ext.android.getOrCreateScope
+import org.koin.android.ext.android.getKoin
+import org.koin.androidx.scope.bindScope
+import org.koin.core.qualifier.named
 
 /*
  * Created by Alexander Efimenko on 2019-02-04.
@@ -27,7 +27,7 @@ class PickInstituteController(
     bundle: Bundle = Bundle()
 ) : BaseController() {
     private var isFromSchedule: Boolean = false
-    private val scope = getOrCreateScope(Scopes.PICK_GROUP)
+    private val scope = getKoin().getOrCreateScope(Scopes.PICK_GROUP, named(Scopes.PICK_GROUP))
 
     init {
         isFromSchedule = bundle.getBoolean(IS_FROM_SCHEDULE)
@@ -36,7 +36,7 @@ class PickInstituteController(
     private val controller: MobiusLoop.Controller<Model, Event> = controller(
         RxMobius.loop(
             InstituteUpdater,
-            InstituteEffectHandler(get(), get()).create()
+            InstituteEffectHandler(scope.get(), scope.get()).create()
         ).init(InstituteInitializer).logger(AndroidLogger.tag("PIFFER")),
         Model()
     )
