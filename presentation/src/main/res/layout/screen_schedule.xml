@@ -47,6 +47,7 @@
         android:paddingEnd="@dimen/spacing_20"
         android:paddingTop="@dimen/spacing_8"
         android:paddingBottom="@dimen/spacing_8"
+        android:textColor="@color/white"
         app:backgroundTint="?colorAccent"
         app:cornerRadius="@dimen/size_m"
         app:icon="@drawable/ic_pick_date"
