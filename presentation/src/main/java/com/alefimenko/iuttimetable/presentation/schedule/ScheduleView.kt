@@ -14,8 +14,10 @@ import com.alefimenko.iuttimetable.base.KotlinView
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
+import com.alefimenko.iuttimetable.presentation.root.RootActivity
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Event
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Model
+import com.alefimenko.iuttimetable.presentation.schedule.groups.GroupsFragment
 import com.alefimenko.iuttimetable.presentation.schedule.model.ClassUi
 import com.alefimenko.iuttimetable.presentation.schedule.model.EmptyDayItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.HeaderItem
@@ -23,7 +25,6 @@ import com.alefimenko.iuttimetable.presentation.schedule.model.Position
 import com.alefimenko.iuttimetable.presentation.schedule.model.ScheduleInfoHeader
 import com.alefimenko.iuttimetable.presentation.schedule.model.toClassUi
 import com.jakewharton.rxbinding3.appcompat.itemClicks
-import com.jakewharton.rxbinding3.appcompat.navigationClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.spotify.mobius.Connectable
 import com.spotify.mobius.rx2.RxConnectables
@@ -42,7 +43,8 @@ import kotlinx.android.synthetic.main.screen_schedule.*
 
 class ScheduleView(
     inflater: LayoutInflater,
-    container: ViewGroup
+    container: ViewGroup,
+    private val activity: RootActivity
 ) : KotlinView(R.layout.screen_schedule, inflater, container) {
 
     private val itemAdapter = GroupAdapter<ViewHolder>()
@@ -58,11 +60,17 @@ class ScheduleView(
 
         compositeDisposable += models.distinctUntilChanged().subscribe(::render)
 
+        toolbar.setNavigationOnClickListener {
+            val fra = GroupsFragment({ groupId ->
+                insideEvents.onNext(Event.DisplaySchedule(groupId))
+            }, { groupId ->
+                insideEvents.onNext(Event.DeleteSchedule(groupId))
+            })
+            fra.show(activity.supportFragmentManager, "BottomSheetDialogFragment")
+        }
+
         return Observable.mergeArray<Event>(
             insideEvents.hide(),
-            toolbar.navigationClicks().map {
-                Event.NavigateToAddNewGroup
-            },
             toolbar.itemClicks().map {
                 Event.NavigateToSettings
             },
@@ -101,7 +109,7 @@ class ScheduleView(
     private fun render(model: Model) = with(model) {
         scheduleStubView.apply {
             isVisible = isError
-            textRes = R.string.institute_loading_error
+            textRes = R.string.schedule_loading_error
             onRetryClick = { insideEvents.onNext(Event.DownloadSchedule) }
         }
 

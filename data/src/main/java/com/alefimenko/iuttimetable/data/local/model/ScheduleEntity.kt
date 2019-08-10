@@ -13,7 +13,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "schedules")
 data class ScheduleEntity @JvmOverloads constructor(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
     var id: Long = -1,
     @ColumnInfo(name = "group_id")

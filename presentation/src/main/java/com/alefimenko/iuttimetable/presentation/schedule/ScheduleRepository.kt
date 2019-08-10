@@ -3,6 +3,7 @@ package com.alefimenko.iuttimetable.presentation.schedule
 import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.data.ScheduleParser
+import com.alefimenko.iuttimetable.data.local.Constants.ITEM_DOESNT_EXIST
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.local.model.GroupEntity
 import com.alefimenko.iuttimetable.data.local.model.InstituteEntity
@@ -16,7 +17,7 @@ import com.alefimenko.iuttimetable.data.remote.model.Schedule
 import com.alefimenko.iuttimetable.data.remote.model.ScheduleResponse
 import com.alefimenko.iuttimetable.data.remote.model.WeekSchedule
 import com.alefimenko.iuttimetable.data.remote.toFormPath
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupPreviewUi
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
 import com.google.gson.Gson
@@ -40,16 +41,22 @@ class ScheduleRepository(
     private val instituteDao: InstitutesDao,
     private val networkStatusReceiver: NetworkStatusReceiver
 ) {
+    val currentGroup: Int get() = preferences.currentGroup
 
     val shouldSwitchToDay: Boolean get() = preferences.switchDay
 
-    fun getSchedule(): Observable<Schedule> = schedulesDao
-        .getByGroupId(preferences.currentGroup)
-        .zipWith(groupsDao.getById(preferences.currentGroup))
+    fun getGroups() = groupsDao.getGroupsWithInstitute()
+        .ioMainSchedulers()
+
+    fun getSchedule(groupId: Int): Observable<Schedule> = schedulesDao
+        .getByGroupId(groupId)
+        .zipWith(groupsDao.getById(groupId))
         .map { (scheduleEntity, group) ->
             scheduleEntity.schedule.copy(groupTitle = group.name)
         }
-        .toObservable()
+        .flatMapObservable {
+            saveCurrentGroup(groupId).toSingleDefault(it).toObservable()
+        }
         .ioMainSchedulers()
 
     fun downloadSchedule(groupInfo: GroupInfo): Observable<Schedule> {
@@ -65,14 +72,34 @@ class ScheduleRepository(
             .ioMainSchedulers()
     }
 
-    fun updateCurrentSchedule(): Observable<Boolean> {
-        return groupsDao.getById(preferences.currentGroup).flatMap { group ->
+    fun deleteCurrentSchedule(groupId: Int) = Single.fromCallable {
+        preferences.currentGroup = ITEM_DOESNT_EXIST
+        groupsDao.delete(groupId)
+        schedulesDao.deleteByGroupId(groupId)
+    }.ioMainSchedulers()
+        .flatMap {
+            schedulesDao.schedules
+                .ioMainSchedulers()
+                .flatMap { schedules ->
+                    Single.just(
+                        schedules.firstOrNull { it.groupId != groupId }?.groupId ?: -1
+                    )
+                }
+        }
+
+    fun deleteSchedule(groupId: Int) = Completable.fromCallable {
+        groupsDao.delete(groupId)
+        schedulesDao.deleteByGroupId(groupId)
+    }
+
+    fun updateCurrentSchedule(groupId: Int = preferences.currentGroup): Observable<Boolean> {
+        return groupsDao.getById(groupId).flatMap { group ->
             Maybe.fromCallable { group }.zipWith(instituteDao.getById(group.instituteId))
         }
             .flatMapObservable { (group, institute) ->
                 val groupInfo = GroupInfo(
                     form = group.form,
-                    group = GroupUi(
+                    group = GroupPreviewUi(
                         group.id,
                         group.name
                     ),
@@ -86,7 +113,7 @@ class ScheduleRepository(
                     .flatMap { body ->
                         createSchedule(body.string(), groupInfo.group.label)
                     }.toObservable()
-                    .zipWith(schedulesDao.getByGroupId(preferences.currentGroup).toObservable())
+                    .zipWith(schedulesDao.getByGroupId(groupId).toObservable())
                     .flatMap { (scheduleResponse, scheduleEntity) ->
                         val areSchedulesSame =
                             scheduleResponse.rawBody == scheduleEntity.rawScheduleStr
@@ -140,8 +167,8 @@ class ScheduleRepository(
         return newWeeksSchedule
     }
 
-    private fun saveCurrentGroup(groupInfo: GroupInfo) = Completable.fromAction {
-        preferences.currentGroup = groupInfo.group.id
+    private fun saveCurrentGroup(groupId: Int) = Completable.fromAction {
+        preferences.currentGroup = groupId
     }
 
     private fun saveSchedule(
@@ -150,6 +177,7 @@ class ScheduleRepository(
     ) = with(groupInfo) {
         schedulesDao.insert(
             ScheduleEntity(
+                id = group.id.toLong(),
                 groupId = group.id,
                 scheduleStr = gson.toJson(response.schedule),
                 rawScheduleStr = response.rawBody
@@ -172,7 +200,7 @@ class ScheduleRepository(
                 )
             )
         ).andThen(
-            saveCurrentGroup(groupInfo)
+            saveCurrentGroup(groupInfo.group.id)
         )
     }
 

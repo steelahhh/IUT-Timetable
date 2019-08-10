@@ -3,6 +3,7 @@ package com.alefimenko.iuttimetable.extension
 import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.TypedValue
 import android.view.MenuItem
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.alefimenko.iuttimetable.coreui.R
 import com.bluelinelabs.conductor.Controller
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -126,4 +128,16 @@ fun Context.convertDpToPixel(dp: Float): Float {
     val metrics = resources.displayMetrics
     val px = dp * (metrics.densityDpi / 160f)
     return Math.round(px).toFloat()
+}
+
+fun Drawable.applyTint(@ColorInt color: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        DrawableCompat.setTint(this, color)
+    } else {
+        this.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+    }
+}
+
+fun Drawable.applyTintOnTop(@ColorInt color: Int) {
+    this.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
 }

@@ -10,7 +10,7 @@ import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Event
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Model
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupPreviewUi
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 import com.mikepenz.fastadapter.listeners.ItemFilterListener
@@ -28,7 +28,7 @@ class PickGroupView(
     container: ViewGroup
 ) : KotlinView(R.layout.screen_pick_group, inflater, container), Connectable<Model, Event> {
 
-    private val fastAdapter = FastItemAdapter<GroupUi>()
+    private val fastAdapter = FastItemAdapter<GroupPreviewUi>()
 
     override fun connect(output: Consumer<Event>): Connection<Model> {
         setupViews()
@@ -55,14 +55,14 @@ class PickGroupView(
 
     private fun setupViews() {
         fastAdapter.apply {
-            itemFilter.itemFilterListener = object : ItemFilterListener<GroupUi> {
+            itemFilter.itemFilterListener = object : ItemFilterListener<GroupPreviewUi> {
                 override fun onReset() {
                     post {
                         errorView.isVisible = false
                     }
                 }
 
-                override fun itemsFiltered(constraint: CharSequence?, results: List<GroupUi>?) {
+                override fun itemsFiltered(constraint: CharSequence?, results: List<GroupPreviewUi>?) {
                     post {
                         errorView.apply {
                             isVisible = results?.isEmpty() ?: false
@@ -94,7 +94,7 @@ class PickGroupView(
         })
     }
 
-    private fun filterGroups(item: GroupUi, constraint: CharSequence?): Boolean {
+    private fun filterGroups(item: GroupPreviewUi, constraint: CharSequence?): Boolean {
         constraint ?: return false
         val query = constraint.toString().toLowerCase()
         val label = item.label.toLowerCase().replace(" ", "")

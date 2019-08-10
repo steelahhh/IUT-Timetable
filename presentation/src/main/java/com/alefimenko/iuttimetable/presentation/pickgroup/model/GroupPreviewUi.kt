@@ -15,27 +15,27 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class GroupUi(
+data class GroupPreviewUi(
     val id: Int,
     val label: String
-) : AbstractItem<GroupUi.VH>(), Parcelable {
+) : AbstractItem<GroupPreviewUi.VH>(), Parcelable {
     override val type get(): Int = R.id.item_group_id
     override fun getViewHolder(v: View) = VH(v)
-    override val layoutRes get() = R.layout.item_group
+    override val layoutRes get() = R.layout.item_list_group
 
-    class VH(view: View) : FastAdapter.ViewHolder<GroupUi>(view) {
+    class VH(view: View) : FastAdapter.ViewHolder<GroupPreviewUi>(view) {
         private val title = itemView.findViewById<TextView>(R.id.group_title)
 
-        override fun bindView(item: GroupUi, payloads: MutableList<Any>) {
+        override fun bindView(item: GroupPreviewUi, payloads: MutableList<Any>) {
             title.text = item.label
         }
 
-        override fun unbindView(item: GroupUi) {
+        override fun unbindView(item: GroupPreviewUi) {
             title.text = null
         }
     }
 }
 
-fun GroupResponse.toGroupUi() = GroupUi(id, name)
+fun GroupResponse.toGroupUi() = GroupPreviewUi(id, name)
 fun GroupResponse.toInstituteUi() = InstituteUi(id, name)
-fun GroupEntity.toGroupUi() = GroupUi(id, name)
+fun GroupEntity.toGroupUi() = GroupPreviewUi(id, name)

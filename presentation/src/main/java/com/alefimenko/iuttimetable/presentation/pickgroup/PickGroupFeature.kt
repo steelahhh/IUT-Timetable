@@ -7,7 +7,7 @@ import com.alefimenko.iuttimetable.common.effectHandler
 import com.alefimenko.iuttimetable.common.transformer
 import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.presentation.di.Screens
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupUi
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupPreviewUi
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
 import com.spotify.mobius.First
@@ -29,8 +29,8 @@ object PickGroupFeature {
     data class Model(
         val form: Int = 0,
         val institute: InstituteUi? = null,
-        val group: GroupUi? = null,
-        val groups: List<GroupUi> = listOf(),
+        val group: GroupPreviewUi? = null,
+        val groups: List<GroupPreviewUi> = listOf(),
         @Transient val isLoading: Boolean = false,
         @Transient val isError: Boolean = false
     ) : Parcelable
@@ -39,7 +39,7 @@ object PickGroupFeature {
         object StartedLoading : Event()
         object LoadGroups : Event()
         data class GroupSelected(val groupInfo: GroupInfo) : Event()
-        data class GroupsLoaded(val groups: List<GroupUi>) : Event()
+        data class GroupsLoaded(val groups: List<GroupPreviewUi>) : Event()
         data class ErrorLoading(val throwable: Throwable) : Event()
     }
 

@@ -25,7 +25,7 @@ interface SchedulesDao {
     @Query("SELECT * FROM Schedules WHERE group_id = :groupId")
     fun getByGroupId(groupId: Int): Maybe<ScheduleEntity>
 
-    @Query("DELETE FROM Schedules WHERE group_id = :id")
+    @Query("DELETE FROM Schedules WHERE id = :id")
     fun deleteByGroupId(id: Int): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

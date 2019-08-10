@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alefimenko.iuttimetable.base.BaseController
+import com.alefimenko.iuttimetable.extension.requireActivity
+import com.alefimenko.iuttimetable.presentation.root.RootActivity
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Event
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Model
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.ScheduleEffectHandler
@@ -34,14 +36,14 @@ class ScheduleController(
         RxMobius.loop(
             ScheduleUpdater,
             ScheduleEffectHandler(get(), get(), get(), this).create()
-        ).init(ScheduleInitializer).logger(AndroidLogger.tag("SCHEDULE")),
+        ).init(ScheduleInitializer(get())).logger(AndroidLogger.tag("SCHEDULE")),
         Model(groupInfo = bundle[GROUP_INFO] as? GroupInfo)
     )
 
     private var scheduleView: ScheduleView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        return ScheduleView(inflater, container).apply {
+        return ScheduleView(inflater, container, requireActivity() as RootActivity).apply {
             controller.connect(connector)
             controller.start()
             scheduleView = this

@@ -14,9 +14,9 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "groups")
 data class GroupEntity(
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "group_id")
     val id: Int,
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "group_name")
     val name: String,
     @ColumnInfo(name = "form_id")
     val form: Int,

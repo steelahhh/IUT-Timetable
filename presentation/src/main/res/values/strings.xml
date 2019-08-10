@@ -52,4 +52,8 @@
 
     <string name="class_header_date_title">%s – %s</string>
 
+    <string name="groups_title">Группы</string>
+    <string name="groups_add_group">Добавить группу</string>
+    <string name="delete_group_content_description">Кнопка удаления расписания</string>
+
 </resources>

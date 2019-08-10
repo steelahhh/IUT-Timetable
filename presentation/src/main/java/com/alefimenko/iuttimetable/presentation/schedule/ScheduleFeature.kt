@@ -6,6 +6,7 @@ import com.alefimenko.iuttimetable.common.action
 import com.alefimenko.iuttimetable.common.consumer
 import com.alefimenko.iuttimetable.common.effectHandler
 import com.alefimenko.iuttimetable.common.transformer
+import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.remote.model.Schedule
 import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.presentation.DateInteractor
@@ -43,15 +44,18 @@ object ScheduleFeature {
     sealed class Event {
         object DownloadSchedule : Event()
         object StartedLoading : Event()
+        object RequestWeekChange : Event()
+        object NavigateToSettings : Event()
+        data class NavigateToAddNewGroup(val shouldDisplayBack: Boolean = true) : Event()
+        object DeleteSuccessful : Event()
         data class ShowSchedule(
             val schedule: Schedule,
             val currentWeek: Int,
             val shouldScrollToDay: Boolean = true
         ) : Event()
 
-        object RequestWeekChange : Event()
-        object NavigateToSettings : Event()
-        object NavigateToAddNewGroup : Event()
+        data class DeleteSchedule(val group: Int) : Event()
+        data class DisplaySchedule(val group: Int) : Event()
         data class SwitchWeek(val week: Int) : Event()
         data class ErrorLoading(val throwable: Throwable) : Event()
         data class ChangeClassVisibility(
@@ -63,31 +67,39 @@ object ScheduleFeature {
 
     sealed class Effect {
         object SwitchToCurrentDay : Effect()
-        object DisplaySchedule : Effect()
         object OpenSettings : Effect()
-        object OpenAddGroup : Effect()
+        data class OpenAddGroup(val shouldDisplayBack: Boolean = true) : Effect()
         data class ChangeClassVisibility(
             val classIndex: Int,
             val dayIndex: Int,
             val weekIndex: Int
         ) : Effect()
+
+        data class DeleteSchedule(val id: Int) : Effect()
+        data class DisplaySchedule(val id: Int) : Effect()
         data class ChangeWeek(val week: Int) : Effect()
         data class DownloadSchedule(val groupInfo: GroupInfo) : Effect()
         data class OpenChangeWeekDialog(val weeks: List<String>, val selectedWeek: Int) : Effect()
     }
 
-    object ScheduleInitializer : Init<Model, Effect> {
+    class ScheduleInitializer(private val preferences: Preferences) : Init<Model, Effect> {
         override fun init(model: Model): First<Model, Effect> = first(
             model,
             if (model.groupInfo != null && model.schedule == null)
                 setOf(Effect.DownloadSchedule(model.groupInfo))
             else
-                setOf(Effect.DisplaySchedule)
+                setOf(Effect.DisplaySchedule(preferences.currentGroup))
         )
     }
 
     object ScheduleUpdater : Update<Model, Event, Effect> {
         override fun update(model: Model, event: Event): Next<Model, Effect> = when (event) {
+            is Event.DisplaySchedule -> dispatch(
+                setOf(Effect.DisplaySchedule(event.group))
+            )
+            is Event.DeleteSchedule -> dispatch(
+                setOf(Effect.DeleteSchedule(event.group))
+            )
             is Event.DownloadSchedule -> dispatch(
                 if (model.groupInfo != null)
                     setOf(Effect.DownloadSchedule(model.groupInfo))
@@ -149,7 +161,10 @@ object ScheduleFeature {
                 )
             )
             is Event.NavigateToAddNewGroup -> dispatch(
-                setOf(Effect.OpenAddGroup)
+                setOf(Effect.OpenAddGroup(event.shouldDisplayBack))
+            )
+            ScheduleFeature.Event.DeleteSuccessful -> dispatch(
+                setOf()
             )
         }
     }
@@ -185,8 +200,21 @@ object ScheduleFeature {
                         )
                     }
             }
-            transformer(Effect.DisplaySchedule::class.java) {
-                repository.getSchedule()
+            transformer(Effect.DeleteSchedule::class.java) { (id) ->
+                if (id == repository.currentGroup) {
+                    repository.deleteCurrentSchedule(id)
+                        .toObservable()
+                        .map { group ->
+                            if (group == -1) ScheduleFeature.Event.NavigateToAddNewGroup(false)
+                            else ScheduleFeature.Event.DisplaySchedule(group)
+                        }
+                } else {
+                    repository.deleteSchedule(id)
+                        .toObservable<Event>().map { ScheduleFeature.Event.DeleteSuccessful }
+                }
+            }
+            transformer(Effect.DisplaySchedule::class.java) { (id) ->
+                repository.getSchedule(id)
                     .map<Event> { schedule ->
                         Event.ShowSchedule(
                             schedule,
@@ -209,8 +237,9 @@ object ScheduleFeature {
                 if (repository.shouldSwitchToDay)
                     view.switchToCurrentDay(dateInteractor.currentDay)
             }
-            action(Effect.OpenAddGroup::class.java) {
-                navigator.push(Screens.PickInstituteScreen(true))
+            consumer(Effect.OpenAddGroup::class.java) { (shouldShowBack) ->
+                if (shouldShowBack) navigator.push(Screens.PickInstituteScreen(true))
+                else navigator.replace(Screens.PickInstituteScreen(false))
             }
             action(Effect.OpenSettings::class.java) {
                 navigator.push(Screens.SettingsScreen)

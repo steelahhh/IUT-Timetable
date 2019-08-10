@@ -61,7 +61,7 @@ object Deps {
     const val appcompat = "androidx.appcompat:appcompat:1.0.2"
     const val androidxCore = "androidx.core:core-ktx:1.0.1"
     const val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
-    const val material = "com.google.android.material:material:1.1.0-alpha04"
+    const val material = "com.google.android.material:material:1.1.0-alpha09"
     const val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
 
     const val multidex = "com.android.support:multidex:1.0.3"
