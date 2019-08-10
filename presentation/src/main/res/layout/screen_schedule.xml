@@ -50,6 +50,7 @@
         android:textColor="@color/white"
         app:backgroundTint="?colorAccent"
         app:cornerRadius="@dimen/size_m"
+        app:iconTint="@color/backgroundLight"
         app:icon="@drawable/ic_pick_date"
         app:layout_constraintBottom_toTopOf="@id/toolbarContainer"
         app:layout_constraintLeft_toLeftOf="parent"
