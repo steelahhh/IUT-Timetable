@@ -1,8 +1,3 @@
-import org.gradle.api.JavaVersion
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.project
-
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -32,13 +27,11 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
-            isUseProguard = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+                        proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
         getByName("debug") {
             isMinifyEnabled = false
-            isUseProguard = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+                        proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
 }

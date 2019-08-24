@@ -13,7 +13,7 @@ import com.alefimenko.iuttimetable.data.local.Constants.ITEM_DOESNT_EXIST
 class Preferences(private val prefs: SharedPreferences) {
 
     var isNightMode: Boolean
-        get() = prefs.getBoolean(NIGHT_MODE, true)
+        get() = prefs.getBoolean(NIGHT_MODE, false)
         set(value) {
             prefs.edit().putBoolean(NIGHT_MODE, value).apply()
         }

@@ -1,8 +1,21 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
     kotlin("android.extensions")
+}
+
+fun getProperty(fileName: String, prop: String): Any? {
+    val propsFile = rootProject.file(fileName)
+    if (propsFile.exists()) {
+        val props = Properties()
+        props.load(FileInputStream(propsFile))
+        return props[prop]
+    }
+    return null
 }
 
 android {
@@ -14,6 +27,15 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    signingConfigs {
+        create("release") {
+            keyAlias = "${getProperty("local.properties", "key_alias")}"
+            keyPassword = "${getProperty("local.properties", "key_password")}"
+            storeFile = file("${getProperty("local.properties", "key_location")}")
+            storePassword = "${getProperty("local.properties", "store_password")}"
+        }
     }
 
     defaultConfig {
@@ -29,12 +51,11 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
-            isUseProguard = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
         }
         getByName("debug") {
             isMinifyEnabled = false
-            isUseProguard = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }

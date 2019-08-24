@@ -18,8 +18,8 @@ object Versions {
     const val minSdk = 19
     const val targetSdk = 28
     const val compileSdk = 28
-    const val appVersionCode = 3000
-    const val appVersionName = "2.2.0"
+    const val appVersionCode = 4200
+    const val appVersionName = "3.0.0"
 
     const val kotlin = "1.3.41"
     const val androidPlugin = "3.6.0-alpha05"

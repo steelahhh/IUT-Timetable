@@ -22,12 +22,10 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
-            isUseProguard = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
         getByName("debug") {
             isMinifyEnabled = false
-            isUseProguard = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
@@ -55,6 +53,6 @@ dependencies {
     api(Deps.rxKotlin)
     api(Deps.rxAndroid)
 
-    api(Deps.leakCanary)
+    api(Deps.leakSentry)
     debugApi(Deps.leakCanary)
 }
