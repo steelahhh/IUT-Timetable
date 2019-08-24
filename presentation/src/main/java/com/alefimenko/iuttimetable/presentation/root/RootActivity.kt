@@ -18,7 +18,7 @@ import org.koin.android.ext.android.inject
 class RootActivity : BaseActivity() {
     override val layoutId: Int = R.layout.activity_root
 
-    private val interactor: RootFeature by inject()
+    private val feature: RootFeature by inject()
     private val networkStatusReceiver: NetworkStatusReceiver by inject()
 
     private val container by bind<FrameLayout>(R.id.container)
@@ -26,14 +26,14 @@ class RootActivity : BaseActivity() {
     private lateinit var router: Router
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        interactor.updateTheme()
+        feature.updateTheme()
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
         router = Conductor.attachRouter(this, container, savedInstanceState)
-        interactor.bindNavigator(router)
+        feature.bindNavigator(router)
 
-        interactor.setRootScreen()
+        feature.setRootScreen()
     }
 
     @Suppress("DEPRECATION")
@@ -54,5 +54,10 @@ class RootActivity : BaseActivity() {
         if (!router.handleBack()) {
             super.onBackPressed()
         }
+    }
+
+    override fun onDestroy() {
+        feature.onDestroy()
+        super.onDestroy()
     }
 }

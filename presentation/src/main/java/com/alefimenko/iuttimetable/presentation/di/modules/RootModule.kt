@@ -1,6 +1,8 @@
 package com.alefimenko.iuttimetable.presentation.di.modules
 
+import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
 import com.alefimenko.iuttimetable.presentation.root.RootFeature
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 /*
@@ -9,6 +11,6 @@ import org.koin.dsl.module
 
 val rootModule = module {
     single {
-        RootFeature(get(), get())
+        RootFeature(get(), get(named(GroupsDao.TAG)), get())
     }
 }
