@@ -38,20 +38,10 @@ class PickInstituteFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog = MaterialDialog(requireContext()).apply {
-            title(R.string.pick_institute)
-        }
-        pickGroupBackButton.isGone = !args.isFromSchedule
-
-        formRadioGroup.setOnCheckedChangeListener { _, id ->
-            when (id) {
-                R.id.edu_form_ochny -> vm.selectForm(0)
-                R.id.edu_form_zaochny -> vm.selectForm(1)
-            }
-        }
-
-        nextButton.setOnClickListener { vm.goToGroups() }
+        setupViews()
     }
+
+    override fun onBackPressed() = vm.exit()
 
     override fun invalidate() = withState(vm, ::render)
 
@@ -90,6 +80,24 @@ class PickInstituteFragment : BaseFragment() {
         }
 
         formRadioGroup.changeEnabled(enabled = !isLoading)
+    }
+
+    private fun setupViews() {
+        dialog = MaterialDialog(requireContext()).apply {
+            title(R.string.pick_institute)
+        }
+        pickGroupBackButton.isGone = !args.isFromSchedule
+
+        pickGroupBackButton.setOnClickListener { vm.exit() }
+
+        nextButton.setOnClickListener { vm.goToGroups() }
+
+        formRadioGroup.setOnCheckedChangeListener { _, id ->
+            when (id) {
+                R.id.edu_form_ochny -> vm.selectForm(0)
+                R.id.edu_form_zaochny -> vm.selectForm(1)
+            }
+        }
     }
 
     companion object {

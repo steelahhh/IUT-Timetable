@@ -93,7 +93,7 @@ object GroupsFeature {
                     .startWith(Event.Loading)
             }
             consumer(Effect.OpenAddGroup::class.java) {
-                navigator.push(Screens.PickInstituteScreen(true))
+                navigator.push(Screens.PickInstituteScreenOld(true))
                 groupsView.dismissDialog()
             }
         }

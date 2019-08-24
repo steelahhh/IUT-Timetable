@@ -238,8 +238,8 @@ object ScheduleFeature {
                     view.switchToCurrentDay(dateInteractor.currentDay)
             }
             consumer(Effect.OpenAddGroup::class.java) { (shouldShowBack) ->
-                if (shouldShowBack) navigator.push(Screens.PickInstituteScreen(true))
-                else navigator.replace(Screens.PickInstituteScreen(false))
+                if (shouldShowBack) navigator.push(Screens.PickInstituteScreenOld(true))
+                else navigator.replace(Screens.PickInstituteScreenOld(false))
             }
             action(Effect.OpenSettings::class.java) {
                 navigator.push(Screens.SettingsScreen)

@@ -3,12 +3,16 @@ package com.alefimenko.iuttimetable.presentation.root
 import android.content.IntentFilter
 import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
-import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.alefimenko.iuttimetable.base.BaseActivity
+import com.alefimenko.iuttimetable.base.BaseFragment
 import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.presentation.R
-import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFragment
 import org.koin.android.ext.android.inject
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.android.support.SupportAppNavigator
+import ru.terrakok.cicerone.commands.Command
 
 /*
  * Created by Alexander Efimenko on 22/11/18.
@@ -19,8 +23,21 @@ class RootActivity : BaseActivity() {
 
     private val feature: RootFeature by inject()
     private val networkStatusReceiver: NetworkStatusReceiver by inject()
+    private val navigatorHolder: NavigatorHolder by inject()
 
-    private val container by bind<FrameLayout>(R.id.container)
+    private val currentFragment: BaseFragment?
+        get() = supportFragmentManager.findFragmentById(R.id.container) as? BaseFragment
+
+    private val navigator =
+        object : SupportAppNavigator(this, supportFragmentManager, R.id.container) {
+            override fun setupFragmentTransaction(
+                command: Command?,
+                currentFragment: Fragment?,
+                nextFragment: Fragment?,
+                fragmentTransaction: FragmentTransaction?
+            ) {
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         feature.updateTheme()
@@ -28,14 +45,11 @@ class RootActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         feature.setRootScreen()
+    }
 
-        supportFragmentManager.beginTransaction()
-            .replace(container.id, PickInstituteFragment.newInstance(
-                PickInstituteFragment.Args(
-                    false
-                )
-            ))
-            .commitNow()
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        navigatorHolder.setNavigator(navigator)
     }
 
     @Suppress("DEPRECATION")
@@ -47,7 +61,10 @@ class RootActivity : BaseActivity() {
         )
     }
 
+    override fun onBackPressed() = currentFragment?.onBackPressed() ?: super.onBackPressed()
+
     override fun onPause() {
+        navigatorHolder.removeNavigator()
         unregisterReceiver(networkStatusReceiver)
         super.onPause()
     }

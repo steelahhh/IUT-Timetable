@@ -5,8 +5,10 @@ import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
 import com.alefimenko.iuttimetable.presentation.BuildConfig
+import com.alefimenko.iuttimetable.presentation.di.Screens
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import ru.terrakok.cicerone.Router
 
 /*
  * Created by Alexander Efimenko on 2019-04-05.
@@ -14,7 +16,8 @@ import io.reactivex.rxkotlin.plusAssign
 
 class RootFeature(
     private val sharedPreferences: Preferences,
-    private val groupsDao: GroupsDao
+    private val groupsDao: GroupsDao,
+    private val router: Router
 ) {
 
     private val cd = CompositeDisposable()
@@ -25,10 +28,11 @@ class RootFeature(
         cd += groupsDao.groups
             .ioMainSchedulers()
             .subscribe({
+                router.newRootScreen(Screens.PickInstituteScreen())
                 // val hasNoGroup =
                 //     groups.isEmpty() || sharedPreferences.currentGroup == ITEM_DOESNT_EXIST
                 // val root = when {
-                //     hasNoGroup -> Screens.PickInstituteScreen()
+                //     hasNoGroup -> Screens.PickInstituteScreenOld()
                 //     else -> Screens.ScheduleScreen()
                 // }
                 // navigator.setRoot(root)

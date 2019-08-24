@@ -49,7 +49,8 @@ dependencies {
         Deps.FastAdapter.drag,
         Deps.FastAdapter.scroll,
         Deps.FastAdapter.swipe,
-        Deps.FastAdapter.utils
+        Deps.FastAdapter.utils,
+        Deps.cicerone
     ).forEach { dependency ->
         implementation(dependency)
     }

@@ -6,7 +6,6 @@ import com.airbnb.mvrx.ViewModelContext
 import com.alefimenko.iuttimetable.common.MvRxViewModel
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.presentation.di.Scopes
-import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupRepository
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
 import org.koin.core.KoinComponent
 import org.koin.core.qualifier.named
@@ -16,7 +15,7 @@ import org.koin.core.qualifier.named
  */
 
 class PickInstituteViewModel(
-    private val repository: PickGroupRepository,
+    private val interactor: PickInstituteInteractor,
     initialState: PickInstituteState
 ) : MvRxViewModel<PickInstituteState>(initialState) {
 
@@ -27,7 +26,7 @@ class PickInstituteViewModel(
     fun loadInstitutes() {
         setState { copy(isLoading = true, isError = false) }
 
-        repository.getInstitutes()
+        interactor.institutes
             .ioMainSchedulers()
             .execute {
                 copy(
@@ -43,7 +42,11 @@ class PickInstituteViewModel(
     fun selectForm(form: Int) = setState { copy(form = form) }
 
     fun goToGroups() = withState {
+        post {
+        }
     }
+
+    fun exit() = interactor.exit()
 
     companion object : MvRxViewModelFactory<PickInstituteViewModel, PickInstituteState>,
         KoinComponent {

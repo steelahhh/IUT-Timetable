@@ -71,6 +71,8 @@ object Deps {
     const val lifecycleReactive = "androidx.lifecycle:lifecycle-reactivestreams:${Versions.aac}"
     const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.aac}"
 
+    const val cicerone = "ru.terrakok.cicerone:cicerone:5.0.0"
+
     const val rxRelay = "com.jakewharton.rxrelay2:rxrelay:${Versions.rxRelay}"
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
