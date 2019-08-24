@@ -37,6 +37,8 @@ object Versions {
 
     const val leakCanary = "2.0-alpha-2"
 
+    const val mvRx = "1.0.2"
+
     const val klock = "1.4.0"
 
     const val mobius = "1.2.2"
@@ -57,8 +59,6 @@ object Versions {
 }
 
 object Deps {
-    val vers = Versions
-
     const val appcompat = "androidx.appcompat:appcompat:1.0.2"
     const val androidxCore = "androidx.core:core-ktx:1.0.2"
     const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0-beta02"
@@ -67,106 +67,86 @@ object Deps {
 
     const val multidex = "com.android.support:multidex:1.0.3"
 
-    const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${vers.aac}"
-    const val lifecycleReactive = "androidx.lifecycle:lifecycle-reactivestreams:${vers.aac}"
-    const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${vers.aac}"
+    const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.aac}"
+    const val lifecycleReactive = "androidx.lifecycle:lifecycle-reactivestreams:${Versions.aac}"
+    const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.aac}"
 
-    const val rxRelay = "com.jakewharton.rxrelay2:rxrelay:${vers.rxRelay}"
-    const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${vers.rxKotlin}"
-    const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${vers.rxAndroid}"
+    const val rxRelay = "com.jakewharton.rxrelay2:rxrelay:${Versions.rxRelay}"
+    const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
+    const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
 
-    const val room = "androidx.room:room-runtime:${vers.room}"
-    const val roomCompiler = "androidx.room:room-compiler:${vers.room}"
-    const val roomRxJava = "androidx.room:room-rxjava2:${vers.room}"
-
-    val klock = Klock
+    const val room = "androidx.room:room-runtime:${Versions.room}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    const val roomRxJava = "androidx.room:room-rxjava2:${Versions.room}"
 
     object Klock {
-        const val core = "com.soywiz:klock-metadata:${vers.klock}"
-        const val jvm = "com.soywiz:klock-jvm:${vers.klock}"
-        const val android = "com.soywiz:klock-android:${vers.klock}"
+        const val core = "com.soywiz:klock-metadata:${Versions.klock}"
+        const val jvm = "com.soywiz:klock-jvm:${Versions.klock}"
+        const val android = "com.soywiz:klock-android:${Versions.klock}"
     }
-
-    val fastAdapter = FastAdapter
 
     object FastAdapter {
-        const val diff = "com.mikepenz:fastadapter-extensions-diff:${vers.fastadapter}"
-        const val drag = "com.mikepenz:fastadapter-extensions-drag:${vers.fastadapter}"
-        const val scroll = "com.mikepenz:fastadapter-extensions-scroll:${vers.fastadapter}"
-        const val swipe = "com.mikepenz:fastadapter-extensions-swipe:${vers.fastadapter}"
-        const val ui = "com.mikepenz:fastadapter-extensions-ui:${vers.fastadapter}"
-        const val utils = "com.mikepenz:fastadapter-extensions-utils:${vers.fastadapter}"
+        const val diff = "com.mikepenz:fastadapter-extensions-diff:${Versions.fastadapter}"
+        const val drag = "com.mikepenz:fastadapter-extensions-drag:${Versions.fastadapter}"
+        const val scroll = "com.mikepenz:fastadapter-extensions-scroll:${Versions.fastadapter}"
+        const val swipe = "com.mikepenz:fastadapter-extensions-swipe:${Versions.fastadapter}"
+        const val ui = "com.mikepenz:fastadapter-extensions-ui:${Versions.fastadapter}"
+        const val utils = "com.mikepenz:fastadapter-extensions-utils:${Versions.fastadapter}"
     }
-
-    val groupie = Groupie
 
     object Groupie {
-        const val core = "com.xwray:groupie:${vers.groupie}"
-        const val ktx = "com.xwray:groupie-kotlin-android-extensions:${vers.groupie}"
+        const val core = "com.xwray:groupie:${Versions.groupie}"
+        const val ktx = "com.xwray:groupie-kotlin-android-extensions:${Versions.groupie}"
     }
 
-    const val retrofit = "com.squareup.retrofit2:retrofit:${vers.retrofit}"
-    const val retrofitGson = "com.squareup.retrofit2:converter-gson:${vers.retrofit}"
-    const val retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava2:${vers.retrofit}"
-    const val gson = "com.google.code.gson:gson:${vers.gson}"
+    object Retrofit {
+        const val core = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+        const val gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+        const val rxJava = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
+    }
 
-    const val jsoup = "org.jsoup:jsoup:${vers.jsoup}"
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
 
-    val koin = Koin
+    const val jsoup = "org.jsoup:jsoup:${Versions.jsoup}"
 
     object Koin {
-        const val core = "org.koin:koin-core:${vers.koin}"
-        const val ext = "org.koin:koin-core-ext:${vers.koin}"
-        const val test = "org.koin:koin-test:${vers.koin}"
-        const val android = "org.koin:koin-android:${vers.koin}"
-        const val androidScope = "org.koin:koin-androidx-scope:${vers.koin}"
+        const val core = "org.koin:koin-core:${Versions.koin}"
+        const val ext = "org.koin:koin-core-ext:${Versions.koin}"
+        const val test = "org.koin:koin-test:${Versions.koin}"
+        const val android = "org.koin:koin-android:${Versions.koin}"
+        const val androidScope = "org.koin:koin-androidx-scope:${Versions.koin}"
     }
 
-    val mobius = Mobius
+    const val mvRx = "com.airbnb.android:mvrx:${Versions.mvRx}"
 
     object Mobius {
-        const val core = "com.spotify.mobius:mobius-core:${vers.mobius}"
-        const val test = "com.spotify.mobius:mobius-test:${vers.mobius}"
-        const val rx = "com.spotify.mobius:mobius-rx2:${vers.mobius}"
-        const val android = "com.spotify.mobius:mobius-android:${vers.mobius}"
-        const val extras = "com.spotify.mobius:mobius-extras:${vers.mobius}"
+        const val core = "com.spotify.mobius:mobius-core:${Versions.mobius}"
+        const val test = "com.spotify.mobius:mobius-test:${Versions.mobius}"
+        const val rx = "com.spotify.mobius:mobius-rx2:${Versions.mobius}"
+        const val android = "com.spotify.mobius:mobius-android:${Versions.mobius}"
+        const val extras = "com.spotify.mobius:mobius-extras:${Versions.mobius}"
     }
-
-    val rxBinding = RxBinding
 
     object RxBinding {
-        const val core = "com.jakewharton.rxbinding3:rxbinding-core:${vers.rxBinding}"
-        const val appCompat = "com.jakewharton.rxbinding3:rxbinding-appcompat:${vers.rxBinding}"
-        const val leanBack = "com.jakewharton.rxbinding3:rxbinding-leanback:${vers.rxBinding}"
-        const val recycler = "com.jakewharton.rxbinding3:rxbinding-recyclerview:${vers.rxBinding}"
-        const val viewPager = "com.jakewharton.rxbinding3:rxbinding-viewpager:${vers.rxBinding}"
-        const val material = "com.jakewharton.rxbinding3:rxbinding-material:${vers.rxBinding}"
+        const val core = "com.jakewharton.rxbinding3:rxbinding-core:${Versions.rxBinding}"
+        const val appCompat = "com.jakewharton.rxbinding3:rxbinding-appcompat:${Versions.rxBinding}"
+        const val leanBack = "com.jakewharton.rxbinding3:rxbinding-leanback:${Versions.rxBinding}"
+        const val recycler = "com.jakewharton.rxbinding3:rxbinding-recyclerview:${Versions.rxBinding}"
+        const val viewPager = "com.jakewharton.rxbinding3:rxbinding-viewpager:${Versions.rxBinding}"
+        const val material = "com.jakewharton.rxbinding3:rxbinding-material:${Versions.rxBinding}"
     }
-
-    val mviCore = MviCore
-
-    object MviCore {
-        const val core = "com.github.badoo.mvicore:mvicore:${vers.mviCore}"
-        const val android = "com.github.badoo.mvicore:mvicore-android:${vers.mviCore}"
-    }
-
-    val conductor = Conductor
 
     object Conductor {
-        const val core = "com.bluelinelabs:conductor:${vers.conductor}"
-        const val support = "com.bluelinelabs:conductor-support:${vers.conductor}"
-        const val rx2 = "com.bluelinelabs:conductor-rxlifecycle2:${vers.conductor}"
-        const val lifecycle = "com.bluelinelabs:conductor-archlifecycle:${vers.conductor}"
+        const val core = "com.bluelinelabs:conductor:${Versions.conductor}"
+        const val support = "com.bluelinelabs:conductor-support:${Versions.conductor}"
+        const val rx2 = "com.bluelinelabs:conductor-rxlifecycle2:${Versions.conductor}"
+        const val lifecycle = "com.bluelinelabs:conductor-archlifecycle:${Versions.conductor}"
     }
-
-    val navigation = Navigation
 
     object Navigation {
         const val fragment = "android.arch.navigation:navigation-fragment-ktx:1.0.0-rc02"
         const val ui = "android.arch.navigation:navigation-ui-ktx:1.0.0-rc02"
     }
-
-    val firebase = Firebase
 
     object Firebase {
         const val core = "com.google.firebase:firebase-core:17.1.0"
@@ -176,10 +156,10 @@ object Deps {
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
     const val leakSentry = "com.squareup.leakcanary:leaksentry:${Versions.leakCanary}"
 
-    const val timber = "com.jakewharton.timber:timber:${vers.timber}"
-    const val materialDialogs = "com.afollestad.material-dialogs:core:${vers.materialDialogs}"
+    const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+    const val materialDialogs = "com.afollestad.material-dialogs:core:${Versions.materialDialogs}"
 
-    const val junit = "junit:junit:${vers.junit}"
-    const val testRunner = "androidx.test:runner:${vers.testRunner}"
-    const val espresso = "androidx.test.espresso:espresso-core:${vers.espresso}"
+    const val junit = "junit:junit:${Versions.junit}"
+    const val testRunner = "androidx.test:runner:${Versions.testRunner}"
+    const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
 }

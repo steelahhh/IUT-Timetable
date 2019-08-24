@@ -34,19 +34,21 @@ android {
 dependencies {
     api(kotlin("stdlib-jdk7", Versions.kotlin))
 
-    api(Deps.koin.core)
-    api(Deps.koin.ext)
-    api(Deps.koin.android)
-    api(Deps.koin.androidScope)
+    api(Deps.mvRx)
 
-    api(Deps.mobius.core)
-    api(Deps.mobius.rx)
-    api(Deps.mobius.extras)
-    api(Deps.mobius.android)
+    api(Deps.Koin.core)
+    api(Deps.Koin.ext)
+    api(Deps.Koin.android)
+    api(Deps.Koin.androidScope)
+
+    api(Deps.Mobius.core)
+    api(Deps.Mobius.rx)
+    api(Deps.Mobius.extras)
+    api(Deps.Mobius.android)
     api(Deps.rxRelay)
 
-    api(Deps.klock.core)
-    api(Deps.klock.android)
+    api(Deps.Klock.core)
+    api(Deps.Klock.android)
 
     api(Deps.timber)
 

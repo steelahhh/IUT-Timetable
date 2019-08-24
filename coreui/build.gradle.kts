@@ -45,12 +45,12 @@ dependencies {
     api(Deps.material)
     api(Deps.materialDialogs)
 
-    api(Deps.conductor.core)
-    api(Deps.conductor.rx2)
-    api(Deps.conductor.support)
-    api(Deps.conductor.lifecycle)
+    api(Deps.Conductor.core)
+    api(Deps.Conductor.rx2)
+    api(Deps.Conductor.support)
+    api(Deps.Conductor.lifecycle)
 
-    api(Deps.rxBinding.core)
-    api(Deps.rxBinding.material)
-    api(Deps.rxBinding.appCompat)
+    api(Deps.RxBinding.core)
+    api(Deps.RxBinding.material)
+    api(Deps.RxBinding.appCompat)
 }

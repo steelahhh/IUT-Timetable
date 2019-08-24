@@ -27,11 +27,11 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
-                        proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
         getByName("debug") {
             isMinifyEnabled = false
-                        proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
 }
@@ -45,14 +45,14 @@ dependencies {
 
     api(Deps.gson)
 
-    api(Deps.retrofit)
-    api(Deps.retrofitGson)
-    api(Deps.retrofitRxJava)
+    api(Deps.Retrofit.core)
+    api(Deps.Retrofit.gson)
+    api(Deps.Retrofit.rxJava)
 
     api(Deps.jsoup)
 
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.espresso)
-    testImplementation(Deps.koin.test)
+    testImplementation(Deps.Koin.test)
 }

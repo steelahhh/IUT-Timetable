@@ -43,18 +43,18 @@ dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.navigation))
 
-    implementation(Deps.fastAdapter.ui)
-    implementation(Deps.fastAdapter.diff)
-    implementation(Deps.fastAdapter.drag)
-    implementation(Deps.fastAdapter.scroll)
-    implementation(Deps.fastAdapter.swipe)
-    implementation(Deps.fastAdapter.utils)
+    implementation(Deps.FastAdapter.ui)
+    implementation(Deps.FastAdapter.diff)
+    implementation(Deps.FastAdapter.drag)
+    implementation(Deps.FastAdapter.scroll)
+    implementation(Deps.FastAdapter.swipe)
+    implementation(Deps.FastAdapter.utils)
 
-    implementation(Deps.groupie.core)
-    implementation(Deps.groupie.ktx)
+    implementation(Deps.Groupie.core)
+    implementation(Deps.Groupie.ktx)
 
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.espresso)
-    testImplementation(Deps.koin.test)
+    testImplementation(Deps.Koin.test)
 }

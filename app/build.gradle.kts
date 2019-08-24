@@ -82,8 +82,8 @@ dependencies {
     implementation(project(Modules.navigation))
     implementation(project(Modules.presentation))
     implementation(Deps.multidex)
-    implementation(Deps.firebase.core)
-    implementation(Deps.firebase.crashlytics)
+    implementation(Deps.Firebase.core)
+    implementation(Deps.Firebase.crashlytics)
 }
 
 detekt {
