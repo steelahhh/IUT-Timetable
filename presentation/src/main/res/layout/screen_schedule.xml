@@ -51,7 +51,7 @@
         android:textColor="@color/white"
         app:backgroundTint="?colorAccent"
         app:elevation="0dp"
-        app:cornerRadius="@dimen/size_m"
+        app:cornerRadius="@dimen/corner_radius_xh"
         app:iconTint="@color/backgroundLight"
         app:icon="@drawable/ic_pick_date"
         app:layout_constraintBottom_toTopOf="@id/toolbarContainer"

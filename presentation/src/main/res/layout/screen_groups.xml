@@ -53,7 +53,7 @@
         android:textAppearance="@style/AppText"
         android:textColor="@color/white"
         app:backgroundTint="?colorAccent"
-        app:cornerRadius="@dimen/spacing_32"
+        app:cornerRadius="@dimen/corner_radius_xxh"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/groupsRecycler" />
 </androidx.constraintlayout.widget.ConstraintLayout>
