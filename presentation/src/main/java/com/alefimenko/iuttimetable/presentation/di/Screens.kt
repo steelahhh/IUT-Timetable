@@ -3,7 +3,6 @@ package com.alefimenko.iuttimetable.presentation.di
 import com.alefimenko.iuttimetable.navigation.Screen
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupController
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteController
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleController
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
 import com.alefimenko.iuttimetable.presentation.settings.SettingsController
@@ -23,7 +22,7 @@ object Screens {
     data class PickInstituteScreen(
         val isFromSchedule: Boolean = false
     ) : Screen() {
-        override fun create() = PickInstituteController.newInstance(isFromSchedule)
+        override fun create() = SettingsController()
     }
 
     object SettingsScreen : Screen() {

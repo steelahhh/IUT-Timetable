@@ -11,6 +11,6 @@ import org.koin.dsl.module
 
 val rootModule = module {
     single {
-        RootFeature(get(), get(named(GroupsDao.TAG)), get())
+        RootFeature(get(), get(named(GroupsDao.TAG)))
     }
 }

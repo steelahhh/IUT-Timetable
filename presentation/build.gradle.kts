@@ -43,12 +43,16 @@ dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.navigation))
 
-    implementation(Deps.FastAdapter.ui)
-    implementation(Deps.FastAdapter.diff)
-    implementation(Deps.FastAdapter.drag)
-    implementation(Deps.FastAdapter.scroll)
-    implementation(Deps.FastAdapter.swipe)
-    implementation(Deps.FastAdapter.utils)
+    listOf(
+        Deps.FastAdapter.ui,
+        Deps.FastAdapter.diff,
+        Deps.FastAdapter.drag,
+        Deps.FastAdapter.scroll,
+        Deps.FastAdapter.swipe,
+        Deps.FastAdapter.utils
+    ).forEach { dependency ->
+        implementation(dependency)
+    }
 
     implementation(Deps.Groupie.core)
     implementation(Deps.Groupie.ktx)

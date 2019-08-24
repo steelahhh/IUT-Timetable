@@ -7,8 +7,7 @@ import android.widget.FrameLayout
 import com.alefimenko.iuttimetable.base.BaseActivity
 import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.presentation.R
-import com.bluelinelabs.conductor.Conductor
-import com.bluelinelabs.conductor.Router
+import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFragment
 import org.koin.android.ext.android.inject
 
 /*
@@ -23,17 +22,20 @@ class RootActivity : BaseActivity() {
 
     private val container by bind<FrameLayout>(R.id.container)
 
-    private lateinit var router: Router
-
     override fun onCreate(savedInstanceState: Bundle?) {
         feature.updateTheme()
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
-        router = Conductor.attachRouter(this, container, savedInstanceState)
-        feature.bindNavigator(router)
-
         feature.setRootScreen()
+
+        supportFragmentManager.beginTransaction()
+            .replace(container.id, PickInstituteFragment.newInstance(
+                PickInstituteFragment.Args(
+                    false
+                )
+            ))
+            .commitNow()
     }
 
     @Suppress("DEPRECATION")
@@ -48,12 +50,6 @@ class RootActivity : BaseActivity() {
     override fun onPause() {
         unregisterReceiver(networkStatusReceiver)
         super.onPause()
-    }
-
-    override fun onBackPressed() {
-        if (!router.handleBack()) {
-            super.onBackPressed()
-        }
     }
 
     override fun onDestroy() {
