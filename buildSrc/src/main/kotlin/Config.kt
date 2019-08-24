@@ -53,6 +53,7 @@ object Versions {
     const val junit = "4.12"
     const val testRunner = "1.1.0"
     const val espresso = "3.1.0"
+    const val googleServices = "4.3.1"
 }
 
 object Deps {
@@ -163,6 +164,13 @@ object Deps {
     object Navigation {
         const val fragment = "android.arch.navigation:navigation-fragment-ktx:1.0.0-rc02"
         const val ui = "android.arch.navigation:navigation-ui-ktx:1.0.0-rc02"
+    }
+
+    val firebase = Firebase
+
+    object Firebase {
+        const val core = "com.google.firebase:firebase-core:17.1.0"
+        const val crashlytics = "com.crashlytics.sdk.android:crashlytics:2.10.1"
     }
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"

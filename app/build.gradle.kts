@@ -6,6 +6,8 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     kotlin("android.extensions")
+    id("com.google.gms.google-services")
+    id("io.fabric")
 }
 
 fun getProperty(fileName: String, prop: String): Any? {
@@ -80,6 +82,8 @@ dependencies {
     implementation(project(Modules.navigation))
     implementation(project(Modules.presentation))
     implementation(Deps.multidex)
+    implementation(Deps.firebase.core)
+    implementation(Deps.firebase.crashlytics)
 }
 
 detekt {

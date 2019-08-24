@@ -3,12 +3,15 @@ buildscript {
         google()
         jcenter()
         maven(url = "https://plugins.gradle.org/m2/")
+        maven(url = "https://maven.fabric.io/public")
     }
 
     dependencies {
         classpath("com.android.tools.build:gradle:${Versions.androidPlugin}")
         classpath(kotlin("gradle-plugin", version = Versions.kotlin))
-        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0-RC13")
+        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0")
+        classpath("com.google.gms:google-services:${Versions.googleServices}")
+        classpath("io.fabric.tools:gradle:1.31.0")
     }
 }
 

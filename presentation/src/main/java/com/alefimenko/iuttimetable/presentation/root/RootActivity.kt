@@ -4,11 +4,11 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
 import android.widget.FrameLayout
+import com.alefimenko.iuttimetable.base.BaseActivity
 import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
+import com.alefimenko.iuttimetable.presentation.R
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
-import com.alefimenko.iuttimetable.base.BaseActivity
-import com.alefimenko.iuttimetable.presentation.R
 import org.koin.android.ext.android.inject
 
 /*
