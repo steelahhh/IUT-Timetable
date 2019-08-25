@@ -2,6 +2,7 @@ package com.alefimenko.iuttimetable.presentation.di.modules
 
 import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
 import com.alefimenko.iuttimetable.presentation.di.Scopes.PICK_GROUP
+import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupInteractor
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupRepository
 import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteInteractor
 import org.koin.core.qualifier.named
@@ -17,7 +18,10 @@ val pickGroupModule = module {
             PickGroupRepository(get(), get(), get(), get(named(SchedulesDao.TAG)), get())
         }
         scoped {
-            PickInstituteInteractor(get(), get())
+            PickInstituteInteractor(get(), get(), get())
+        }
+        scoped {
+            PickGroupInteractor(get(), get())
         }
     }
 }

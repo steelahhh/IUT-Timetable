@@ -40,8 +40,8 @@ class RootActivity : BaseActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        feature.updateTheme()
         setTheme(R.style.AppTheme)
+        feature.updateTheme()
         super.onCreate(savedInstanceState)
 
         feature.setRootScreen()

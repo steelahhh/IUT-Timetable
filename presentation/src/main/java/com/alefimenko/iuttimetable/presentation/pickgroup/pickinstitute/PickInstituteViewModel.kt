@@ -1,6 +1,7 @@
 package com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute
 
 import com.airbnb.mvrx.Fail
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
 import com.alefimenko.iuttimetable.common.MvRxViewModel
@@ -31,7 +32,7 @@ class PickInstituteViewModel(
             .execute {
                 copy(
                     institutes = it() ?: listOf(),
-                    isLoading = false,
+                    isLoading = it is Loading,
                     isError = it is Fail
                 )
             }
@@ -41,9 +42,8 @@ class PickInstituteViewModel(
 
     fun selectForm(form: Int) = setState { copy(form = form) }
 
-    fun goToGroups() = withState {
-        post {
-        }
+    fun goToGroups() = withState { state ->
+        interactor.goToGroups(state.form, state.institute!!)
     }
 
     fun exit() = interactor.exit()
@@ -59,7 +59,7 @@ class PickInstituteViewModel(
                     Scopes.PICK_GROUP,
                     named(Scopes.PICK_GROUP)
                 ).get(),
-                PickInstituteState()
+                state
             )
         }
     }

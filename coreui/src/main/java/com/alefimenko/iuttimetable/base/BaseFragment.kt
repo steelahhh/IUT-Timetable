@@ -1,5 +1,7 @@
 package com.alefimenko.iuttimetable.base
 
+import android.os.Handler
+import android.os.Looper
 import com.airbnb.mvrx.BaseMvRxFragment
 
 /*
@@ -7,5 +9,11 @@ import com.airbnb.mvrx.BaseMvRxFragment
  */
 
 abstract class BaseFragment : BaseMvRxFragment() {
+    private val handler = Handler(Looper.getMainLooper())
+
     open fun onBackPressed() = Unit
+
+    fun post(action: () -> Unit) {
+        handler.post(action)
+    }
 }

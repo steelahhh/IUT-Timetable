@@ -31,16 +31,12 @@ class PickGroupRepository(
     private val lruCache: LruCache<String, List<InstituteUi>> = LruCache(2 * 1024 * 1024)
 
     fun getGroups(form: Int, instituteId: Int): Observable<List<GroupPreviewUi>> {
-        return if (networkStatusReceiver.isNetworkAvailable()) {
-            scheduleService.fetchGroups(form.toFormPath(), instituteId)
-                .toObservable()
-                .ioMainSchedulers()
-                .mapList { group ->
-                    group.toGroupUi()
-                }
-        } else {
-            Observable.error(Exceptions.NoNetworkException())
-        }
+        return scheduleService.fetchGroups(form.toFormPath(), instituteId)
+            .toObservable()
+            .ioMainSchedulers()
+            .mapList { group ->
+                group.toGroupUi()
+            }
     }
 
     fun getInstitutes(): Observable<List<InstituteUi>> {

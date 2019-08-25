@@ -28,7 +28,7 @@ class RootFeature(
         cd += groupsDao.groups
             .ioMainSchedulers()
             .subscribe({
-                router.newRootScreen(Screens.PickInstituteScreen())
+                router.replaceScreen(Screens.PickInstituteScreen())
                 // val hasNoGroup =
                 //     groups.isEmpty() || sharedPreferences.currentGroup == ITEM_DOESNT_EXIST
                 // val root = when {

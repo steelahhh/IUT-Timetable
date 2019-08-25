@@ -2,7 +2,7 @@ package com.alefimenko.iuttimetable.presentation.di
 
 import androidx.fragment.app.Fragment
 import com.alefimenko.iuttimetable.navigation.Screen
-import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupController
+import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFragment
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFragment
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleController
@@ -24,8 +24,9 @@ object Screens {
     data class PickGroupScreen(
         private val form: Int,
         private val institute: InstituteUi
-    ) : Screen() {
-        override fun create() = PickGroupController.newInstance(form, institute)
+    ) : SupportAppScreen() {
+        override fun getFragment() =
+            PickGroupFragment.newInstance(PickGroupFragment.Args(form, institute))
     }
 
     data class PickInstituteScreenOld(
