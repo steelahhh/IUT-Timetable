@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.airbnb.mvrx.BaseMvRxActivity
 import com.alefimenko.iuttimetable.coreui.R
 import com.alefimenko.iuttimetable.createBinder
 
@@ -16,7 +16,7 @@ import com.alefimenko.iuttimetable.createBinder
  */
 
 @SuppressLint("Registered")
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : BaseMvRxActivity() {
     protected abstract val layoutId: Int
 
     protected val bind = createBinder()

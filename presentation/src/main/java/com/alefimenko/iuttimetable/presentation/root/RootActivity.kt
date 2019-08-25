@@ -5,9 +5,9 @@ import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.airbnb.mvrx.viewModel
 import com.alefimenko.iuttimetable.base.BaseActivity
 import com.alefimenko.iuttimetable.base.BaseFragment
-import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.presentation.R
 import org.koin.android.ext.android.inject
 import ru.terrakok.cicerone.NavigatorHolder
@@ -21,8 +21,7 @@ import ru.terrakok.cicerone.commands.Command
 class RootActivity : BaseActivity() {
     override val layoutId: Int = R.layout.activity_root
 
-    private val feature: RootFeature by inject()
-    private val networkStatusReceiver: NetworkStatusReceiver by inject()
+    private val vm by viewModel(RootViewModel::class)
     private val navigatorHolder: NavigatorHolder by inject()
 
     private val currentFragment: BaseFragment?
@@ -41,10 +40,10 @@ class RootActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
-        feature.updateTheme()
+        vm.updateTheme()
         super.onCreate(savedInstanceState)
 
-        feature.setRootScreen()
+        vm.setRootScreen()
     }
 
     override fun onResumeFragments() {
@@ -56,7 +55,7 @@ class RootActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         registerReceiver(
-            networkStatusReceiver,
+            vm.networkStatusReceiver,
             IntentFilter(CONNECTIVITY_ACTION)
         )
     }
@@ -65,12 +64,7 @@ class RootActivity : BaseActivity() {
 
     override fun onPause() {
         navigatorHolder.removeNavigator()
-        unregisterReceiver(networkStatusReceiver)
+        unregisterReceiver(vm.networkStatusReceiver)
         super.onPause()
-    }
-
-    override fun onDestroy() {
-        feature.onDestroy()
-        super.onDestroy()
     }
 }

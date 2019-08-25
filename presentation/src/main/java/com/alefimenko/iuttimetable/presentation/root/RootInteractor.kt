@@ -14,7 +14,7 @@ import ru.terrakok.cicerone.Router
  * Created by Alexander Efimenko on 2019-04-05.
  */
 
-class RootFeature(
+class RootInteractor(
     private val sharedPreferences: Preferences,
     private val groupsDao: GroupsDao,
     private val router: Router
