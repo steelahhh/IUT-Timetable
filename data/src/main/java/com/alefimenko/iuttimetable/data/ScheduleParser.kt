@@ -175,7 +175,7 @@ class ScheduleParser {
                 .filter { it.length > 3 }
 
             val teacher = nameMatches.firstOrNull()
-                ?.takeIf { !hasVacancy } ?: vacancy
+                ?.takeIf { !hasVacancy } ?: VACANCY
 
             val idx = try {
                 toLowerCase().indexOf(teacher.toLowerCase())
@@ -192,7 +192,7 @@ class ScheduleParser {
         }
 
     private val String.hasVacancy: Boolean
-        get() = toLowerCase().contains(vacancy.toRegex())
+        get() = toLowerCase().contains(VACANCY.toRegex())
 
     private val Int.innerGroup: String
         get() = if (this != 0) {
@@ -205,6 +205,6 @@ class ScheduleParser {
         const val EMPTY_ENTRY = "0"
         const val SPACE = ' '
         const val AMBIGUOUS_SPACE = 160.toChar()
-        const val vacancy = "вакансия"
+        const val VACANCY = "вакансия"
     }
 }
