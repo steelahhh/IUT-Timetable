@@ -1,5 +1,6 @@
 package com.alefimenko.iuttimetable.data
 
+import android.annotation.SuppressLint
 import com.alefimenko.iuttimetable.data.remote.model.ClassEntry
 import com.alefimenko.iuttimetable.data.remote.model.Time
 import com.alefimenko.iuttimetable.data.remote.model.WeekSchedule
@@ -12,6 +13,7 @@ import org.jsoup.select.Elements
  * Created by Alexander Efimenko on 2019-01-16.
  */
 
+@SuppressLint("DefaultLocale")
 class ScheduleParser {
     private var _doc: Document? = null
 
@@ -54,13 +56,10 @@ class ScheduleParser {
                 if (!entry.hasMultipleClasses) {
                     acc.add(
                         ClassEntry(
-                            subject = entry.classInfo.first,
-                            teacher = entry.classInfo.second,
+                            subject = entry.subjectTeacher.first,
+                            teacher = entry.subjectTeacher.second,
                             classType = entry.classType,
-                            time = Time(
-                                start = time[0],
-                                finish = time[1]
-                            ),
+                            time = Time(start = time[0], finish = time[1]),
                             location = entry.location,
                             innerGroup = 0.innerGroup,
                             date = document.getDate(week, day)
@@ -75,13 +74,10 @@ class ScheduleParser {
                         }
                         acc.add(
                             ClassEntry(
-                                subject = cell.classInfo.first,
-                                teacher = cell.classInfo.second,
+                                subject = cell.subjectTeacher.first,
+                                teacher = cell.subjectTeacher.second,
                                 classType = cell.classType,
-                                time = Time(
-                                    start = time[0],
-                                    finish = time[1]
-                                ),
+                                time = Time(start = time[0], finish = time[1]),
                                 location = cell.location,
                                 innerGroup = (idx + 1).innerGroup,
                                 date = document.getDate(week, day)
@@ -110,7 +106,7 @@ class ScheduleParser {
             if (firstLetter.matches("[0-9]".toRegex())) {
                 "$title неделя"
             } else {
-                "${firstLetter.toUpperCase()}${title.substring(1)}"
+                title.capitalize()
             }
         }
 
@@ -160,46 +156,43 @@ class ScheduleParser {
 
     private val String.classType: String
         get() = when {
-            contains("(пр)".toRegex()) -> "прак"
-            contains("(л)".toRegex()) -> "лек"
-            contains("(лаб)".toRegex()) -> "лаб"
-            contains("(зач)".toRegex()) -> "зач"
-            contains("(экз)".toRegex()) -> "экз"
-            contains("(ул)".toRegex()) -> "ул"
+            contains("(пр)") -> "прак"
+            contains("(л)") -> "лек"
+            contains("(лаб)") -> "лаб"
+            contains("(зач)") -> "зач"
+            contains("(экз)") -> "экз"
+            contains("(ул)") -> "ул"
             else -> "---"
         }
 
-    private val String.subjectAndTeacher: List<String>
-        get() = substring(0, indexOf('(')).trim().split(" ".toRegex())
-
-    private val String.classInfo: Pair<String, String>
+    private val String.subjectTeacher: Pair<String, String>
         get() {
-            var subject = StringBuilder()
-            val subjNTeach = subjectAndTeacher
-            val until = if (hasVacancy) 1 else 2
-            if (subjNTeach.size > 2) {
-                for (i in 0 until subjNTeach.size - until) {
-                    subject.append(subjNTeach[i]).append(" ")
-                }
-            } else {
-                subject = StringBuilder(subjNTeach[0])
+            // Matches [Surname F. P.] or [Surname F.]
+            val teacherFullNamePattern = Regex("[а-яА-Я]* [А-Яа-я]\\.( )?[А-Яа-я]?\\.?")
+
+            val nameMatches = teacherFullNamePattern.findAll(this)
+                .map { it.value.trim() }
+                .filter { it.length > 3 }
+
+            val teacher = nameMatches.firstOrNull()
+                ?.takeIf { !hasVacancy } ?: VACANCY
+
+            val idx = try {
+                toLowerCase().indexOf(teacher.toLowerCase())
+            } catch (expected: Exception) {
+                this.length
             }
 
-            val teacher = if (subjNTeach.size > 2 && !hasVacancy) {
-                // subjNTeach has a full name of a teacher
-                subjNTeach[subjNTeach.size - 2] + " " + subjNTeach[subjNTeach.size - 1]
-            } else {
-                // subjNTeach only contains 2 elements (subject - teacher)
-                subjNTeach[subjNTeach.size - 1]
-            }
+            val subject = if (idx != -1)
+                substring(0, idx)
+            else
+                EMPTY_ENTRY
 
-            return subject.toString().capitalize() to teacher.capitalize()
+            return subject.capitalize() to teacher.capitalize()
         }
 
     private val String.hasVacancy: Boolean
-        get() {
-            return contains("вакансия".toRegex())
-        }
+        get() = toLowerCase().contains(VACANCY.toRegex())
 
     private val Int.innerGroup: String
         get() = if (this != 0) {
@@ -212,5 +205,6 @@ class ScheduleParser {
         const val EMPTY_ENTRY = "0"
         const val SPACE = ' '
         const val AMBIGUOUS_SPACE = 160.toChar()
+        const val VACANCY = "вакансия"
     }
 }

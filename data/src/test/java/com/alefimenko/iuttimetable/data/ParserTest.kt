@@ -22,8 +22,8 @@ class ParserTest {
     }
 
     @Test
-    fun `Should contain spring`() {
-        assert(scheduleParser.semester == "весенний семестр 2018-2019")
+    fun `Should contain semester`() {
+        assert(scheduleParser.semester.contains("семестр \\d*-\\d*".toRegex()))
     }
 
     @Test
@@ -39,7 +39,8 @@ class ParserTest {
     }
 
     private val HTML = """
-<!-- saved from url=(0074)https://www.tyuiu.ru/shedule_new/bin/groups.py?act=show&print=&sgroup=5307 -->
+        
+<!-- saved from url=(0074)https://www.tyuiu.ru/shedule_new/bin/groups.py?act=show&print=&sgroup=4819 -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=KOI8-R">
         <title>Расписание</title>
         <link rel="stylesheet" type="text/css" href="./Расписание_files/view.css">
@@ -51,8 +52,8 @@ class ParserTest {
 		<colgroup><col width="250px"><col width="470px"><col width="250px">
 		</colgroup><tbody><tr>
 			<td>&nbsp;</td>
-			<td style="text-align:center; font-size:12pt;">Расписание занятий группы А б-18-1
-				<br><span style="font-size:12pt;">весенний семестр 2018-2019 учебного года</span></td>
+			<td style="text-align:center; font-size:12pt;">Расписание занятий группы ИСТ б-16-1
+				<br><span style="font-size:12pt;">осенний семестр 2019-2020 учебного года</span></td>
 			<td style="text-align:right;">
 				<span></span><br>
 				<span></span><br>
@@ -73,246 +74,243 @@ class ParserTest {
 <thead>
 	<tr><td>&nbsp;</td>
 	<td>время</td>
-
+	
 		<td>понедельник</td>
-
-
+	
+	
 		<td>вторник</td>
-
-
+	
+	
 		<td>среда</td>
-
-
+	
+	
 		<td>четверг</td>
-
-
+	
+	
 		<td>пятница</td>
-
-
+	
+	
 		<td>суббота</td>
-
+	
 </tr></thead>
 <tbody>
 
 <tr>
 	<td>1</td>
 	<td>08:00 - 09:35</td>
-
-		<td>&nbsp;</td>
-
-
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">Рисунок  Зыков К.Н.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="50%">Планирование эксперимента и обработка эксперементальных данных Николаева Д.Р.(лаб), 612(Корпус 8/1 (ул. Луначарского, 2))</td>
 
-	<td class="stroke" width="50%">Рисунок  вакансия (пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%"> </td>
 
 </tr></tbody></table>
 </td>
-
-
+	
+	
 		<td>&nbsp;</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">живопись и колористика Зыков К.Н.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">живопись и колористика Козловская О.Л.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
-
+	
+	
 		<td>&nbsp;</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">Начертательная геометрия Крамаровская В.И.(пр), 410(Корпус 8/1 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">Начертательная геометрия Романова А.А.(пр), 410(Корпус 8/1 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td>&nbsp;</td>
+	
 </tr>
 
 
 <tr>
 	<td>2</td>
 	<td>09:45 - 11:20</td>
-
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">архитектурная графика Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="50%">Планирование эксперимента и обработка эксперементальных данных Николаева Д.Р.(лаб), 612(Корпус 8/1 (ул. Луначарского, 2))</td>
 
-	<td class="stroke" width="50%">архитектурная графика Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%"> </td>
 
 </tr></tbody></table>
 </td>
-
-
+	
+	
+		<td>&nbsp;</td>
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">Рисунок  Зыков К.Н.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="100%">Проектирование автоматизированных систем. обработка информации и управления Антипова А.Н.(пр), 610(Корпус 8/1 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="100%">Проектирование автоматизированных систем. обработка информации и управления Антипова А.Н.(л), 610(Корпус 8/1 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="50%">Строительные конструкции вакансия (лаб), 062(Корпус 8/1 (ул. Луначарского, 2))</td>
 
-	<td class="stroke" width="50%">Рисунок  вакансия (пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%"> </td>
 
 </tr></tbody></table>
 </td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">История архитектуры Панфилов А.В.(л), 452(Корпус 8 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">живопись и колористика Зыков К.Н.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">живопись и колористика Козловская О.Л.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">математика Фомина В.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">Геодезия Архипова Т.Д.(пр), 342(Корпус 8/1 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
+	
 </tr>
 
 
 <tr>
 	<td>3</td>
 	<td>11:30 - 13:05</td>
-
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">архитектурная графика Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="50%">Проектирование автоматизированных систем. обработка информации и управления Лозикова И.О.(лаб), 517(Корпус 8/1 (ул. Луначарского, 2))</td>
 
-	<td class="stroke" width="50%">архитектурная графика Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%"> </td>
 
 </tr></tbody></table>
 </td>
-
-
+	
+	
+		<td>&nbsp;</td>
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">иностранный язык Ситева С.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="100%">Надежность и качество информационных систем Паршуков А.Н.(пр), 704(Корпус 8/1 (ул. Луначарского, 2))</td>
 </tr></tbody></table>
 </td>
-
-
+	
+	
+		<td>&nbsp;</td>
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">Начертательная геометрия Крамаровская В.И.(л), 913(Корпус 8/1 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="100%">Информационная безопасность и защита информации Вяткин А.И.(л), 612(Корпус 8/1 (ул. Луначарского, 2))</td>
 </tr></tbody></table>
 </td>
-
-
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">основы архитектурного проектирования Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="50%">Строительные конструкции вакансия (лаб), 062(Корпус 8/1 (ул. Луначарского, 2))</td>
 
-	<td class="stroke" width="50%">основы архитектурного проектирования Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%"> </td>
 
 </tr></tbody></table>
 </td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">математика Фомина В.В.(л), 214(Корпус 8/1 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">Геодезия Архипова Т.Д.(л), 604(Корпус 8/1 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
+	
 </tr>
 
 
 <tr>
 	<td>4</td>
 	<td>13:45 - 15:20</td>
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">основы архитектурного проектирования Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">основы архитектурного проектирования Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">иностранный язык Ситева С.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">Элективные курсы по физической культуре вакансия (пр), с/з(Корпус 8/1 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">основы архитектурного проектирования Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">основы архитектурного проектирования Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">Элективные курсы по физической культуре вакансия (пр), с/з(Корпус 8/1 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
-
+	
 		<td>&nbsp;</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="50%">Информационная безопасность и защита информации Вяткин А.И.(лаб), а. 21 (БИЦ)()</td>
 
+	<td class="stroke" width="50%"> </td>
+
+</tr></tbody></table>
+</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="100%">инженерные системы Максимова С.В.(пр), 521(Корпус 8/1 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="100%">инженерные системы Максимова С.В.(л), 414(Корпус 8/1 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="50%">Проектирование автоматизированных систем. обработка информации и управления Лозикова И.О.(лаб), 612(Корпус 8/1 (ул. Луначарского, 2))</td>
+
+	<td class="stroke" width="50%"> </td>
+
+</tr></tbody></table>
+</td>
+	
 </tr>
 
 
 <tr>
 	<td>5</td>
 	<td>15:30 - 17:05</td>
-
+	
+		<td>&nbsp;</td>
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">основы архитектурного проектирования Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="50%">Информационная безопасность и защита информации Вяткин А.И.(лаб), а. 21 (БИЦ)()</td>
 
-	<td class="stroke" width="50%">основы архитектурного проектирования Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%"> </td>
 
 </tr></tbody></table>
 </td>
-
-
-		<td>&nbsp;</td>
-
-
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">композиционное моделирование Мальцева Е.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">композиционное моделирование Кукоарэ Д.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
+<tbody><tr><td width="100%">Надежность и качество информационных систем Паршуков А.Н.(л), 612(Корпус 8/1 (ул. Луначарского, 2))</td>
 </tr></tbody></table>
 </td>
-
-
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="100%">Иностранный язык (профессиональный) вакансия(пр), 459(Корпус 8 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
 		<td>&nbsp;</td>
-
-
+	
+	
 		<td>&nbsp;</td>
+	
+</tr>
 
 
+<tr>
+	<td>6</td>
+	<td>17:15 - 18:50</td>
+	
 		<td>&nbsp;</td>
-
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="100%">Строительные конструкции вакансия (л), 061(Корпус 8/1 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td>&nbsp;</td>
+	
 </tr>
 
 </tbody>
@@ -325,237 +323,243 @@ class ParserTest {
 <thead>
 	<tr><td>&nbsp;</td>
 	<td>время</td>
-
+	
 		<td>понедельник</td>
-
-
+	
+	
 		<td>вторник</td>
-
-
+	
+	
 		<td>среда</td>
-
-
+	
+	
 		<td>четверг</td>
-
-
+	
+	
 		<td>пятница</td>
-
-
+	
+	
 		<td>суббота</td>
-
+	
 </tr></thead>
 <tbody>
 
 <tr>
 	<td>1</td>
 	<td>08:00 - 09:35</td>
-
-		<td>&nbsp;</td>
-
-
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">Рисунок  Зыков К.Н.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="50%"> </td>
 
-	<td class="stroke" width="50%">Рисунок  вакансия (пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%">Планирование эксперимента и обработка эксперементальных данных Николаева Д.Р.(лаб), 612(Корпус 8/1 (ул. Луначарского, 2))</td>
 
 </tr></tbody></table>
 </td>
-
-
+	
+	
 		<td>&nbsp;</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">живопись и колористика Зыков К.Н.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">живопись и колористика Козловская О.Л.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
-
+	
+	
 		<td>&nbsp;</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">Начертательная геометрия Крамаровская В.И.(пр), 410(Корпус 8/1 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">Начертательная геометрия Романова А.А.(пр), 410(Корпус 8/1 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td>&nbsp;</td>
+	
 </tr>
 
 
 <tr>
 	<td>2</td>
 	<td>09:45 - 11:20</td>
-
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">архитектурная графика Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="50%"> </td>
 
-	<td class="stroke" width="50%">архитектурная графика Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%">Планирование эксперимента и обработка эксперементальных данных Николаева Д.Р.(лаб), 612(Корпус 8/1 (ул. Луначарского, 2))</td>
 
 </tr></tbody></table>
 </td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">Рисунок  Зыков К.Н.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">Рисунок  вакансия (пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">История архитектуры Панфилов А.В.(л), 452(Корпус 8 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">живопись и колористика Зыков К.Н.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">живопись и колористика Козловская О.Л.(пр), 334(Корпус 9 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
-
+	
+	
 		<td>&nbsp;</td>
-
-
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">Геодезия Архипова Т.Д.(пр), 342(Корпус 8/1 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="100%">Проектирование автоматизированных систем. обработка информации и управления Антипова А.Н.(пр), 610(Корпус 8/1 (ул. Луначарского, 2))</td>
 </tr></tbody></table>
 </td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="50%"> </td>
 
+	<td class="stroke" width="50%">Строительные конструкции вакансия (лаб), 062(Корпус 8/1 (ул. Луначарского, 2))</td>
+
+</tr></tbody></table>
+</td>
+	
 </tr>
 
 
 <tr>
 	<td>3</td>
 	<td>11:30 - 13:05</td>
-
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">архитектурная графика Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="50%"> </td>
 
-	<td class="stroke" width="50%">архитектурная графика Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%">Проектирование автоматизированных систем. обработка информации и управления Лозикова И.О.(лаб), 517(Корпус 8/1 (ул. Луначарского, 2))</td>
 
 </tr></tbody></table>
 </td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">иностранный язык Ситева С.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">Начертательная геометрия Крамаровская В.И.(л), 913(Корпус 8/1 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
-
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">основы архитектурного проектирования Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">основы архитектурного проектирования Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
-
+	
+	
 		<td>&nbsp;</td>
-
-
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">Геодезия Архипова Т.Д.(л), 604(Корпус 8/1 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="100%">Надежность и качество информационных систем Паршуков А.Н.(пр), 704(Корпус 8/1 (ул. Луначарского, 2))</td>
 </tr></tbody></table>
 </td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="100%">Информационная безопасность и защита информации Вяткин А.И.(л), 612(Корпус 8/1 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="50%"> </td>
 
+	<td class="stroke" width="50%">Строительные конструкции вакансия (лаб), 062(Корпус 8/1 (ул. Луначарского, 2))</td>
+
+</tr></tbody></table>
+</td>
+	
 </tr>
 
 
 <tr>
 	<td>4</td>
 	<td>13:45 - 15:20</td>
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">основы архитектурного проектирования Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">основы архитектурного проектирования Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-</tr></tbody></table>
-</td>
-
-
+	
 		<td>&nbsp;</td>
-
-
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">Элективные курсы по физической культуре вакансия (пр), с/з(Корпус 8/1 (ул. Луначарского, 2))</td>
-</tr></tbody></table>
-</td>
+<tbody><tr><td width="50%"> </td>
 
-
-		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">основы архитектурного проектирования Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">основы архитектурного проектирования Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%">Информационная безопасность и защита информации Вяткин А.И.(лаб), а. 21 (БИЦ)()</td>
 
 </tr></tbody></table>
 </td>
-
-
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="100%">Элективные курсы по физической культуре вакансия (пр), с/з(Корпус 8/1 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="100%">инженерные системы Максимова С.В.(пр), 521(Корпус 8/1 (ул. Луначарского, 2))</td>
 </tr></tbody></table>
 </td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="100%">Иностранный язык (профессиональный) Филяровская Н.(пр), 271(Корпус 8 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="100%">инженерные системы Максимова С.В.(л), 238(Корпус 8/1 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="50%"> </td>
 
+	<td class="stroke" width="50%">Проектирование автоматизированных систем. обработка информации и управления Лозикова И.О.(лаб), 612(Корпус 8/1 (ул. Луначарского, 2))</td>
 
-		<td>&nbsp;</td>
-
+</tr></tbody></table>
+</td>
+	
 </tr>
 
 
 <tr>
 	<td>5</td>
 	<td>15:30 - 17:05</td>
-
+	
+		<td>&nbsp;</td>
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">основы архитектурного проектирования Курмаз Ю.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+<tbody><tr><td width="50%"> </td>
 
-	<td class="stroke" width="50%">основы архитектурного проектирования Черенева (пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
+	<td class="stroke" width="50%">Информационная безопасность и защита информации Вяткин А.И.(лаб), а. 21 (БИЦ)()</td>
 
 </tr></tbody></table>
 </td>
-
-
-		<td>&nbsp;</td>
-
-
+	
+	
 		<td><table class="cell" width="100%" height="100%">
-<tbody><tr><td width="50%">композиционное моделирование Мальцева Е.В.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
-	<td class="stroke" width="50%">композиционное моделирование Кукоарэ Д.(пр), 301(Корпус 9 (ул. Луначарского, 2))</td>
-
+<tbody><tr><td width="100%">Планирование эксперимента и обработка эксперементальных данных Николаева Д.Р.(л), 602(Корпус 8/1 (ул. Луначарского, 2))</td>
 </tr></tbody></table>
 </td>
-
-
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="100%">Иностранный язык (профессиональный) Филяровская Н.(пр), 459(Корпус 8 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
 		<td>&nbsp;</td>
-
-
+	
+	
 		<td>&nbsp;</td>
+	
+</tr>
 
 
+<tr>
+	<td>6</td>
+	<td>17:15 - 18:50</td>
+	
 		<td>&nbsp;</td>
-
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td><table class="cell" width="100%" height="100%">
+<tbody><tr><td width="100%">Строительные конструкции вакансия (л), 061(Корпус 8/1 (ул. Луначарского, 2))</td>
+</tr></tbody></table>
+</td>
+	
+	
+		<td>&nbsp;</td>
+	
+	
+		<td>&nbsp;</td>
+	
 </tr>
 
 </tbody>
@@ -569,7 +573,7 @@ class ParserTest {
 <script type="text/javascript">
     ${'$'}(document).ready(function(){
         ${'$'}("a.button_close_").click(function(){
-            window.close();
+            window.close();  
         })
     });
 </script>
@@ -577,5 +581,5 @@ class ParserTest {
 
 
 </body></html>
-""".trimIndent()
+    """.trimIndent()
 }

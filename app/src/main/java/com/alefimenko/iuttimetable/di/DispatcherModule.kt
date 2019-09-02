@@ -2,8 +2,8 @@ package com.alefimenko.iuttimetable.di
 
 import android.os.Handler
 import android.os.Looper
-import org.koin.dsl.module
 import java.util.concurrent.Executor
+import org.koin.dsl.module
 
 /*
  * Created by Alexander Efimenko on 2018-12-12.
