@@ -160,12 +160,12 @@ class ScheduleParser {
 
     private val String.classType: String
         get() = when {
-            contains("(пр)".toRegex()) -> "прак"
-            contains("(л)".toRegex()) -> "лек"
-            contains("(лаб)".toRegex()) -> "лаб"
-            contains("(зач)".toRegex()) -> "зач"
-            contains("(экз)".toRegex()) -> "экз"
-            contains("(ул)".toRegex()) -> "ул"
+            contains("(пр)") -> "прак"
+            contains("(л)") -> "лек"
+            contains("(лаб)") -> "лаб"
+            contains("(зач)") -> "зач"
+            contains("(экз)") -> "экз"
+            contains("(ул)") -> "ул"
             else -> "---"
         }
 
