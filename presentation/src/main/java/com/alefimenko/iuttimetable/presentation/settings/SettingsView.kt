@@ -20,8 +20,8 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.screen_settings.*
 import java.util.concurrent.TimeUnit
+import kotlinx.android.synthetic.main.screen_settings.*
 
 /*
  * Created by Alexander Efimenko on 2019-07-08.

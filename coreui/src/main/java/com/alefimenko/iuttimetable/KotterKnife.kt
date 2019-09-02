@@ -6,11 +6,11 @@ import android.app.Activity
 import android.app.Dialog
 import android.view.View
 import androidx.annotation.IdRes
+import androidx.fragment.app.DialogFragment as SupportDialogFragment
+import androidx.fragment.app.Fragment as SupportFragment
 import com.bluelinelabs.conductor.Controller
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
-import androidx.fragment.app.DialogFragment as SupportDialogFragment
-import androidx.fragment.app.Fragment as SupportFragment
 
 fun <V : View> Activity.bindView(id: Int): ReadOnlyProperty<Activity, V> =
     required(id, viewFinder, null)
