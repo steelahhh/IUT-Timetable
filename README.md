@@ -3,6 +3,11 @@
 # IUT Timetable
 <a href='https://play.google.com/store/apps/details?id=com.alefimenko.iuttimetable&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height=92/></a>
 
+Screenshots
+----------
+<img src="media/screen00.jpg" width="250"> <img src="media/screen01.jpg" width="250"> <img src="media/screen02.jpg" width="250">
+<img src="media/screen03.jpg" width="250"> <img src="media/screen04.jpg" width="250">
+
 Libraries used
 ----------
 
