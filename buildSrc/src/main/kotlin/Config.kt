@@ -22,7 +22,7 @@ object Versions {
     const val appVersionName = "3.0.1"
 
     const val kotlin = "1.3.41"
-    const val androidPlugin = "3.6.0-alpha05"
+    const val androidPlugin = "3.6.0-beta01"
 
     const val mviCore = "1.1.6"
     const val aac = "2.0.0"
