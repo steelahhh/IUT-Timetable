@@ -125,7 +125,7 @@ class ScheduleParser {
                 }
                 else -> {
                     val sem = table.substring(0, table.indexOf(" учеб")).split(" ")
-                    sem[sem.size - 3] + " " + sem[sem.size - 2] + " " + sem[sem.size - 1]
+                    sem.takeLast(3).joinToString(separator = " ")
                 }
             }
         }
