@@ -1,11 +1,13 @@
 package com.alefimenko.iuttimetable.presentation.settings
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.alefimenko.iuttimetable.base.KotlinView
+import com.alefimenko.iuttimetable.presentation.BuildConfig
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Event
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Model
@@ -71,7 +73,7 @@ class SettingsView(
         settingsAdapter.addAll(model.buildSection())
     }
 
-    private fun Model.buildSection() = listOf(
+    private fun Model.buildSection() = listOfNotNull(
         // SettingsItem(
         //     key = SettingsItemKey.Language,
         //     titleRes = R.string.settings_language_title,
@@ -82,7 +84,7 @@ class SettingsView(
             titleRes = R.string.settings_theme_title,
             isChecked = isDarkTheme,
             switcherVisible = true
-        ),
+        ).takeUnless { Build.VERSION.SDK_INT == Build.VERSION_CODES.Q },
         SettingsItem(
             key = SettingsItemKey.RelevantSchedule,
             titleRes = R.string.settings_relevant_schedule_title,

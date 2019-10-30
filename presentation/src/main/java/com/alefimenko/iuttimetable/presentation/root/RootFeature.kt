@@ -1,6 +1,9 @@
 package com.alefimenko.iuttimetable.presentation.root
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.data.local.Constants.ITEM_DOESNT_EXIST
 import com.alefimenko.iuttimetable.data.local.Preferences
@@ -11,6 +14,7 @@ import com.alefimenko.iuttimetable.presentation.di.Screens
 import com.bluelinelabs.conductor.Router
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import timber.log.Timber
 
 /*
  * Created by Alexander Efimenko on 2019-04-05.
@@ -49,10 +53,14 @@ class RootFeature(
     }
 
     fun updateTheme() {
-        if (sharedPreferences.isNightMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            if (sharedPreferences.isNightMode) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
         }
     }
 

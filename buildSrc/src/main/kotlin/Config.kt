@@ -16,8 +16,8 @@ object Modules {
 
 object Versions {
     const val minSdk = 19
-    const val targetSdk = 28
-    const val compileSdk = 28
+    const val targetSdk = 29
+    const val compileSdk = 29
     const val appVersionCode = 4203
     const val appVersionName = "3.0.1"
 

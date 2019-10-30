@@ -19,6 +19,7 @@ import com.alefimenko.iuttimetable.data.remote.model.ClassEntry
 import com.alefimenko.iuttimetable.extension.getColorCompat
 import com.alefimenko.iuttimetable.extension.getDimenPixelSize
 import com.alefimenko.iuttimetable.extension.getPrimaryTextColor
+import com.alefimenko.iuttimetable.extension.isDarkModeEnabled
 import com.alefimenko.iuttimetable.presentation.R
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
@@ -92,8 +93,8 @@ data class ClassUi(
         }
         divider.isGone = positionInGroup == Position.LAST || positionInGroup == Position.SINGLE
         val drawable = ContextCompat.getDrawable(context, drawableRes)
-        val color = when (AppCompatDelegate.getDefaultNightMode()) {
-            AppCompatDelegate.MODE_NIGHT_YES -> ContextCompat.getColor(context, R.color.almostDark)
+        val color = when (context.isDarkModeEnabled) {
+            true -> ContextCompat.getColor(context, R.color.almostDark)
             else -> ContextCompat.getColor(
                 context,
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) R.color.white else R.color.slightlyWhiteGray

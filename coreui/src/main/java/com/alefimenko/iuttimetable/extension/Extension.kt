@@ -1,10 +1,15 @@
 package com.alefimenko.iuttimetable.extension
 
 import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_MASK
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
 import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
@@ -23,6 +28,7 @@ import com.alefimenko.iuttimetable.coreui.R
 import com.bluelinelabs.conductor.Controller
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import timber.log.Timber
 
 /*
  * Created by Alexander Efimenko on 2019-04-24.
@@ -59,9 +65,15 @@ fun RadioGroup.changeEnabled(enabled: Boolean) {
     }
 }
 
+val Context.isDarkModeEnabled get(): Boolean = if (SDK_INT == Q) {
+    resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
+} else {
+    AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES
+}
+
 fun BottomAppBar.changeMenuColors() {
-    val colorOnBackground = when (AppCompatDelegate.getDefaultNightMode()) {
-        MODE_NIGHT_YES ->
+    val colorOnBackground = when (context.isDarkModeEnabled) {
+        true ->
             context.getColorCompat(R.color.backgroundLight)
         else ->
             context.getColorCompat(R.color.backgroundDark)
@@ -78,7 +90,7 @@ fun BottomAppBar.changeMenuColors() {
 }
 
 private fun MenuItem.changeIconColor(color: Int) {
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+    if (SDK_INT <= Build.VERSION_CODES.KITKAT) {
         val drawable = icon
         drawable.mutate()
         drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
@@ -131,7 +143,7 @@ fun Context.convertDpToPixel(dp: Float): Float {
 }
 
 fun Drawable.applyTint(@ColorInt color: Int) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    if (SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         DrawableCompat.setTint(this, color)
     } else {
         this.setColorFilter(color, PorterDuff.Mode.SRC_IN)
