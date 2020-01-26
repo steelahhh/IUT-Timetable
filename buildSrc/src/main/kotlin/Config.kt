@@ -21,11 +21,11 @@ object Versions {
     const val appVersionCode = 4203
     const val appVersionName = "3.0.1"
 
-    const val kotlin = "1.3.41"
+    const val kotlin = "1.3.61"
     const val androidPlugin = "3.6.0-rc01"
 
     const val mviCore = "1.1.6"
-    const val aac = "2.0.0"
+    const val aac = "2.2.0"
 
     const val rxRelay = "2.1.0"
     const val rxBinding = "3.0.0-alpha2"
@@ -39,13 +39,13 @@ object Versions {
 
     const val klock = "1.4.0"
 
-    const val mobius = "1.2.2"
+    const val mobius = "1.3.4"
 
     const val jsoup = "1.11.3"
 
     const val groupie = "2.3.0"
-    const val fastadapter = "4.0.1"
-    const val retrofit = "2.4.0"
+    const val fastadapter = "4.1.2"
+    const val retrofit = "2.6.0"
     const val gson = "2.8.5"
     const val koin = "2.0.1"
     const val timber = "4.7.1"
@@ -59,10 +59,10 @@ object Versions {
 object Deps {
     val vers = Versions
 
-    const val appcompat = "androidx.appcompat:appcompat:1.0.2"
-    const val androidxCore = "androidx.core:core-ktx:1.0.2"
-    const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0-beta02"
-    const val material = "com.google.android.material:material:1.1.0-alpha09"
+    const val appcompat = "androidx.appcompat:appcompat:1.1.0"
+    const val androidxCore = "androidx.core:core-ktx:1.1.0"
+    const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
+    const val material = "com.google.android.material:material:1.2.0-alpha04"
     const val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
 
     const val multidex = "com.android.support:multidex:1.0.3"
