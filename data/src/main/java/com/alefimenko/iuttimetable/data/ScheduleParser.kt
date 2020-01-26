@@ -67,7 +67,7 @@ class ScheduleParser {
                     )
                 } else {
                     val cells = entry.split("\\) ".toRegex())
-                    cells.mapIndexed { idx, s ->
+                    cells.forEachIndexed { idx, s ->
                         val cell = when {
                             idx != cells.size - 1 -> "$s)"
                             else -> s
