@@ -30,7 +30,7 @@ import com.spotify.mobius.Connectable
 import com.spotify.mobius.rx2.RxConnectables
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -47,7 +47,7 @@ class ScheduleView(
     private val activity: RootActivity
 ) : KotlinView(R.layout.screen_schedule, inflater, container) {
 
-    private val itemAdapter = GroupAdapter<ViewHolder>()
+    private val itemAdapter = GroupAdapter<GroupieViewHolder>()
     private val insideEvents = PublishSubject.create<Event>()
     private val headerIndices = mutableListOf<Int>()
 

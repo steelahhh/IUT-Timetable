@@ -4,8 +4,8 @@ import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.presentation.R
 import com.soywiz.klock.DayOfWeek
 import com.soywiz.klock.KlockLocale
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_simple_text.view.*
 
 /*
@@ -19,7 +19,7 @@ data class HeaderItem(
 ) : Item(day.toLong()) {
     override fun getLayout() = R.layout.item_simple_text
 
-    override fun bind(viewHolder: ViewHolder, position: Int) = with(viewHolder.itemView) {
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) = with(viewHolder.itemView) {
         val dayIdx = when (KlockLocale.default) {
             is KlockLocale.English -> day + 1
             else -> day

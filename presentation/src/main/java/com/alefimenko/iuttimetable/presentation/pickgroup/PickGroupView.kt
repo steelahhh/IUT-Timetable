@@ -2,7 +2,7 @@ package com.alefimenko.iuttimetable.presentation.pickgroup
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alefimenko.iuttimetable.base.KotlinView
@@ -10,115 +10,100 @@ import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Event
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Model
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupPreviewUi
-import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
-import com.mikepenz.fastadapter.adapters.FastItemAdapter
-import com.mikepenz.fastadapter.listeners.ItemFilterListener
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.Group
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupItem
+import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import com.spotify.mobius.Connectable
-import com.spotify.mobius.Connection
-import com.spotify.mobius.functions.Consumer
+import com.spotify.mobius.rx2.RxConnectables
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.screen_pick_group.*
 
 /*
- * Created by Alexander Efimenko on 2019-05-10.
+ * Created by Alexander Efimenko on 13/2/20.
  */
 
 class PickGroupView(
     inflater: LayoutInflater,
     container: ViewGroup
-) : KotlinView(R.layout.screen_pick_group, inflater, container), Connectable<Model, Event> {
+) : KotlinView(R.layout.screen_pick_group, inflater, container) {
 
-    private val fastAdapter = FastItemAdapter<GroupPreviewUi>()
+    private val groupsAdapter = GroupAdapter<GroupieViewHolder>()
 
-    override fun connect(output: Consumer<Event>): Connection<Model> {
+    private val insideEvents = PublishSubject.create<Event>()
+    val connector: Connectable<Model, Event> = RxConnectables.fromTransformer(::connect)
+
+    fun connect(models: Observable<Model>): Observable<Event> {
         setupViews()
-        return object : Connection<Model> {
-            override fun accept(value: Model) {
-                fastAdapter.onClickListener = { _, _, group, _ ->
-                    output.accept(
-                        PickGroupFeature.Event.GroupSelected(
-                            GroupInfo(
-                                form = value.form,
-                                group = group,
-                                institute = value.institute!!
-                            )
-                        )
-                    )
-                    false
-                }
-                render(value, output)
-            }
 
-            override fun dispose() = tearDown()
+        val cd = CompositeDisposable()
+        cd += models.distinctUntilChanged().subscribe(::render)
+
+        return Observable.mergeArray<Event>(
+            insideEvents,
+            errorView.retryClicks().map { Event.LoadGroups },
+            searchView.queryTextChanges()
+                .distinctUntilChanged()
+                .map {
+                    Event.QueryChanged(it.toString())
+                }
+        ).doOnDispose {
+            tearDown()
+            cd.dispose()
         }
     }
 
-    private fun setupViews() {
-        fastAdapter.apply {
-            itemFilter.itemFilterListener = object : ItemFilterListener<GroupPreviewUi> {
-                override fun onReset() {
-                    post {
-                        errorView.isVisible = false
-                    }
-                }
-
-                override fun itemsFiltered(constraint: CharSequence?, results: List<GroupPreviewUi>?) {
-                    post {
-                        errorView.apply {
-                            isVisible = results?.isEmpty() ?: false
-                            textRes = R.string.search_error
-                            retryVisible = false
-                        }
-                    }
-                }
-            }
-
-            itemFilter.filterPredicate = { item, constraint ->
-                filterGroups(item, constraint)
-            }
-        }
-
-        recycler.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = fastAdapter
-        }
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?) = true.also {
-                fastAdapter.filter(query.orEmpty() as CharSequence)
-            }
-
-            override fun onQueryTextChange(newText: String?) = true.also {
-                fastAdapter.filter(newText.orEmpty() as CharSequence)
-            }
-        })
+    private fun render(value: Model) = with(value) {
+        renderContent()
+        renderError()
+        toolbar.changeMenuColors()
     }
 
-    private fun filterGroups(item: GroupPreviewUi, constraint: CharSequence?): Boolean {
-        constraint ?: return false
-        val query = constraint.toString().toLowerCase()
-        val label = item.label.toLowerCase().replace(" ", "")
-        val digits = query.replace("[a-zA-Zа-яА-Я]+".toRegex(), "").trim()
-        val name = query.replace("\\d+".toRegex(), "").trim()
-        return label.contains(query) || (label.contains(digits) && label.contains(name))
-    }
-
-    private fun render(model: Model, output: Consumer<Event>) = with(model) {
+    private fun Model.renderContent() {
         progressBar.isVisible = isLoading
         recycler.isVisible = !isLoading
+
+        if (groups.isNotEmpty()) {
+            groupsAdapter.setOnItemClickListener { group, _ ->
+                require(group is GroupItem)
+                insideEvents.onNext(Event.GroupSelected(Group(group.id, group.label)))
+            }
+
+            groupsAdapter.clear()
+            groupsAdapter.updateAsync(filteredGroups)
+        }
+    }
+
+    private fun Model.renderError() {
+        if (isError) groupsAdapter.clear()
+
         errorView.apply {
             isVisible = isError
             retryVisible = true
             textRes = R.string.group_loading_error
-            onRetryClick = { output.accept(Event.LoadGroups) }
         }
-
-        if (isError) fastAdapter.clear()
 
         if (groups.isNotEmpty()) {
-            fastAdapter.set(groups)
-            if (searchView.query.isNotEmpty()) fastAdapter.filter(searchView.query)
+            if (filteredGroups.isNotEmpty()) {
+                errorView.isGone = true
+            } else {
+                errorView.apply {
+                    isVisible = true
+                    textRes = R.string.search_error
+                    retryVisible = false
+                }
+            }
         }
-        toolbar.changeMenuColors()
+    }
+
+    private fun setupViews() {
+        recycler.run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = groupsAdapter
+        }
     }
 }

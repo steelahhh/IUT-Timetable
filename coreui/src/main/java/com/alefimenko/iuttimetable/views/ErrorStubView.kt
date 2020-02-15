@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.alefimenko.iuttimetable.coreui.R
 import com.google.android.material.button.MaterialButton
+import com.jakewharton.rxbinding3.view.clicks
 
 /*
  * Created by Alexander Efimenko on 2019-03-10.
@@ -35,9 +36,7 @@ class ErrorStubView @JvmOverloads constructor(
     var textRes: Int = -1
         set(value) {
             field = value
-            if (textRes != -1) {
-                text = context.getString(value)
-            }
+            if (textRes != -1) text = context.getString(value)
         }
 
     var text: String = ""
@@ -63,4 +62,6 @@ class ErrorStubView @JvmOverloads constructor(
         title = findViewById(R.id.try_again_text)
         button = findViewById(R.id.try_again_button)
     }
+
+    fun retryClicks() = button.clicks()
 }

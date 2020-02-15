@@ -17,7 +17,7 @@ import com.alefimenko.iuttimetable.data.remote.model.Schedule
 import com.alefimenko.iuttimetable.data.remote.model.ScheduleResponse
 import com.alefimenko.iuttimetable.data.remote.model.WeekSchedule
 import com.alefimenko.iuttimetable.data.remote.toFormPath
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupPreviewUi
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.Group
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
 import com.google.gson.Gson
@@ -63,7 +63,7 @@ class ScheduleRepository(
         val formPath = groupInfo.form.toFormPath()
         return scheduleService.fetchSchedule(formPath, groupInfo.group.id)
             .flatMap { body ->
-                createSchedule(body.string(), groupInfo.group.label)
+                createSchedule(body.string(), groupInfo.group.name)
             }.flatMap { response ->
                 saveSchedule(groupInfo, response)
                     .toSingleDefault(response.schedule)
@@ -99,10 +99,7 @@ class ScheduleRepository(
             .flatMapObservable { (group, institute) ->
                 val groupInfo = GroupInfo(
                     form = group.form,
-                    group = GroupPreviewUi(
-                        group.id,
-                        group.name
-                    ),
+                    group = Group(group.id, group.name),
                     institute = InstituteUi(
                         institute.id,
                         institute.name
@@ -111,12 +108,11 @@ class ScheduleRepository(
                 val formPath = groupInfo.form.toFormPath()
                 scheduleService.fetchSchedule(formPath, groupInfo.group.id)
                     .flatMap { body ->
-                        createSchedule(body.string(), groupInfo.group.label)
+                        createSchedule(body.string(), groupInfo.group.name)
                     }.toObservable()
                     .zipWith(schedulesDao.getByGroupId(groupId).toObservable())
                     .flatMap { (scheduleResponse, scheduleEntity) ->
-                        val areSchedulesSame =
-                            scheduleResponse.rawBody == scheduleEntity.rawScheduleStr
+                        val areSchedulesSame = scheduleResponse.rawBody == scheduleEntity.rawScheduleStr
                         when {
                             !areSchedulesSame -> saveSchedule(
                                 groupInfo,
@@ -186,7 +182,7 @@ class ScheduleRepository(
             groupsDao.insert(
                 GroupEntity(
                     group.id,
-                    group.label,
+                    group.name,
                     form,
                     institute.id,
                     response.schedule.semester

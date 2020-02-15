@@ -5,8 +5,8 @@ import androidx.annotation.StringRes
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.alefimenko.iuttimetable.presentation.R
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_settings.*
 
 /*
@@ -26,7 +26,7 @@ data class SettingsItem(
 ) : Item() {
     override fun getLayout() = R.layout.item_settings
 
-    override fun bind(viewHolder: ViewHolder, position: Int) = with(viewHolder) {
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) = with(viewHolder) {
         settingsTextSubtitle.isGone = subtitleRes == null
         subtitleRes?.let {
             settingsTextSubtitle.text = itemView.context.getString(it)
@@ -37,7 +37,7 @@ data class SettingsItem(
         settingsSwitch.isVisible = switcherVisible
     }
 
-    override fun unbind(holder: ViewHolder) = with(holder) {
+    override fun unbind(holder: GroupieViewHolder) = with(holder) {
         settingsImage.setImageDrawable(null)
         super.unbind(holder)
     }

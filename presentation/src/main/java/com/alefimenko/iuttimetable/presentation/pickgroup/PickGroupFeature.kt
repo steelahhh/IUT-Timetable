@@ -7,7 +7,8 @@ import com.alefimenko.iuttimetable.common.effectHandler
 import com.alefimenko.iuttimetable.common.transformer
 import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.presentation.di.Screens
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupPreviewUi
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.Group
+import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupItem
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
 import com.spotify.mobius.First
@@ -29,8 +30,9 @@ object PickGroupFeature {
     data class Model(
         val form: Int = 0,
         val institute: InstituteUi? = null,
-        val group: GroupPreviewUi? = null,
-        val groups: List<GroupPreviewUi> = listOf(),
+        val group: Group? = null,
+        val groups: List<GroupItem> = listOf(),
+        val filteredGroups: List<GroupItem> = listOf(),
         @Transient val isLoading: Boolean = false,
         @Transient val isError: Boolean = false
     ) : Parcelable
@@ -38,8 +40,9 @@ object PickGroupFeature {
     sealed class Event {
         object StartedLoading : Event()
         object LoadGroups : Event()
-        data class GroupSelected(val groupInfo: GroupInfo) : Event()
-        data class GroupsLoaded(val groups: List<GroupPreviewUi>) : Event()
+        data class QueryChanged(val query: String) : Event()
+        data class GroupSelected(val group: Group) : Event()
+        data class GroupsLoaded(val groups: List<GroupItem>) : Event()
         data class ErrorLoading(val throwable: Throwable) : Event()
     }
 
@@ -62,14 +65,27 @@ object PickGroupFeature {
             Event.LoadGroups -> dispatch(setOf(Effect.LoadGroups(model.form, model.institute)))
             is Event.ErrorLoading -> next(model.copy(isLoading = false, isError = true))
             is Event.GroupSelected -> next(
-                model.copy(group = event.groupInfo.group),
-                setOf(Effect.NavigateToSchedule(event.groupInfo))
+                model.copy(group = event.group),
+                setOf(
+                    Effect.NavigateToSchedule(
+                        GroupInfo(model.form, event.group, model.institute!!)
+                    )
+                )
             )
             is Event.GroupsLoaded -> next(
                 model.copy(
                     groups = event.groups,
+                    filteredGroups = event.groups,
                     isError = false,
                     isLoading = false
+                )
+            )
+            is Event.QueryChanged -> next(
+                model.copy(
+                    filteredGroups = when {
+                        event.query.isEmpty() -> model.groups
+                        else -> model.groups.filter { filterGroups(groupName = it.label, query = event.query) }
+                    }
                 )
             )
         }
@@ -83,7 +99,7 @@ object PickGroupFeature {
             return effectHandler {
                 transformer(Effect.LoadGroups::class.java) { effect ->
                     repository.getGroups(effect.form, effect.institute!!.id)
-                        .map<Event> { Event.GroupsLoaded(it) }
+                        .map<Event> { Event.GroupsLoaded(it.map { group -> GroupItem(group.id, group.name) }) }
                         .onErrorReturn { Event.ErrorLoading(it) }
                         .startWith(Event.StartedLoading)
                 }
@@ -92,5 +108,12 @@ object PickGroupFeature {
                 }
             }
         }
+    }
+
+    private fun filterGroups(groupName: String, query: String): Boolean {
+        val label = groupName.replace(" ", "")
+        val digits = query.replace("[a-zA-Zа-яА-Я]+".toRegex(), "").trim()
+        val name = query.replace("\\d+".toRegex(), "").trim()
+        return label.contains(query, true) || (label.contains(digits) && label.contains(name, true))
     }
 }

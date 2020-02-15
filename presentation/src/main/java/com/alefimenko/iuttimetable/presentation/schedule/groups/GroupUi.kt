@@ -6,8 +6,8 @@ import com.alefimenko.iuttimetable.createTypeFace
 import com.alefimenko.iuttimetable.extension.getColorCompat
 import com.alefimenko.iuttimetable.extension.getDimen
 import com.alefimenko.iuttimetable.presentation.R
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_group.*
 
 /*
@@ -22,7 +22,7 @@ data class GroupUi(
     val isCurrent: Boolean,
     val clickListener: OnGroupClickListener
 ) : Item() {
-    override fun bind(viewHolder: ViewHolder, position: Int) = with(viewHolder) {
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) = with(viewHolder) {
         val context = itemView.context
         groupEntryContainer.setOnClickListener {
             clickListener.onClick(this@GroupUi)

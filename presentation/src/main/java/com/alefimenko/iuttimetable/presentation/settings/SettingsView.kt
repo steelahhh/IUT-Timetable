@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.alefimenko.iuttimetable.base.KotlinView
-import com.alefimenko.iuttimetable.presentation.BuildConfig
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Event
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Model
@@ -17,7 +16,7 @@ import com.jakewharton.rxbinding3.view.clicks
 import com.spotify.mobius.Connectable
 import com.spotify.mobius.rx2.RxConnectables
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -34,7 +33,7 @@ class SettingsView(
     container: ViewGroup
 ) : KotlinView(R.layout.screen_settings, inflater, container) {
 
-    private val settingsAdapter = GroupAdapter<ViewHolder>()
+    private val settingsAdapter = GroupAdapter<GroupieViewHolder>()
 
     private val insideEvents = PublishSubject.create<Event>()
 

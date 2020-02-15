@@ -14,7 +14,6 @@ import com.alefimenko.iuttimetable.presentation.di.Screens
 import com.bluelinelabs.conductor.Router
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
-import timber.log.Timber
 
 /*
  * Created by Alexander Efimenko on 2019-04-05.

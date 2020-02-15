@@ -1,7 +1,6 @@
 package com.alefimenko.iuttimetable.extension
 
 import android.content.Context
-import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.PorterDuff
@@ -28,7 +27,6 @@ import com.alefimenko.iuttimetable.coreui.R
 import com.bluelinelabs.conductor.Controller
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import timber.log.Timber
 
 /*
  * Created by Alexander Efimenko on 2019-04-24.

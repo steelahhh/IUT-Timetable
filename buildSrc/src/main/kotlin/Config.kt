@@ -22,7 +22,7 @@ object Versions {
     const val appVersionName = "3.0.1"
 
     const val kotlin = "1.3.61"
-    const val androidPlugin = "3.6.0-rc01"
+    const val androidPlugin = "3.6.0-rc02"
 
     const val mviCore = "1.1.6"
     const val aac = "2.2.0"
@@ -43,8 +43,7 @@ object Versions {
 
     const val jsoup = "1.11.3"
 
-    const val groupie = "2.3.0"
-    const val fastadapter = "4.1.2"
+    const val groupie = "2.7.2"
     const val retrofit = "2.6.0"
     const val gson = "2.8.5"
     const val koin = "2.0.1"
@@ -85,17 +84,6 @@ object Deps {
         const val core = "com.soywiz:klock-metadata:${vers.klock}"
         const val jvm = "com.soywiz:klock-jvm:${vers.klock}"
         const val android = "com.soywiz:klock-android:${vers.klock}"
-    }
-
-    val fastAdapter = FastAdapter
-
-    object FastAdapter {
-        const val diff = "com.mikepenz:fastadapter-extensions-diff:${vers.fastadapter}"
-        const val drag = "com.mikepenz:fastadapter-extensions-drag:${vers.fastadapter}"
-        const val scroll = "com.mikepenz:fastadapter-extensions-scroll:${vers.fastadapter}"
-        const val swipe = "com.mikepenz:fastadapter-extensions-swipe:${vers.fastadapter}"
-        const val ui = "com.mikepenz:fastadapter-extensions-ui:${vers.fastadapter}"
-        const val utils = "com.mikepenz:fastadapter-extensions-utils:${vers.fastadapter}"
     }
 
     val groupie = Groupie
@@ -157,13 +145,6 @@ object Deps {
         const val support = "com.bluelinelabs:conductor-support:${vers.conductor}"
         const val rx2 = "com.bluelinelabs:conductor-rxlifecycle2:${vers.conductor}"
         const val lifecycle = "com.bluelinelabs:conductor-archlifecycle:${vers.conductor}"
-    }
-
-    val navigation = Navigation
-
-    object Navigation {
-        const val fragment = "android.arch.navigation:navigation-fragment-ktx:1.0.0-rc02"
-        const val ui = "android.arch.navigation:navigation-ui-ktx:1.0.0-rc02"
     }
 
     val firebase = Firebase

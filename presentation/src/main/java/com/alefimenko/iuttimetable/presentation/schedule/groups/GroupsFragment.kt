@@ -17,7 +17,7 @@ import com.spotify.mobius.android.MobiusAndroid
 import com.spotify.mobius.rx2.RxConnectables
 import com.spotify.mobius.rx2.RxMobius
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -46,7 +46,7 @@ class GroupsFragment(
             GroupsModel()
         )
 
-    private val groupsAdapter = GroupAdapter<ViewHolder>()
+    private val groupsAdapter = GroupAdapter<GroupieViewHolder>()
 
     private val connector = RxConnectables.fromTransformer(::connect)
 

@@ -32,13 +32,12 @@ class PickGroupController(
 ) : BaseController() {
     private var form: Int
     private var institute: InstituteUi?
+    private val scope = getKoin().getOrCreateScope(Scopes.PICK_GROUP, named(Scopes.PICK_GROUP))
 
     init {
         form = bundle.getInt(FORM_KEY)
         institute = bundle.getParcelable(INSTITUTE_KEY)
     }
-
-    private val scope = getKoin().getOrCreateScope(Scopes.PICK_GROUP, named(Scopes.PICK_GROUP))
 
     private val controller: MobiusLoop.Controller<Model, Event> = controller(
         RxMobius.loop(
@@ -47,6 +46,7 @@ class PickGroupController(
         ).init(GroupInitializer).logger(AndroidLogger.tag("PINSTER")),
         Model(form = form, institute = institute)
     )
+
     private val toolbar by bind<BottomAppBar>(R.id.toolbar)
 
     override fun onCreateView(
@@ -55,7 +55,7 @@ class PickGroupController(
     ): View {
         val view = PickGroupView(inflater, container)
         bindScope(scope)
-        controller.connect(view)
+        controller.connect(view.connector)
         controller.start()
         return view.containerView
     }

@@ -4,7 +4,6 @@ import android.graphics.PorterDuff
 import android.os.Build
 import android.text.TextUtils
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.BASELINE
 import androidx.constraintlayout.widget.ConstraintSet.BOTTOM
@@ -21,8 +20,8 @@ import com.alefimenko.iuttimetable.extension.getDimenPixelSize
 import com.alefimenko.iuttimetable.extension.getPrimaryTextColor
 import com.alefimenko.iuttimetable.extension.isDarkModeEnabled
 import com.alefimenko.iuttimetable.presentation.R
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_class.view.*
 
 /*
@@ -53,7 +52,7 @@ data class ClassUi(
 ) : Item() {
     override fun getLayout() = R.layout.item_class
 
-    override fun bind(viewHolder: ViewHolder, position: Int) = with(viewHolder.itemView) {
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) = with(viewHolder.itemView) {
         renderBackground()
         updateConstraints()
         finishTimeTv.text = finishTime
