@@ -30,13 +30,10 @@ abstract class BaseController : LifecycleController(), ComponentCallbacks {
         }
     }
 
-    open fun onViewBound(view: View) {
-    }
+    open fun onViewBound(view: View) = Unit
 
     override fun onAttach(view: View) {
-        (activity as BaseActivity).run {
-            window.setBackgroundDrawable(null)
-        }
+        (activity as BaseActivity).window.setBackgroundDrawable(null)
         super.onAttach(view)
     }
 

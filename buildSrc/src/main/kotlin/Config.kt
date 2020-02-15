@@ -27,13 +27,13 @@ object Versions {
     const val mviCore = "1.1.6"
     const val aac = "2.2.0"
 
-    const val rxRelay = "2.1.0"
-    const val rxBinding = "3.0.0-alpha2"
-    const val rxKotlin = "2.2.0"
-    const val rxAndroid = "2.0.2"
+    const val rxRelay = "2.1.1"
+    const val rxBinding = "3.1.0"
+    const val rxKotlin = "2.4.0"
+    const val rxAndroid = "2.1.1"
     const val room = "2.1.0"
 
-    const val conductor = "3.0.0-rc1"
+    const val conductor = "3.3.0"
 
     const val leakCanary = "2.0-alpha-2"
 
@@ -44,11 +44,11 @@ object Versions {
     const val jsoup = "1.11.3"
 
     const val groupie = "2.7.2"
-    const val retrofit = "2.6.0"
+    const val retrofit = "2.7.0"
     const val gson = "2.8.5"
     const val koin = "2.0.1"
     const val timber = "4.7.1"
-    const val materialDialogs = "3.1.0"
+    const val materialDialogs = "3.2.1"
     const val junit = "4.12"
     const val testRunner = "1.1.0"
     const val espresso = "3.1.0"
@@ -141,10 +141,7 @@ object Deps {
     val conductor = Conductor
 
     object Conductor {
-        const val core = "com.bluelinelabs:conductor:${vers.conductor}"
-        const val support = "com.bluelinelabs:conductor-support:${vers.conductor}"
-        const val rx2 = "com.bluelinelabs:conductor-rxlifecycle2:${vers.conductor}"
-        const val lifecycle = "com.bluelinelabs:conductor-archlifecycle:${vers.conductor}"
+        const val core = "com.github.edgar-zigis:conductor:${vers.conductor}"
     }
 
     val firebase = Firebase
