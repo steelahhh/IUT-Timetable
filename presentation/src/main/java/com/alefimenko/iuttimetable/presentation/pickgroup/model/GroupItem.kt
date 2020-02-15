@@ -2,7 +2,7 @@ package com.alefimenko.iuttimetable.presentation.pickgroup.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.alefimenko.iuttimetable.data.remote.model.GroupResponse
+import com.alefimenko.iuttimetable.data.remote.model.IUTLabeledResponse
 import com.alefimenko.iuttimetable.presentation.R
 import com.xwray.groupie.Item as GroupieItem
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
@@ -55,4 +55,4 @@ data class GroupItem(
     }
 }
 
-fun GroupResponse.toInstituteUi() = InstituteUi(id, name)
+fun IUTLabeledResponse.toInstituteUi() = InstituteUi(id, name)

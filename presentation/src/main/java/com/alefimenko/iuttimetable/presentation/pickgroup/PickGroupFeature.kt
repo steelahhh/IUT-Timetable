@@ -18,6 +18,7 @@ import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
 import com.spotify.mobius.Update
+import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import kotlinx.android.parcel.Parcelize
 
@@ -95,17 +96,16 @@ object PickGroupFeature {
         private val repository: PickGroupRepository,
         private val navigator: Navigator
     ) : BaseEffectHandler<Effect, Event>() {
-        override fun create(): ObservableTransformer<Effect, Event> {
-            return effectHandler {
-                transformer(Effect.LoadGroups::class.java) { effect ->
-                    repository.getGroups(effect.form, effect.institute!!.id)
-                        .map<Event> { Event.GroupsLoaded(it.map { group -> GroupItem(group.id, group.name) }) }
-                        .onErrorReturn { Event.ErrorLoading(it) }
-                        .startWith(Event.StartedLoading)
-                }
-                consumer(Effect.NavigateToSchedule::class.java) { effect ->
-                    navigator.replace(Screens.ScheduleScreen(effect.groupInfo))
-                }
+        override fun create(): ObservableTransformer<Effect, Event> = effectHandler {
+            transformer(Effect.LoadGroups::class.java) { effect ->
+                if (effect.institute == null) Observable.empty<Event>()
+                else repository.getGroups(effect.form, effect.institute.id)
+                    .map<Event> { Event.GroupsLoaded(it.map { group -> GroupItem(group.id, group.name) }) }
+                    .onErrorReturn { Event.ErrorLoading(it) }
+                    .startWith(Event.StartedLoading)
+            }
+            consumer(Effect.NavigateToSchedule::class.java) { effect ->
+                navigator.replace(Screens.ScheduleScreen(effect.groupInfo))
             }
         }
     }

@@ -43,7 +43,7 @@ class PickGroupController(
         RxMobius.loop(
             GroupUpdater,
             PickGroupEffectHandler(scope.get(), scope.get()).create()
-        ).init(GroupInitializer).logger(AndroidLogger.tag("PINSTER")),
+        ).init(GroupInitializer).logger(AndroidLogger.tag("PickGroup")),
         Model(form = form, institute = institute)
     )
 
@@ -91,6 +91,7 @@ class PickGroupController(
         super.onRestoreInstanceState(savedInstanceState)
         form = savedInstanceState[FORM_KEY] as Int
         institute = savedInstanceState[INSTITUTE_KEY] as InstituteUi
+        controller.replaceModel(Model(form = form, institute = institute))
     }
 
     companion object {

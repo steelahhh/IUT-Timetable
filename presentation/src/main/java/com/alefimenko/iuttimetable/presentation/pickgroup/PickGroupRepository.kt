@@ -5,7 +5,7 @@ import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.data.remote.Exceptions
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
-import com.alefimenko.iuttimetable.data.remote.model.GroupResponse
+import com.alefimenko.iuttimetable.data.remote.model.IUTLabeledResponse
 import com.alefimenko.iuttimetable.data.remote.toFormPath
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
 import com.alefimenko.iuttimetable.presentation.pickgroup.model.toInstituteUi
@@ -22,7 +22,7 @@ class PickGroupRepository(
 
     private val lruCache: LruCache<String, List<InstituteUi>> = LruCache(2 * 1024 * 1024)
 
-    fun getGroups(form: Int, instituteId: Int): Observable<List<GroupResponse>> {
+    fun getGroups(form: Int, instituteId: Int): Observable<List<IUTLabeledResponse>> {
         return if (networkStatusReceiver.isNetworkAvailable()) {
             scheduleService.fetchGroups(form.toFormPath(), instituteId)
                 .toObservable()
