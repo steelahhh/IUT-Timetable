@@ -46,7 +46,6 @@ class PickInstituteView(
             output.accept(Event.BackClicked)
         }
 
-
         formRadioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
                 R.id.edu_form_ochny -> output.accept(Event.FormClicked(0))

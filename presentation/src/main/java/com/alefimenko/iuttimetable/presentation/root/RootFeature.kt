@@ -62,7 +62,5 @@ class RootFeature(
         }
     }
 
-    fun onDestroy() {
-        cd.clear()
-    }
+    fun onDestroy() = cd.dispose()
 }
