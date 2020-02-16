@@ -28,6 +28,7 @@ class PickInstituteController(
 ) : BaseController() {
     private var isFromSchedule: Boolean = false
     private val scope = getKoin().getOrCreateScope(Scopes.PICK_GROUP, named(Scopes.PICK_GROUP))
+    private var pickInstituteView: PickInstituteView? = null
 
     init {
         isFromSchedule = bundle.getBoolean(IS_FROM_SCHEDULE)
@@ -42,10 +43,13 @@ class PickInstituteController(
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        val view = PickInstituteView(inflater, container, isFromSchedule)
-        bindScope(scope)
-        controller.connect(view)
-        controller.start()
+        val view = PickInstituteView(inflater, container).apply {
+            pickInstituteView = this
+            bindScope(scope)
+            controller.connect(this)
+            controller.start()
+            this.isFromSchedule = this@PickInstituteController.isFromSchedule
+        }
         return view.containerView
     }
 
@@ -56,11 +60,14 @@ class PickInstituteController(
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean(IS_FROM_SCHEDULE, isFromSchedule)
         outState.putParcelable(MODEL, controller.model)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        isFromSchedule = savedInstanceState.getBoolean(IS_FROM_SCHEDULE)
         controller.replaceModel(savedInstanceState[MODEL] as Model)
+        pickInstituteView?.isFromSchedule = isFromSchedule
     }
 
     companion object {

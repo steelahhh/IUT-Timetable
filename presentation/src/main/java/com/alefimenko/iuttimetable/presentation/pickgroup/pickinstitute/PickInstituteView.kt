@@ -22,10 +22,14 @@ import kotlinx.android.synthetic.main.screen_pick_institute.*
 
 class PickInstituteView(
     inflater: LayoutInflater,
-    container: ViewGroup,
-    private val isFromSchedule: Boolean
+    container: ViewGroup
 ) : KotlinView(R.layout.screen_pick_institute, inflater, container), Connectable<Model, Event> {
     private var dialog: MaterialDialog? = null
+    var isFromSchedule: Boolean = false
+        set(value) {
+            field = value
+            pickGroupBackButton.isGone = !value
+        }
 
     init {
         dialog = MaterialDialog(containerView.context).apply {
@@ -42,7 +46,6 @@ class PickInstituteView(
             output.accept(Event.BackClicked)
         }
 
-        pickGroupBackButton.isGone = !isFromSchedule
 
         formRadioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
