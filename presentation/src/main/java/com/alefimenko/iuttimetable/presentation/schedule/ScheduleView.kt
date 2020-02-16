@@ -61,22 +61,20 @@ class ScheduleView(
         compositeDisposable += models.distinctUntilChanged().subscribe(::render)
 
         toolbar.setNavigationOnClickListener {
-            val fra = GroupsFragment({ groupId ->
-                insideEvents.onNext(Event.DisplaySchedule(groupId))
-            }, { groupId ->
-                insideEvents.onNext(Event.DeleteSchedule(groupId))
-            })
-            fra.show(activity.supportFragmentManager, "BottomSheetDialogFragment")
+            if (!activity.isFinishing) {
+                val fra = GroupsFragment({ groupId ->
+                    insideEvents.onNext(Event.DisplaySchedule(groupId))
+                }, { groupId ->
+                    insideEvents.onNext(Event.DeleteSchedule(groupId))
+                })
+                fra.show(activity.supportFragmentManager, "BottomSheetDialogFragment")
+            }
         }
 
         return Observable.mergeArray<Event>(
             insideEvents.hide(),
-            toolbar.itemClicks().map {
-                Event.NavigateToSettings
-            },
-            scheduleChangeWeekButton.clicks().map {
-                Event.RequestWeekChange
-            }
+            toolbar.itemClicks().map { Event.NavigateToSettings },
+            scheduleChangeWeekButton.clicks().map { Event.RequestWeekChange }
         ).doOnDispose {
             tearDown()
             compositeDisposable.dispose()
