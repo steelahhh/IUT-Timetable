@@ -24,6 +24,7 @@ class RootActivity : BaseActivity() {
     private val container by bind<FrameLayout>(R.id.container)
 
     private lateinit var router: Router
+    private var isReceiverRegistered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         feature.updateTheme()
@@ -43,10 +44,18 @@ class RootActivity : BaseActivity() {
             networkStatusReceiver,
             IntentFilter(CONNECTIVITY_ACTION)
         )
+        isReceiverRegistered = true
     }
 
     override fun onPause() {
-        unregisterReceiver(networkStatusReceiver)
+        if (isReceiverRegistered) {
+            try {
+                unregisterReceiver(networkStatusReceiver)
+            } catch (e: Exception) {
+                // Fail silently here
+            }
+            isReceiverRegistered = false
+        }
         super.onPause()
     }
 

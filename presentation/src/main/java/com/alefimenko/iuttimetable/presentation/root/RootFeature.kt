@@ -37,8 +37,7 @@ class RootFeature(
         cd += groupsDao.groups
             .ioMainSchedulers()
             .subscribe({ groups ->
-                val hasNoGroup =
-                    groups.isEmpty() || sharedPreferences.currentGroup == ITEM_DOESNT_EXIST
+                val hasNoGroup = groups.isEmpty() || sharedPreferences.currentGroup == ITEM_DOESNT_EXIST
                 val root = when {
                     hasNoGroup -> Screens.PickInstituteScreen()
                     else -> Screens.ScheduleScreen()
@@ -56,9 +55,9 @@ class RootFeature(
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         } else {
             if (sharedPreferences.isNightMode) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
             } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
             }
         }
     }
