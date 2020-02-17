@@ -11,6 +11,7 @@ import com.alefimenko.iuttimetable.data.local.model.ScheduleEntity
 import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
 import com.alefimenko.iuttimetable.data.local.schedule.InstitutesDao
 import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
+import com.alefimenko.iuttimetable.data.remote.Exceptions
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.data.remote.model.ClassEntry
 import com.alefimenko.iuttimetable.data.remote.model.Schedule
@@ -44,8 +45,7 @@ class ScheduleRepository(
 
     val shouldSwitchToDay: Boolean get() = preferences.switchDay
 
-    fun getGroups() = groupsDao.getGroupsWithInstitute()
-        .ioMainSchedulers()
+    fun getGroups() = groupsDao.getGroupsWithInstitute().ioMainSchedulers()
 
     fun getSchedule(groupId: Int): Observable<Schedule> = schedulesDao
         .getByGroupId(groupId)
@@ -60,15 +60,15 @@ class ScheduleRepository(
 
     fun downloadSchedule(groupInfo: GroupInfo): Observable<Schedule> {
         val formPath = groupInfo.form.toFormPath()
-        return scheduleService.fetchSchedule(formPath, groupInfo.group.id)
-            .flatMap { body ->
-                createSchedule(body.string(), groupInfo.group.name)
-            }.flatMap { response ->
-                saveSchedule(groupInfo, response)
-                    .toSingleDefault(response.schedule)
-            }
-            .toObservable()
-            .ioMainSchedulers()
+        return if (networkStatusReceiver.isNetworkAvailable()) {
+            scheduleService.fetchSchedule(formPath, groupInfo.group.id)
+                .flatMap { body -> createSchedule(body.string(), groupInfo.group.name) }
+                .flatMap { response -> saveSchedule(groupInfo, response).toSingleDefault(response.schedule) }
+                .toObservable()
+                .ioMainSchedulers()
+        } else {
+            Observable.error(Exceptions.NoNetworkException())
+        }
     }
 
     fun deleteCurrentSchedule(groupId: Int) = Single.fromCallable {
@@ -103,9 +103,8 @@ class ScheduleRepository(
                 )
                 val formPath = groupInfo.form.toFormPath()
                 scheduleService.fetchSchedule(formPath, groupInfo.group.id)
-                    .flatMap { body ->
-                        createSchedule(body.string(), groupInfo.group.name)
-                    }.toObservable()
+                    .flatMap { body -> createSchedule(body.string(), groupInfo.group.name) }
+                    .toObservable()
                     .zipWith(schedulesDao.getByGroupId(groupId).toObservable())
                     .flatMap { (scheduleResponse, scheduleEntity) ->
                         val areSchedulesSame = scheduleResponse.rawBody == scheduleEntity.rawScheduleStr

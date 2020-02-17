@@ -81,5 +81,4 @@ class Navigator {
             .pushChangeHandler(changeHandler)
             .popChangeHandler(changeHandler)
     )
-
 }
