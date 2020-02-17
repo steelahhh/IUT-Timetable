@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute
+package com.alefimenko.iuttimetable.presentation.pickinstitute
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,8 +9,8 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.base.KotlinView
 import com.alefimenko.iuttimetable.extension.changeEnabled
 import com.alefimenko.iuttimetable.presentation.R
-import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.Event
-import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.Model
+import com.alefimenko.iuttimetable.presentation.pickinstitute.PickInstituteFeature.Event
+import com.alefimenko.iuttimetable.presentation.pickinstitute.PickInstituteFeature.Model
 import com.spotify.mobius.Connectable
 import com.spotify.mobius.Connection
 import com.spotify.mobius.functions.Consumer
@@ -83,7 +83,7 @@ class PickInstituteView(
                 icon = null
                 text = String.format(
                     context.getString(R.string.selected_institute),
-                    institute.label
+                    institute.name
                 )
             }
             nextButton.show()
@@ -93,7 +93,7 @@ class PickInstituteView(
             pickInstituteButton.setOnClickListener {
                 val selected = institutes.indexOf(institute)
                 dialog?.listItemsSingleChoice(
-                    items = institutes.map { it.label },
+                    items = institutes.map { it.name },
                     initialSelection = selected
                 ) { dialog, index, _ ->
                     output.accept(Event.InstituteClicked(institutes[index]))

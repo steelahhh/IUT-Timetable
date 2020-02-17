@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute
+package com.alefimenko.iuttimetable.presentation.pickinstitute
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.alefimenko.iuttimetable.base.BaseController
 import com.alefimenko.iuttimetable.presentation.di.Scopes
-import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.Event
-import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.InstituteEffectHandler
-import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.InstituteInitializer
-import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.InstituteUpdater
-import com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute.PickInstituteFeature.Model
+import com.alefimenko.iuttimetable.presentation.pickinstitute.PickInstituteFeature.Event
+import com.alefimenko.iuttimetable.presentation.pickinstitute.PickInstituteFeature.InstituteEffectHandler
+import com.alefimenko.iuttimetable.presentation.pickinstitute.PickInstituteFeature.InstituteInitializer
+import com.alefimenko.iuttimetable.presentation.pickinstitute.PickInstituteFeature.InstituteUpdater
+import com.alefimenko.iuttimetable.presentation.pickinstitute.PickInstituteFeature.Model
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.android.AndroidLogger
 import com.spotify.mobius.android.MobiusAndroid.controller

@@ -8,7 +8,7 @@ import com.alefimenko.iuttimetable.common.transformer
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
 import com.alefimenko.iuttimetable.navigation.Navigator
-import com.alefimenko.iuttimetable.presentation.di.Screens
+import com.alefimenko.iuttimetable.presentation.Screens
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleRepository
 import com.spotify.mobius.First
 import com.spotify.mobius.First.first
@@ -88,7 +88,7 @@ object GroupsFeature {
                 repository.getGroups()
                     .toObservable()
                     .map<Event> {
-                        GroupsFeature.Event.GroupsLoaded(it, preferences.currentGroup)
+                        Event.GroupsLoaded(it, preferences.currentGroup)
                     }
                     .startWith(Event.Loading)
             }

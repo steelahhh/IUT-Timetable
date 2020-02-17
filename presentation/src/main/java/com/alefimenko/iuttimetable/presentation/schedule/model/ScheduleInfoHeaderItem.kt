@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.item_schedule_header.*
  * Created by Alexander Efimenko on 2019-07-09.
  */
 
-data class ScheduleInfoHeader(
+data class ScheduleInfoHeaderItem(
     val group: String,
     val semester: String,
     val isWeekOdd: Boolean

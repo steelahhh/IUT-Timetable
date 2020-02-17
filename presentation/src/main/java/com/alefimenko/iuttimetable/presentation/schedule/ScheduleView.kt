@@ -18,12 +18,12 @@ import com.alefimenko.iuttimetable.presentation.root.RootActivity
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Event
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Model
 import com.alefimenko.iuttimetable.presentation.schedule.groups.GroupsFragment
-import com.alefimenko.iuttimetable.presentation.schedule.model.ClassUi
+import com.alefimenko.iuttimetable.presentation.schedule.model.ClassItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.EmptyDayItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.HeaderItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.Position
-import com.alefimenko.iuttimetable.presentation.schedule.model.ScheduleInfoHeader
-import com.alefimenko.iuttimetable.presentation.schedule.model.toClassUi
+import com.alefimenko.iuttimetable.presentation.schedule.model.ScheduleInfoHeaderItem
+import com.alefimenko.iuttimetable.presentation.schedule.model.toClassItem
 import com.jakewharton.rxbinding3.appcompat.itemClicks
 import com.jakewharton.rxbinding3.view.clicks
 import com.spotify.mobius.Connectable
@@ -114,7 +114,7 @@ class ScheduleView(
         recyclerView.isGone = isLoading || isError
         itemAdapter.clear()
         val items = Section(
-            ScheduleInfoHeader(
+            ScheduleInfoHeaderItem(
                 model.schedule?.groupTitle ?: "",
                 model.schedule?.semester ?: "",
                 currentWeek == 0
@@ -140,7 +140,7 @@ class ScheduleView(
                             listIdx == list.size - 1 -> Position.LAST
                             else -> Position.OTHER
                         }
-                        classEntry.toClassUi(
+                        classEntry.toClassItem(
                             position,
                             onClassMenuClick = { classUi, view ->
                                 openPopupMenu(classUi, view, listIdx, dayIndex, selectedWeek)
@@ -159,7 +159,7 @@ class ScheduleView(
     }
 
     private fun openPopupMenu(
-        classUi: ClassUi,
+        classItem: ClassItem,
         view: View,
         classIndex: Int,
         dayIndex: Int,
@@ -172,8 +172,8 @@ class ScheduleView(
                 true
             }
             show()
-            menu.findItem(R.id.hide_class).isVisible = !classUi.hidden
-            menu.findItem(R.id.restore_class).isVisible = classUi.hidden
+            menu.findItem(R.id.hide_class).isVisible = !classItem.hidden
+            menu.findItem(R.id.restore_class).isVisible = classItem.hidden
         }
     }
 

@@ -3,12 +3,12 @@ package com.alefimenko.iuttimetable.presentation.pickgroup
 import android.util.LruCache
 import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
+import com.alefimenko.iuttimetable.data.Institute
 import com.alefimenko.iuttimetable.data.remote.Exceptions
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.data.remote.model.IUTLabeledResponse
 import com.alefimenko.iuttimetable.data.remote.toFormPath
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.toInstituteUi
+import com.alefimenko.iuttimetable.presentation.model.toInstitute
 import io.reactivex.Observable
 
 /*
@@ -20,7 +20,7 @@ class PickGroupRepository(
     private val networkStatusReceiver: NetworkStatusReceiver
 ) {
 
-    private val lruCache: LruCache<String, List<InstituteUi>> = LruCache(2 * 1024 * 1024)
+    private val lruCache: LruCache<String, List<Institute>> = LruCache(2 * 1024 * 1024)
 
     fun getGroups(form: Int, instituteId: Int): Observable<List<IUTLabeledResponse>> {
         return if (networkStatusReceiver.isNetworkAvailable()) {
@@ -32,7 +32,7 @@ class PickGroupRepository(
         }
     }
 
-    fun getInstitutes(): Observable<List<InstituteUi>> {
+    fun getInstitutes(): Observable<List<Institute>> {
         val cachedInstitutes = lruCache[INSTITUTES]
         return if (cachedInstitutes != null) {
             Observable.just(cachedInstitutes)
@@ -43,7 +43,7 @@ class PickGroupRepository(
                     .ioMainSchedulers()
                     .map { institutes ->
                         institutes.map { institute ->
-                            institute.toInstituteUi()
+                            institute.toInstitute()
                         }.also {
                             lruCache.put(INSTITUTES, it)
                         }

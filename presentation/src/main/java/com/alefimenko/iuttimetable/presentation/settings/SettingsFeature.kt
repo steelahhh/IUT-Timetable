@@ -23,11 +23,10 @@ import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Effect.
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Event.AboutClicked
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Event.BackClicked
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Event.FeedbackClicked
-import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey
-import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey.DarkTheme
-import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey.RelevantSchedule
-import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey.UpdateSchedule
-import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey.WeekCountDown
+import com.alefimenko.iuttimetable.presentation.settings.SettingsItemKey.DarkTheme
+import com.alefimenko.iuttimetable.presentation.settings.SettingsItemKey.RelevantSchedule
+import com.alefimenko.iuttimetable.presentation.settings.SettingsItemKey.UpdateSchedule
+import com.alefimenko.iuttimetable.presentation.settings.SettingsItemKey.WeekCountDown
 import com.spotify.mobius.First
 import com.spotify.mobius.First.first
 import com.spotify.mobius.Init

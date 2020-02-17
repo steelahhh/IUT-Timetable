@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alefimenko.iuttimetable.base.BaseController
+import com.alefimenko.iuttimetable.data.Institute
 import com.alefimenko.iuttimetable.extension.hideSoftKeyboard
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.di.Scopes
@@ -13,7 +14,6 @@ import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Group
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.GroupUpdater
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Model
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.PickGroupEffectHandler
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.android.AndroidLogger
@@ -31,7 +31,7 @@ class PickGroupController(
     bundle: Bundle = Bundle()
 ) : BaseController() {
     private var form: Int
-    private var institute: InstituteUi?
+    private var institute: Institute?
     private val scope = getKoin().getOrCreateScope(Scopes.PICK_GROUP, named(Scopes.PICK_GROUP))
 
     init {
@@ -90,7 +90,7 @@ class PickGroupController(
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         form = savedInstanceState[FORM_KEY] as Int
-        institute = savedInstanceState[INSTITUTE_KEY] as InstituteUi
+        institute = savedInstanceState[INSTITUTE_KEY] as Institute
         controller.replaceModel(Model(form = form, institute = institute))
     }
 
@@ -101,20 +101,12 @@ class PickGroupController(
 
         fun newInstance(
             form: Int,
-            institute: InstituteUi
+            institute: Institute
         ): PickGroupController = PickGroupController(
             Bundle().apply {
                 putInt(FORM_KEY, form)
                 putParcelable(INSTITUTE_KEY, institute)
             }
         )
-
-        fun createBundle(
-            form: Int,
-            institute: InstituteUi
-        ) = Bundle().apply {
-            putInt(FORM_KEY, form)
-            putParcelable(INSTITUTE_KEY, institute)
-        }
     }
 }

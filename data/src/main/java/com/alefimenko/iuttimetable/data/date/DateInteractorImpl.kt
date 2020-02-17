@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation
+package com.alefimenko.iuttimetable.data.date
 
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.soywiz.klock.DateTime
@@ -6,15 +6,8 @@ import com.soywiz.klock.DayOfWeek
 import com.soywiz.klock.weekOfYear0
 
 /*
- * Created by Alexander Efimenko on 2019-04-21.
+ * Created by Alexander Efimenko on 17/2/20.
  */
-
-interface DateInteractor {
-    val today: DateTime
-    val isWeekOdd: Boolean
-    val currentWeek: Int
-    val currentDay: Int
-}
 
 class DateInteractorImpl(
     private val localPreferences: Preferences

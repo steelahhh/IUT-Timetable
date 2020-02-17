@@ -2,11 +2,11 @@ package com.alefimenko.iuttimetable.presentation.schedule
 
 import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
+import com.alefimenko.iuttimetable.data.GroupInfo
 import com.alefimenko.iuttimetable.data.ScheduleParser
 import com.alefimenko.iuttimetable.data.local.Constants.ITEM_DOESNT_EXIST
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.local.model.GroupEntity
-import com.alefimenko.iuttimetable.data.local.model.InstituteEntity
 import com.alefimenko.iuttimetable.data.local.model.ScheduleEntity
 import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
 import com.alefimenko.iuttimetable.data.local.schedule.InstitutesDao
@@ -17,9 +17,8 @@ import com.alefimenko.iuttimetable.data.remote.model.Schedule
 import com.alefimenko.iuttimetable.data.remote.model.ScheduleResponse
 import com.alefimenko.iuttimetable.data.remote.model.WeekSchedule
 import com.alefimenko.iuttimetable.data.remote.toFormPath
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.Group
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
+import com.alefimenko.iuttimetable.presentation.model.toDb
+import com.alefimenko.iuttimetable.presentation.model.toDomain
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -99,11 +98,8 @@ class ScheduleRepository(
             .flatMapObservable { (group, institute) ->
                 val groupInfo = GroupInfo(
                     form = group.form,
-                    group = Group(group.id, group.name),
-                    institute = InstituteUi(
-                        institute.id,
-                        institute.name
-                    )
+                    group = group.toDomain(),
+                    institute = institute.toDomain()
                 )
                 val formPath = groupInfo.form.toFormPath()
                 scheduleService.fetchSchedule(formPath, groupInfo.group.id)
@@ -189,12 +185,7 @@ class ScheduleRepository(
                 )
             )
         ).andThen(
-            instituteDao.insert(
-                InstituteEntity(
-                    institute.id,
-                    institute.label
-                )
-            )
+            instituteDao.insert(institute.toDb())
         ).andThen(
             saveCurrentGroup(groupInfo.group.id)
         )

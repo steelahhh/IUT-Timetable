@@ -6,12 +6,12 @@ import com.alefimenko.iuttimetable.common.action
 import com.alefimenko.iuttimetable.common.consumer
 import com.alefimenko.iuttimetable.common.effectHandler
 import com.alefimenko.iuttimetable.common.transformer
+import com.alefimenko.iuttimetable.data.GroupInfo
+import com.alefimenko.iuttimetable.data.date.DateInteractor
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.remote.model.Schedule
 import com.alefimenko.iuttimetable.navigation.Navigator
-import com.alefimenko.iuttimetable.presentation.DateInteractor
-import com.alefimenko.iuttimetable.presentation.di.Screens
-import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
+import com.alefimenko.iuttimetable.presentation.Screens
 import com.spotify.mobius.First
 import com.spotify.mobius.First.first
 import com.spotify.mobius.Init

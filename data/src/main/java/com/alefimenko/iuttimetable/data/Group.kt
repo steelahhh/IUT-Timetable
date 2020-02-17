@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.pickgroup.model
+package com.alefimenko.iuttimetable.data
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

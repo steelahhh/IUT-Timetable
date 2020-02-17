@@ -5,12 +5,11 @@ import com.alefimenko.iuttimetable.common.BaseEffectHandler
 import com.alefimenko.iuttimetable.common.consumer
 import com.alefimenko.iuttimetable.common.effectHandler
 import com.alefimenko.iuttimetable.common.transformer
+import com.alefimenko.iuttimetable.data.Group
+import com.alefimenko.iuttimetable.data.GroupInfo
+import com.alefimenko.iuttimetable.data.Institute
 import com.alefimenko.iuttimetable.navigation.Navigator
-import com.alefimenko.iuttimetable.presentation.di.Screens
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.Group
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupItem
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
-import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
+import com.alefimenko.iuttimetable.presentation.Screens
 import com.spotify.mobius.First
 import com.spotify.mobius.First.first
 import com.spotify.mobius.Init
@@ -30,7 +29,7 @@ object PickGroupFeature {
     @Parcelize
     data class Model(
         val form: Int = 0,
-        val institute: InstituteUi? = null,
+        val institute: Institute? = null,
         val group: Group? = null,
         val groups: List<GroupItem> = listOf(),
         val filteredGroups: List<GroupItem> = listOf(),
@@ -49,7 +48,7 @@ object PickGroupFeature {
 
     sealed class Effect {
         data class NavigateToSchedule(val groupInfo: GroupInfo) : Effect()
-        data class LoadGroups(val form: Int, val institute: InstituteUi?) : Effect()
+        data class LoadGroups(val form: Int, val institute: Institute?) : Effect()
     }
 
     object GroupInitializer : Init<Model, Effect> {
@@ -69,7 +68,11 @@ object PickGroupFeature {
                 model.copy(group = event.group),
                 setOf(
                     Effect.NavigateToSchedule(
-                        GroupInfo(model.form, event.group, model.institute!!)
+                        GroupInfo(
+                            model.form,
+                            event.group,
+                            model.institute!!
+                        )
                     )
                 )
             )
@@ -100,7 +103,12 @@ object PickGroupFeature {
             transformer(Effect.LoadGroups::class.java) { effect ->
                 if (effect.institute == null) Observable.empty<Event>()
                 else repository.getGroups(effect.form, effect.institute.id)
-                    .map<Event> { Event.GroupsLoaded(it.map { group -> GroupItem(group.id, group.name) }) }
+                    .map<Event> { Event.GroupsLoaded(it.map { group ->
+                        GroupItem(
+                            group.id,
+                            group.name
+                        )
+                    }) }
                     .onErrorReturn { Event.ErrorLoading(it) }
                     .startWith(Event.StartedLoading)
             }

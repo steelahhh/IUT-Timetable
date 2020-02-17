@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.pickgroup.pickinstitute
+package com.alefimenko.iuttimetable.presentation.pickinstitute
 
 import android.os.Parcelable
 import com.alefimenko.iuttimetable.common.BaseEffectHandler
@@ -6,10 +6,10 @@ import com.alefimenko.iuttimetable.common.action
 import com.alefimenko.iuttimetable.common.consumer
 import com.alefimenko.iuttimetable.common.effectHandler
 import com.alefimenko.iuttimetable.common.transformer
+import com.alefimenko.iuttimetable.data.Institute
 import com.alefimenko.iuttimetable.navigation.Navigator
-import com.alefimenko.iuttimetable.presentation.di.Screens
+import com.alefimenko.iuttimetable.presentation.Screens
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupRepository
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.InstituteUi
 import com.spotify.mobius.First
 import com.spotify.mobius.First.first
 import com.spotify.mobius.Init
@@ -28,8 +28,8 @@ object PickInstituteFeature {
 
     @Parcelize
     data class Model(
-        val institutes: List<InstituteUi> = listOf(),
-        val institute: InstituteUi? = null,
+        val institutes: List<Institute> = listOf(),
+        val institute: Institute? = null,
         val form: Int = 0,
         @Transient val isLoading: Boolean = false,
         @Transient val isError: Boolean = false
@@ -40,16 +40,16 @@ object PickInstituteFeature {
         object NextButtonClicked : Event()
         object StartedLoading : Event()
         object LoadInstitutes : Event()
-        data class InstitutesLoaded(val institutes: List<InstituteUi>) : Event()
+        data class InstitutesLoaded(val institutes: List<Institute>) : Event()
         data class ErrorLoading(val throwable: Throwable) : Event()
-        data class InstituteClicked(val institute: InstituteUi) : Event()
+        data class InstituteClicked(val institute: Institute) : Event()
         data class FormClicked(val id: Int) : Event()
     }
 
     sealed class Effect {
         object LoadInstitutes : Effect()
         object NavigateBack : Effect()
-        data class NavigateToPickGroup(val form: Int, val institute: InstituteUi) : Effect()
+        data class NavigateToPickGroup(val form: Int, val institute: Institute) : Effect()
     }
 
     object InstituteInitializer : Init<Model, Effect> {

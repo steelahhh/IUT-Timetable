@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.settings.model
+package com.alefimenko.iuttimetable.presentation.settings
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

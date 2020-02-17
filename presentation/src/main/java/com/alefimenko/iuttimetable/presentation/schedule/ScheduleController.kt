@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alefimenko.iuttimetable.base.BaseController
+import com.alefimenko.iuttimetable.data.GroupInfo
 import com.alefimenko.iuttimetable.extension.requireActivity
 import com.alefimenko.iuttimetable.presentation.root.RootActivity
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Event
@@ -12,7 +13,6 @@ import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Model
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.ScheduleEffectHandler
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.ScheduleInitializer
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.ScheduleUpdater
-import com.alefimenko.iuttimetable.presentation.schedule.model.GroupInfo
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.android.AndroidLogger
 import com.spotify.mobius.android.MobiusAndroid.controller

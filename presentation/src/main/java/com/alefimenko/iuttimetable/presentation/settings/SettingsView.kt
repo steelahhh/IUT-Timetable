@@ -10,8 +10,6 @@ import com.alefimenko.iuttimetable.base.KotlinView
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Event
 import com.alefimenko.iuttimetable.presentation.settings.SettingsFeature.Model
-import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItem
-import com.alefimenko.iuttimetable.presentation.settings.model.SettingsItemKey
 import com.jakewharton.rxbinding3.view.clicks
 import com.spotify.mobius.Connectable
 import com.spotify.mobius.rx2.RxConnectables

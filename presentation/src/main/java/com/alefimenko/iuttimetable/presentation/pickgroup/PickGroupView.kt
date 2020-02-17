@@ -6,12 +6,11 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alefimenko.iuttimetable.base.KotlinView
+import com.alefimenko.iuttimetable.data.Group
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Event
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupFeature.Model
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.Group
-import com.alefimenko.iuttimetable.presentation.pickgroup.model.GroupItem
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import com.spotify.mobius.Connectable
 import com.spotify.mobius.rx2.RxConnectables

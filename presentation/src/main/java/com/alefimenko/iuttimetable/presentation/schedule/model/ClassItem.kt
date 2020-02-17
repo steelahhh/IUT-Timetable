@@ -28,16 +28,9 @@ import kotlinx.android.synthetic.main.item_class.view.*
  * Created by Alexander Efimenko on 2019-05-09.
  */
 
-enum class Position {
-    FIRST,
-    OTHER,
-    LAST,
-    SINGLE
-}
+typealias OnClassMenuClick = (classItem: ClassItem, view: View) -> Unit
 
-typealias OnClassMenuClick = (classUi: ClassUi, view: View) -> Unit
-
-data class ClassUi(
+data class ClassItem(
     val subject: String = "",
     val teacher: String = "",
     val classType: String = "",
@@ -64,7 +57,7 @@ data class ClassUi(
         innerGroupTv.isGone = hidden || innerGroup == Constants.EMPTY_ENTRY
         innerGroupTv.text = innerGroup
         menuBtn.setOnClickListener {
-            onClassMenuClick(this@ClassUi, it)
+            onClassMenuClick(this@ClassItem, it)
         }
 
         finishTimeTv.isGone = hidden
@@ -93,9 +86,8 @@ data class ClassUi(
         divider.isGone = positionInGroup == Position.LAST || positionInGroup == Position.SINGLE
         val drawable = ContextCompat.getDrawable(context, drawableRes)
         val color = when (context.isDarkModeEnabled) {
-            true -> ContextCompat.getColor(context, R.color.almostDark)
-            else -> ContextCompat.getColor(
-                context,
+            true -> context.getColorCompat(R.color.almostDark)
+            else -> context.getColorCompat(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) R.color.white else R.color.slightlyWhiteGray
             )
         }
@@ -113,7 +105,7 @@ data class ClassUi(
         }
         if (hidden) {
             constraints.apply {
-                subjectTv.setSingleLine(true)
+                subjectTv.isSingleLine = true
                 subjectTv.marqueeRepeatLimit = 3
                 subjectTv.ellipsize = TextUtils.TruncateAt.END
                 connect(startTimeTv.id, TOP, PARENT_ID, TOP, 17)
@@ -129,7 +121,7 @@ data class ClassUi(
                 applyTo(class_layout)
             }
         } else {
-            subjectTv.setSingleLine(false)
+            subjectTv.isSingleLine = false
             subjectTv.marqueeRepeatLimit = -1
             constraints.apply {
                 connect(
@@ -142,7 +134,7 @@ data class ClassUi(
     }
 }
 
-fun ClassEntry.toClassUi(position: Position, onClassMenuClick: OnClassMenuClick) = ClassUi(
+fun ClassEntry.toClassItem(position: Position, onClassMenuClick: OnClassMenuClick) = ClassItem(
     subject = subject,
     teacher = teacher,
     classType = classType,

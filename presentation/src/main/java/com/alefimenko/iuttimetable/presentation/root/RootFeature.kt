@@ -10,7 +10,7 @@ import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
 import com.alefimenko.iuttimetable.navigation.Navigator
 import com.alefimenko.iuttimetable.presentation.BuildConfig
-import com.alefimenko.iuttimetable.presentation.di.Screens
+import com.alefimenko.iuttimetable.presentation.Screens
 import com.bluelinelabs.conductor.Router
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
