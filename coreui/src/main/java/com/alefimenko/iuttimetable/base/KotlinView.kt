@@ -21,7 +21,7 @@ abstract class KotlinView(
     private val mainHandler = Handler(Looper.getMainLooper())
 
     private var _containerView: View? = inflater.inflate(layoutRes, container, false)
-    override val containerView: View get() = _containerView ?: error("Error inflating view")
+    override val containerView: View get() = _containerView ?: error("Error inflating view: ${javaClass.simpleName}")
 
     protected open fun tearDown() {
         clearFindViewByIdCache()
