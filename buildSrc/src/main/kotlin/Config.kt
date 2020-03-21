@@ -22,7 +22,7 @@ object Versions {
     const val appVersionName = "3.0.1"
 
     const val kotlin = "1.3.61"
-    const val androidPlugin = "3.6.0-rc02"
+    const val androidPlugin = "3.6.1"
 
     const val mviCore = "1.1.6"
     const val aac = "2.2.0"
@@ -35,7 +35,7 @@ object Versions {
 
     const val conductor = "3.3.0"
 
-    const val leakCanary = "2.0-alpha-2"
+    const val leakCanary = "2.0"
 
     const val klock = "1.4.0"
 
@@ -152,7 +152,6 @@ object Deps {
     }
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
-    const val leakSentry = "com.squareup.leakcanary:leaksentry:${Versions.leakCanary}"
 
     const val timber = "com.jakewharton.timber:timber:${vers.timber}"
     const val materialDialogs = "com.afollestad.material-dialogs:core:${vers.materialDialogs}"
