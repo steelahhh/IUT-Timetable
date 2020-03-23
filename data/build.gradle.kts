@@ -51,6 +51,9 @@ dependencies {
 
     api(Deps.jsoup)
 
+    implementation(Deps.dagger.core)
+    kapt(Deps.dagger.compiler)
+
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.espresso)

@@ -43,6 +43,9 @@ dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.navigation))
 
+    implementation(Deps.dagger.core)
+    kapt(Deps.dagger.compiler)
+
     implementation(Deps.groupie.core)
     implementation(Deps.groupie.ktx)
 

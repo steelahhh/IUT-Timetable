@@ -4,12 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.alefimenko.iuttimetable.remote.R
+import javax.inject.Inject
 
 /*
  * Created by Alexander Efimenko on 2019-01-20.
  */
 
-class FeedbackService(private val context: Context) {
+class FeedbackService @Inject constructor(private val context: Context) {
 
     data class FeedbackInfo(
         val formId: Int,

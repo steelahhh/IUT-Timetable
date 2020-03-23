@@ -10,12 +10,13 @@ import com.alefimenko.iuttimetable.data.remote.model.IUTLabeledResponse
 import com.alefimenko.iuttimetable.data.remote.toFormPath
 import com.alefimenko.iuttimetable.presentation.model.toInstitute
 import io.reactivex.Observable
+import javax.inject.Inject
 
 /*
  * Created by Alexander Efimenko on 2019-02-14.
  */
 
-class PickGroupRepository(
+class PickGroupRepository @Inject constructor(
     private val scheduleService: ScheduleService,
     private val networkStatusReceiver: NetworkStatusReceiver
 ) {

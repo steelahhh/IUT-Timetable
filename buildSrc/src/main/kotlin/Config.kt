@@ -43,6 +43,8 @@ object Versions {
 
     const val jsoup = "1.11.3"
 
+    const val dagger = "2.27"
+
     const val groupie = "2.7.2"
     const val retrofit = "2.7.0"
     const val gson = "2.8.5"
@@ -108,6 +110,15 @@ object Deps {
         const val test = "org.koin:koin-test:${vers.koin}"
         const val android = "org.koin:koin-android:${vers.koin}"
         const val androidScope = "org.koin:koin-androidx-scope:${vers.koin}"
+    }
+
+    val ribs = "com.github.badoo.RIBs:rib-android:0.11.2"
+
+    val dagger = Dagger
+
+    object Dagger {
+        const val core = "com.google.dagger:dagger:${vers.dagger}"
+        const val compiler = "com.google.dagger:dagger-compiler:${vers.dagger}"
     }
 
     val mobius = Mobius

@@ -81,6 +81,8 @@ dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.navigation))
     implementation(project(Modules.presentation))
+    implementation(Deps.dagger.core)
+    kapt(Deps.dagger.compiler)
     implementation(Deps.multidex)
     implementation(Deps.firebase.core)
     implementation(Deps.firebase.crashlytics)

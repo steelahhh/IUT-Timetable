@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rib_pick_institute"
+    android:layout_width="match_parent"
+    android:background="?attr/background_color"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/pickGroupBackButton"
+        android:layout_width="@dimen/size_xl"
+        android:layout_height="@dimen/size_xxl"
+        android:layout_margin="@dimen/spacing_4"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/navigate_button_content"
+        android:padding="@dimen/spacing_8"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/formRadioGroup"
+        style="@style/AppText.Larger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pickInstituteButton"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <RadioButton
+            android:id="@+id/edu_form_zaochny"
+            style="@style/AppText.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/zaochnaya_form"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/edu_form_ochny"
+            style="@style/AppText.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:checked="true"
+            android:enabled="false"
+            android:text="@string/ochnaya_form"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pickInstituteButton"
+        style="@style/TextMaterialButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:layoutDirection="rtl"
+        android:padding="20dp"
+        android:text="@string/pick_institute"
+        android:textColor="?android:textColorPrimary"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_arrow_down"
+        app:iconGravity="start"
+        app:iconTint="?android:textColorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/formRadioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.68"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/pickInstituteButton"
+        app:layout_constraintLeft_toRightOf="@id/pickInstituteButton"
+        app:layout_constraintTop_toTopOf="@id/pickInstituteButton" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_arrow_forward"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.alefimenko.iuttimetable.views.ErrorStubView
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

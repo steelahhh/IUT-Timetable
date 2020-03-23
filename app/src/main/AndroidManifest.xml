@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".presentation.root.RootActivity"
+            android:name=".RootActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>

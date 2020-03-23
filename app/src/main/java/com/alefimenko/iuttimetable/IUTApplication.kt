@@ -2,6 +2,9 @@ package com.alefimenko.iuttimetable
 
 import androidx.multidex.MultiDexApplication
 import com.alefimenko.iuttimetable.common.RussianLocale
+import com.alefimenko.iuttimetable.di.ApplicationComponent
+import com.alefimenko.iuttimetable.di.DaggerApplicationComponent
+import com.alefimenko.iuttimetable.di.InjectorProvider
 import com.alefimenko.iuttimetable.di.applicationModule
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
@@ -16,7 +19,11 @@ import timber.log.Timber
  */
 
 @Suppress("unused")
-class IUTApplication : MultiDexApplication() {
+class IUTApplication : MultiDexApplication(), InjectorProvider {
+
+    override val component: ApplicationComponent by lazy {
+        DaggerApplicationComponent.factory().create(this)
+    }
 
     override fun onCreate() {
         super.onCreate()

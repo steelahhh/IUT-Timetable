@@ -27,6 +27,7 @@ fun <T> Observable<T>.ioSchedulers() = this
     .subscribeOn(Schedulers.io())
     .observeOn(Schedulers.io())
 
+@Deprecated("Ditch this, and get schedulers as a dependency")
 fun <T> Single<T>.ioMainSchedulers() = this
     .subscribeOn(Schedulers.io())
     .observeOn(AndroidSchedulers.mainThread())
@@ -42,6 +43,8 @@ fun <T> Maybe<T>.ioMainSchedulers() = this
 fun <T> Maybe<T>.ioSchedulers() = this
     .subscribeOn(Schedulers.io())
     .observeOn(Schedulers.io())
+
+fun <T> justOnMain(item: T): Observable<T> = Observable.just(item).observeOn(AndroidSchedulers.mainThread())
 
 fun <T, R> Observable<List<T>>.mapList(
     mapper: (t: T) -> R

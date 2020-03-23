@@ -7,12 +7,13 @@ import android.net.ConnectivityManager
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
+import javax.inject.Inject
 
 /*
  * Created by Alexander Efimenko on 2019-01-20.
  */
 
-class NetworkStatusReceiver(
+class NetworkStatusReceiver @Inject constructor(
     private val applicationContext: Context
 ) : BroadcastReceiver() {
 

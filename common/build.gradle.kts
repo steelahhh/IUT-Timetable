@@ -34,6 +34,10 @@ android {
 dependencies {
     api(kotlin("stdlib-jdk7", Versions.kotlin))
 
+    api(Deps.ribs)
+
+    implementation(Deps.dagger.core)
+
     api(Deps.koin.core)
     api(Deps.koin.ext)
     api(Deps.koin.android)

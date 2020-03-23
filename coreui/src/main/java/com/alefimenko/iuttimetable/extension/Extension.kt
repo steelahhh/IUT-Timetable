@@ -1,5 +1,6 @@
 package com.alefimenko.iuttimetable.extension
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -32,6 +33,37 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  * Created by Alexander Efimenko on 2019-04-24.
  */
 
+fun Activity.updateNavigationColor() {
+    val typedValueAttr = TypedValue()
+    theme.resolveAttribute(R.attr.background_color, typedValueAttr, true)
+    val color = ContextCompat.getColor(this, typedValueAttr.resourceId)
+    val darkColor = ContextCompat.getColor(this, R.color.backgroundDark)
+    val isDark = color == darkColor
+
+    var newNavigationColor = color
+
+    if (SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        window.apply {
+            statusBarColor = color
+            if (SDK_INT >= Build.VERSION_CODES.O && !isDark) {
+                var flags = decorView.systemUiVisibility
+                flags = flags xor View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                decorView.systemUiVisibility = flags
+            } else {
+                newNavigationColor = ContextCompat.getColor(
+                    this@updateNavigationColor,
+                    if (isDark) {
+                        R.color.backgroundDark
+                    } else {
+                        android.R.color.black
+                    }
+                )
+            }
+            navigationBarColor = newNavigationColor
+        }
+    }
+}
+
 fun FloatingActionButton.show(state: Boolean) = if (state) show() else hide()
 
 fun View.showSoftKeyboard() {
@@ -63,11 +95,12 @@ fun RadioGroup.changeEnabled(enabled: Boolean) {
     }
 }
 
-val Context.isDarkModeEnabled get(): Boolean = if (SDK_INT == Q) {
-    resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
-} else {
-    AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES
-}
+val Context.isDarkModeEnabled
+    get(): Boolean = if (SDK_INT == Q) {
+        resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
+    } else {
+        AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES
+    }
 
 fun BottomAppBar.changeMenuColors() {
     val colorOnBackground = when (context.isDarkModeEnabled) {

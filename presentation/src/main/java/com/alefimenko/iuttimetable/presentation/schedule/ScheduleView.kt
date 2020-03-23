@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +15,6 @@ import com.alefimenko.iuttimetable.base.KotlinView
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
-import com.alefimenko.iuttimetable.presentation.root.RootActivity
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Event
 import com.alefimenko.iuttimetable.presentation.schedule.ScheduleFeature.Model
 import com.alefimenko.iuttimetable.presentation.schedule.groups.GroupsFragment
@@ -44,7 +44,7 @@ import kotlinx.android.synthetic.main.screen_schedule.*
 class ScheduleView(
     inflater: LayoutInflater,
     container: ViewGroup,
-    private val activity: RootActivity
+    private val activity: AppCompatActivity
 ) : KotlinView(R.layout.screen_schedule, inflater, container) {
 
     private val itemAdapter = GroupAdapter<GroupieViewHolder>()
