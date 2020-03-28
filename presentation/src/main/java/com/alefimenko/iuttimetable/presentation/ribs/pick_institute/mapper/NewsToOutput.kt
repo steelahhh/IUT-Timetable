@@ -5,5 +5,7 @@ import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.feature.Pick
 
 internal object NewsToOutput : (News) -> Output? {
 
-    override fun invoke(news: News): Output? = null
+    override fun invoke(news: News): Output? = when (news) {
+        is News.RouteToPickGroup -> Output.RouteToPickInstitute(news.form, news.institute)
+    }
 }

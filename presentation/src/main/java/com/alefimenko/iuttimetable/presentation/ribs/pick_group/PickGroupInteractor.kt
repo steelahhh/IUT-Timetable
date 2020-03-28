@@ -9,6 +9,7 @@ import com.alefimenko.iuttimetable.presentation.ribs.pick_group.mapper.NewsToOut
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.mapper.StateToViewModel
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.mapper.ViewEventToAnalyticsEvent
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.mapper.ViewEventToWish
+import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.android.lifecycle.createDestroy
 import com.badoo.mvicore.android.lifecycle.startStop
 import com.badoo.mvicore.binder.using
@@ -19,6 +20,7 @@ import io.reactivex.functions.Consumer
 internal class PickGroupInteractor(
     savedInstanceState: Bundle?,
     private val router: PickGroupRouter,
+    private val timeCapsule: AndroidTimeCapsule,
     private val input: ObservableSource<PickGroup.Input>,
     private val output: Consumer<PickGroup.Output>,
     private val feature: PickGroupFeature
@@ -40,5 +42,10 @@ internal class PickGroupInteractor(
             bind(view to feature using ViewEventToWish)
             bind(view to PickGroupAnalytics using ViewEventToAnalyticsEvent)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        timeCapsule.saveState(outState)
     }
 }

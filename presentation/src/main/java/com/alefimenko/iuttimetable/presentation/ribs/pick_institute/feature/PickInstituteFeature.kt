@@ -25,11 +25,11 @@ import kotlinx.android.parcel.Parcelize
 internal class PickInstituteFeature @Inject constructor(
     pickGroupRepository: PickGroupRepository,
     @Named(CAPSULE_KEY)
-    private val androidTimeCapsule: AndroidTimeCapsule
+    private val timeCapsule: AndroidTimeCapsule
 ) : ActorReducerFeature<Wish, Effect, State, News>(
-    initialState = androidTimeCapsule[FEATURE_KEY] ?: State(),
+    initialState = timeCapsule[FEATURE_KEY] ?: State(),
     bootstrapper = BootStrapperImpl(
-        institutesLoaded = androidTimeCapsule.get<State>(FEATURE_KEY)?.institutes?.isNotEmpty() ?: false
+        institutesLoaded = timeCapsule.get<State>(FEATURE_KEY)?.institutes?.isNotEmpty() ?: false
     ),
     actor = ActorImpl(pickGroupRepository),
     reducer = ReducerImpl(),
@@ -38,7 +38,7 @@ internal class PickInstituteFeature @Inject constructor(
 
     init {
         subscribe(object : EmptyObserver<State>() {
-            override fun onNext(value: State) = androidTimeCapsule.register(FEATURE_KEY) {
+            override fun onNext(value: State) = timeCapsule.register(FEATURE_KEY) {
                 value.copy(
                     isLoading = false,
                     isError = false
@@ -58,6 +58,7 @@ internal class PickInstituteFeature @Inject constructor(
 
     sealed class Wish {
         object FetchInstitutes : Wish()
+        object NavigateToPickGroup : Wish()
         data class FormPicked(val form: Int) : Wish()
         data class InstitutePicked(val institute: Institute) : Wish()
     }
@@ -68,9 +69,12 @@ internal class PickInstituteFeature @Inject constructor(
         data class InstitutesLoaded(val institutes: List<Institute>) : Effect()
         data class SelectForm(val form: Int) : Effect()
         data class InstitutePicked(val institute: Institute) : Effect()
+        data class RouteToPickGroup(val form: Int, val institute: Institute) : Effect()
     }
 
-    sealed class News
+    sealed class News {
+        data class RouteToPickGroup(val form: Int, val institute: Institute) : News()
+    }
 
     class BootStrapperImpl(private val institutesLoaded: Boolean) : Bootstrapper<Wish> {
         override fun invoke(): Observable<Wish> = if (institutesLoaded) empty() else just(Wish.FetchInstitutes)
@@ -86,6 +90,7 @@ internal class PickInstituteFeature @Inject constructor(
                 .startWith(Effect.StartLoading)
             is Wish.FormPicked -> justOnMain(Effect.SelectForm(wish.form))
             is Wish.InstitutePicked -> justOnMain(Effect.InstitutePicked(wish.institute))
+            is Wish.NavigateToPickGroup -> justOnMain(Effect.RouteToPickGroup(state.selectedForm, state.institute!!))
         }
     }
 
@@ -100,11 +105,15 @@ internal class PickInstituteFeature @Inject constructor(
             )
             is Effect.SelectForm -> state.copy(selectedForm = effect.form)
             is Effect.InstitutePicked -> state.copy(institute = effect.institute)
+            is Effect.RouteToPickGroup -> state
         }
     }
 
     class NewsPublisherImpl : NewsPublisher<Wish, Effect, State, News> {
-        override fun invoke(wish: Wish, effect: Effect, state: State): News? = null
+        override fun invoke(wish: Wish, effect: Effect, state: State): News? = when (effect) {
+            is Effect.RouteToPickGroup -> News.RouteToPickGroup(effect.form, effect.institute)
+            else -> null
+        }
     }
 
     companion object {

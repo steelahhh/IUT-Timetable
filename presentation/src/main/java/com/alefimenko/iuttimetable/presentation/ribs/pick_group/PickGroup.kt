@@ -1,17 +1,23 @@
 package com.alefimenko.iuttimetable.presentation.ribs.pick_group
 
+import com.alefimenko.iuttimetable.common.ContextProvider
+import com.alefimenko.iuttimetable.data.Institute
 import com.badoo.ribs.core.Rib
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 
 interface PickGroup : Rib {
 
-    interface Dependency {
+    interface Dependency : ContextProvider {
         fun pickGroupInput(): ObservableSource<Input>
         fun pickGroupOutput(): Consumer<Output>
     }
 
-    sealed class Input
+    sealed class Input {
+        data class GroupInfoReceived(val form: Int, val institute: Institute) : Input()
+    }
 
-    sealed class Output
+    sealed class Output {
+        object GoBack : Output()
+    }
 }

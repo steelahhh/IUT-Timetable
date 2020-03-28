@@ -85,6 +85,10 @@ class PickInstituteViewImpl private constructor(
             )
         }
 
+        nextButton.setOnClickListener {
+            events.accept(Event.NextClicked)
+        }
+
         if (vm.institutes.isNotEmpty()) {
             pickInstituteButton.setOnClickListener {
                 val selected = vm.institutes.indexOf(vm.institute)

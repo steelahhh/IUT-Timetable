@@ -5,6 +5,7 @@ import com.alefimenko.iuttimetable.presentation.ribs.pick_group.feature.PickGrou
 
 internal object InputToWish : (Input) -> Wish? {
 
-    override fun invoke(event: Input): Wish? =
-        TODO("Implement PickGroupInputToWish mapping")
+    override fun invoke(event: Input): Wish? = when (event) {
+        is Input.GroupInfoReceived -> Wish.LoadGroups(event.form, event.institute)
+    }
 }

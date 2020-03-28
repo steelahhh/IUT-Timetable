@@ -28,6 +28,7 @@ class PickGroupRouter(
         sealed class Overlay : Configuration()
     }
 
-    override fun resolveConfiguration(configuration: Configuration): RoutingAction<PickGroupView> =
-        RoutingAction.noop()
+    override fun resolveConfiguration(
+        configuration: Configuration
+    ): RoutingAction<PickGroupView> = RoutingAction.noop()
 }

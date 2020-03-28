@@ -2,7 +2,6 @@
 
 package com.alefimenko.iuttimetable.root.builder
 
-import android.content.Context
 import android.os.Bundle
 import com.alefimenko.iuttimetable.data.DataModule
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group_root.PickGroupRoot
@@ -27,11 +26,7 @@ internal object RootModule {
         savedInstanceState: Bundle?
     ): RootRouter = RootRouter(
         savedInstanceState = savedInstanceState,
-        pickGroupRootBuilder = PickGroupRootBuilder(object : PickGroupRoot.Dependency {
-            override fun pickGroupRootInput(): ObservableSource<PickGroupRoot.Input> = Observable.empty()
-            override fun pickGroupRootOutput(): Consumer<PickGroupRoot.Output> = Consumer { }
-            override val context: Context = component.context()
-        })
+        pickGroupRootBuilder = PickGroupRootBuilder(component)
     )
 
     @RootScope
@@ -61,4 +56,14 @@ internal object RootModule {
         interactor = interactor,
         feature = feature
     )
+
+    @RootScope
+    @Provides
+    @JvmStatic
+    internal fun rootGroupInput(): ObservableSource<PickGroupRoot.Input> = Observable.empty()
+
+    @RootScope
+    @Provides
+    @JvmStatic
+    internal fun rootGroupOutput(): Consumer<PickGroupRoot.Output> = Consumer { }
 }

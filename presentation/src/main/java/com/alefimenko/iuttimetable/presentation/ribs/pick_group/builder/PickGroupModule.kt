@@ -3,6 +3,7 @@
 package com.alefimenko.iuttimetable.presentation.ribs.pick_group.builder
 
 import android.os.Bundle
+import com.alefimenko.iuttimetable.data.DataModule
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.PickGroup.Input
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.PickGroup.Output
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.PickGroupInteractor
@@ -10,31 +11,31 @@ import com.alefimenko.iuttimetable.presentation.ribs.pick_group.PickGroupNode
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.PickGroupRouter
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.PickGroupViewImpl
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.feature.PickGroupFeature
+import com.badoo.mvicore.android.AndroidTimeCapsule
 import dagger.Provides
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
+import javax.inject.Named
 
-@dagger.Module
+@dagger.Module(includes = [DataModule::class])
 internal object PickGroupModule {
+
+    @PickGroupScope
+    @Provides
+    @Named(PickGroupFeature.CAPSULE_KEY)
+    @JvmStatic
+    internal fun timeCapsule(savedInstanceState: Bundle?) = AndroidTimeCapsule(savedInstanceState)
 
     @PickGroupScope
     @Provides
     @JvmStatic
     internal fun router(
-        // pass component to child rib builders, or remove if there are none
         component: PickGroupComponent,
         savedInstanceState: Bundle?
-    ): PickGroupRouter =
-        PickGroupRouter(
-            savedInstanceState = savedInstanceState,
-            transitionHandler = null // Add customisation.transitionHandler if you need it
-        )
-
-    @PickGroupScope
-    @Provides
-    @JvmStatic
-    internal fun feature(): PickGroupFeature =
-        PickGroupFeature()
+    ): PickGroupRouter = PickGroupRouter(
+        savedInstanceState = savedInstanceState,
+        transitionHandler = null
+    )
 
     @PickGroupScope
     @Provides
@@ -42,17 +43,19 @@ internal object PickGroupModule {
     internal fun interactor(
         savedInstanceState: Bundle?,
         router: PickGroupRouter,
+        @Named(PickGroupFeature.CAPSULE_KEY)
+        timeCapsule: AndroidTimeCapsule,
         input: ObservableSource<Input>,
         output: Consumer<Output>,
         feature: PickGroupFeature
-    ): PickGroupInteractor =
-        PickGroupInteractor(
-            savedInstanceState = savedInstanceState,
-            router = router,
-            input = input,
-            output = output,
-            feature = feature
-        )
+    ): PickGroupInteractor = PickGroupInteractor(
+        savedInstanceState = savedInstanceState,
+        router = router,
+        timeCapsule = timeCapsule,
+        input = input,
+        output = output,
+        feature = feature
+    )
 
     @PickGroupScope
     @Provides

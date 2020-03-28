@@ -17,3 +17,4 @@ fun InstituteEntity.toDomain() = Institute(id, name)
 fun Institute.toDb() = InstituteEntity(id, name)
 
 fun IUTLabeledResponse.toInstitute() = Institute(id, name)
+fun IUTLabeledResponse.toGroup() = Group(id, name)
