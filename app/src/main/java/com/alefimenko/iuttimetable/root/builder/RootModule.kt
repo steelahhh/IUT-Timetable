@@ -3,13 +3,17 @@
 package com.alefimenko.iuttimetable.root.builder
 
 import android.os.Bundle
+import com.alefimenko.iuttimetable.AppRibCustomisations
 import com.alefimenko.iuttimetable.data.DataModule
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group_root.PickGroupRoot
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group_root.builder.PickGroupRootBuilder
+import com.alefimenko.iuttimetable.presentation.ribs.schedule.Schedule
+import com.alefimenko.iuttimetable.presentation.ribs.schedule.builder.ScheduleBuilder
 import com.alefimenko.iuttimetable.root.RootInteractor
 import com.alefimenko.iuttimetable.root.RootNode
 import com.alefimenko.iuttimetable.root.RootRouter
 import com.alefimenko.iuttimetable.root.feature.RootFeature
+import com.badoo.ribs.customisation.RibCustomisationDirectory
 import dagger.Provides
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
@@ -26,7 +30,8 @@ internal object RootModule {
         savedInstanceState: Bundle?
     ): RootRouter = RootRouter(
         savedInstanceState = savedInstanceState,
-        pickGroupRootBuilder = PickGroupRootBuilder(component)
+        pickGroupRootBuilder = PickGroupRootBuilder(component),
+        scheduleBuilder = ScheduleBuilder(component)
     )
 
     @RootScope
@@ -65,5 +70,23 @@ internal object RootModule {
     @RootScope
     @Provides
     @JvmStatic
-    internal fun rootGroupOutput(): Consumer<PickGroupRoot.Output> = Consumer { }
+    internal fun rootGroupOutput(
+        rootInteractor: RootInteractor
+    ): Consumer<PickGroupRoot.Output> = rootInteractor.pickGroupNavigator
+
+    @RootScope
+    @Provides
+    @JvmStatic
+    internal fun scheduleInput(
+        rootInteractor: RootInteractor
+    ): ObservableSource<Schedule.Input> = rootInteractor.scheduleInput
+
+    @RootScope
+    @Provides
+    @JvmStatic
+    internal fun scheduleOutput(): Consumer<Schedule.Output> = Consumer { }
+
+    @Provides
+    @JvmStatic
+    internal fun customisation(): RibCustomisationDirectory = AppRibCustomisations
 }

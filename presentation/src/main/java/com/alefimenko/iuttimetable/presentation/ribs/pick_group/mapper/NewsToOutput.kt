@@ -6,5 +6,6 @@ import com.alefimenko.iuttimetable.presentation.ribs.pick_group.feature.PickGrou
 internal object NewsToOutput : (News) -> Output? {
     override fun invoke(news: News): Output? = when (news) {
         is News.GoBack -> Output.GoBack
+        is News.RouteToSchedule -> Output.GoToSchedule(news.groupInfo)
     }
 }

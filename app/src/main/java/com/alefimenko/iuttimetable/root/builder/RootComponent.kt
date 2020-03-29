@@ -3,6 +3,7 @@ package com.alefimenko.iuttimetable.root.builder
 import android.content.Context
 import android.os.Bundle
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group_root.PickGroupRoot
+import com.alefimenko.iuttimetable.presentation.ribs.schedule.Schedule
 import com.alefimenko.iuttimetable.root.Root
 import com.alefimenko.iuttimetable.root.RootNode
 import dagger.BindsInstance
@@ -12,7 +13,7 @@ import dagger.BindsInstance
     modules = [RootModule::class],
     dependencies = [Root.Dependency::class]
 )
-internal interface RootComponent : PickGroupRoot.Dependency {
+internal interface RootComponent : PickGroupRoot.Dependency, Schedule.Dependency {
 
     @dagger.Component.Factory
     interface Factory {

@@ -1,6 +1,7 @@
 package com.alefimenko.iuttimetable.presentation.ribs.pick_group_root
 
 import com.alefimenko.iuttimetable.common.ContextProvider
+import com.alefimenko.iuttimetable.data.GroupInfo
 import com.badoo.ribs.core.Rib
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
@@ -14,5 +15,7 @@ interface PickGroupRoot : Rib {
 
     sealed class Input
 
-    sealed class Output
+    sealed class Output {
+        data class OpenSchedule(val groupInfo: GroupInfo) : Output()
+    }
 }

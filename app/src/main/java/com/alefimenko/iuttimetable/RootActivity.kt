@@ -7,6 +7,8 @@ import com.alefimenko.iuttimetable.extension.updateNavigationColor
 import com.alefimenko.iuttimetable.root.builder.RootBuilder
 import com.badoo.ribs.android.RibActivity
 import com.badoo.ribs.core.Node
+import com.badoo.ribs.customisation.RibCustomisationDirectory
+import com.badoo.ribs.customisation.RibCustomisationDirectoryImpl
 import kotlinx.android.synthetic.main.activity_root.*
 
 /*
@@ -27,3 +29,10 @@ class RootActivity : RibActivity() {
         if (savedInstanceState == null) updateNavigationColor()
     }
 }
+
+object AppRibCustomisations : RibCustomisationDirectory by customisations({
+})
+
+fun customisations(
+    block: RibCustomisationDirectoryImpl.() -> Unit
+): RibCustomisationDirectoryImpl = RibCustomisationDirectoryImpl().apply(block)

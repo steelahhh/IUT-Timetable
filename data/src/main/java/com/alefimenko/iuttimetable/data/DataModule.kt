@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 @dagger.Module
 object DataModule {
     private const val BASE_URL = "https://www.tyuiu.ru/"
-    private const val CONNECT_TIMEOUT_IN_MS = 1500L
+    private const val CONNECT_TIMEOUT_IN_MS = 5000L
 
     @dagger.Provides
     fun parser(): ScheduleParser = ScheduleParser()

@@ -8,11 +8,15 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.lifecycle.Lifecycle
+import com.alefimenko.iuttimetable.presentation.ribs.pick_group.PickGroup
+import com.alefimenko.iuttimetable.presentation.ribs.pick_group_root.PickGroupRoot
+import com.alefimenko.iuttimetable.presentation.ribs.schedule.Schedule
 import com.alefimenko.iuttimetable.root.feature.RootFeature
 import com.alefimenko.iuttimetable.root.feature.RootFeature.News
 import com.badoo.mvicore.android.lifecycle.startStop
 import com.badoo.ribs.core.Interactor
 import io.reactivex.functions.Consumer
+import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 
 internal class RootInteractor(
@@ -23,8 +27,18 @@ internal class RootInteractor(
     savedInstanceState = savedInstanceState,
     disposables = feature
 ) {
+    val scheduleInput = PublishSubject.create<Schedule.Input>()
+
+    val pickGroupNavigator: Consumer<PickGroupRoot.Output> = Consumer {
+        when (it) {
+            is PickGroupRoot.Output.OpenSchedule -> {
+                router.newRoot(RootRouter.Configuration.Schedule)
+                scheduleInput.onNext(Schedule.Input.LoadSchedule(it.groupInfo))
+            }
+        }
+    }
+
     private val newsConsumer = Consumer<News> {
-        Timber.d("Got news $it")
         when (it) {
             is News.UpdateTheme -> updateTheme(it.isNightMode)
             News.RouteToSchedule -> router.newRoot(RootRouter.Configuration.Schedule)

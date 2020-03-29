@@ -32,6 +32,7 @@ internal class PickGroupRootInteractor(
     val pickGroupOutputConsumer: Consumer<PickGroup.Output> = Consumer {
         when (it) {
             is PickGroup.Output.GoBack -> router.popBackStack()
+            is PickGroup.Output.GoToSchedule -> output.accept(PickGroupRoot.Output.OpenSchedule(it.groupInfo))
         }
     }
 }

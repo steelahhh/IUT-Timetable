@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.common.extension.justOnMain
 import com.alefimenko.iuttimetable.data.Group
+import com.alefimenko.iuttimetable.data.GroupInfo
 import com.alefimenko.iuttimetable.data.Institute
 import com.alefimenko.iuttimetable.presentation.model.toGroup
 import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupRepository
@@ -76,10 +77,12 @@ class PickGroupFeature @Inject constructor(
         data class GroupsLoaded(val groups: List<Group>) : Effect()
         data class FilterGroups(val query: String) : Effect()
         data class SaveGroupInfo(val form: Int, val institute: Institute) : Effect()
+        data class PickGroup(val group: Group, val form: Int, val institute: Institute) : Effect()
     }
 
     sealed class News {
         object GoBack : News()
+        data class RouteToSchedule(val groupInfo: GroupInfo) : News()
     }
 
     class BootStrapperImpl : Bootstrapper<Action> {
@@ -106,7 +109,13 @@ class PickGroupFeature @Inject constructor(
                 .onErrorReturnItem(Effect.LoadedWithError)
                 .startWith(Effect.Loading)
                 .ioMainSchedulers()
-            is Wish.PickGroup -> empty()
+            is Wish.PickGroup -> justOnMain(
+                Effect.PickGroup(
+                    form = state.form,
+                    institute = state.institute!!,
+                    group = wish.group
+                )
+            )
             is Wish.QueryChanged -> justOnMain(Effect.FilterGroups(wish.query))
         }
     }
@@ -135,6 +144,7 @@ class PickGroupFeature @Inject constructor(
                 form = effect.form,
                 institute = effect.institute
             )
+            else -> state
         }
 
         private fun Group.matchesQuery(query: String): Boolean {
@@ -157,6 +167,13 @@ class PickGroupFeature @Inject constructor(
     class NewsPublisherImpl : NewsPublisher<Action, Effect, State, News> {
         override fun invoke(action: Action, effect: Effect, state: State): News? = when (effect) {
             is Effect.RouteBack -> News.GoBack
+            is Effect.PickGroup -> News.RouteToSchedule(
+                groupInfo = GroupInfo(
+                    form = effect.form,
+                    institute = effect.institute,
+                    group = effect.group
+                )
+            )
             else -> null
         }
     }
