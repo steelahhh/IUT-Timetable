@@ -17,7 +17,6 @@ import com.badoo.mvicore.android.lifecycle.startStop
 import com.badoo.ribs.core.Interactor
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
 
 internal class RootInteractor(
     savedInstanceState: Bundle?,
@@ -53,7 +52,6 @@ internal class RootInteractor(
     }
 
     private fun updateTheme(isNightMode: Boolean) {
-        Timber.d("Updating theme $isNightMode")
         when (Build.VERSION.SDK_INT) {
             VERSION_CODES.Q -> AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
             else -> if (isNightMode) {

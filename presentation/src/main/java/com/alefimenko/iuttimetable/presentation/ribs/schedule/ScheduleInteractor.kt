@@ -2,6 +2,7 @@ package com.alefimenko.iuttimetable.presentation.ribs.schedule
 
 import android.os.Bundle
 import androidx.lifecycle.Lifecycle
+import com.alefimenko.iuttimetable.presentation.ribs.schedule.ScheduleRouter.Configuration.Content
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.analytics.ScheduleAnalytics
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFeature
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFeature.News
@@ -10,6 +11,8 @@ import com.alefimenko.iuttimetable.presentation.ribs.schedule.mapper.NewsToOutpu
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.mapper.StateToViewModel
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.mapper.ViewEventToAnalyticsEvent
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.mapper.ViewEventToWish
+import com.alefimenko.iuttimetable.presentation.ribs.settings.Settings
+import com.alefimenko.iuttimetable.presentation.ribs.settings.Settings.Output
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.android.lifecycle.createDestroy
 import com.badoo.mvicore.android.lifecycle.startStop
@@ -31,8 +34,21 @@ internal class ScheduleInteractor(
     savedInstanceState = savedInstanceState,
     disposables = feature
 ) {
+    val settingsOutputConsumer = Consumer<Output> { output ->
+        when (output) {
+            Output.GoBack -> router.popBackStack()
+        }
+    }
+
+    private val scheduleNewsConsumer = Consumer<News> { news ->
+        when (news) {
+            News.OpenSettings -> router.push(Content.Settings)
+        }
+    }
+
     override fun onAttach(ribLifecycle: Lifecycle, savedInstanceState: Bundle?) {
         ribLifecycle.createDestroy {
+            bind(feature.news to scheduleNewsConsumer)
             bind(feature.news to output using NewsToOutput named "OutputTransformer")
             bind(input to feature using InputToWish)
         }

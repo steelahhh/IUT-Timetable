@@ -69,12 +69,16 @@ class ScheduleViewImpl private constructor(
 
     init {
         with(androidView) {
-            recyclerView.apply {
+            recyclerView.run {
                 layoutManager = LinearLayoutManager(context)
                 adapter = itemAdapter
             }
-            toolbar.apply {
+            toolbar.run {
                 replaceMenu(R.menu.schedule_menu)
+                setOnMenuItemClickListener { menuItem ->
+                    if (menuItem.itemId == R.id.action_settings) events.accept(Event.OnSettingsClick)
+                    true
+                }
                 changeMenuColors()
             }
 
@@ -134,7 +138,7 @@ class ScheduleViewImpl private constructor(
         itemAdapter.add(items)
         itemAdapter.notifyDataSetChanged()
         progressBar.isGone = !vm.isLoading
-        if (itemAdapter.itemCount != 0 && headerIndices.isNotEmpty()) {
+        if (itemAdapter.itemCount != 0 && headerIndices.isNotEmpty() && vm.currentDay >= 0) {
             val smoothScroller = object : LinearSmoothScroller(androidView.context) {
                 override fun getVerticalSnapPreference() = SNAP_TO_START
             }

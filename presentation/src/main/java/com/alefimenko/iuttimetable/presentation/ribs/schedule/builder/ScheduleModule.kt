@@ -14,7 +14,10 @@ import com.alefimenko.iuttimetable.presentation.ribs.schedule.ScheduleInteractor
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.ScheduleNode
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.ScheduleRouter
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFeature
+import com.alefimenko.iuttimetable.presentation.ribs.settings.Settings
+import com.alefimenko.iuttimetable.presentation.ribs.settings.builder.SettingsBuilder
 import com.badoo.mvicore.android.AndroidTimeCapsule
+import com.badoo.ribs.core.routing.transition.handler.Slider
 import dagger.Provides
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
@@ -42,8 +45,9 @@ internal object ScheduleModule {
         savedInstanceState: Bundle?,
         customisation: Schedule.Customisation
     ): ScheduleRouter = ScheduleRouter(
+        settingsBuilder = SettingsBuilder(component),
         savedInstanceState = savedInstanceState,
-        transitionHandler = null // Add customisation.transitionHandler if you need it
+        transitionHandler = Slider()
     )
 
     @ScheduleScope
@@ -86,4 +90,11 @@ internal object ScheduleModule {
         output = output,
         feature = feature
     )
+
+    @ScheduleScope
+    @Provides
+    @JvmStatic
+    fun settingsOutput(
+        scheduleInteractor: ScheduleInteractor
+    ): Consumer<Settings.Output> = scheduleInteractor.settingsOutputConsumer
 }

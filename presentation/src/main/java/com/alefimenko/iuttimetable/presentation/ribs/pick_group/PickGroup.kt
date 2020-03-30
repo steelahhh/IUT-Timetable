@@ -1,6 +1,6 @@
 package com.alefimenko.iuttimetable.presentation.ribs.pick_group
 
-import com.alefimenko.iuttimetable.common.ContextProvider
+import com.alefimenko.iuttimetable.common.CanProvideContext
 import com.alefimenko.iuttimetable.data.GroupInfo
 import com.alefimenko.iuttimetable.data.Institute
 import com.badoo.ribs.core.Rib
@@ -9,7 +9,7 @@ import io.reactivex.functions.Consumer
 
 interface PickGroup : Rib {
 
-    interface Dependency : ContextProvider {
+    interface Dependency : CanProvideContext {
         fun pickGroupInput(): ObservableSource<Input>
         fun pickGroupOutput(): Consumer<Output>
     }

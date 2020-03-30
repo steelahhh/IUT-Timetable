@@ -56,7 +56,7 @@ internal class ScheduleFeature @Inject constructor(
         val groupInfo: GroupInfo? = null,
         val currentWeek: Int = -1,
         val selectedWeek: Int = -1,
-        val currentDay: Int = 0,
+        val currentDay: Int = -1,
         @Transient val isLoading: Boolean = false,
         @Transient val isError: Boolean = false,
         val schedule: Schedule? = null
@@ -67,6 +67,7 @@ internal class ScheduleFeature @Inject constructor(
         data class ChangeClassVisibility(val classIndex: Int, val dayIndex: Int, val weekIndex: Int) : Wish()
         data class UpdateCurrentWeek(val week: Int) : Wish()
         object RequestWeekChange : Wish()
+        object RouteToSettings : Wish()
     }
 
     sealed class Action {
@@ -76,6 +77,7 @@ internal class ScheduleFeature @Inject constructor(
     }
 
     sealed class Effect {
+        object RouteToSettings : Effect()
         object RouteToPickWeek : Effect()
         object StartLoading : Effect()
         object LoadedWithError : Effect()
@@ -83,13 +85,13 @@ internal class ScheduleFeature @Inject constructor(
             val schedule: Schedule,
             val currentWeek: Int
         ) : Effect()
-
         data class ScheduleUpdated(val schedule: Schedule) : Effect()
         data class ChangeCurrentDay(val day: Int) : Effect()
         data class ChangeCurrentWeek(val week: Int) : Effect()
     }
 
     sealed class News {
+        object OpenSettings : News()
         data class RouteToWeekPicker(val list: List<String>, val selectedWeek: Int) : News()
     }
 
@@ -141,6 +143,7 @@ internal class ScheduleFeature @Inject constructor(
                 wish.weekIndex
             ).ioMainSchedulers().map<Effect> { Effect.ScheduleUpdated(schedule = it) }
             is Wish.UpdateCurrentWeek -> justOnMain(Effect.ChangeCurrentWeek(wish.week))
+            Wish.RouteToSettings -> justOnMain(Effect.RouteToSettings)
         }
     }
 
@@ -181,6 +184,7 @@ internal class ScheduleFeature @Inject constructor(
                 list = state.schedule?.weeks ?: emptyList(),
                 selectedWeek = state.selectedWeek
             )
+            is Effect.RouteToSettings -> News.OpenSettings
             else -> null
         }
     }

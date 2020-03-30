@@ -9,5 +9,6 @@ internal object ViewEventToWish : (Event) -> Wish? {
         Event.ChangeWeek -> Wish.RequestWeekChange
         is Event.ChangeClassVisibility -> Wish.ChangeClassVisibility(event.classIndex, event.dayIndex, event.weekIndex)
         is Event.SwitchToWeek -> Wish.UpdateCurrentWeek(event.weekIdx)
+        Event.OnSettingsClick -> Wish.RouteToSettings
     }
 }

@@ -3,6 +3,7 @@ package com.alefimenko.iuttimetable.presentation.ribs.schedule.builder
 import android.os.Bundle
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.Schedule
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.ScheduleNode
+import com.alefimenko.iuttimetable.presentation.ribs.settings.Settings
 import dagger.BindsInstance
 
 @ScheduleScope
@@ -10,7 +11,7 @@ import dagger.BindsInstance
     modules = [ScheduleModule::class],
     dependencies = [Schedule.Dependency::class]
 )
-internal interface ScheduleComponent {
+internal interface ScheduleComponent : Settings.Dependency {
 
     @dagger.Component.Factory
     interface Factory {

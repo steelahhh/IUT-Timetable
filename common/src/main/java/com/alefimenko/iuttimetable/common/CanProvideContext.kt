@@ -7,6 +7,6 @@ import android.content.Context
  * 23/3/20
  */
 
-interface ContextProvider {
+interface CanProvideContext {
     val context: Context
 }

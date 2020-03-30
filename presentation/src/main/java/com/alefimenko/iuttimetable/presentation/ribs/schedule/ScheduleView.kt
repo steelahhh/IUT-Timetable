@@ -18,6 +18,7 @@ interface ScheduleView : RibView,
         data class ChangeClassVisibility(val classIndex: Int, val dayIndex: Int, val weekIndex: Int) : Event()
         data class SwitchToWeek(val weekIdx: Int) : Event()
         object ChangeWeek : Event()
+        object OnSettingsClick : Event()
     }
 
     data class ViewModel(
