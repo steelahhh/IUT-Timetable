@@ -65,6 +65,7 @@ internal class ScheduleFeature @Inject constructor(
     sealed class Wish {
         data class DownloadSchedule(val info: GroupInfo) : Wish()
         data class ChangeClassVisibility(val classIndex: Int, val dayIndex: Int, val weekIndex: Int) : Wish()
+        data class UpdateCurrentWeek(val week: Int) : Wish()
         object RequestWeekChange : Wish()
     }
 
@@ -75,18 +76,22 @@ internal class ScheduleFeature @Inject constructor(
     }
 
     sealed class Effect {
+        object RouteToPickWeek : Effect()
         object StartLoading : Effect()
         object LoadedWithError : Effect()
         data class ScheduleLoaded(
             val schedule: Schedule,
             val currentWeek: Int
         ) : Effect()
+
         data class ScheduleUpdated(val schedule: Schedule) : Effect()
         data class ChangeCurrentDay(val day: Int) : Effect()
         data class ChangeCurrentWeek(val week: Int) : Effect()
     }
 
-    sealed class News
+    sealed class News {
+        data class RouteToWeekPicker(val list: List<String>, val selectedWeek: Int) : News()
+    }
 
     class BootStrapperImpl(val isLoaded: Boolean) : Bootstrapper<Action> {
         override fun invoke(): Observable<Action> =
@@ -129,12 +134,13 @@ internal class ScheduleFeature @Inject constructor(
             is Wish.RequestWeekChange -> if (state.schedule?.weeks?.size == 2)
                 justOnMain<Effect>(Effect.ChangeCurrentWeek(if (state.selectedWeek == 1) 0 else 1))
             else
-                TODO()
+                justOnMain<Effect>(Effect.RouteToPickWeek)
             is Wish.ChangeClassVisibility -> repository.hideClassAndUpdate(
                 wish.classIndex,
                 wish.dayIndex,
                 wish.weekIndex
             ).ioMainSchedulers().map<Effect> { Effect.ScheduleUpdated(schedule = it) }
+            is Wish.UpdateCurrentWeek -> justOnMain(Effect.ChangeCurrentWeek(wish.week))
         }
     }
 
@@ -158,6 +164,7 @@ internal class ScheduleFeature @Inject constructor(
             is Effect.ChangeCurrentDay -> state.copy(currentDay = effect.day)
             is Effect.ChangeCurrentWeek -> state.copy(selectedWeek = effect.week)
             is Effect.ScheduleUpdated -> state.copy(schedule = effect.schedule)
+            else -> state
         }
     }
 
@@ -169,7 +176,11 @@ internal class ScheduleFeature @Inject constructor(
     }
 
     class NewsPublisherImpl : NewsPublisher<Action, Effect, State, News> {
-        override fun invoke(action: Action, effect: Effect, state: State): News? = when {
+        override fun invoke(action: Action, effect: Effect, state: State): News? = when (effect) {
+            is Effect.RouteToPickWeek -> News.RouteToWeekPicker(
+                list = state.schedule?.weeks ?: emptyList(),
+                selectedWeek = state.selectedWeek
+            )
             else -> null
         }
     }

@@ -8,9 +8,12 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
+import com.alefimenko.iuttimetable.presentation.ribs.schedule.ScheduleView.Event
 import com.alefimenko.iuttimetable.presentation.schedule.model.ClassItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.EmptyDayItem
 import com.alefimenko.iuttimetable.presentation.schedule.model.HeaderItem
@@ -25,7 +28,6 @@ import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.rib_schedule.view.*
-import kotlinx.android.synthetic.main.screen_schedule.*
 
 /*
  * Author: steelahhh
@@ -34,9 +36,9 @@ import kotlinx.android.synthetic.main.screen_schedule.*
 
 class ScheduleViewImpl private constructor(
     override val androidView: ViewGroup,
-    private val events: PublishRelay<ScheduleView.Event> = PublishRelay.create()
+    private val events: PublishRelay<Event> = PublishRelay.create()
 ) : ScheduleView,
-    ObservableSource<ScheduleView.Event> by events,
+    ObservableSource<Event> by events,
     Consumer<ScheduleView.ViewModel> {
 
     private val itemAdapter = GroupAdapter<GroupieViewHolder>()
@@ -48,6 +50,19 @@ class ScheduleViewImpl private constructor(
         override fun invoke(deps: Nothing?): (ViewGroup) -> ScheduleView = {
             ScheduleViewImpl(
                 inflate(it, layoutRes)
+            )
+        }
+    }
+
+    override fun openWeekPickerDialog(weeks: List<String>, selectedWeek: Int) {
+        MaterialDialog(androidView.context).show {
+            title(res = R.string.pick_week_dialog_title)
+            listItemsSingleChoice(
+                items = weeks,
+                initialSelection = selectedWeek,
+                selection = { _, index, _ ->
+                    events.accept(Event.SwitchToWeek(index))
+                }
             )
         }
     }
@@ -64,7 +79,7 @@ class ScheduleViewImpl private constructor(
             }
 
             scheduleChangeWeekButton.setOnClickListener {
-                events.accept(ScheduleView.Event.ChangeWeek)
+                events.accept(Event.ChangeWeek)
             }
         }
     }
@@ -123,7 +138,7 @@ class ScheduleViewImpl private constructor(
             val smoothScroller = object : LinearSmoothScroller(androidView.context) {
                 override fun getVerticalSnapPreference() = SNAP_TO_START
             }
-            smoothScroller.targetPosition = headerIndices[2]
+            smoothScroller.targetPosition = headerIndices[vm.currentDay]
             recyclerView.layoutManager?.startSmoothScroll(smoothScroller)
         }
     }
@@ -134,16 +149,14 @@ class ScheduleViewImpl private constructor(
         classIndex: Int,
         dayIndex: Int,
         weekIndex: Int
-    ) {
-        PopupMenu(view.context, view).apply {
-            menuInflater.inflate(R.menu.class_entry_menu, menu)
-            setOnMenuItemClickListener {
-                events.accept(ScheduleView.Event.ChangeClassVisibility(classIndex, dayIndex, weekIndex))
-                true
-            }
-            show()
-            menu.findItem(R.id.hide_class).isVisible = !classItem.hidden
-            menu.findItem(R.id.restore_class).isVisible = classItem.hidden
+    ) = PopupMenu(view.context, view).run {
+        menuInflater.inflate(R.menu.class_entry_menu, menu)
+        setOnMenuItemClickListener {
+            events.accept(Event.ChangeClassVisibility(classIndex, dayIndex, weekIndex))
+            true
         }
+        show()
+        menu.findItem(R.id.hide_class).isVisible = !classItem.hidden
+        menu.findItem(R.id.restore_class).isVisible = classItem.hidden
     }
 }

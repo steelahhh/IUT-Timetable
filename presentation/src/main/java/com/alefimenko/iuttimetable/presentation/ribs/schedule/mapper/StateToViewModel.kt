@@ -9,6 +9,7 @@ internal object StateToViewModel : (State) -> ViewModel {
         isLoading = state.isLoading,
         isError = state.isError,
         schedule = state.schedule,
+        currentDay = state.currentDay,
         currentWeek = state.currentWeek,
         selectedWeek = state.selectedWeek
     )

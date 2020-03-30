@@ -12,8 +12,11 @@ interface ScheduleView : RibView,
     ObservableSource<Event>,
     Consumer<ViewModel> {
 
+    fun openWeekPickerDialog(weeks: List<String>, selectedWeek: Int)
+
     sealed class Event {
         data class ChangeClassVisibility(val classIndex: Int, val dayIndex: Int, val weekIndex: Int) : Event()
+        data class SwitchToWeek(val weekIdx: Int) : Event()
         object ChangeWeek : Event()
     }
 
@@ -21,6 +24,7 @@ interface ScheduleView : RibView,
         val isLoading: Boolean,
         val isError: Boolean,
         val schedule: Schedule? = null,
+        val currentDay: Int,
         val currentWeek: Int,
         val selectedWeek: Int
     )

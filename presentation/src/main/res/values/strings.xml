@@ -9,7 +9,7 @@
 
     <string name="group_loading_error">Ошибка при загрузке групп</string>
     <string name="institute_loading_error">Ошибка при загрузке институтов</string>
-    <string name="schedule_loading_error">Ошибка при загрузке институтов</string>
+    <string name="schedule_loading_error">Ошибка при загрузке расписания</string>
 
     <string name="search_error">Ничего не найдено</string>
 
