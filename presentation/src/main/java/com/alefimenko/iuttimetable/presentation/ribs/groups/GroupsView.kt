@@ -89,7 +89,7 @@ class GroupsViewImpl private constructor(
         groupsAdapter.updateAsync(groups)
 
         androidView.groupsRecycler.updateLayoutParams<ConstraintLayout.LayoutParams> {
-            height = if (groups.size <= 2) WRAP_CONTENT
+            height = if (groups.size <= 4) WRAP_CONTENT
             else androidView.context.getDimen(R.dimen.item_height_xxl).toInt()
         }
     }
