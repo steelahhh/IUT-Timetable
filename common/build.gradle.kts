@@ -38,11 +38,6 @@ dependencies {
 
     implementation(Deps.dagger.core)
 
-    api(Deps.koin.core)
-    api(Deps.koin.ext)
-    api(Deps.koin.android)
-    api(Deps.koin.androidScope)
-
     api(Deps.mobius.core)
     api(Deps.mobius.rx)
     api(Deps.mobius.extras)

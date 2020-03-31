@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.schedule.model
+package com.alefimenko.iuttimetable.presentation.data.model
 
 import com.alefimenko.iuttimetable.presentation.R
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder

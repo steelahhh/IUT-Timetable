@@ -7,6 +7,7 @@ import com.alefimenko.iuttimetable.data.GroupInfo
 import com.alefimenko.iuttimetable.data.date.DateInteractor
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.remote.model.Schedule
+import com.alefimenko.iuttimetable.presentation.data.ScheduleRepository
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.builder.ScheduleScope
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFeature.Action
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFeature.Action.Execute
@@ -14,7 +15,6 @@ import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFe
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFeature.News
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFeature.State
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFeature.Wish
-import com.alefimenko.iuttimetable.presentation.schedule.ScheduleRepository
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.element.Actor
 import com.badoo.mvicore.element.Bootstrapper

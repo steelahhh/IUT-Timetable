@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.schedule.model
+package com.alefimenko.iuttimetable.presentation.data.model
 
 import android.graphics.PorterDuff
 import android.os.Build

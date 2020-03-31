@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.schedule.groups
+package com.alefimenko.iuttimetable.presentation.data
 
 import android.os.Build
 import com.alefimenko.iuttimetable.Font
@@ -13,6 +13,11 @@ import kotlinx.android.synthetic.main.item_group.*
 /*
  * Created by Alexander Efimenko on 2019-07-30.
  */
+
+interface OnGroupClickListener {
+    fun onClick(group: GroupUi)
+    fun delete(group: GroupUi)
+}
 
 data class GroupUi(
     val id: Int,

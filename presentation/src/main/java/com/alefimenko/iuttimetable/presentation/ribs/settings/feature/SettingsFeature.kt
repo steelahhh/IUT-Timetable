@@ -5,6 +5,8 @@ import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.common.extension.justOnMain
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.remote.FeedbackService
+import com.alefimenko.iuttimetable.presentation.data.ScheduleRepository
+import com.alefimenko.iuttimetable.presentation.data.SettingsRepository
 import com.alefimenko.iuttimetable.presentation.ribs.settings.builder.SettingsScope
 import com.alefimenko.iuttimetable.presentation.ribs.settings.feature.SettingsFeature.Action
 import com.alefimenko.iuttimetable.presentation.ribs.settings.feature.SettingsFeature.Action.Execute
@@ -12,8 +14,6 @@ import com.alefimenko.iuttimetable.presentation.ribs.settings.feature.SettingsFe
 import com.alefimenko.iuttimetable.presentation.ribs.settings.feature.SettingsFeature.News
 import com.alefimenko.iuttimetable.presentation.ribs.settings.feature.SettingsFeature.State
 import com.alefimenko.iuttimetable.presentation.ribs.settings.feature.SettingsFeature.Wish
-import com.alefimenko.iuttimetable.presentation.schedule.ScheduleRepository
-import com.alefimenko.iuttimetable.presentation.settings.SettingsRepository
 import com.badoo.mvicore.element.Actor
 import com.badoo.mvicore.element.Bootstrapper
 import com.badoo.mvicore.element.NewsPublisher

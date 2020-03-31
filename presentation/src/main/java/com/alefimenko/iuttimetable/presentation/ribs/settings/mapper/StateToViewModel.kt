@@ -2,10 +2,10 @@ package com.alefimenko.iuttimetable.presentation.ribs.settings.mapper
 
 import android.os.Build
 import com.alefimenko.iuttimetable.presentation.R
+import com.alefimenko.iuttimetable.presentation.data.SettingsItem
+import com.alefimenko.iuttimetable.presentation.data.SettingsItemKey
 import com.alefimenko.iuttimetable.presentation.ribs.settings.SettingsView.ViewModel
 import com.alefimenko.iuttimetable.presentation.ribs.settings.feature.SettingsFeature.State
-import com.alefimenko.iuttimetable.presentation.settings.SettingsItem
-import com.alefimenko.iuttimetable.presentation.settings.SettingsItemKey
 
 internal object StateToViewModel : (State) -> ViewModel {
 

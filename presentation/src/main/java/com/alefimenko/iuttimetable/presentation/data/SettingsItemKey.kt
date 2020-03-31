@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.settings
+package com.alefimenko.iuttimetable.presentation.data
 
 /*
  * Created by Alexander Efimenko on 2019-07-12.

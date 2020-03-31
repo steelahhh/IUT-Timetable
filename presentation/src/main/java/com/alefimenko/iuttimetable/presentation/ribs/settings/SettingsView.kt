@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.alefimenko.iuttimetable.presentation.BuildConfig
 import com.alefimenko.iuttimetable.presentation.R
+import com.alefimenko.iuttimetable.presentation.data.SettingsItem
+import com.alefimenko.iuttimetable.presentation.data.SettingsItemKey
 import com.alefimenko.iuttimetable.presentation.ribs.settings.SettingsView.Event
 import com.alefimenko.iuttimetable.presentation.ribs.settings.SettingsView.ViewModel
-import com.alefimenko.iuttimetable.presentation.settings.SettingsItem
-import com.alefimenko.iuttimetable.presentation.settings.SettingsItemKey
 import com.badoo.ribs.core.view.RibView
 import com.badoo.ribs.core.view.ViewFactory
 import com.badoo.ribs.customisation.inflate

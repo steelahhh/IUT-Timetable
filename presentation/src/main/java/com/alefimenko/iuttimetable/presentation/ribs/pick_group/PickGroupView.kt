@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
-import com.alefimenko.iuttimetable.presentation.pickgroup.GroupItem
+import com.alefimenko.iuttimetable.presentation.data.GroupItem
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.PickGroupView.Event
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.PickGroupView.ViewModel
 import com.badoo.ribs.core.view.RibView

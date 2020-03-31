@@ -57,5 +57,4 @@ dependencies {
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.espresso)
-    testImplementation(Deps.koin.test)
 }

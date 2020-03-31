@@ -6,8 +6,8 @@ import com.alefimenko.iuttimetable.common.extension.justOnMain
 import com.alefimenko.iuttimetable.data.Group
 import com.alefimenko.iuttimetable.data.GroupInfo
 import com.alefimenko.iuttimetable.data.Institute
-import com.alefimenko.iuttimetable.presentation.model.toGroup
-import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupRepository
+import com.alefimenko.iuttimetable.presentation.data.PickGroupRepository
+import com.alefimenko.iuttimetable.presentation.data.toGroup
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.builder.PickGroupScope
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.feature.PickGroupFeature.Action
 import com.alefimenko.iuttimetable.presentation.ribs.pick_group.feature.PickGroupFeature.Action.Execute

@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.schedule
+package com.alefimenko.iuttimetable.presentation.data
 
 import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
@@ -18,8 +18,6 @@ import com.alefimenko.iuttimetable.data.remote.model.Schedule
 import com.alefimenko.iuttimetable.data.remote.model.ScheduleResponse
 import com.alefimenko.iuttimetable.data.remote.model.WeekSchedule
 import com.alefimenko.iuttimetable.data.remote.toFormPath
-import com.alefimenko.iuttimetable.presentation.model.toDb
-import com.alefimenko.iuttimetable.presentation.model.toDomain
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Maybe

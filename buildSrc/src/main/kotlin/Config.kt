@@ -102,16 +102,6 @@ object Deps {
 
     const val jsoup = "org.jsoup:jsoup:${vers.jsoup}"
 
-    val koin = Koin
-
-    object Koin {
-        const val core = "org.koin:koin-core:${vers.koin}"
-        const val ext = "org.koin:koin-core-ext:${vers.koin}"
-        const val test = "org.koin:koin-test:${vers.koin}"
-        const val android = "org.koin:koin-android:${vers.koin}"
-        const val androidScope = "org.koin:koin-androidx-scope:${vers.koin}"
-    }
-
     val ribs = "com.github.badoo.RIBs:rib-android:0.11.2"
 
     val dagger = Dagger

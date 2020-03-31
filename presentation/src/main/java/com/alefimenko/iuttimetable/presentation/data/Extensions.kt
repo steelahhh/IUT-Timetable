@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.model
+package com.alefimenko.iuttimetable.presentation.data
 
 import com.alefimenko.iuttimetable.data.Group
 import com.alefimenko.iuttimetable.data.Institute

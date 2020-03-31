@@ -4,7 +4,7 @@ import android.os.Parcelable
 import com.alefimenko.iuttimetable.common.EmptyObserver
 import com.alefimenko.iuttimetable.common.extension.justOnMain
 import com.alefimenko.iuttimetable.data.Institute
-import com.alefimenko.iuttimetable.presentation.pickgroup.PickGroupRepository
+import com.alefimenko.iuttimetable.presentation.data.PickGroupRepository
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.feature.PickInstituteFeature.Effect
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.feature.PickInstituteFeature.News
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.feature.PickInstituteFeature.State

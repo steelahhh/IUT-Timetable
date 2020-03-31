@@ -13,13 +13,13 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.presentation.R
+import com.alefimenko.iuttimetable.presentation.data.model.ClassItem
+import com.alefimenko.iuttimetable.presentation.data.model.EmptyDayItem
+import com.alefimenko.iuttimetable.presentation.data.model.HeaderItem
+import com.alefimenko.iuttimetable.presentation.data.model.Position
+import com.alefimenko.iuttimetable.presentation.data.model.ScheduleInfoHeaderItem
+import com.alefimenko.iuttimetable.presentation.data.model.toClassItem
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.ScheduleView.Event
-import com.alefimenko.iuttimetable.presentation.schedule.model.ClassItem
-import com.alefimenko.iuttimetable.presentation.schedule.model.EmptyDayItem
-import com.alefimenko.iuttimetable.presentation.schedule.model.HeaderItem
-import com.alefimenko.iuttimetable.presentation.schedule.model.Position
-import com.alefimenko.iuttimetable.presentation.schedule.model.ScheduleInfoHeaderItem
-import com.alefimenko.iuttimetable.presentation.schedule.model.toClassItem
 import com.badoo.ribs.customisation.inflate
 import com.jakewharton.rxrelay2.PublishRelay
 import com.xwray.groupie.GroupAdapter
@@ -100,9 +100,9 @@ class ScheduleViewImpl private constructor(
         itemAdapter.clear()
         val items = Section(
             ScheduleInfoHeaderItem(
-                vm.schedule?.groupTitle ?: "",
-                vm.schedule?.semester ?: "",
-                vm.currentWeek == 0
+                group = vm.schedule?.groupTitle ?: "",
+                semester = vm.schedule?.semester ?: "",
+                isWeekOdd = vm.currentWeek == 0
             )
         )
         vm.schedule?.weekSchedule?.get(vm.selectedWeek)?.let { days ->

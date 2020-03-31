@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.pickgroup
+package com.alefimenko.iuttimetable.presentation.data
 
 import android.util.LruCache
 import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
@@ -8,7 +8,6 @@ import com.alefimenko.iuttimetable.data.remote.Exceptions
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.data.remote.model.IUTLabeledResponse
 import com.alefimenko.iuttimetable.data.remote.toFormPath
-import com.alefimenko.iuttimetable.presentation.model.toInstitute
 import io.reactivex.Observable
 import javax.inject.Inject
 

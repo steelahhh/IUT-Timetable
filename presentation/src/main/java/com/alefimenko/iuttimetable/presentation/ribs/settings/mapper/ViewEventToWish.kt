@@ -1,8 +1,8 @@
 package com.alefimenko.iuttimetable.presentation.ribs.settings.mapper
 
+import com.alefimenko.iuttimetable.presentation.data.SettingsItemKey
 import com.alefimenko.iuttimetable.presentation.ribs.settings.SettingsView.Event
 import com.alefimenko.iuttimetable.presentation.ribs.settings.feature.SettingsFeature.Wish
-import com.alefimenko.iuttimetable.presentation.settings.SettingsItemKey
 
 internal object ViewEventToWish : (Event) -> Wish? {
 

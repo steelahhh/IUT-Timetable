@@ -1,4 +1,4 @@
-package com.alefimenko.iuttimetable.presentation.settings
+package com.alefimenko.iuttimetable.presentation.data
 
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
