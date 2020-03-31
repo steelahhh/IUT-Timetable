@@ -46,8 +46,6 @@ dependencies {
     api(Deps.material)
     api(Deps.materialDialogs)
 
-    api(Deps.conductor.core)
-
     api(Deps.rxBinding.core)
     api(Deps.rxBinding.material)
     api(Deps.rxBinding.appCompat)

@@ -3,6 +3,5 @@ include(
     ":common",
     ":coreui",
     ":data",
-    ":navigation",
     ":presentation"
 )

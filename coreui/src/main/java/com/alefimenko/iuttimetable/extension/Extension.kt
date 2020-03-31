@@ -25,7 +25,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.alefimenko.iuttimetable.coreui.R
-import com.bluelinelabs.conductor.Controller
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -130,13 +129,6 @@ private fun MenuItem.changeIconColor(color: Int) {
         icon.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
     }
 }
-
-fun Controller.requireView() = view ?: error("There is no view bound to this controller")
-
-fun Controller.requireContext() = requireView().context
-
-fun Controller.requireActivity() =
-    activity ?: error("There is no activity bound to this controller")
 
 fun Toolbar.changeToolbarFont() {
     for (i in 0 until childCount) {

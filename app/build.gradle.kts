@@ -79,7 +79,6 @@ dependencies {
     implementation(project(Modules.common))
     implementation(project(Modules.coreUi))
     implementation(project(Modules.data))
-    implementation(project(Modules.navigation))
     implementation(project(Modules.presentation))
     implementation(Deps.dagger.core)
     kapt(Deps.dagger.compiler)

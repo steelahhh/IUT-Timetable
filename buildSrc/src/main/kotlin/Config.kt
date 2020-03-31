@@ -10,7 +10,6 @@ object Modules {
     const val common = ":common"
     const val coreUi = ":coreui"
     const val data = ":data"
-    const val navigation = ":navigation"
     const val presentation = ":presentation"
 }
 
@@ -138,13 +137,7 @@ object Deps {
         const val core = "com.github.badoo.mvicore:mvicore:${vers.mviCore}"
         const val android = "com.github.badoo.mvicore:mvicore-android:${vers.mviCore}"
     }
-
-    val conductor = Conductor
-
-    object Conductor {
-        const val core = "com.github.edgar-zigis:conductor:${vers.conductor}"
-    }
-
+    
     val firebase = Firebase
 
     object Firebase {
