@@ -8,6 +8,7 @@ import java.util.LinkedList
  */
 
 object Constants {
+    const val PICK_GROUP_ROOT = "isRoot:pickGroupRoot"
     const val PREFS_NAME = "MyPrefsFile"
     const val EMPTY_ENTRY = "0"
     const val MAX_GROUPS_AMOUNT = 10

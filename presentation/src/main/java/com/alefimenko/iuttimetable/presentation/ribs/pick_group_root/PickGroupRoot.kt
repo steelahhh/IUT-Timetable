@@ -16,6 +16,7 @@ interface PickGroupRoot : Rib {
     sealed class Input
 
     sealed class Output {
+        object GoBack : Output()
         data class OpenSchedule(val groupInfo: GroupInfo) : Output()
     }
 }

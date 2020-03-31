@@ -8,12 +8,13 @@ import com.badoo.ribs.core.Builder
 class PickGroupRootBuilder(
     override val dependency: PickGroupRoot.Dependency
 ) : Builder<PickGroupRoot.Dependency>() {
-    fun build(savedInstanceState: Bundle?): PickGroupRootNode =
+    fun build(savedInstanceState: Bundle?, isRoot: Boolean): PickGroupRootNode =
         DaggerPickGroupRootComponent
             .factory()
             .create(
                 dependency = dependency,
-                savedInstanceState = savedInstanceState
+                savedInstanceState = savedInstanceState,
+                isRoot = isRoot
             )
             .node()
 }

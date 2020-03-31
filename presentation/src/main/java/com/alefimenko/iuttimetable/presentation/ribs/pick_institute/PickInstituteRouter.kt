@@ -28,6 +28,7 @@ class PickInstituteRouter(
         sealed class Overlay : Configuration()
     }
 
-    override fun resolveConfiguration(configuration: Configuration): RoutingAction<PickInstituteView> =
-        RoutingAction.noop()
+    override fun resolveConfiguration(
+        configuration: Configuration
+    ): RoutingAction<PickInstituteView> = RoutingAction.noop()
 }

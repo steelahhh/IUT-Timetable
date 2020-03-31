@@ -96,6 +96,7 @@ class ScheduleViewImpl private constructor(
             onRetryClick = { events.accept(Event.Retry) }
         }
 
+        recyclerView.isVisible = !vm.isLoading && !vm.isError
         progressBar.isGone = !vm.isLoading || vm.isError
 
         itemAdapter.clear()

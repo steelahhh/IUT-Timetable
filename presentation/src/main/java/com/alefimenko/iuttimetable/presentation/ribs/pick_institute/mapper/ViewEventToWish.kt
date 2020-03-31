@@ -10,5 +10,6 @@ internal object ViewEventToWish : (Event) -> Wish? {
         is Event.FormPicked -> Wish.FormPicked(event.form)
         is Event.InstituteClicked -> Wish.InstitutePicked(event.institute)
         is Event.NextClicked -> Wish.NavigateToPickGroup
+        else -> null
     }
 }

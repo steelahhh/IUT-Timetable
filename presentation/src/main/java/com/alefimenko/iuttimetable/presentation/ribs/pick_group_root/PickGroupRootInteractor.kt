@@ -26,6 +26,7 @@ internal class PickGroupRootInteractor(
                 router.push(Content.PickGroup)
                 pickGroupInput.onNext(PickGroup.Input.GroupInfoReceived(it.form, it.institute))
             }
+            is PickInstitute.Output.GoBack -> output.accept(PickGroupRoot.Output.GoBack)
         }
     }
 

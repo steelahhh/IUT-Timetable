@@ -24,6 +24,7 @@ interface PickInstituteView : RibView,
     Consumer<ViewModel> {
 
     sealed class Event {
+        object GoBack : Event()
         object Retry : Event()
         object NextClicked : Event()
         data class FormPicked(val form: Int) : Event()
@@ -60,7 +61,10 @@ class PickInstituteViewImpl private constructor(
     private var dialog: MaterialDialog? = null
 
     init {
-        androidView.pickGroupBackButton.isGone = isRoot
+        androidView.pickGroupBackButton.run {
+            isGone = isRoot
+            setOnClickListener { events.accept(Event.GoBack) }
+        }
 
         dialog = MaterialDialog(androidView.context).apply {
             title(R.string.pick_institute)

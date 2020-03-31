@@ -84,7 +84,9 @@ internal object RootModule {
     @RootScope
     @Provides
     @JvmStatic
-    internal fun scheduleOutput(): Consumer<Schedule.Output> = Consumer { }
+    internal fun scheduleOutput(
+        rootInteractor: RootInteractor
+    ): Consumer<Schedule.Output> = rootInteractor.scheduleOutput
 
     @Provides
     @JvmStatic

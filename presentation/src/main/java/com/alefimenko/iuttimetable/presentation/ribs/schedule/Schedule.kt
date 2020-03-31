@@ -21,7 +21,9 @@ interface Schedule : Rib {
         data class DownloadSchedule(val groupInfo: GroupInfo) : Input()
     }
 
-    sealed class Output
+    sealed class Output {
+        object OpenPickGroup : Output()
+    }
 
     class Customisation(
         val viewFactory: ScheduleView.Factory = ScheduleViewImpl.Factory(),

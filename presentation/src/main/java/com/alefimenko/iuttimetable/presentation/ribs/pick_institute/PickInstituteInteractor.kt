@@ -37,6 +37,7 @@ internal class PickInstituteInteractor(
     override fun onViewCreated(view: PickInstituteView, viewLifecycle: Lifecycle) {
         viewLifecycle.startStop {
             bind(feature to view using StateToViewModel)
+            bind(view to output using ViewEventToOutput)
             bind(view to feature using ViewEventToWish)
         }
     }
@@ -44,5 +45,12 @@ internal class PickInstituteInteractor(
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         timeCapsule.saveState(outState)
+    }
+
+    private object ViewEventToOutput : (PickInstituteView.Event) -> PickInstitute.Output? {
+        override fun invoke(event: PickInstituteView.Event): PickInstitute.Output? = when (event) {
+            PickInstituteView.Event.GoBack -> PickInstitute.Output.GoBack
+            else -> null
+        }
     }
 }

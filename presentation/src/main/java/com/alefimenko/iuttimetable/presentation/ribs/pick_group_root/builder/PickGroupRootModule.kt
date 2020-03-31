@@ -17,7 +17,6 @@ import dagger.Provides
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
-import javax.inject.Named
 
 @dagger.Module
 internal object PickGroupRootModule {
@@ -92,9 +91,4 @@ internal object PickGroupRootModule {
     fun pickGroupOutput(
         pickGroupRootInteractor: PickGroupRootInteractor
     ): Consumer<PickGroup.Output> = pickGroupRootInteractor.pickGroupOutputConsumer
-
-    @Provides
-    @JvmStatic
-    @Named("RootScreenFlag")
-    fun isRootScreen() = true
 }

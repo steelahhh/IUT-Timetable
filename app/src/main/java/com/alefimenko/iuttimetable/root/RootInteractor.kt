@@ -28,12 +28,19 @@ internal class RootInteractor(
 ) {
     val scheduleInput = PublishSubject.create<Schedule.Input>()
 
+    val scheduleOutput = Consumer<Schedule.Output> { output ->
+        when (output) {
+            Schedule.Output.OpenPickGroup -> router.push(Configuration.PickGroup(isRoot = false))
+        }
+    }
+
     val pickGroupNavigator: Consumer<PickGroupRoot.Output> = Consumer {
         when (it) {
             is PickGroupRoot.Output.OpenSchedule -> {
                 router.newRoot(Configuration.Schedule)
                 scheduleInput.onNext(Schedule.Input.DownloadSchedule(it.groupInfo))
             }
+            PickGroupRoot.Output.GoBack -> router.popBackStack()
         }
     }
 
@@ -44,7 +51,7 @@ internal class RootInteractor(
                 router.newRoot(Configuration.Schedule)
                 scheduleInput.onNext(Schedule.Input.LoadCurrentSchedule)
             }
-            News.RouteToPickGroup -> router.newRoot(Configuration.PickGroup)
+            News.RouteToPickGroup -> router.newRoot(Configuration.PickGroup(isRoot = true))
         }
     }
 

@@ -4,6 +4,7 @@ package com.alefimenko.iuttimetable.presentation.ribs.pick_institute.builder
 
 import android.os.Bundle
 import com.alefimenko.iuttimetable.data.DataModule
+import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.PickInstitute.Input
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.PickInstitute.Output
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.PickInstituteInteractor
@@ -61,6 +62,8 @@ internal object PickInstituteModule {
     @Provides
     @JvmStatic
     internal fun node(
+        @Named(Constants.PICK_GROUP_ROOT)
+        isRoot: Boolean,
         savedInstanceState: Bundle?,
         router: PickInstituteRouter,
         interactor: PickInstituteInteractor,
@@ -69,7 +72,7 @@ internal object PickInstituteModule {
         feature: PickInstituteFeature
     ): PickInstituteNode = PickInstituteNode(
         savedInstanceState = savedInstanceState,
-        viewFactory = PickInstituteViewImpl.Factory().invoke(true),
+        viewFactory = PickInstituteViewImpl.Factory().invoke(isRoot),
         router = router,
         interactor = interactor,
         input = input,
