@@ -17,7 +17,8 @@ interface Schedule : Rib {
     }
 
     sealed class Input {
-        data class LoadSchedule(val groupInfo: GroupInfo) : Input()
+        object LoadCurrentSchedule : Input()
+        data class DownloadSchedule(val groupInfo: GroupInfo) : Input()
     }
 
     sealed class Output

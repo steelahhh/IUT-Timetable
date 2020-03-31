@@ -38,9 +38,7 @@ internal class ScheduleFeature @Inject constructor(
 ) : BaseFeature<Wish, Action, Effect, State, News>(
     initialState = timeCapsule[FEATURE_KEY] ?: State(),
     wishToAction = { Execute(it) },
-    bootstrapper = BootStrapperImpl(
-        isLoaded = timeCapsule.get<State>(FEATURE_KEY)?.groupInfo != null
-    ),
+    bootstrapper = BootStrapperImpl(),
     actor = ActorImpl(scheduleRepository, dateInteractor, preferences),
     reducer = ReducerImpl(),
     postProcessor = PostProcessorImpl(),
@@ -66,6 +64,7 @@ internal class ScheduleFeature @Inject constructor(
         data class DownloadSchedule(val info: GroupInfo) : Wish()
         data class ChangeClassVisibility(val classIndex: Int, val dayIndex: Int, val weekIndex: Int) : Wish()
         data class UpdateCurrentWeek(val week: Int) : Wish()
+        object LoadSchedule : Wish()
         object RequestWeekChange : Wish()
         object RouteToSettings : Wish()
         object RequestDownload : Wish()
@@ -73,7 +72,6 @@ internal class ScheduleFeature @Inject constructor(
 
     sealed class Action {
         data class Execute(val wish: Wish) : Action()
-        object LoadSchedule : Action()
         object SwitchToCurrentDay : Action()
     }
 
@@ -97,9 +95,8 @@ internal class ScheduleFeature @Inject constructor(
         data class RouteToWeekPicker(val list: List<String>, val selectedWeek: Int) : News()
     }
 
-    class BootStrapperImpl(val isLoaded: Boolean) : Bootstrapper<Action> {
-        override fun invoke(): Observable<Action> =
-            if (isLoaded) justOnMain(Action.LoadSchedule) else empty()
+    class BootStrapperImpl : Bootstrapper<Action> {
+        override fun invoke(): Observable<Action> = empty()
     }
 
     class ActorImpl(
@@ -109,15 +106,6 @@ internal class ScheduleFeature @Inject constructor(
     ) : Actor<State, Action, Effect> {
         override fun invoke(state: State, action: Action): Observable<Effect> = when (action) {
             is Execute -> handleWish(state, action.wish)
-            Action.LoadSchedule -> repository.getSchedule(preferences.currentGroup)
-                .map<Effect> {
-                    Effect.ScheduleLoaded(
-                        schedule = it,
-                        currentWeek = if (it.weeks.size == 2) dateInteractor.currentWeek else 0
-                    )
-                }
-                .startWith(Effect.StartLoading)
-                .onErrorReturnItem(Effect.LoadedWithError())
             Action.SwitchToCurrentDay -> if (repository.shouldSwitchToDay)
                 justOnMain<Effect>(Effect.ChangeCurrentDay(dateInteractor.currentDay))
             else
@@ -138,6 +126,15 @@ internal class ScheduleFeature @Inject constructor(
             is Wish.UpdateCurrentWeek -> justOnMain(Effect.ChangeCurrentWeek(wish.week))
             Wish.RouteToSettings -> justOnMain(Effect.RouteToSettings)
             Wish.RequestDownload -> state.groupInfo?.let { downloadSchedule(state.groupInfo) } ?: empty()
+            Wish.LoadSchedule -> repository.getSchedule(preferences.currentGroup)
+                .map<Effect> {
+                    Effect.ScheduleLoaded(
+                        schedule = it,
+                        currentWeek = if (it.weeks.size == 2) dateInteractor.currentWeek else 0
+                    )
+                }
+                .startWith(Effect.StartLoading)
+                .onErrorReturnItem(Effect.LoadedWithError())
         }
 
         private fun downloadSchedule(info: GroupInfo) = repository.downloadSchedule(info)

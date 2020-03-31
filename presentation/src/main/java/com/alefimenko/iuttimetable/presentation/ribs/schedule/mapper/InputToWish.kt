@@ -6,6 +6,7 @@ import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFe
 internal object InputToWish : (Input) -> Wish? {
 
     override fun invoke(event: Input): Wish? = when (event) {
-        is Input.LoadSchedule -> Wish.DownloadSchedule(event.groupInfo)
+        is Input.DownloadSchedule -> Wish.DownloadSchedule(event.groupInfo)
+        is Input.LoadCurrentSchedule -> Wish.LoadSchedule
     }
 }
