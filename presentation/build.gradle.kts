@@ -45,8 +45,6 @@ dependencies {
     implementation(Deps.dagger.core)
     kapt(Deps.dagger.compiler)
 
-    implementation("com.gauravk.bubblenavigation:bubblenavigation:1.0.7")
-
     implementation(Deps.groupie.core)
     implementation(Deps.groupie.ktx)
 

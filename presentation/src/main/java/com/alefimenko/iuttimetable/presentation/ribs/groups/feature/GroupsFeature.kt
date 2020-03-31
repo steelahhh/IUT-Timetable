@@ -110,7 +110,7 @@ internal class GroupsFeature @Inject constructor(
                     .ioMainSchedulers()
                     .flatMapObservable<Effect> { just(Effect.GroupDeleted) }
             }
-            else -> justOnMain(Effect.AddGroup)
+            is Wish.AddNewGroup -> justOnMain(Effect.AddGroup)
         }
     }
 
@@ -122,8 +122,11 @@ internal class GroupsFeature @Inject constructor(
     }
 
     class PostProcessorImpl : PostProcessor<Action, Effect, State> {
-        override fun invoke(action: Action, effect: Effect, state: State): Action? = when (effect) {
-            is Effect.GroupDeleted, is Effect.CurrentGroupDeleted, is Effect.CurrentGroupUpdated -> Action.LoadGroups
+        override fun invoke(action: Action, effect: Effect, state: State): Action? = when {
+            action is Execute && action.wish is Wish.SelectGroup -> Execute(Wish.GoBack)
+            effect is Effect.GroupDeleted -> Action.LoadGroups
+            effect is Effect.CurrentGroupDeleted -> Action.LoadGroups
+            effect is Effect.CurrentGroupUpdated -> Action.LoadGroups
             else -> null
         }
     }
