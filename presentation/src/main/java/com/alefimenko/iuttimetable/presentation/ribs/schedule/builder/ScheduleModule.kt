@@ -20,6 +20,8 @@ import com.alefimenko.iuttimetable.presentation.ribs.settings.Settings
 import com.alefimenko.iuttimetable.presentation.ribs.settings.builder.SettingsBuilder
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.ribs.core.routing.transition.handler.CrossFader
+import com.badoo.ribs.core.routing.transition.handler.Slider
+import com.badoo.ribs.core.routing.transition.handler.TransitionHandler
 import dagger.Provides
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
@@ -51,7 +53,10 @@ internal object ScheduleModule {
         settingsBuilder = SettingsBuilder(component),
         groupsBuilder = GroupsBuilder(component),
         savedInstanceState = savedInstanceState,
-        transitionHandler = CrossFader()
+        transitionHandler = TransitionHandler.multiple(
+            CrossFader(condition = { it.identifier is Groups }),
+            Slider(condition = { it.identifier is Settings })
+        )
     )
 
     @ScheduleScope

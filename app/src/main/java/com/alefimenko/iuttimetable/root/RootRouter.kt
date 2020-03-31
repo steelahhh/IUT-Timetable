@@ -14,7 +14,7 @@ import kotlinx.android.parcel.Parcelize
 
 class RootRouter(
     savedInstanceState: Bundle?,
-    transitionHandler: TransitionHandler<Configuration>? = CrossFader(),
+    transitionHandler: TransitionHandler<Configuration>? = null,
     private val pickGroupRootBuilder: PickGroupRootBuilder,
     private val scheduleBuilder: ScheduleBuilder
 ) : Router<Configuration, Nothing, Configuration, Nothing, Nothing>(
