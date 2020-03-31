@@ -2,17 +2,16 @@ package com.alefimenko.iuttimetable.presentation.ribs.schedule
 
 import android.os.Bundle
 import androidx.lifecycle.Lifecycle
+import com.alefimenko.iuttimetable.presentation.ribs.groups.Groups
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.ScheduleRouter.Configuration.Content
-import com.alefimenko.iuttimetable.presentation.ribs.schedule.analytics.ScheduleAnalytics
+import com.alefimenko.iuttimetable.presentation.ribs.schedule.ScheduleRouter.Configuration.Overlay
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFeature
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFeature.News
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.mapper.InputToWish
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.mapper.NewsToOutput
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.mapper.StateToViewModel
-import com.alefimenko.iuttimetable.presentation.ribs.schedule.mapper.ViewEventToAnalyticsEvent
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.mapper.ViewEventToWish
 import com.alefimenko.iuttimetable.presentation.ribs.settings.Settings
-import com.alefimenko.iuttimetable.presentation.ribs.settings.Settings.Output
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.android.lifecycle.createDestroy
 import com.badoo.mvicore.android.lifecycle.startStop
@@ -34,15 +33,23 @@ internal class ScheduleInteractor(
     savedInstanceState = savedInstanceState,
     disposables = feature
 ) {
-    val settingsOutputConsumer = Consumer<Output> { output ->
+    val groupsOutputConsumer: Consumer<Groups.Output> = Consumer { output ->
         when (output) {
-            Output.GoBack -> router.popBackStack()
+            Groups.Output.Dismiss -> router.popOverlay()
+            Groups.Output.AddNewGroup -> router.popOverlay()
+        }
+    }
+
+    val settingsOutputConsumer = Consumer<Settings.Output> { output ->
+        when (output) {
+            Settings.Output.GoBack -> router.popBackStack()
         }
     }
 
     private val scheduleNewsConsumer = Consumer<News> { news ->
         when (news) {
             News.OpenSettings -> router.push(Content.Settings)
+            News.OpenGroupPicker -> router.pushOverlay(Overlay.GroupsPicker)
         }
     }
 
@@ -63,7 +70,6 @@ internal class ScheduleInteractor(
             })
             bind(wrap(feature).distinctUntilChanged() to view using StateToViewModel)
             bind(view to feature using ViewEventToWish)
-            bind(view to ScheduleAnalytics using ViewEventToAnalyticsEvent)
         }
     }
 

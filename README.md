@@ -11,10 +11,8 @@ Screenshots
 Libraries used
 ----------
 
-- [spotify/Mobius](https://github.com/spotify/mobius)
 - [Jsoup](https://jsoup.org/)
 - [Room](https://developer.android.com/topic/libraries/architecture/room.html)
-- [Koin](https://github.com/InsertKoinIO/koin)
 - [RxJava](https://github.com/ReactiveX/RxJava)
 - [Retrofit](https://square.github.io/retrofit/)
 - [GSON](https://github.com/google/gson)

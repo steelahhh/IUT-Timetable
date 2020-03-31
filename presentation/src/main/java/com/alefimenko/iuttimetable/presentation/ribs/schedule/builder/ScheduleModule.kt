@@ -7,6 +7,8 @@ import com.alefimenko.iuttimetable.data.DataModule
 import com.alefimenko.iuttimetable.data.date.DateInteractor
 import com.alefimenko.iuttimetable.data.date.DateInteractorImpl
 import com.alefimenko.iuttimetable.data.local.Preferences
+import com.alefimenko.iuttimetable.presentation.ribs.groups.Groups
+import com.alefimenko.iuttimetable.presentation.ribs.groups.builder.GroupsBuilder
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.Schedule
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.Schedule.Input
 import com.alefimenko.iuttimetable.presentation.ribs.schedule.Schedule.Output
@@ -17,8 +19,9 @@ import com.alefimenko.iuttimetable.presentation.ribs.schedule.feature.ScheduleFe
 import com.alefimenko.iuttimetable.presentation.ribs.settings.Settings
 import com.alefimenko.iuttimetable.presentation.ribs.settings.builder.SettingsBuilder
 import com.badoo.mvicore.android.AndroidTimeCapsule
-import com.badoo.ribs.core.routing.transition.handler.Slider
+import com.badoo.ribs.core.routing.transition.handler.CrossFader
 import dagger.Provides
+import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 import javax.inject.Named
@@ -46,8 +49,9 @@ internal object ScheduleModule {
         customisation: Schedule.Customisation
     ): ScheduleRouter = ScheduleRouter(
         settingsBuilder = SettingsBuilder(component),
+        groupsBuilder = GroupsBuilder(component),
         savedInstanceState = savedInstanceState,
-        transitionHandler = Slider()
+        transitionHandler = CrossFader()
     )
 
     @ScheduleScope
@@ -97,4 +101,16 @@ internal object ScheduleModule {
     fun settingsOutput(
         scheduleInteractor: ScheduleInteractor
     ): Consumer<Settings.Output> = scheduleInteractor.settingsOutputConsumer
+
+    @ScheduleScope
+    @Provides
+    @JvmStatic
+    fun groupsInput(): ObservableSource<Groups.Input> = Observable.empty()
+
+    @ScheduleScope
+    @Provides
+    @JvmStatic
+    fun groupsOutput(
+        scheduleInteractor: ScheduleInteractor
+    ): Consumer<Groups.Output> = scheduleInteractor.groupsOutputConsumer
 }

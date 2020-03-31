@@ -11,5 +11,6 @@ internal object ViewEventToWish : (Event) -> Wish? {
         is Event.SwitchToWeek -> Wish.UpdateCurrentWeek(event.weekIdx)
         Event.OnSettingsClick -> Wish.RouteToSettings
         Event.Retry -> Wish.RequestDownload
+        is Event.OnMenuClick -> Wish.RouteToGroupPicker
     }
 }

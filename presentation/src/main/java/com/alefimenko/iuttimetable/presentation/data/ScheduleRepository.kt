@@ -4,7 +4,6 @@ import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.data.GroupInfo
 import com.alefimenko.iuttimetable.data.ScheduleParser
-import com.alefimenko.iuttimetable.data.local.Constants.ITEM_DOESNT_EXIST
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.local.model.GroupEntity
 import com.alefimenko.iuttimetable.data.local.model.ScheduleEntity
@@ -72,26 +71,6 @@ class ScheduleRepository @Inject constructor(
         } else {
             Observable.error(Exceptions.NoNetworkException())
         }
-    }
-
-    fun deleteCurrentSchedule(groupId: Int) = Single.fromCallable {
-        preferences.currentGroup = ITEM_DOESNT_EXIST
-        groupsDao.delete(groupId)
-        schedulesDao.deleteByGroupId(groupId)
-    }.ioMainSchedulers()
-        .flatMap {
-            schedulesDao.schedules
-                .ioMainSchedulers()
-                .flatMap { schedules ->
-                    Single.just(
-                        schedules.firstOrNull { it.groupId != groupId }?.groupId ?: -1
-                    )
-                }
-        }
-
-    fun deleteSchedule(groupId: Int) = Completable.fromCallable {
-        groupsDao.delete(groupId)
-        schedulesDao.deleteByGroupId(groupId)
     }
 
     fun updateCurrentSchedule(groupId: Int = preferences.currentGroup): Observable<Boolean> {

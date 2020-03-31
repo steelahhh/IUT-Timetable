@@ -20,6 +20,7 @@ interface ScheduleView : RibView,
         object ChangeWeek : Event()
         object OnSettingsClick : Event()
         object Retry : Event()
+        object OnMenuClick : Event()
     }
 
     data class ViewModel(

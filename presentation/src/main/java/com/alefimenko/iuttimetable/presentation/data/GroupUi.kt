@@ -25,15 +25,15 @@ data class GroupUi(
     val instituteName: String,
     val semester: String,
     val isCurrent: Boolean,
-    val clickListener: OnGroupClickListener
+    val clickListener: OnGroupClickListener? = null
 ) : Item() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) = with(viewHolder) {
         val context = itemView.context
         groupEntryContainer.setOnClickListener {
-            clickListener.onClick(this@GroupUi)
+            clickListener?.onClick(this@GroupUi)
         }
         groupEntryDeleteButton.setOnClickListener {
-            clickListener.delete(this@GroupUi)
+            clickListener?.delete(this@GroupUi)
         }
         val elevation = if (isCurrent) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)

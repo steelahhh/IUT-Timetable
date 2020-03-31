@@ -2,12 +2,10 @@ package com.alefimenko.iuttimetable.presentation.ribs.pick_institute
 
 import android.os.Bundle
 import androidx.lifecycle.Lifecycle
-import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.analytics.PickInstituteAnalytics
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.feature.PickInstituteFeature
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.mapper.InputToWish
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.mapper.NewsToOutput
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.mapper.StateToViewModel
-import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.mapper.ViewEventToAnalyticsEvent
 import com.alefimenko.iuttimetable.presentation.ribs.pick_institute.mapper.ViewEventToWish
 import com.badoo.mvicore.android.AndroidTimeCapsule
 import com.badoo.mvicore.android.lifecycle.createDestroy
@@ -40,7 +38,6 @@ internal class PickInstituteInteractor(
         viewLifecycle.startStop {
             bind(feature to view using StateToViewModel)
             bind(view to feature using ViewEventToWish)
-            bind(view to PickInstituteAnalytics using ViewEventToAnalyticsEvent)
         }
     }
 

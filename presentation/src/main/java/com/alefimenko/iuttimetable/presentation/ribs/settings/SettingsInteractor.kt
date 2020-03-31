@@ -2,12 +2,10 @@ package com.alefimenko.iuttimetable.presentation.ribs.settings
 
 import android.os.Bundle
 import androidx.lifecycle.Lifecycle
-import com.alefimenko.iuttimetable.presentation.ribs.settings.analytics.SettingsAnalytics
 import com.alefimenko.iuttimetable.presentation.ribs.settings.feature.SettingsFeature
 import com.alefimenko.iuttimetable.presentation.ribs.settings.feature.SettingsFeature.News
 import com.alefimenko.iuttimetable.presentation.ribs.settings.mapper.NewsToOutput
 import com.alefimenko.iuttimetable.presentation.ribs.settings.mapper.StateToViewModel
-import com.alefimenko.iuttimetable.presentation.ribs.settings.mapper.ViewEventToAnalyticsEvent
 import com.alefimenko.iuttimetable.presentation.ribs.settings.mapper.ViewEventToWish
 import com.badoo.mvicore.android.lifecycle.createDestroy
 import com.badoo.mvicore.android.lifecycle.startStop
@@ -45,7 +43,6 @@ internal class SettingsInteractor(
             })
             bind(wrap(feature).distinctUntilChanged() to view using StateToViewModel)
             bind(view to feature using ViewEventToWish)
-            bind(view to SettingsAnalytics using ViewEventToAnalyticsEvent)
         }
     }
 }

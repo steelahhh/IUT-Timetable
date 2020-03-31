@@ -75,6 +75,7 @@ class ScheduleViewImpl private constructor(
             }
             toolbar.run {
                 replaceMenu(R.menu.schedule_menu)
+                setNavigationOnClickListener { events.accept(Event.OnMenuClick) }
                 setOnMenuItemClickListener { menuItem ->
                     if (menuItem.itemId == R.id.action_settings) events.accept(Event.OnSettingsClick)
                     true

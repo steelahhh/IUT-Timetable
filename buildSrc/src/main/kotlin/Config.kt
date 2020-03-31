@@ -137,7 +137,7 @@ object Deps {
         const val core = "com.github.badoo.mvicore:mvicore:${vers.mviCore}"
         const val android = "com.github.badoo.mvicore:mvicore-android:${vers.mviCore}"
     }
-    
+
     val firebase = Firebase
 
     object Firebase {

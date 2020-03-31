@@ -10,6 +10,9 @@
     <dimen name="size_xxl">64dp</dimen>
     <dimen name="size_xxxl">128dp</dimen>
 
+    <dimen name="item_height_m">56dp</dimen>
+    <dimen name="item_height_xxl">256dp</dimen>
+
     <dimen name="spacing_1">1dp</dimen>
     <dimen name="spacing_2">2dp</dimen>
     <dimen name="spacing_4">4dp</dimen>

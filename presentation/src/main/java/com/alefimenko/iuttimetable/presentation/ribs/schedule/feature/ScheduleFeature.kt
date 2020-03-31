@@ -68,6 +68,7 @@ internal class ScheduleFeature @Inject constructor(
         object RequestWeekChange : Wish()
         object RouteToSettings : Wish()
         object RequestDownload : Wish()
+        object RouteToGroupPicker : Wish()
     }
 
     sealed class Action {
@@ -76,6 +77,7 @@ internal class ScheduleFeature @Inject constructor(
     }
 
     sealed class Effect {
+        object RouteToGroupPicker : Effect()
         object RouteToSettings : Effect()
         object RouteToPickWeek : Effect()
         object StartLoading : Effect()
@@ -91,6 +93,7 @@ internal class ScheduleFeature @Inject constructor(
     }
 
     sealed class News {
+        object OpenGroupPicker : News()
         object OpenSettings : News()
         data class RouteToWeekPicker(val list: List<String>, val selectedWeek: Int) : News()
     }
@@ -135,6 +138,7 @@ internal class ScheduleFeature @Inject constructor(
                 }
                 .startWith(Effect.StartLoading)
                 .onErrorReturnItem(Effect.LoadedWithError())
+            Wish.RouteToGroupPicker -> justOnMain(Effect.RouteToGroupPicker)
         }
 
         private fun downloadSchedule(info: GroupInfo) = repository.downloadSchedule(info)
@@ -187,6 +191,7 @@ internal class ScheduleFeature @Inject constructor(
                 selectedWeek = state.selectedWeek
             )
             is Effect.RouteToSettings -> News.OpenSettings
+            is Effect.RouteToGroupPicker -> News.OpenGroupPicker
             else -> null
         }
     }

@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DimenRes
 import androidx.appcompat.app.AppCompatDelegate
@@ -157,6 +158,14 @@ fun Context.getPrimaryTextColor(): Int {
     val primaryColor = arr.getColor(0, -1)
     arr.recycle()
     return primaryColor
+}
+
+@ColorInt
+fun Context.getColorFromAttr(@AttrRes attr: Int): Int {
+    val typedValue = TypedValue()
+    val theme = theme
+    theme.resolveAttribute(attr, typedValue, true)
+    return getColorCompat(typedValue.resourceId)
 }
 
 fun Context.convertDpToPixel(dp: Float): Float {
