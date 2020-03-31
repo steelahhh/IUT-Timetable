@@ -92,8 +92,10 @@ class ScheduleViewImpl private constructor(
         scheduleStubView.apply {
             isVisible = vm.isError
             textRes = R.string.schedule_loading_error
-            onRetryClick = { /* insideEvents.onNext(ScheduleFeature.Event.DownloadSchedule) */ }
+            onRetryClick = { events.accept(Event.Retry) }
         }
+
+        progressBar.isGone = !vm.isLoading || vm.isError
 
         itemAdapter.clear()
         val items = Section(
@@ -137,7 +139,6 @@ class ScheduleViewImpl private constructor(
             vm.schedule?.weeks?.get(vm.selectedWeek) ?: androidView.context.getString(R.string.menu_change_week)
         itemAdapter.add(items)
         itemAdapter.notifyDataSetChanged()
-        progressBar.isGone = !vm.isLoading
         if (itemAdapter.itemCount != 0 && headerIndices.isNotEmpty() && vm.currentDay >= 0) {
             val smoothScroller = object : LinearSmoothScroller(androidView.context) {
                 override fun getVerticalSnapPreference() = SNAP_TO_START

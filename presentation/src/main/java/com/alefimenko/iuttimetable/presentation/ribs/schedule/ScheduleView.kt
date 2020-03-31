@@ -19,6 +19,7 @@ interface ScheduleView : RibView,
         data class SwitchToWeek(val weekIdx: Int) : Event()
         object ChangeWeek : Event()
         object OnSettingsClick : Event()
+        object Retry : Event()
     }
 
     data class ViewModel(

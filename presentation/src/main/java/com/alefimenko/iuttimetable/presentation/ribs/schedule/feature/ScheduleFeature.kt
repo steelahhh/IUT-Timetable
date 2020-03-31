@@ -39,7 +39,7 @@ internal class ScheduleFeature @Inject constructor(
     initialState = timeCapsule[FEATURE_KEY] ?: State(),
     wishToAction = { Execute(it) },
     bootstrapper = BootStrapperImpl(
-        isLoaded = timeCapsule.get<State>(FEATURE_KEY)?.groupInfo == null
+        isLoaded = timeCapsule.get<State>(FEATURE_KEY)?.groupInfo != null
     ),
     actor = ActorImpl(scheduleRepository, dateInteractor, preferences),
     reducer = ReducerImpl(),
@@ -68,6 +68,7 @@ internal class ScheduleFeature @Inject constructor(
         data class UpdateCurrentWeek(val week: Int) : Wish()
         object RequestWeekChange : Wish()
         object RouteToSettings : Wish()
+        object RequestDownload : Wish()
     }
 
     sealed class Action {
@@ -80,11 +81,12 @@ internal class ScheduleFeature @Inject constructor(
         object RouteToSettings : Effect()
         object RouteToPickWeek : Effect()
         object StartLoading : Effect()
-        object LoadedWithError : Effect()
+        data class LoadedWithError(val groupInfo: GroupInfo? = null) : Effect()
         data class ScheduleLoaded(
             val schedule: Schedule,
             val currentWeek: Int
         ) : Effect()
+
         data class ScheduleUpdated(val schedule: Schedule) : Effect()
         data class ChangeCurrentDay(val day: Int) : Effect()
         data class ChangeCurrentWeek(val week: Int) : Effect()
@@ -115,7 +117,7 @@ internal class ScheduleFeature @Inject constructor(
                     )
                 }
                 .startWith(Effect.StartLoading)
-                .onErrorReturnItem(Effect.LoadedWithError)
+                .onErrorReturnItem(Effect.LoadedWithError())
             Action.SwitchToCurrentDay -> if (repository.shouldSwitchToDay)
                 justOnMain<Effect>(Effect.ChangeCurrentDay(dateInteractor.currentDay))
             else
@@ -123,16 +125,7 @@ internal class ScheduleFeature @Inject constructor(
         }
 
         private fun handleWish(state: State, wish: Wish): Observable<Effect> = when (wish) {
-            is Wish.DownloadSchedule -> repository.downloadSchedule(wish.info)
-                .map<Effect> {
-                    Effect.ScheduleLoaded(
-                        schedule = it,
-                        currentWeek = if (it.weeks.size == 2) dateInteractor.currentWeek else 0
-                    )
-                }
-                .startWith(Effect.StartLoading)
-                .doOnError { it.printStackTrace() }
-                .onErrorReturnItem(Effect.LoadedWithError)
+            is Wish.DownloadSchedule -> downloadSchedule(wish.info)
             is Wish.RequestWeekChange -> if (state.schedule?.weeks?.size == 2)
                 justOnMain<Effect>(Effect.ChangeCurrentWeek(if (state.selectedWeek == 1) 0 else 1))
             else
@@ -144,7 +137,18 @@ internal class ScheduleFeature @Inject constructor(
             ).ioMainSchedulers().map<Effect> { Effect.ScheduleUpdated(schedule = it) }
             is Wish.UpdateCurrentWeek -> justOnMain(Effect.ChangeCurrentWeek(wish.week))
             Wish.RouteToSettings -> justOnMain(Effect.RouteToSettings)
+            Wish.RequestDownload -> state.groupInfo?.let { downloadSchedule(state.groupInfo) } ?: empty()
         }
+
+        private fun downloadSchedule(info: GroupInfo) = repository.downloadSchedule(info)
+            .map<Effect> {
+                Effect.ScheduleLoaded(
+                    schedule = it,
+                    currentWeek = if (it.weeks.size == 2) dateInteractor.currentWeek else 0
+                )
+            }
+            .startWith(Effect.StartLoading)
+            .onErrorReturnItem(Effect.LoadedWithError(info))
     }
 
     class ReducerImpl : Reducer<State, Effect> {
@@ -155,7 +159,8 @@ internal class ScheduleFeature @Inject constructor(
             )
             is Effect.LoadedWithError -> state.copy(
                 isLoading = false,
-                isError = true
+                isError = true,
+                groupInfo = effect.groupInfo
             )
             is Effect.ScheduleLoaded -> state.copy(
                 isLoading = false,
