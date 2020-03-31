@@ -30,7 +30,11 @@ internal class RootInteractor(
 
     val scheduleOutput = Consumer<Schedule.Output> { output ->
         when (output) {
-            Schedule.Output.OpenPickGroup -> router.push(Configuration.PickGroup(isRoot = false))
+            is Schedule.Output.OpenPickGroup -> if (output.isRoot)
+                router.newRoot(Configuration.PickGroup(isRoot = output.isRoot))
+            else
+                router.push(Configuration.PickGroup(isRoot = output.isRoot))
+            is Schedule.Output.GroupUpdated -> scheduleInput.onNext(Schedule.Input.LoadCurrentSchedule)
         }
     }
 

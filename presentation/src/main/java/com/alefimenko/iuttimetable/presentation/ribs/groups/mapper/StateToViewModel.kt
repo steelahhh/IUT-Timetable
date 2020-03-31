@@ -15,6 +15,6 @@ internal object StateToViewModel : (State) -> ViewModel {
                 semester = group.semester,
                 isCurrent = group.id == state.currentGroup
             )
-        }
+        }.sortedByDescending { it.isCurrent }
     )
 }

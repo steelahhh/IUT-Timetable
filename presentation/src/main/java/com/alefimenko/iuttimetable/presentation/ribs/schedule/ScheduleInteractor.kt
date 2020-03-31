@@ -36,10 +36,11 @@ internal class ScheduleInteractor(
     val groupsOutputConsumer: Consumer<Groups.Output> = Consumer { event ->
         when (event) {
             Groups.Output.Dismiss -> router.popOverlay()
-            Groups.Output.AddNewGroup -> {
-                output.accept(Schedule.Output.OpenPickGroup)
+            is Groups.Output.AddNewGroup -> {
+                output.accept(Schedule.Output.OpenPickGroup(event.isRoot))
                 router.popOverlay()
             }
+            is Groups.Output.UpdateGroup -> output.accept(Schedule.Output.GroupUpdated)
         }
     }
 

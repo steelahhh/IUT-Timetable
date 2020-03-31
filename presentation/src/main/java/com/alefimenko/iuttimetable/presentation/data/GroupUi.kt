@@ -6,6 +6,7 @@ import com.alefimenko.iuttimetable.createTypeFace
 import com.alefimenko.iuttimetable.extension.getColorCompat
 import com.alefimenko.iuttimetable.extension.getDimen
 import com.alefimenko.iuttimetable.presentation.R
+import com.xwray.groupie.Item as GroupieItem
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.item_group.*
@@ -54,4 +55,14 @@ data class GroupUi(
     }
 
     override fun getLayout(): Int = R.layout.item_group
+
+    override fun isSameAs(other: GroupieItem<*>): Boolean = when (other) {
+        is GroupUi -> this == other
+        else -> other.isSameAs(other)
+    }
+
+    override fun hasSameContentAs(other: GroupieItem<*>): Boolean = when (other) {
+        is GroupUi -> id == other.id
+        else -> other.isSameAs(other)
+    }
 }

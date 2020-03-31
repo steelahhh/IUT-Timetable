@@ -22,7 +22,8 @@ interface Schedule : Rib {
     }
 
     sealed class Output {
-        object OpenPickGroup : Output()
+        data class OpenPickGroup(val isRoot: Boolean) : Output()
+        object GroupUpdated : Output()
     }
 
     class Customisation(

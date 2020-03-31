@@ -6,8 +6,10 @@ import com.alefimenko.iuttimetable.presentation.ribs.groups.feature.GroupsFeatur
 internal object NewsToOutput : (News) -> Output? {
 
     override fun invoke(news: News): Output? = when (news) {
-        News.GoBack -> Output.Dismiss
-        News.AddGroup -> Output.AddNewGroup
+        is News.GoBack -> Output.Dismiss
+        is News.UpdateNewGroup -> Output.UpdateGroup
+        is News.AddGroup -> Output.AddNewGroup(isRoot = false)
+        is News.LastGroupDeleted -> Output.AddNewGroup(isRoot = true)
         else -> null
     }
 }

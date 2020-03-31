@@ -19,7 +19,8 @@ interface Groups : Rib {
 
     sealed class Output {
         object Dismiss : Output()
-        object AddNewGroup : Output()
+        object UpdateGroup : Output()
+        data class AddNewGroup(val isRoot: Boolean) : Output()
     }
 
     class Customisation(

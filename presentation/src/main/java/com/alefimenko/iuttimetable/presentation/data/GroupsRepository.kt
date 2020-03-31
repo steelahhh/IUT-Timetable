@@ -1,12 +1,12 @@
 package com.alefimenko.iuttimetable.presentation.data
 
+import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.data.local.Preferences
 import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
 import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -22,7 +22,11 @@ class GroupsRepository @Inject constructor(
     private val schedulesDao: SchedulesDao,
     val preferences: Preferences
 ) {
-    val currentGroup get() = preferences.currentGroup
+    var currentGroup
+        get() = preferences.currentGroup
+        set(value) {
+            preferences.currentGroup = value
+        }
 
     fun getGroups() = groupsDao.getGroupsWithInstitute()
 
@@ -32,8 +36,9 @@ class GroupsRepository @Inject constructor(
         preferences.currentGroup = Constants.ITEM_DOESNT_EXIST
         groupsDao.delete(groupId)
         schedulesDao.deleteByGroupId(groupId)
-    }.subscribeOn(Schedulers.io()).flatMap {
+    }.ioMainSchedulers().flatMap {
         schedulesDao.schedules
+            .ioMainSchedulers()
             .flatMap { schedules ->
                 Single.just(
                     schedules.firstOrNull { it.groupId != groupId }?.groupId ?: -1

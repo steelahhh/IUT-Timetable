@@ -18,7 +18,9 @@ import com.badoo.mvicore.element.NewsPublisher
 import com.badoo.mvicore.element.PostProcessor
 import com.badoo.mvicore.element.Reducer
 import com.badoo.mvicore.feature.BaseFeature
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Observable.just
 import javax.inject.Inject
 
 @GroupsScope
@@ -54,36 +56,60 @@ internal class GroupsFeature @Inject constructor(
     sealed class Effect {
         object AddGroup : Effect()
         object GoBack : Effect()
+        object GroupDeleted : Effect()
+        object LastGroupDeleted : Effect()
+        object CurrentGroupUpdated : Effect()
         data class GroupsLoaded(val groups: List<GroupInstitute>, val currentGroup: Int) : Effect()
-        data class SelectGroup(val group: GroupUi) : Effect()
-        data class DeleteGroup(val group: GroupUi) : Effect()
+        data class CurrentGroupDeleted(val groupId: Int) : Effect()
     }
 
     sealed class News {
         object AddGroup : News()
         object GoBack : News()
-        data class SelectGroup(val group: GroupUi) : News()
-        data class DeleteGroup(val group: GroupUi) : News()
+        object LastGroupDeleted : News()
+        object UpdateNewGroup : News()
     }
 
     class BootstrapperImpl : Bootstrapper<Action> {
         override fun invoke(): Observable<Action> = justOnMain(Action.LoadGroups)
     }
 
-    class ActorImpl(private val pickGroupRepository: GroupsRepository) : Actor<State, Action, Effect> {
+    class ActorImpl(private val repository: GroupsRepository) : Actor<State, Action, Effect> {
         override fun invoke(state: State, action: Action): Observable<Effect> = when (action) {
-            Action.LoadGroups -> pickGroupRepository.getGroups()
+            Action.LoadGroups -> repository.getGroups()
                 .ioMainSchedulers()
                 .toObservable().map {
-                    Effect.GroupsLoaded(it, pickGroupRepository.currentGroup)
+                    Effect.GroupsLoaded(it, repository.currentGroup)
                 }
             is Execute -> handleWish(state, action.wish)
         }
 
         private fun handleWish(state: State, wish: Wish): Observable<Effect> = when (wish) {
             Wish.GoBack -> justOnMain(Effect.GoBack)
-            is Wish.SelectGroup -> justOnMain(Effect.SelectGroup(wish.group))
-            is Wish.DeleteGroup -> justOnMain(Effect.DeleteGroup(wish.group))
+            is Wish.SelectGroup -> {
+                Completable.fromAction { repository.currentGroup = wish.group.id }
+                    .ioMainSchedulers()
+                    .toSingleDefault(true)
+                    .toObservable()
+                    .map { Effect.CurrentGroupUpdated }
+            }
+            is Wish.DeleteGroup -> if (wish.group.id == state.currentGroup) {
+                repository.deleteCurrentSchedule(wish.group.id)
+                    .ioMainSchedulers()
+                    .toObservable().map<Effect> { newGroupId ->
+                        if (newGroupId != -1) {
+                            repository.currentGroup = newGroupId
+                            Effect.CurrentGroupDeleted(newGroupId)
+                        } else {
+                            Effect.LastGroupDeleted
+                        }
+                    }
+            } else {
+                repository.deleteSchedule(wish.group.id)
+                    .toSingleDefault(true)
+                    .ioMainSchedulers()
+                    .flatMapObservable<Effect> { just(Effect.GroupDeleted) }
+            }
             else -> justOnMain(Effect.AddGroup)
         }
     }
@@ -96,15 +122,24 @@ internal class GroupsFeature @Inject constructor(
     }
 
     class PostProcessorImpl : PostProcessor<Action, Effect, State> {
-        override fun invoke(action: Action, effect: Effect, state: State): Action? = null
+        override fun invoke(action: Action, effect: Effect, state: State): Action? = when (effect) {
+            is Effect.GroupDeleted, is Effect.CurrentGroupDeleted, is Effect.CurrentGroupUpdated -> Action.LoadGroups
+            else -> null
+        }
     }
 
     class NewsPublisherImpl : NewsPublisher<Action, Effect, State, News> {
-        override fun invoke(action: Action, effect: Effect, state: State): News? = when (action) {
+        override fun invoke(action: Action, effect: Effect, state: State): News? = when {
+            effect is Effect.CurrentGroupDeleted -> News.UpdateNewGroup
+            effect is Effect.CurrentGroupUpdated -> News.UpdateNewGroup
+            effect is Effect.LastGroupDeleted -> News.LastGroupDeleted
+            action is Execute -> handleAction(action)
+            else -> null
+        }
+
+        private fun handleAction(action: Action): News? = when (action) {
             is Execute -> when (action.wish) {
                 is Wish.GoBack -> News.GoBack
-                is Wish.SelectGroup -> News.SelectGroup(action.wish.group)
-                is Wish.DeleteGroup -> News.DeleteGroup(action.wish.group)
                 is Wish.AddNewGroup -> News.AddGroup
                 else -> null
             }
