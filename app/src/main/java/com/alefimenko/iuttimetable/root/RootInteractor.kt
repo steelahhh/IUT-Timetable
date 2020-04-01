@@ -8,11 +8,11 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.lifecycle.Lifecycle
-import com.alefimenko.iuttimetable.presentation.ribs.pick_group_root.PickGroupRoot
-import com.alefimenko.iuttimetable.presentation.ribs.schedule.Schedule
+import com.alefimenko.iuttimetable.pick_group_root.PickGroupRoot
 import com.alefimenko.iuttimetable.root.RootRouter.Configuration
 import com.alefimenko.iuttimetable.root.feature.RootFeature
 import com.alefimenko.iuttimetable.root.feature.RootFeature.News
+import com.alefimenko.iuttimetable.schedule.Schedule
 import com.badoo.mvicore.android.lifecycle.startStop
 import com.badoo.ribs.core.Interactor
 import io.reactivex.functions.Consumer

@@ -2,13 +2,12 @@ package com.alefimenko.iuttimetable.root
 
 import android.os.Bundle
 import android.os.Parcelable
-import com.alefimenko.iuttimetable.presentation.ribs.pick_group_root.builder.PickGroupRootBuilder
-import com.alefimenko.iuttimetable.presentation.ribs.schedule.builder.ScheduleBuilder
+import com.alefimenko.iuttimetable.pick_group_root.builder.PickGroupRootBuilder
 import com.alefimenko.iuttimetable.root.RootRouter.Configuration
+import com.alefimenko.iuttimetable.schedule.builder.ScheduleBuilder
 import com.badoo.ribs.core.Router
 import com.badoo.ribs.core.routing.action.AttachRibRoutingAction.Companion.attach
 import com.badoo.ribs.core.routing.action.RoutingAction
-import com.badoo.ribs.core.routing.transition.handler.CrossFader
 import com.badoo.ribs.core.routing.transition.handler.TransitionHandler
 import kotlinx.android.parcel.Parcelize
 

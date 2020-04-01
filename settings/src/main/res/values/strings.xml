@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="date_info_pattern">%s %s</string>
+    <string name="navigate_button_content">A button to navigate back</string>
+    <string name="settings_title">Настройки</string>
+    <string name="about_title">Расписание ТИУ %s</string>
+
+    <string name="settings_language_title">Язык приложения</string>
+    <string name="settings_theme_title">Темная тема</string>
+    <string name="settings_relevant_schedule_title">Всегда актуальное расписание</string>
+    <string name="settings_relevant_schedule_subtitle">При запуске приложения переходить на текущий день и неделю (для групп с 2-я неделями)</string>
+    <string name="settings_week_countdown_title">Сменить отсчет недель</string>
+    <string name="settings_week_countdown_subtitle">Используйте, если четность недели в приложении не совподает с таковой в университете (переход недели происходит автоматически)</string>
+    <string name="settings_feedback_title">Обратная связь</string>
+    <string name="settings_about_title">О приложении</string>
+    <string name="settings_update_schedule_title">Обновить текущее расписание</string>
+
+    <string name="about_body"><![CDATA[
+        Спроектировал и разработал <b>Александр Ефименко &copy; 2017</b><br/>
+
+        <a href=\'https://www.linkedin.com/in/steelahhh\'>LinkedIn</a><br/><br/>
+
+        Данное приложение является личным проектом разработчика и не связано с администрацией Тюменского Индустриального Университета.
+    ]]>
+    </string>
+</resources>

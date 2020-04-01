@@ -2,10 +2,10 @@ package com.alefimenko.iuttimetable.root.builder
 
 import android.content.Context
 import android.os.Bundle
-import com.alefimenko.iuttimetable.presentation.ribs.pick_group_root.PickGroupRoot
-import com.alefimenko.iuttimetable.presentation.ribs.schedule.Schedule
+import com.alefimenko.iuttimetable.pick_group_root.PickGroupRoot
 import com.alefimenko.iuttimetable.root.Root
 import com.alefimenko.iuttimetable.root.RootNode
+import com.alefimenko.iuttimetable.schedule.Schedule
 import dagger.BindsInstance
 
 @RootScope

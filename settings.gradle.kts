@@ -3,5 +3,7 @@ include(
     ":common",
     ":coreui",
     ":data",
-    ":presentation"
+    ":pickgroup",
+    ":schedule",
+    ":settings"
 )
