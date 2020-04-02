@@ -24,6 +24,7 @@ allprojects {
         maven(url = "https://jitpack.io/")
         maven(url = "https://plugins.gradle.org/m2/")
         maven(url = "https://dl.bintray.com/soywiz/soywiz")
+        maven(url = "https://dl.bintray.com/lisawray/maven")
     }
 
     dependencies {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_refresh">Обновить</string>
+    <string name="menu_change_week">Сменить неделю</string>
+    <string name="pick_week_dialog_title">Выберите неделю</string>
+
+    <string name="schedule_loading_error">Ошибка при загрузке расписания</string>
+
+    <string name="empty_day">В этот день нет занятий</string>
+    <string name="class_header_date_title">%s – %s</string>
+
+    <string name="class_entry_hidden">Class entry is hidden</string>
+    <string name="class_entry_menu">Class entry menu</string>
+    <string name="class_entry_restore">Восстановить</string>
+    <string name="class_entry_hide">Скрыть</string>
+
+    <string name="groups_title">Группы</string>
+    <string name="groups_add_group">Добавить группу</string>
+    <string name="delete_group_content_description">Кнопка удаления расписания</string>
+</resources>

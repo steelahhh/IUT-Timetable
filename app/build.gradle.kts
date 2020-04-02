@@ -23,7 +23,7 @@ fun getProperty(fileName: String, prop: String): Any? {
 android {
     compileSdkVersion(Versions.compileSdk)
     androidExtensions {
-        isExperimental = true
+        features = setOf("parcelize")
     }
 
     compileOptions {
@@ -76,14 +76,36 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.common))
-    implementation(project(Modules.coreUi))
-    implementation(project(Modules.data))
-    implementation(project(Modules.navigation))
-    implementation(project(Modules.presentation))
-    implementation(Deps.multidex)
-    implementation(Deps.firebase.core)
-    implementation(Deps.firebase.crashlytics)
+    arrayOf(
+        Modules.common,
+        Modules.coreUi,
+        Modules.data,
+        Modules.pickgroup,
+        Modules.schedule,
+        Modules.settings
+    ).forEach { dependency ->
+        implementation(project(dependency))
+    }
+
+    arrayOf(
+        kotlin("stdlib-jdk7", Versions.kotlin),
+        Deps.timber,
+        Deps.ribs.android,
+        Deps.dagger.core,
+        Deps.multidex,
+        Deps.firebase.core,
+        Deps.firebase.crashlytics,
+        Deps.klock.core,
+        Deps.klock.android,
+        Deps.retrofit,
+        Deps.room
+    ).forEach {
+        implementation(it)
+    }
+
+    debugImplementation(Deps.leakCanary)
+
+    kapt(Deps.dagger.compiler)
 }
 
 detekt {

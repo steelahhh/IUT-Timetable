@@ -8,7 +8,7 @@ plugins {
 android {
     compileSdkVersion(Versions.compileSdk)
     androidExtensions {
-        isExperimental = true
+        features = setOf("parcelize")
     }
 
     compileOptions {
@@ -37,22 +37,35 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.common))
+    arrayOf(
+        Modules.common
+    ).forEach { dependency ->
+        implementation(project(dependency))
+    }
 
-    api(Deps.room)
+    arrayOf(
+        kotlin("stdlib-jdk7", Versions.kotlin),
+        Deps.timber,
+        Deps.klock.core,
+        Deps.klock.android,
+        Deps.rxKotlin,
+        Deps.rxAndroid,
+        Deps.room,
+        Deps.retrofit,
+        Deps.retrofitGson,
+        Deps.retrofitRxJava,
+        Deps.jsoup,
+        Deps.dagger.core,
+        Deps.roomRxJava,
+        Deps.gson
+    ).forEach { dependency ->
+        implementation(dependency)
+    }
+
     kapt(Deps.roomCompiler)
-    api(Deps.roomRxJava)
-
-    api(Deps.gson)
-
-    api(Deps.retrofit)
-    api(Deps.retrofitGson)
-    api(Deps.retrofitRxJava)
-
-    api(Deps.jsoup)
+    kapt(Deps.dagger.compiler)
 
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.espresso)
-    testImplementation(Deps.koin.test)
 }

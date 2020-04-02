@@ -2,13 +2,13 @@ package com.alefimenko.iuttimetable
 
 import androidx.multidex.MultiDexApplication
 import com.alefimenko.iuttimetable.common.RussianLocale
-import com.alefimenko.iuttimetable.di.applicationModule
+import com.alefimenko.iuttimetable.di.ApplicationComponent
+import com.alefimenko.iuttimetable.di.DaggerApplicationComponent
+import com.alefimenko.iuttimetable.di.InjectorProvider
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.soywiz.klock.KlockLocale
 import io.fabric.sdk.android.Fabric
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
 import timber.log.Timber
 
 /*
@@ -16,21 +16,17 @@ import timber.log.Timber
  */
 
 @Suppress("unused")
-class IUTApplication : MultiDexApplication() {
+class IUTApplication : MultiDexApplication(), InjectorProvider {
+
+    override val component: ApplicationComponent by lazy {
+        DaggerApplicationComponent.factory().create(this)
+    }
 
     override fun onCreate() {
         super.onCreate()
-        initializeKoin()
         initializeTimber()
         initializeCrashlytics()
         initializeKlock()
-    }
-
-    private fun initializeKoin() {
-        startKoin {
-            androidContext(applicationContext)
-            modules(applicationModule)
-        }
     }
 
     private fun initializeTimber() {

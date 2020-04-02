@@ -8,7 +8,6 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.DialogFragment as SupportDialogFragment
 import androidx.fragment.app.Fragment as SupportFragment
-import com.bluelinelabs.conductor.Controller
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
@@ -53,7 +52,6 @@ fun <V : View> View.bindOptionalViews(
 fun SupportFragment.createBinder() = ViewBinder(viewFinder)
 fun SupportDialogFragment.createBinder() = ViewBinder(viewFinder)
 fun Activity.createBinder() = ViewBinder(viewFinder)
-fun Controller.createBinder() = ViewBinder(viewFinder)
 
 class ViewBinder(private val viewFinder: Finder) {
     private val lazyRegistry = mutableListOf<Lazy<*>>()
@@ -98,7 +96,6 @@ private typealias ViewInitializer<V> = V.() -> Unit
 private inline val View.viewFinder: Finder get() = { findViewById(it) }
 private inline val Activity.viewFinder: Finder get() = { findViewById(it) }
 private inline val Dialog.viewFinder: Finder get() = { findViewById(it) }
-private inline val Controller.viewFinder: Finder get() = { view?.findViewById(it) }
 
 private val SupportDialogFragment.viewFinder: Finder
     get() = { id ->

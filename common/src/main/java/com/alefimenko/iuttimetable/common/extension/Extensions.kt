@@ -12,7 +12,7 @@ inline fun withLollipop(action: () -> Unit) {
     }
 }
 
-val Int.asGenetiveMonth get(): String {
+val Int.asGenitiveMonth get(): String {
     return when (this) {
         1 -> "января"
         2 -> "февраля"
