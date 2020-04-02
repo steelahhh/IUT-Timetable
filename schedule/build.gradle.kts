@@ -63,7 +63,10 @@ dependencies {
         Deps.klock.core,
         Deps.klock.android,
         Deps.rxKotlin,
-        Deps.rxAndroid
+        Deps.rxAndroid,
+        Deps.retrofit,
+        Deps.gson,
+        Deps.room
     ).forEach { dependency ->
         implementation(dependency)
     }

@@ -60,7 +60,9 @@ dependencies {
         Deps.groupie.ktx,
         Deps.materialDialogs,
         Deps.rxKotlin,
-        Deps.rxAndroid
+        Deps.rxAndroid,
+        Deps.retrofit,
+        Deps.room
     ).forEach { dependency ->
         implementation(dependency)
     }

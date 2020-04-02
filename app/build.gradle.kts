@@ -96,7 +96,9 @@ dependencies {
         Deps.firebase.core,
         Deps.firebase.crashlytics,
         Deps.klock.core,
-        Deps.klock.android
+        Deps.klock.android,
+        Deps.retrofit,
+        Deps.room
     ).forEach {
         implementation(it)
     }

@@ -49,24 +49,20 @@ dependencies {
         Deps.klock.core,
         Deps.klock.android,
         Deps.rxKotlin,
-        Deps.rxAndroid
+        Deps.rxAndroid,
+        Deps.room,
+        Deps.retrofit,
+        Deps.retrofitGson,
+        Deps.retrofitRxJava,
+        Deps.jsoup,
+        Deps.dagger.core,
+        Deps.roomRxJava,
+        Deps.gson
     ).forEach { dependency ->
         implementation(dependency)
     }
 
-    api(Deps.room)
     kapt(Deps.roomCompiler)
-    api(Deps.roomRxJava)
-
-    api(Deps.gson)
-
-    api(Deps.retrofit)
-    api(Deps.retrofitGson)
-    api(Deps.retrofitRxJava)
-
-    api(Deps.jsoup)
-
-    implementation(Deps.dagger.core)
     kapt(Deps.dagger.compiler)
 
     testImplementation(Deps.junit)
