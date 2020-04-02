@@ -23,11 +23,10 @@ internal object SettingsModule {
         component: SettingsComponent,
         savedInstanceState: Bundle?,
         customisation: Settings.Customisation
-    ): SettingsRouter =
-        SettingsRouter(
-            savedInstanceState = savedInstanceState,
-            transitionHandler = null
-        )
+    ): SettingsRouter = SettingsRouter(
+        savedInstanceState = savedInstanceState,
+        transitionHandler = null
+    )
 
     @SettingsScope
     @Provides
@@ -37,13 +36,12 @@ internal object SettingsModule {
         router: SettingsRouter,
         output: Consumer<Output>,
         feature: SettingsFeature
-    ): SettingsInteractor =
-        SettingsInteractor(
-            savedInstanceState = savedInstanceState,
-            router = router,
-            output = output,
-            feature = feature
-        )
+    ): SettingsInteractor = SettingsInteractor(
+        savedInstanceState = savedInstanceState,
+        router = router,
+        output = output,
+        feature = feature
+    )
 
     @SettingsScope
     @Provides
@@ -55,13 +53,12 @@ internal object SettingsModule {
         interactor: SettingsInteractor,
         output: Consumer<Output>,
         feature: SettingsFeature
-    ): SettingsNode =
-        SettingsNode(
-            savedInstanceState = savedInstanceState,
-            viewFactory = customisation.viewFactory(null),
-            router = router,
-            interactor = interactor,
-            output = output,
-            feature = feature
-        )
+    ): SettingsNode = SettingsNode(
+        savedInstanceState = savedInstanceState,
+        viewFactory = customisation.viewFactory(null),
+        router = router,
+        interactor = interactor,
+        output = output,
+        feature = feature
+    )
 }

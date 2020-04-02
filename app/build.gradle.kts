@@ -86,11 +86,24 @@ dependencies {
     ).forEach { dependency ->
         implementation(project(dependency))
     }
-    implementation(Deps.dagger.core)
+
+    arrayOf(
+        kotlin("stdlib-jdk7", Versions.kotlin),
+        Deps.timber,
+        Deps.ribs.android,
+        Deps.dagger.core,
+        Deps.multidex,
+        Deps.firebase.core,
+        Deps.firebase.crashlytics,
+        Deps.klock.core,
+        Deps.klock.android
+    ).forEach {
+        implementation(it)
+    }
+
+    debugImplementation(Deps.leakCanary)
+
     kapt(Deps.dagger.compiler)
-    implementation(Deps.multidex)
-    implementation(Deps.firebase.core)
-    implementation(Deps.firebase.crashlytics)
 }
 
 detekt {

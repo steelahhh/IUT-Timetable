@@ -48,6 +48,10 @@ dependencies {
     }
 
     arrayOf(
+        kotlin("stdlib-jdk7", Versions.kotlin),
+        Deps.timber,
+        Deps.ribs.android,
+        Deps.rxRelay,
         Deps.constraint,
         Deps.androidxCore,
         Deps.recyclerView,
@@ -55,7 +59,11 @@ dependencies {
         Deps.dagger.core,
         Deps.groupie.core,
         Deps.groupie.ktx,
-        Deps.materialDialogs
+        Deps.materialDialogs,
+        Deps.klock.core,
+        Deps.klock.android,
+        Deps.rxKotlin,
+        Deps.rxAndroid
     ).forEach { dependency ->
         implementation(dependency)
     }

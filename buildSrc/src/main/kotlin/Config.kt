@@ -96,7 +96,11 @@ object Deps {
 
     const val jsoup = "org.jsoup:jsoup:${vers.jsoup}"
 
-    val ribs = "com.github.badoo.RIBs:rib-android:0.11.2"
+    val ribs = RIBs
+
+    object RIBs {
+        const val android = "com.github.badoo.RIBs:rib-android:0.11.2"
+    }
 
     val dagger = Dagger
 

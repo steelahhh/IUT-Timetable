@@ -43,6 +43,17 @@ dependencies {
         implementation(project(dependency))
     }
 
+    arrayOf(
+        kotlin("stdlib-jdk7", Versions.kotlin),
+        Deps.timber,
+        Deps.klock.core,
+        Deps.klock.android,
+        Deps.rxKotlin,
+        Deps.rxAndroid
+    ).forEach { dependency ->
+        implementation(dependency)
+    }
+
     api(Deps.room)
     kapt(Deps.roomCompiler)
     api(Deps.roomRxJava)

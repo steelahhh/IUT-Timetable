@@ -32,21 +32,15 @@ android {
 }
 
 dependencies {
-    api(kotlin("stdlib-jdk7", Versions.kotlin))
-
-    api(Deps.ribs)
-
-    implementation(Deps.dagger.core)
-
-    api(Deps.rxRelay)
-
-    api(Deps.klock.core)
-    api(Deps.klock.android)
-
-    api(Deps.timber)
-
-    api(Deps.rxKotlin)
-    api(Deps.rxAndroid)
-
-    debugApi(Deps.leakCanary)
+    arrayOf(
+        kotlin("stdlib-jdk7", Versions.kotlin),
+        Deps.timber,
+        Deps.dagger.core,
+        Deps.klock.core,
+        Deps.klock.android,
+        Deps.rxKotlin,
+        Deps.rxAndroid
+    ).forEach { dependency ->
+        implementation(dependency)
+    }
 }
