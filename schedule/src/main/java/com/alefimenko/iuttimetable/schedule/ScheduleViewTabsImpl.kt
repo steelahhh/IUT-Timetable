@@ -8,20 +8,19 @@ import androidx.core.view.isVisible
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.extension.changeMenuColors
-import com.alefimenko.iuttimetable.schedule.data.model.*
+import com.alefimenko.iuttimetable.schedule.data.model.ClassItem
+import com.alefimenko.iuttimetable.schedule.data.model.Position
+import com.alefimenko.iuttimetable.schedule.data.model.DayTabItem
+import com.alefimenko.iuttimetable.schedule.data.model.toClassItem
+import com.alefimenko.iuttimetable.schedule.databinding.RibScheduleTabsBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jakewharton.rxrelay2.PublishRelay
 import com.soywiz.klock.KlockLocale
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Item
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.item_schedule_header.view.*
-import kotlinx.android.synthetic.main.rib_schedule_tabs.view.*
-import kotlinx.android.synthetic.main.rib_schedule_tabs.view.progressBar
-import kotlinx.android.synthetic.main.rib_schedule_tabs.view.scheduleChangeWeekButton
-import kotlinx.android.synthetic.main.rib_schedule_tabs.view.scheduleStubView
 
 internal class ScheduleViewTabsImpl(
     override val androidView: ViewGroup,
@@ -31,29 +30,28 @@ internal class ScheduleViewTabsImpl(
     Consumer<ScheduleView.ViewModel> {
 
     private val tabsAdapter = GroupAdapter<GroupieViewHolder>()
+    private val binding = RibScheduleTabsBinding.bind(androidView)
 
     init {
-        androidView.run {
-            scheduleTabsToolbar.run {
-                replaceMenu(R.menu.schedule_menu)
-                setNavigationOnClickListener { events.accept(ScheduleView.Event.OnMenuClick) }
-                setOnMenuItemClickListener { menuItem ->
-                    if (menuItem.itemId == R.id.action_settings) events.accept(ScheduleView.Event.OnSettingsClick)
-                    true
-                }
-                changeMenuColors()
+        binding.scheduleTabsToolbar.run {
+            replaceMenu(R.menu.schedule_menu)
+            setNavigationOnClickListener { events.accept(ScheduleView.Event.OnMenuClick) }
+            setOnMenuItemClickListener { menuItem ->
+                if (menuItem.itemId == R.id.action_settings) events.accept(ScheduleView.Event.OnSettingsClick)
+                true
             }
-
-            scheduleTabsViewPager.adapter = tabsAdapter
-
-            scheduleChangeWeekButton.setOnClickListener {
-                events.accept(ScheduleView.Event.ChangeWeek)
-            }
-
-            TabLayoutMediator(scheduleTabLayout, scheduleTabsViewPager) { tab, position ->
-                tab.text = KlockLocale.default.daysOfWeekShort[position]
-            }.attach()
+            changeMenuColors()
         }
+
+        binding.scheduleTabsViewPager.adapter = tabsAdapter
+
+        binding.scheduleChangeWeekButton.setOnClickListener {
+            events.accept(ScheduleView.Event.ChangeWeek)
+        }
+
+        TabLayoutMediator(binding.scheduleTabLayout, binding.scheduleTabsViewPager) { tab, position ->
+            tab.text = KlockLocale.default.daysOfWeekShort[position]
+        }.attach()
     }
 
     override fun openWeekPickerDialog(weeks: List<String>, selectedWeek: Int) {
@@ -69,7 +67,7 @@ internal class ScheduleViewTabsImpl(
         }
     }
 
-    override fun accept(vm: ScheduleView.ViewModel) = with(androidView) {
+    override fun accept(vm: ScheduleView.ViewModel) = with(binding) {
         scheduleStubView.apply {
             isVisible = vm.isError
             textRes = R.string.schedule_loading_error
@@ -82,11 +80,13 @@ internal class ScheduleViewTabsImpl(
         progressBar.isGone = !vm.isLoading || vm.isError
         scheduleChangeWeekButton.isGone = vm.isError || vm.isLoading
 
-        val classes = mutableListOf<Item>()
+        val classes = mutableListOf<Item<*>>()
 
         vm.schedule?.let { schedule ->
-            scheduleHeaderTitle.text = schedule.groupTitle
-            scheduleHeaderSubtitle.text = schedule.semester
+            binding.scheduleTabsHeaderLayout.run {
+                scheduleHeaderTitle.text = schedule.groupTitle
+                scheduleHeaderSubtitle.text = schedule.semester
+            }
 
             schedule.weekSchedule[vm.selectedWeek]?.forEachIndexed { dayIndex, list ->
                 classes.add(

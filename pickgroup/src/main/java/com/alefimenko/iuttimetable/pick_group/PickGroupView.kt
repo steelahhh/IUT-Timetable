@@ -10,15 +10,15 @@ import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.extension.hideSoftKeyboard
 import com.alefimenko.iuttimetable.pick_group.PickGroupView.Event
 import com.alefimenko.iuttimetable.pick_group.PickGroupView.ViewModel
+import com.alefimenko.iuttimetable.pick_group.databinding.RibPickGroupBinding
 import com.badoo.ribs.core.view.RibView
 import com.badoo.ribs.core.view.ViewFactory
 import com.badoo.ribs.customisation.inflate
 import com.jakewharton.rxrelay2.PublishRelay
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
+import com.xwray.groupie.GroupieViewHolder
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.rib_pick_group.view.*
 
 interface PickGroupView : RibView,
     ObservableSource<Event>,
@@ -51,55 +51,48 @@ class PickGroupViewImpl private constructor(
         @LayoutRes private val layoutRes: Int = R.layout.rib_pick_group
     ) : PickGroupView.Factory {
         override fun invoke(deps: Nothing?): (ViewGroup) -> PickGroupView = {
-            PickGroupViewImpl(
-                inflate(
-                    it,
-                    layoutRes
-                )
-            )
+            PickGroupViewImpl(inflate(it, layoutRes))
         }
     }
 
     private val groupsAdapter = GroupAdapter<GroupieViewHolder>()
 
     init {
-        with(androidView) {
-            toolbar.setNavigationOnClickListener { events.accept(Event.GoBack) }
-            recycler.run {
-                layoutManager = LinearLayoutManager(context)
-                adapter = groupsAdapter
+        val binding = RibPickGroupBinding.bind(androidView)
+        binding.toolbar.setNavigationOnClickListener { events.accept(Event.GoBack) }
+        binding.recycler.run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = groupsAdapter
+        }
+        binding.toolbar.changeMenuColors()
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            var oldText: String? = null
+            override fun onQueryTextSubmit(query: String?): Boolean = true
+
+            override fun onQueryTextChange(newText: String?): Boolean = true.also {
+                events.accept(Event.QueryChanged(newText ?: ""))
+                oldText = newText
             }
-            toolbar.changeMenuColors()
+        })
 
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                var oldText: String? = null
-                override fun onQueryTextSubmit(query: String?): Boolean = true
-
-                override fun onQueryTextChange(newText: String?): Boolean = true.also {
-                    events.accept(Event.QueryChanged(newText ?: ""))
-                    oldText = newText
-                }
-            })
-
-            errorView.onRetryClick = {
-                events.accept(Event.Retry)
-            }
+        binding.errorView.onRetryClick = {
+            events.accept(Event.Retry)
         }
     }
 
-    override fun accept(vm: ViewModel) = with(androidView) {
+    override fun accept(vm: ViewModel) = with(RibPickGroupBinding.bind(androidView)) {
         renderContent(vm)
         renderError(vm)
     }
 
-    private fun ViewGroup.renderContent(vm: ViewModel) = with(vm) {
+    private fun RibPickGroupBinding.renderContent(vm: ViewModel) = with(vm) {
         progressBar.isVisible = isLoading
         recycler.isVisible = !isLoading
 
         if (groups.isNotEmpty()) {
             groupsAdapter.setOnItemClickListener { group, _ ->
                 require(group is GroupItem)
-                hideSoftKeyboard()
+                root.hideSoftKeyboard()
                 events.accept(Event.PickGroup(group))
             }
 
@@ -108,7 +101,7 @@ class PickGroupViewImpl private constructor(
         }
     }
 
-    private fun ViewGroup.renderError(vm: ViewModel) = with(vm) {
+    private fun RibPickGroupBinding.renderError(vm: ViewModel) = with(vm) {
         errorView.apply {
             isVisible = vm.isError
             retryVisible = true

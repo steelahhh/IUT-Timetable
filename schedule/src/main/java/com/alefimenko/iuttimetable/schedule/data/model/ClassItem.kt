@@ -20,9 +20,8 @@ import com.alefimenko.iuttimetable.extension.getDimenPixelSize
 import com.alefimenko.iuttimetable.extension.getPrimaryTextColor
 import com.alefimenko.iuttimetable.extension.isDarkModeEnabled
 import com.alefimenko.iuttimetable.schedule.R
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlinx.android.synthetic.main.item_class.view.*
+import com.alefimenko.iuttimetable.schedule.databinding.ItemClassBinding
+import com.xwray.groupie.viewbinding.BindableItem
 
 /*
  * Created by Alexander Efimenko on 2019-05-09.
@@ -42,10 +41,12 @@ data class ClassItem(
     val hidden: Boolean,
     val positionInGroup: Position,
     val onClassMenuClick: OnClassMenuClick
-) : Item() {
+) : BindableItem<ItemClassBinding>() {
     override fun getLayout() = R.layout.item_class
 
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) = with(viewHolder.itemView) {
+    override fun initializeViewBinding(view: View): ItemClassBinding = ItemClassBinding.bind(view)
+
+    override fun bind(viewHolder: ItemClassBinding, position: Int) = with(viewHolder) {
         renderBackground()
         updateConstraints()
         finishTimeTv.text = finishTime
@@ -66,8 +67,8 @@ data class ClassItem(
         typeTv.isGone = hidden
         hiddenIv.isGone = !hidden
 
-        val textColor = if (hidden) context.getColorCompat(R.color.warmGray) else {
-            context.getPrimaryTextColor()
+        val textColor = if (hidden) root.context.getColorCompat(R.color.warmGray) else {
+            root.context.getPrimaryTextColor()
         }
 
         startTimeTv.setTextColor(textColor)
@@ -76,7 +77,8 @@ data class ClassItem(
         menuBtn.setColorFilter(textColor)
     }
 
-    private fun View.renderBackground() {
+    private fun ItemClassBinding.renderBackground() {
+        val context = root.context
         val drawableRes = when (positionInGroup) {
             Position.FIRST -> R.drawable.card_background_first
             Position.OTHER -> R.drawable.card_background_other
@@ -93,15 +95,16 @@ data class ClassItem(
         }
         drawable?.mutate()
         drawable?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-        background = drawable
+        root.background = drawable
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            elevation = 12f
+            root.elevation = 12f
         }
     }
 
-    private fun View.updateConstraints() {
+    private fun ItemClassBinding.updateConstraints() {
+        val context = root.context
         val constraints = ConstraintSet().apply {
-            clone(class_layout)
+            clone(root)
         }
         if (hidden) {
             constraints.apply {
@@ -118,7 +121,7 @@ data class ClassItem(
                 connect(subjectTv.id, BASELINE, startTimeTv.id, BASELINE, 0)
                 connect(hiddenIv.id, TOP, PARENT_ID, TOP, 10)
                 connect(hiddenIv.id, BOTTOM, PARENT_ID, BOTTOM, 10)
-                applyTo(class_layout)
+                applyTo(root)
             }
         } else {
             subjectTv.isSingleLine = false
@@ -128,7 +131,7 @@ data class ClassItem(
                     subjectTv.id, TOP, typeTv.id, BOTTOM,
                     context.getDimenPixelSize(R.dimen.spacing_4)
                 )
-                applyTo(class_layout)
+                applyTo(root)
             }
         }
     }

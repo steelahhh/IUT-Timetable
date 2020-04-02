@@ -13,15 +13,15 @@ import com.alefimenko.iuttimetable.settings.SettingsView.Event
 import com.alefimenko.iuttimetable.settings.SettingsView.ViewModel
 import com.alefimenko.iuttimetable.settings.data.SettingsItem
 import com.alefimenko.iuttimetable.settings.data.SettingsItemKey
+import com.alefimenko.iuttimetable.settings.databinding.RibSettingsBinding
 import com.badoo.ribs.core.view.RibView
 import com.badoo.ribs.core.view.ViewFactory
 import com.badoo.ribs.customisation.inflate
 import com.jakewharton.rxrelay2.PublishRelay
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
+import com.xwray.groupie.GroupieViewHolder
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.rib_settings.view.*
 
 interface SettingsView : RibView,
     ObservableSource<Event>,
@@ -62,10 +62,11 @@ class SettingsViewImpl private constructor(
     private val settingsAdapter = GroupAdapter<GroupieViewHolder>()
 
     init {
-        androidView.settingsBackButton.setOnClickListener {
+        val binding = RibSettingsBinding.bind(androidView)
+        binding.settingsBackButton.setOnClickListener {
             events.accept(Event.OnBackClick)
         }
-        androidView.settingsRecycler.apply {
+        binding.settingsRecycler.apply {
             adapter = settingsAdapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))

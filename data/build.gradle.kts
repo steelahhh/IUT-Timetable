@@ -8,7 +8,7 @@ plugins {
 android {
     compileSdkVersion(Versions.compileSdk)
     androidExtensions {
-        isExperimental = true
+        features = setOf("parcelize")
     }
 
     compileOptions {

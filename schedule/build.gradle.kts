@@ -7,8 +7,9 @@ plugins {
 
 android {
     compileSdkVersion(Versions.compileSdk)
+
     androidExtensions {
-        isExperimental = true
+        features = setOf("parcelize")
     }
 
     compileOptions {
@@ -24,6 +25,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
     }
+
+    android.buildFeatures.viewBinding = true
 
     buildTypes {
         getByName("release") {
@@ -58,7 +61,7 @@ dependencies {
         Deps.material,
         Deps.dagger.core,
         Deps.groupie.core,
-        Deps.groupie.ktx,
+        Deps.groupie.viewBinding,
         Deps.materialDialogs,
         Deps.klock.core,
         Deps.klock.android,

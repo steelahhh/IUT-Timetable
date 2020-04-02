@@ -2,11 +2,11 @@ package com.alefimenko.iuttimetable.data
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.view.View
 import com.alefimenko.iuttimetable.pick_group.R
+import com.alefimenko.iuttimetable.pick_group.databinding.ItemListGroupBinding
 import com.xwray.groupie.Item as GroupieItem
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlinx.android.synthetic.main.item_list_group.*
+import com.xwray.groupie.viewbinding.BindableItem
 
 /*
  * Created by Alexander Efimenko on 22/11/18.
@@ -15,13 +15,15 @@ import kotlinx.android.synthetic.main.item_list_group.*
 data class GroupItem(
     val id: Int,
     val label: String
-) : Item(id.toLong()), Parcelable {
+) : BindableItem<ItemListGroupBinding>(id.toLong()), Parcelable {
     constructor(parcel: Parcel) : this(parcel.readInt(), parcel.readString() ?: "")
 
     override fun getLayout(): Int = R.layout.item_list_group
 
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) = with(viewHolder) {
-        group_title.text = label
+    override fun initializeViewBinding(view: View): ItemListGroupBinding = ItemListGroupBinding.bind(view)
+
+    override fun bind(viewBinding: ItemListGroupBinding, position: Int) {
+        viewBinding.groupTitle.text = label
     }
 
     override fun isSameAs(other: GroupieItem<*>): Boolean = when (other) {

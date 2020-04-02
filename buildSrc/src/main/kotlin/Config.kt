@@ -44,7 +44,7 @@ object Versions {
 
     const val dagger = "2.27"
 
-    const val groupie = "2.7.2"
+    const val groupie = "2.8.0"
     const val retrofit = "2.7.0"
     const val gson = "2.8.5"
     const val timber = "4.7.1"
@@ -87,6 +87,7 @@ object Deps {
     object Groupie {
         const val core = "com.xwray:groupie:${vers.groupie}"
         const val ktx = "com.xwray:groupie-kotlin-android-extensions:${vers.groupie}"
+        const val viewBinding = "com.xwray:groupie-viewbinding:${vers.groupie}"
     }
 
     const val retrofit = "com.squareup.retrofit2:retrofit:${vers.retrofit}"

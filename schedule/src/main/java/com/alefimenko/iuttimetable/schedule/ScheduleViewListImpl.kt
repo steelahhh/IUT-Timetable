@@ -18,14 +18,13 @@ import com.alefimenko.iuttimetable.schedule.data.model.HeaderItem
 import com.alefimenko.iuttimetable.schedule.data.model.Position
 import com.alefimenko.iuttimetable.schedule.data.model.ScheduleInfoHeaderItem
 import com.alefimenko.iuttimetable.schedule.data.model.toClassItem
-import com.badoo.ribs.customisation.inflate
+import com.alefimenko.iuttimetable.schedule.databinding.RibScheduleListBinding
 import com.jakewharton.rxrelay2.PublishRelay
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Section
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.rib_schedule_list.view.*
 
 /*
  * Author: steelahhh
@@ -41,26 +40,25 @@ internal class ScheduleViewListImpl(
 
     private val itemAdapter = GroupAdapter<GroupieViewHolder>()
     private val headerIndices = mutableListOf<Int>()
+    private val binding = RibScheduleListBinding.bind(androidView)
 
     init {
-        with(androidView) {
-            recyclerView.run {
-                layoutManager = LinearLayoutManager(context)
-                adapter = itemAdapter
+        binding.recyclerView.run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = itemAdapter
+        }
+        binding.toolbar.run {
+            replaceMenu(R.menu.schedule_menu)
+            setNavigationOnClickListener { events.accept(Event.OnMenuClick) }
+            setOnMenuItemClickListener { menuItem ->
+                if (menuItem.itemId == R.id.action_settings) events.accept(Event.OnSettingsClick)
+                true
             }
-            toolbar.run {
-                replaceMenu(R.menu.schedule_menu)
-                setNavigationOnClickListener { events.accept(Event.OnMenuClick) }
-                setOnMenuItemClickListener { menuItem ->
-                    if (menuItem.itemId == R.id.action_settings) events.accept(Event.OnSettingsClick)
-                    true
-                }
-                changeMenuColors()
-            }
+            changeMenuColors()
+        }
 
-            scheduleChangeWeekButton.setOnClickListener {
-                events.accept(Event.ChangeWeek)
-            }
+        binding.scheduleChangeWeekButton.setOnClickListener {
+            events.accept(Event.ChangeWeek)
         }
     }
 
@@ -77,7 +75,7 @@ internal class ScheduleViewListImpl(
         }
     }
 
-    override fun accept(vm: ScheduleView.ViewModel) = with(androidView) {
+    override fun accept(vm: ScheduleView.ViewModel) = with(binding) {
         scheduleStubView.apply {
             isVisible = vm.isError
             textRes = R.string.schedule_loading_error

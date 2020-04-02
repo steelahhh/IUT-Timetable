@@ -9,7 +9,6 @@ import com.alefimenko.iuttimetable.extension.updateNavigationColor
 import com.alefimenko.iuttimetable.root.builder.RootBuilder
 import com.badoo.ribs.android.RibActivity
 import com.badoo.ribs.core.Node
-import kotlinx.android.synthetic.main.activity_root.*
 
 /*
  * Created by Alexander Efimenko on 22/11/18.
@@ -19,7 +18,7 @@ class RootActivity : RibActivity() {
     private val networkStatusReceiver by lazy { component.networkStatusReceiver }
     private var isReceiverRegistered = false
 
-    override val rootViewGroup: ViewGroup get() = container
+    override val rootViewGroup: ViewGroup get() = findViewById(R.id.container)
 
     override fun createRib(
         savedInstanceState: Bundle?
@@ -31,7 +30,6 @@ class RootActivity : RibActivity() {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) updateNavigationColor()
     }
-
 
     @Suppress("DEPRECATION")
     override fun onResume() {

@@ -9,6 +9,7 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.data.Institute
 import com.alefimenko.iuttimetable.extension.changeEnabled
 import com.alefimenko.iuttimetable.pick_group.R
+import com.alefimenko.iuttimetable.pick_group.databinding.RibPickInstituteBinding
 import com.alefimenko.iuttimetable.pick_institute.PickInstituteView.Event
 import com.alefimenko.iuttimetable.pick_institute.PickInstituteView.ViewModel
 import com.badoo.ribs.core.view.RibView
@@ -17,7 +18,6 @@ import com.badoo.ribs.customisation.inflate
 import com.jakewharton.rxrelay2.PublishRelay
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.rib_pick_institute.view.*
 
 interface PickInstituteView : RibView,
     ObservableSource<Event>,
@@ -64,7 +64,8 @@ class PickInstituteViewImpl private constructor(
     private var dialog: MaterialDialog? = null
 
     init {
-        androidView.pickGroupBackButton.run {
+        val binding = RibPickInstituteBinding.bind(androidView)
+        binding.pickGroupBackButton.run {
             isGone = isRoot
             setOnClickListener { events.accept(Event.GoBack) }
         }
@@ -74,7 +75,7 @@ class PickInstituteViewImpl private constructor(
         }
     }
 
-    override fun accept(vm: ViewModel) = with(androidView) {
+    override fun accept(vm: ViewModel) = with(RibPickInstituteBinding.bind(androidView)) {
         progressBar.isGone = !vm.isLoading
         pickInstituteButton.isEnabled = !vm.isLoading
         formRadioGroup.changeEnabled(vm.institutes.isNotEmpty())

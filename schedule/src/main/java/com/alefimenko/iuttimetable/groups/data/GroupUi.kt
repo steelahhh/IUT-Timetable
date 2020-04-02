@@ -1,15 +1,15 @@
 package com.alefimenko.iuttimetable.groups.data
 
 import android.os.Build
+import android.view.View
 import com.alefimenko.iuttimetable.Font
 import com.alefimenko.iuttimetable.createTypeFace
 import com.alefimenko.iuttimetable.extension.getColorCompat
 import com.alefimenko.iuttimetable.extension.getDimen
 import com.alefimenko.iuttimetable.schedule.R
+import com.alefimenko.iuttimetable.schedule.databinding.ItemGroupBinding
 import com.xwray.groupie.Item as GroupieItem
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlinx.android.synthetic.main.item_group.*
+import com.xwray.groupie.viewbinding.BindableItem
 
 /*
  * Created by Alexander Efimenko on 2019-07-30.
@@ -27,9 +27,13 @@ data class GroupUi(
     val semester: String,
     val isCurrent: Boolean,
     val clickListener: OnGroupClickListener? = null
-) : Item() {
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) = with(viewHolder) {
-        val context = itemView.context
+) : BindableItem<ItemGroupBinding>() {
+    override fun getLayout(): Int = R.layout.item_group
+
+    override fun initializeViewBinding(view: View): ItemGroupBinding = ItemGroupBinding.bind(view)
+
+    override fun bind(viewHolder: ItemGroupBinding, position: Int) = with(viewHolder) {
+        val context = root.context
         groupEntryContainer.setOnClickListener {
             clickListener?.onClick(this@GroupUi)
         }
@@ -50,11 +54,9 @@ data class GroupUi(
 
         groupEntryName.text = name
         groupEntrySubtitle.text = semester
-        if (isCurrent) groupEntryName.typeface = itemView.context.createTypeFace(Font.BOLD)
-        else groupEntryName.typeface = itemView.context.createTypeFace(Font.REGULAR)
+        if (isCurrent) groupEntryName.typeface = root.context.createTypeFace(Font.BOLD)
+        else groupEntryName.typeface = root.context.createTypeFace(Font.REGULAR)
     }
-
-    override fun getLayout(): Int = R.layout.item_group
 
     override fun isSameAs(other: GroupieItem<*>): Boolean = when (other) {
         is GroupUi -> this == other

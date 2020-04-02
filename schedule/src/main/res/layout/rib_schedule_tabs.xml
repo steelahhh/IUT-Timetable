@@ -23,7 +23,9 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:statusBarScrim="?background_color">
 
-            <include layout="@layout/item_schedule_header" />
+            <include
+                android:id="@+id/scheduleTabsHeaderLayout"
+                layout="@layout/item_schedule_header" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
