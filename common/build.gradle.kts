@@ -38,10 +38,6 @@ dependencies {
 
     implementation(Deps.dagger.core)
 
-    api(Deps.mobius.core)
-    api(Deps.mobius.rx)
-    api(Deps.mobius.extras)
-    api(Deps.mobius.android)
     api(Deps.rxRelay)
 
     api(Deps.klock.core)

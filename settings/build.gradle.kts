@@ -38,15 +38,28 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.common))
-    implementation(project(Modules.coreUi))
-    implementation(project(Modules.data))
+    arrayOf(
+        Modules.common,
+        Modules.coreUi,
+        Modules.data
+    ).forEach { dependency ->
+        implementation(project(dependency))
+    }
 
-    implementation(Deps.dagger.core)
+    arrayOf(
+        Deps.constraint,
+        Deps.androidxCore,
+        Deps.recyclerView,
+        Deps.material,
+        Deps.dagger.core,
+        Deps.groupie.core,
+        Deps.groupie.ktx,
+        Deps.materialDialogs
+    ).forEach { dependency ->
+        implementation(dependency)
+    }
+
     kapt(Deps.dagger.compiler)
-
-    implementation(Deps.groupie.core)
-    implementation(Deps.groupie.ktx)
 
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.testRunner)

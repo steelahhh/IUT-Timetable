@@ -37,7 +37,11 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.common))
+    arrayOf(
+        Modules.common
+    ).forEach { dependency ->
+        implementation(project(dependency))
+    }
 
     api(Deps.room)
     kapt(Deps.roomCompiler)

@@ -38,15 +38,14 @@ android {
 
 dependencies {
     implementation(project(Modules.common))
-    api(Deps.constraint)
-    api(Deps.appcompat)
-    api(Deps.androidxCore)
-    api(Deps.recyclerView)
 
-    api(Deps.material)
-    api(Deps.materialDialogs)
-
-    api(Deps.rxBinding.core)
-    api(Deps.rxBinding.material)
-    api(Deps.rxBinding.appCompat)
+    arrayOf(
+        Deps.constraint,
+        Deps.androidxCore,
+        Deps.recyclerView,
+        Deps.material,
+        Deps.materialDialogs
+    ).forEach { dependency ->
+        implementation(dependency)
+    }
 }

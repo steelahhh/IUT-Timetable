@@ -23,7 +23,7 @@ object Versions {
     const val appVersionName = "3.0.1"
 
     const val kotlin = "1.3.71"
-    const val androidPlugin = "4.0.0-beta03"
+    const val androidPlugin = "4.1.0-alpha04"
 
     const val mviCore = "1.1.6"
     const val aac = "2.2.0"
@@ -40,8 +40,6 @@ object Versions {
 
     const val klock = "1.4.0"
 
-    const val mobius = "1.3.4"
-
     const val jsoup = "1.11.3"
 
     const val dagger = "2.27"
@@ -49,7 +47,6 @@ object Versions {
     const val groupie = "2.7.2"
     const val retrofit = "2.7.0"
     const val gson = "2.8.5"
-    const val koin = "2.0.1"
     const val timber = "4.7.1"
     const val materialDialogs = "3.2.1"
     const val junit = "4.12"
@@ -68,10 +65,6 @@ object Deps {
     const val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
 
     const val multidex = "com.android.support:multidex:1.0.3"
-
-    const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${vers.aac}"
-    const val lifecycleReactive = "androidx.lifecycle:lifecycle-reactivestreams:${vers.aac}"
-    const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${vers.aac}"
 
     const val rxRelay = "com.jakewharton.rxrelay2:rxrelay:${vers.rxRelay}"
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${vers.rxKotlin}"
@@ -110,16 +103,6 @@ object Deps {
     object Dagger {
         const val core = "com.google.dagger:dagger:${vers.dagger}"
         const val compiler = "com.google.dagger:dagger-compiler:${vers.dagger}"
-    }
-
-    val mobius = Mobius
-
-    object Mobius {
-        const val core = "com.spotify.mobius:mobius-core:${vers.mobius}"
-        const val test = "com.spotify.mobius:mobius-test:${vers.mobius}"
-        const val rx = "com.spotify.mobius:mobius-rx2:${vers.mobius}"
-        const val android = "com.spotify.mobius:mobius-android:${vers.mobius}"
-        const val extras = "com.spotify.mobius:mobius-extras:${vers.mobius}"
     }
 
     val rxBinding = RxBinding
