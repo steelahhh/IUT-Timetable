@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CollapsingToolbarTheme">
+        <item name="colorPrimary">?background_color</item>
+        <item name="colorPrimaryDark">?background_color</item>
+    </style>
+</resources>

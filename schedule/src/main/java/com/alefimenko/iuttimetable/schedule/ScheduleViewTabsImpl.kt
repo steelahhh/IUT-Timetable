@@ -13,11 +13,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.jakewharton.rxrelay2.PublishRelay
 import com.soywiz.klock.KlockLocale
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Section
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.item_schedule_header.view.*
 import kotlinx.android.synthetic.main.rib_schedule_tabs.view.*
 import kotlinx.android.synthetic.main.rib_schedule_tabs.view.progressBar
 import kotlinx.android.synthetic.main.rib_schedule_tabs.view.scheduleChangeWeekButton
@@ -77,39 +77,38 @@ internal class ScheduleViewTabsImpl(
         }
 
         scheduleTabsViewPager.isVisible = !vm.isLoading && !vm.isError
+        scheduleTabLayout.isVisible = !vm.isLoading && !vm.isError
+        scheduleTabsAppbarLayout.isVisible = !vm.isLoading && !vm.isError
         progressBar.isGone = !vm.isLoading || vm.isError
+        scheduleChangeWeekButton.isGone = vm.isError || vm.isLoading
 
         val classes = mutableListOf<Item>()
-        vm.schedule?.weekSchedule?.get(vm.selectedWeek)?.forEachIndexed { dayIndex, list ->
-            val items = Section(
-                ScheduleInfoHeaderItem(
-                    group = vm.schedule.groupTitle,
-                    semester = vm.schedule.semester,
-                    isWeekOdd = vm.currentWeek == 0
-                )
-            )
 
-            classes.add(
-                DayTabItem(
-                    list.mapIndexed { listIdx, classEntry ->
-                        val position = when {
-                            list.size == 1 -> Position.SINGLE
-                            listIdx == 0 -> Position.FIRST
-                            listIdx == list.size - 1 -> Position.LAST
-                            else -> Position.OTHER
+        vm.schedule?.let { schedule ->
+            scheduleHeaderTitle.text = schedule.groupTitle
+            scheduleHeaderSubtitle.text = schedule.semester
+
+            schedule.weekSchedule[vm.selectedWeek]?.forEachIndexed { dayIndex, list ->
+                classes.add(
+                    DayTabItem(
+                        list.mapIndexed { listIdx, classEntry ->
+                            val position = when {
+                                list.size == 1 -> Position.SINGLE
+                                listIdx == 0 -> Position.FIRST
+                                listIdx == list.size - 1 -> Position.LAST
+                                else -> Position.OTHER
+                            }
+                            classEntry.toClassItem(
+                                position,
+                                onClassMenuClick = { classUi, view ->
+                                    openPopupMenu(classUi, view, listIdx, dayIndex, vm.selectedWeek)
+                                })
                         }
-                        classEntry.toClassItem(
-                            position,
-                            onClassMenuClick = { classUi, view ->
-                                openPopupMenu(classUi, view, listIdx, dayIndex, vm.selectedWeek)
-                            })
-                    }
+                    )
                 )
-            )
+            }
+            scheduleChangeWeekButton.text = schedule.weeks[vm.selectedWeek]
         }
-        scheduleChangeWeekButton.isGone = vm.isError || vm.isLoading
-        scheduleChangeWeekButton.text =
-            vm.schedule?.weeks?.get(vm.selectedWeek) ?: androidView.context.getString(R.string.menu_change_week)
         tabsAdapter.clear()
         tabsAdapter.addAll(classes)
         // TODO: extract this into event and trigger it only on start?
