@@ -32,5 +32,5 @@ interface ScheduleView : RibView,
         val selectedWeek: Int
     )
 
-    interface Factory : ViewFactory<Nothing?, ScheduleView>
+    interface Factory : ViewFactory<Boolean?, ScheduleView>
 }

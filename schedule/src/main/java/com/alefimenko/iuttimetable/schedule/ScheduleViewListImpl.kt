@@ -3,7 +3,6 @@ package com.alefimenko.iuttimetable.schedule
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.annotation.LayoutRes
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,14 +25,14 @@ import com.xwray.groupie.Section
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.rib_schedule.view.*
+import kotlinx.android.synthetic.main.rib_schedule_list.view.*
 
 /*
  * Author: steelahhh
  * 29/3/20
  */
 
-class ScheduleViewImpl private constructor(
+internal class ScheduleViewListImpl(
     override val androidView: ViewGroup,
     private val events: PublishRelay<Event> = PublishRelay.create()
 ) : ScheduleView,
@@ -42,29 +41,6 @@ class ScheduleViewImpl private constructor(
 
     private val itemAdapter = GroupAdapter<GroupieViewHolder>()
     private val headerIndices = mutableListOf<Int>()
-
-    class Factory(
-        @LayoutRes private val layoutRes: Int = R.layout.rib_schedule
-    ) : ScheduleView.Factory {
-        override fun invoke(deps: Nothing?): (ViewGroup) -> ScheduleView = {
-            ScheduleViewImpl(
-                inflate(it, layoutRes)
-            )
-        }
-    }
-
-    override fun openWeekPickerDialog(weeks: List<String>, selectedWeek: Int) {
-        MaterialDialog(androidView.context).show {
-            title(res = R.string.pick_week_dialog_title)
-            listItemsSingleChoice(
-                items = weeks,
-                initialSelection = selectedWeek,
-                selection = { _, index, _ ->
-                    events.accept(Event.SwitchToWeek(index))
-                }
-            )
-        }
-    }
 
     init {
         with(androidView) {
@@ -85,6 +61,19 @@ class ScheduleViewImpl private constructor(
             scheduleChangeWeekButton.setOnClickListener {
                 events.accept(Event.ChangeWeek)
             }
+        }
+    }
+
+    override fun openWeekPickerDialog(weeks: List<String>, selectedWeek: Int) {
+        MaterialDialog(androidView.context).show {
+            title(res = R.string.pick_week_dialog_title)
+            listItemsSingleChoice(
+                items = weeks,
+                initialSelection = selectedWeek,
+                selection = { _, index, _ ->
+                    events.accept(Event.SwitchToWeek(index))
+                }
+            )
         }
     }
 

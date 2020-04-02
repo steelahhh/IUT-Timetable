@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rib_schedule_tabs"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?background_color"
+    android:clipChildren="false">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/scheduleTabLayout"
+        style="@style/Widget.MaterialComponents.TabLayout.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?background_color"
+        app:layout_constraintBottom_toTopOf="@id/scheduleTabsViewPager"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabGravity="fill"
+        app:tabIndicator="@drawable/tab_indicator_pill"
+        app:tabIndicatorColor="@color/lightBlue"
+        app:tabIndicatorGravity="stretch"
+        app:tabRippleColor="@null"
+        app:tabSelectedTextColor="@color/lightBlue"
+        app:tabTextColor="?android:textColorPrimary" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/scheduleTabsViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/toolbarContainer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scheduleTabLayout" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/scheduleChangeWeekButton"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/spacing_4"
+        android:paddingStart="@dimen/spacing_20"
+        android:paddingTop="@dimen/spacing_8"
+        android:paddingEnd="@dimen/spacing_20"
+        android:paddingBottom="@dimen/spacing_8"
+        android:text="@string/menu_change_week"
+        android:textAppearance="@style/AppText.Small"
+        android:textColor="@color/white"
+        app:backgroundTint="?colorAccent"
+        app:cornerRadius="@dimen/corner_radius_xh"
+        app:elevation="0dp"
+        app:icon="@drawable/ic_pick_date"
+        app:iconTint="@color/backgroundLight"
+        app:layout_constraintBottom_toTopOf="@id/toolbarContainer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <com.alefimenko.iuttimetable.views.ErrorStubView
+        android:id="@+id/scheduleStubView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/toolbarContainer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/toolbarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/scheduleTabsToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_xl"
+            android:layout_gravity="bottom"
+            app:backgroundTint="?background_color"
+            app:elevation="@dimen/spacing_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:navigationIcon="@drawable/ic_menu" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

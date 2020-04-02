@@ -27,7 +27,7 @@ interface Schedule : Rib {
     }
 
     class Customisation(
-        val viewFactory: ScheduleView.Factory = ScheduleViewImpl.Factory(),
+        val viewFactory: ScheduleView.Factory = ScheduleViewFactory(),
         val transitionHandler: TransitionHandler<ScheduleRouter.Configuration>? = null
     ) : RibCustomisation
 }

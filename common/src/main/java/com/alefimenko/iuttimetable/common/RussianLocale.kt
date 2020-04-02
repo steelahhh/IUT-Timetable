@@ -17,4 +17,7 @@ object RussianLocale : KlockLocale() {
         "январь", "февраль", "март", "апрель", "май", "июнь",
         "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
     )
+    override val daysOfWeekShort: List<String> = listOf(
+        "пн", "вт", "ср", "чт", "пт", "сб", "вс"
+    )
 }
