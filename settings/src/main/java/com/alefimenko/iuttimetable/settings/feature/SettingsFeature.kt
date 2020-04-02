@@ -47,7 +47,8 @@ internal class SettingsFeature @Inject constructor(
     data class State(
         val isDarkTheme: Boolean = false,
         val alwaysRelevantSchedule: Boolean = false,
-        val changeWeekCountdown: Boolean = false
+        val changeWeekCountdown: Boolean = false,
+        val isTabsSchedule: Boolean = false
     ) : Parcelable
 
     sealed class Wish {
@@ -58,6 +59,7 @@ internal class SettingsFeature @Inject constructor(
         object ChangeLanguage : Wish()
         object UpdateSchedule : Wish()
         object SendFeedback : Wish()
+        object ChangeScheduleDisplayMode : Wish()
         object ShowAboutDialog : Wish()
     }
 
@@ -74,7 +76,8 @@ internal class SettingsFeature @Inject constructor(
         data class PreferencesLoaded(
             val isDarkTheme: Boolean,
             val alwaysRelevantSchedule: Boolean,
-            val changeWeekCountdown: Boolean
+            val changeWeekCountdown: Boolean,
+            val isTabsSchedule: Boolean
         ) : Effect()
         object OpenAboutDialog : Effect()
         object ScheduleUpdated : Effect()
@@ -106,7 +109,8 @@ internal class SettingsFeature @Inject constructor(
                 Effect.PreferencesLoaded(
                     isDarkTheme = preferences.isNightMode,
                     alwaysRelevantSchedule = preferences.switchDay,
-                    changeWeekCountdown = preferences.switchWeek
+                    changeWeekCountdown = preferences.switchWeek,
+                    isTabsSchedule = preferences.isTabsEnabled
                 )
             )
         }
@@ -123,6 +127,10 @@ internal class SettingsFeature @Inject constructor(
             }
             Wish.ChangeTheme -> {
                 preferences.isNightMode = !preferences.isNightMode
+                justOnMain(Effect.ThemeChanged)
+            }
+            Wish.ChangeScheduleDisplayMode -> {
+                preferences.isTabsEnabled = !preferences.isTabsEnabled
                 justOnMain(Effect.ThemeChanged)
             }
             Wish.ChangeLanguage -> empty()
@@ -147,7 +155,8 @@ internal class SettingsFeature @Inject constructor(
             is Effect.PreferencesLoaded -> state.copy(
                 isDarkTheme = effect.isDarkTheme,
                 changeWeekCountdown = effect.changeWeekCountdown,
-                alwaysRelevantSchedule = effect.alwaysRelevantSchedule
+                alwaysRelevantSchedule = effect.alwaysRelevantSchedule,
+                isTabsSchedule = effect.isTabsSchedule
             )
             else -> state
         }

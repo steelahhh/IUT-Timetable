@@ -12,6 +12,12 @@ import com.alefimenko.iuttimetable.data.local.Constants.ITEM_DOESNT_EXIST
 @SuppressLint("ApplySharedPref")
 class Preferences(private val prefs: SharedPreferences) {
 
+    var isTabsEnabled: Boolean
+        get() = prefs.getBoolean(SCHEDULE_DISPLAY_MODE, false)
+        set(value) {
+            prefs.edit().putBoolean(SCHEDULE_DISPLAY_MODE, value).apply()
+        }
+
     var isNightMode: Boolean
         get() = prefs.getBoolean(NIGHT_MODE, false)
         set(value) {
@@ -62,5 +68,6 @@ class Preferences(private val prefs: SharedPreferences) {
         const val SWITCH_TO_DAY = "PREF_KEY_SWITCH_TO_DAY"
         const val CURRENT_GROUP_ID = "PREF_KEY_CURRENT_GROUP_ID"
         const val VERSION_CODE = "version_code"
+        const val SCHEDULE_DISPLAY_MODE = "key:schedule_display_mode"
     }
 }

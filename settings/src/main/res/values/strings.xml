@@ -7,6 +7,8 @@
 
     <string name="settings_language_title">Язык приложения</string>
     <string name="settings_theme_title">Темная тема</string>
+    <string name="settings_schedule_as_tabs_title">Расписание по дням</string>
+    <string name="settings_schedule_as_tabs_subtitle">Если включено, расписание будет разбито по дням, иначе расписание будет отображться в одном списке</string>
     <string name="settings_relevant_schedule_title">Всегда актуальное расписание</string>
     <string name="settings_relevant_schedule_subtitle">При запуске приложения переходить на текущий день и неделю (для групп с 2-я неделями)</string>
     <string name="settings_week_countdown_title">Сменить отсчет недель</string>

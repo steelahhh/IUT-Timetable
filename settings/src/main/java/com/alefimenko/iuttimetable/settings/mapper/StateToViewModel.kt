@@ -24,6 +24,13 @@ internal object StateToViewModel : (State) -> ViewModel {
             switcherVisible = true
         ).takeUnless { Build.VERSION.SDK_INT == Build.VERSION_CODES.Q },
         SettingsItem(
+            key = SettingsItemKey.ScheduleAsTabs,
+            titleRes = R.string.settings_schedule_as_tabs_title,
+            subtitleRes = R.string.settings_schedule_as_tabs_subtitle,
+            isChecked = isTabsSchedule,
+            switcherVisible = true
+        ),
+        SettingsItem(
             key = SettingsItemKey.RelevantSchedule,
             titleRes = R.string.settings_relevant_schedule_title,
             subtitleRes = R.string.settings_relevant_schedule_subtitle,

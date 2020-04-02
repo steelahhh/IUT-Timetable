@@ -10,6 +10,7 @@ enum class SettingsItemKey {
     RelevantSchedule,
     UpdateSchedule,
     WeekCountDown,
+    ScheduleAsTabs,
     Feedback,
     About
 }

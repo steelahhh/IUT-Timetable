@@ -16,7 +16,7 @@ internal object ViewEventToWish : (Event) -> Wish? {
             SettingsItemKey.WeekCountDown -> Wish.ChangeWeekCountDown
             SettingsItemKey.Feedback -> Wish.SendFeedback
             SettingsItemKey.About -> Wish.ShowAboutDialog
+            SettingsItemKey.ScheduleAsTabs -> Wish.ChangeScheduleDisplayMode
         }
-        else -> null
     }
 }

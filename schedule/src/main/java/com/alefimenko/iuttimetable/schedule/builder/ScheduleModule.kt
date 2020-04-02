@@ -86,6 +86,7 @@ internal object ScheduleModule {
     @JvmStatic
     internal fun node(
         savedInstanceState: Bundle?,
+        preferences: Preferences,
         customisation: Schedule.Customisation,
         router: ScheduleRouter,
         interactor: ScheduleInteractor,
@@ -94,7 +95,7 @@ internal object ScheduleModule {
         feature: ScheduleFeature
     ): ScheduleNode = ScheduleNode(
         savedInstanceState = savedInstanceState,
-        viewFactory = customisation.viewFactory(null),
+        viewFactory = customisation.viewFactory(preferences.isTabsEnabled),
         router = router,
         interactor = interactor,
         input = input,
