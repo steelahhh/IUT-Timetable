@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alefimenko.iuttimetable.data.GroupItem
 import com.alefimenko.iuttimetable.extension.changeMenuColors
+import com.alefimenko.iuttimetable.extension.hideSoftKeyboard
 import com.alefimenko.iuttimetable.pick_group.PickGroupView.Event
 import com.alefimenko.iuttimetable.pick_group.PickGroupView.ViewModel
 import com.badoo.ribs.core.view.RibView
@@ -75,7 +76,7 @@ class PickGroupViewImpl private constructor(
                 override fun onQueryTextSubmit(query: String?): Boolean = true
 
                 override fun onQueryTextChange(newText: String?): Boolean = true.also {
-                        events.accept(Event.QueryChanged(newText ?: ""))
+                    events.accept(Event.QueryChanged(newText ?: ""))
                     oldText = newText
                 }
             })
@@ -98,6 +99,7 @@ class PickGroupViewImpl private constructor(
         if (groups.isNotEmpty()) {
             groupsAdapter.setOnItemClickListener { group, _ ->
                 require(group is GroupItem)
+                hideSoftKeyboard()
                 events.accept(Event.PickGroup(group))
             }
 
