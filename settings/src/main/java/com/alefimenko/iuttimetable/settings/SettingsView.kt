@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.alefimenko.iuttimetable.extension.activity
 import com.alefimenko.iuttimetable.settings.SettingsView.Event
 import com.alefimenko.iuttimetable.settings.SettingsView.ViewModel
 import com.alefimenko.iuttimetable.settings.data.SettingsItem
@@ -113,10 +114,5 @@ class SettingsViewImpl private constructor(
             message(text = "Произошла ошибка при обновлении расписания")
             positiveButton(res = R.string.common_ok)
         }
-    }
-
-    tailrec fun Context?.activity(): Activity? = when (this) {
-        is Activity -> this
-        else -> (this as? ContextWrapper)?.baseContext?.activity()
     }
 }

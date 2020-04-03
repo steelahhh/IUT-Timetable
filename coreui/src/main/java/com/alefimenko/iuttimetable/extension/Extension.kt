@@ -2,6 +2,7 @@ package com.alefimenko.iuttimetable.extension
 
 import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.PorterDuff
@@ -93,6 +94,11 @@ fun RadioGroup.changeEnabled(enabled: Boolean) {
         (getChildAt(child) as? RadioButton)?.isEnabled = enabled
         (getChildAt(child) as? RadioButton)?.isClickable = enabled
     }
+}
+
+tailrec fun Context?.activity(): Activity? = when (this) {
+    is Activity -> this
+    else -> (this as? ContextWrapper)?.baseContext?.activity()
 }
 
 val Context.isDarkModeEnabled
