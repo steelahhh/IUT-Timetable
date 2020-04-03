@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="0dp"
     android:background="?selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
+    app:cardBackgroundColor="?background_color"
+    app:cardCornerRadius="0dp"
     tools:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,9 +63,9 @@
             android:id="@+id/settingsSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:clickable="false"
             android:focusable="false"
-            android:background="@null"
             android:focusableInTouchMode="false"
             android:linksClickable="false"
             android:longClickable="false"

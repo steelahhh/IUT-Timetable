@@ -4,7 +4,7 @@
     <color name="primary">#0288d1</color>
     <color name="primaryDark">#0288d1</color>
 
-    <color name="backgroundDark">#18191C</color>
+    <color name="backgroundDark">#161b23</color>
     <color name="backgroundLight">#fff</color>
 
     <color name="coral">#f44336</color>
@@ -17,7 +17,7 @@
     <color name="iutColor">#0e4194</color>
 
     <color name="slightlyWhiteGray">#EBEBEB</color>
-    <color name="almostDark">#202020</color>
+    <color name="almostDark">#1e2630</color>
 
     <color name="transparent">#00ffffff</color>
     <color name="transparentBlack">#66000000</color>
