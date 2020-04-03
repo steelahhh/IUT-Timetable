@@ -44,18 +44,18 @@ internal class RootInteractor(
                 router.newRoot(Configuration.Schedule)
                 scheduleInput.onNext(Schedule.Input.DownloadSchedule(it.groupInfo))
             }
-            PickGroupRoot.Output.GoBack -> router.popBackStack()
+            is PickGroupRoot.Output.GoBack -> router.popBackStack()
         }
     }
 
     private val newsConsumer = Consumer<News> {
         when (it) {
             is News.UpdateTheme -> updateTheme(it.isNightMode)
-            News.RouteToSchedule -> {
+            is News.RouteToSchedule -> {
                 router.newRoot(Configuration.Schedule)
                 scheduleInput.onNext(Schedule.Input.LoadCurrentSchedule)
             }
-            News.RouteToPickGroup -> router.newRoot(Configuration.PickGroup(isRoot = true))
+            is News.RouteToPickGroup -> router.newRoot(Configuration.PickGroup(isRoot = true))
         }
     }
 
