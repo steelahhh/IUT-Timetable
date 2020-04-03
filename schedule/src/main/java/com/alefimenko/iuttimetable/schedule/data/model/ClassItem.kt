@@ -67,7 +67,7 @@ data class ClassItem(
         typeTv.isGone = hidden
         hiddenIv.isGone = !hidden
 
-        val textColor = if (hidden) root.context.getColorCompat(R.color.warmGray) else {
+        val textColor = if (hidden) root.context.getColorCompat(R.color.gray_smooth) else {
             root.context.getPrimaryTextColor()
         }
 
@@ -88,9 +88,9 @@ data class ClassItem(
         divider.isGone = positionInGroup == Position.LAST || positionInGroup == Position.SINGLE
         val drawable = ContextCompat.getDrawable(context, drawableRes)
         val color = when (context.isDarkModeEnabled) {
-            true -> context.getColorCompat(R.color.almostDark)
+            true -> context.getColorCompat(R.color.blue_drakon)
             else -> context.getColorCompat(
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) R.color.white else R.color.slightlyWhiteGray
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) R.color.white_raw else R.color.white_grosh
             )
         }
         drawable?.mutate()

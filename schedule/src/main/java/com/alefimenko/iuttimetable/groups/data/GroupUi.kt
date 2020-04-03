@@ -42,11 +42,11 @@ data class GroupUi(
         }
         val elevation = if (isCurrent) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                groupEntryContainer.outlineSpotShadowColor = context.getColorCompat(R.color.iutColor)
+                groupEntryContainer.outlineSpotShadowColor = context.getColorCompat(R.color.blue_uni)
             context.getDimen(R.dimen.spacing_4)
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                groupEntryContainer.outlineSpotShadowColor = context.getColorCompat(R.color.backgroundDark)
+                groupEntryContainer.outlineSpotShadowColor = context.getColorCompat(R.color.blue_darket)
             context.getDimen(R.dimen.spacing_2)
         }
 

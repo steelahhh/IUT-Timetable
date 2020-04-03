@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:layoutDirection="rtl"
-                app:queryBackground="@color/transparent"
+                app:queryBackground="@color/black_trop"
                 app:queryHint="@string/group_search_hint"
                 app:searchIcon="@drawable/ic_search" />
         </com.google.android.material.bottomappbar.BottomAppBar>

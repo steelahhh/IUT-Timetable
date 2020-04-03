@@ -54,7 +54,7 @@
             android:layout_margin="@dimen/spacing_12"
             android:text="@string/groups_add_group"
             android:textAppearance="@style/AppText"
-            android:textColor="@color/white"
+            android:textColor="@color/white_raw"
             app:backgroundTint="?colorAccent"
             app:cornerRadius="@dimen/corner_radius_xxh"
             app:layout_constraintBottom_toBottomOf="parent"

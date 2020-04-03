@@ -55,10 +55,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tabGravity="fill"
             app:tabIndicator="@drawable/tab_indicator_pill"
-            app:tabIndicatorColor="@color/lightBlue"
+            app:tabIndicatorColor="@color/blue_blep"
             app:tabIndicatorGravity="stretch"
             app:tabRippleColor="@null"
-            app:tabSelectedTextColor="@color/lightBlue"
+            app:tabSelectedTextColor="@color/blue_blep"
             app:tabTextColor="?android:textColorPrimary" />
 
         <androidx.viewpager2.widget.ViewPager2
@@ -102,12 +102,12 @@
             android:paddingBottom="@dimen/spacing_8"
             android:text="@string/menu_change_week"
             android:textAppearance="@style/AppText.Small"
-            android:textColor="@color/white"
+            android:textColor="@color/white_raw"
             app:backgroundTint="?colorAccent"
             app:cornerRadius="@dimen/corner_radius_xh"
             app:elevation="0dp"
             app:icon="@drawable/ic_pick_date"
-            app:iconTint="@color/backgroundLight"
+            app:iconTint="@color/white_raw"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

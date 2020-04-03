@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="accent">#0288d1</color>
-    <color name="primary">#0288d1</color>
-    <color name="primaryDark">#0288d1</color>
+    <color name="blue_blep">#0288d1</color>
+    <color name="blue_uni">#0e4194</color>
+    <color name="blue_darket">#161b23</color>
+    <color name="blue_drakon">#1e2630</color>
 
-    <color name="backgroundDark">#161b23</color>
-    <color name="backgroundLight">#fff</color>
+    <color name="red_coral">#f44336</color>
+    <color name="red_blood">#b71c1c</color>
 
-    <color name="coral">#f44336</color>
+    <color name="white_raw">#ffffffff</color>
+    <color name="white_grosh">#EBEBEB</color>
+
     <color name="black">#ff212121</color>
-    <color name="white">#ffffffff</color>
-    <color name="darkGray">#ff4a4a4a</color>
-    <color name="darkRed">#b71c1c</color>
-    <color name="lightBlue">#0288d1</color>
-    <color name="warmGray">#ff9b9b9b</color>
-    <color name="iutColor">#0e4194</color>
+    <color name="black_trop">#00ffffff</color>
+    <color name="black_lukum">#66000000</color>
 
-    <color name="slightlyWhiteGray">#EBEBEB</color>
-    <color name="almostDark">#1e2630</color>
-
-    <color name="transparent">#00ffffff</color>
-    <color name="transparentBlack">#66000000</color>
-
-    <color name="card_background">#fff</color>
+    <color name="gray_deep">#ff4a4a4a</color>
+    <color name="gray_smooth">#ff9b9b9b</color>
 </resources>

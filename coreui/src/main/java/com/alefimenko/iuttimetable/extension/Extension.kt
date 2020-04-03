@@ -34,11 +34,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  * Created by Alexander Efimenko on 2019-04-24.
  */
 
+// TODO: Refactor
 fun Activity.updateNavigationColor() {
     val typedValueAttr = TypedValue()
     theme.resolveAttribute(R.attr.background_color, typedValueAttr, true)
     val color = ContextCompat.getColor(this, typedValueAttr.resourceId)
-    val darkColor = ContextCompat.getColor(this, R.color.backgroundDark)
+    val darkColor = ContextCompat.getColor(this, R.color.blue_darket)
     val isDark = color == darkColor
 
     var newNavigationColor = color
@@ -54,7 +55,7 @@ fun Activity.updateNavigationColor() {
                 newNavigationColor = ContextCompat.getColor(
                     this@updateNavigationColor,
                     if (isDark) {
-                        R.color.backgroundDark
+                        R.color.blue_darket
                     } else {
                         android.R.color.black
                     }
@@ -111,9 +112,9 @@ val Context.isDarkModeEnabled
 fun BottomAppBar.changeMenuColors() {
     val colorOnBackground = when (context.isDarkModeEnabled) {
         true ->
-            context.getColorCompat(R.color.backgroundLight)
+            context.getColorCompat(R.color.white_raw)
         else ->
-            context.getColorCompat(R.color.backgroundDark)
+            context.getColorCompat(R.color.blue_darket)
     }
 
     for (index in 0 until menu.size()) {

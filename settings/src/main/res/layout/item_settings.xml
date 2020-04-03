@@ -10,7 +10,7 @@
     android:orientation="vertical"
     app:cardBackgroundColor="?background_color"
     app:cardCornerRadius="0dp"
-    tools:background="@color/white">
+    tools:background="@color/white_raw">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
