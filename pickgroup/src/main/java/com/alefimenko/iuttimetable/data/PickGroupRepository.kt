@@ -1,9 +1,7 @@
 package com.alefimenko.iuttimetable.data
 
 import android.util.LruCache
-import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
-import com.alefimenko.iuttimetable.data.remote.Exceptions
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.data.remote.model.IUTLabeledResponse
 import com.alefimenko.iuttimetable.data.remote.toFormPath
@@ -15,41 +13,33 @@ import javax.inject.Inject
  */
 
 class PickGroupRepository @Inject constructor(
-    private val scheduleService: ScheduleService,
-    private val networkStatusReceiver: NetworkStatusReceiver
+    private val scheduleService: ScheduleService
 ) {
 
     private val lruCache: LruCache<String, List<Institute>> = LruCache(2 * 1024 * 1024)
 
-    fun getGroups(form: Int, instituteId: Int): Observable<List<IUTLabeledResponse>> {
-        return if (networkStatusReceiver.isNetworkAvailable()) {
-            scheduleService.fetchGroups(form.toFormPath(), instituteId)
-                .toObservable()
-                .ioMainSchedulers()
-        } else {
-            Observable.error(Exceptions.NoNetworkException())
-        }
-    }
+    fun getGroups(
+        form: Int,
+        instituteId: Int
+    ): Observable<List<IUTLabeledResponse>> = scheduleService.fetchGroups(form.toFormPath(), instituteId)
+        .toObservable()
+        .ioMainSchedulers()
 
     fun getInstitutes(): Observable<List<Institute>> {
         val cachedInstitutes = lruCache[INSTITUTES]
         return if (cachedInstitutes != null) {
             Observable.just(cachedInstitutes)
         } else {
-            if (networkStatusReceiver.isNetworkAvailable()) {
-                scheduleService.fetchInstitutes()
-                    .toObservable()
-                    .ioMainSchedulers()
-                    .map { institutes ->
-                        institutes.map { institute ->
-                            institute.toInstitute()
-                        }.also {
-                            lruCache.put(INSTITUTES, it)
-                        }
+            scheduleService.fetchInstitutes()
+                .toObservable()
+                .ioMainSchedulers()
+                .map { institutes ->
+                    institutes.map { institute ->
+                        institute.toInstitute()
+                    }.also {
+                        lruCache.put(INSTITUTES, it)
                     }
-            } else {
-                Observable.error(Exceptions.NoNetworkException())
-            }
+                }
         }
     }
 

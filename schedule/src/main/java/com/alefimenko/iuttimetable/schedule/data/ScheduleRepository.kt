@@ -1,6 +1,5 @@
 package com.alefimenko.iuttimetable.schedule.data
 
-import com.alefimenko.iuttimetable.common.NetworkStatusReceiver
 import com.alefimenko.iuttimetable.common.extension.ioMainSchedulers
 import com.alefimenko.iuttimetable.data.GroupInfo
 import com.alefimenko.iuttimetable.data.ScheduleParser
@@ -10,7 +9,6 @@ import com.alefimenko.iuttimetable.data.local.model.ScheduleEntity
 import com.alefimenko.iuttimetable.data.local.schedule.GroupsDao
 import com.alefimenko.iuttimetable.data.local.schedule.InstitutesDao
 import com.alefimenko.iuttimetable.data.local.schedule.SchedulesDao
-import com.alefimenko.iuttimetable.data.remote.Exceptions
 import com.alefimenko.iuttimetable.data.remote.ScheduleService
 import com.alefimenko.iuttimetable.data.remote.model.ClassEntry
 import com.alefimenko.iuttimetable.data.remote.model.Schedule
@@ -40,8 +38,7 @@ class ScheduleRepository @Inject constructor(
     @Named(GroupsDao.TAG)
     private val groupsDao: GroupsDao,
     @Named(InstitutesDao.TAG)
-    private val instituteDao: InstitutesDao,
-    private val networkStatusReceiver: NetworkStatusReceiver
+    private val instituteDao: InstitutesDao
 ) {
     val currentGroup: Int get() = preferences.currentGroup
 
@@ -62,15 +59,11 @@ class ScheduleRepository @Inject constructor(
 
     fun downloadSchedule(groupInfo: GroupInfo): Observable<Schedule> {
         val formPath = groupInfo.form.toFormPath()
-        return if (networkStatusReceiver.isNetworkAvailable()) {
-            scheduleService.fetchSchedule(formPath, groupInfo.group.id)
-                .flatMap { body -> createSchedule(body.string(), groupInfo.group.name) }
-                .flatMap { response -> saveSchedule(groupInfo, response).toSingleDefault(response.schedule) }
-                .toObservable()
-                .ioMainSchedulers()
-        } else {
-            Observable.error(Exceptions.NoNetworkException())
-        }
+        return scheduleService.fetchSchedule(formPath, groupInfo.group.id)
+            .flatMap { body -> createSchedule(body.string(), groupInfo.group.name) }
+            .flatMap { response -> saveSchedule(groupInfo, response).toSingleDefault(response.schedule) }
+            .toObservable()
+            .ioMainSchedulers()
     }
 
     fun hideClassAndUpdate(classIndex: Int, dayIndex: Int, weekIndex: Int): Observable<Schedule> =

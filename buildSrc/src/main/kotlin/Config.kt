@@ -19,11 +19,11 @@ object Versions {
     const val minSdk = 19
     const val targetSdk = 29
     const val compileSdk = 29
-    const val appVersionCode = 4203
-    const val appVersionName = "3.0.1"
+    const val appVersionCode = 4204
+    const val appVersionName = "3.1.0"
 
     const val kotlin = "1.3.71"
-    const val androidPlugin = "4.1.0-alpha04"
+    const val androidPlugin = "4.0.0-beta03"
 
     const val mviCore = "1.1.6"
     const val aac = "2.2.0"
