@@ -8,11 +8,14 @@ import androidx.core.view.isVisible
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.extension.changeMenuColors
+import com.alefimenko.iuttimetable.groups.Groups
+import com.alefimenko.iuttimetable.schedule.ScheduleView.ViewModel
 import com.alefimenko.iuttimetable.schedule.data.model.ClassItem
-import com.alefimenko.iuttimetable.schedule.data.model.Position
 import com.alefimenko.iuttimetable.schedule.data.model.DayTabItem
+import com.alefimenko.iuttimetable.schedule.data.model.Position
 import com.alefimenko.iuttimetable.schedule.data.model.toClassItem
 import com.alefimenko.iuttimetable.schedule.databinding.RibScheduleTabsBinding
+import com.badoo.ribs.core.Node
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jakewharton.rxrelay2.PublishRelay
 import com.soywiz.klock.KlockLocale
@@ -27,7 +30,7 @@ internal class ScheduleViewTabsImpl(
     private val events: PublishRelay<ScheduleView.Event> = PublishRelay.create()
 ) : ScheduleView,
     ObservableSource<ScheduleView.Event> by events,
-    Consumer<ScheduleView.ViewModel> {
+    Consumer<ViewModel> {
 
     private val tabsAdapter = GroupAdapter<GroupieViewHolder>()
     private val binding = RibScheduleTabsBinding.bind(androidView)
@@ -48,10 +51,6 @@ internal class ScheduleViewTabsImpl(
         binding.scheduleChangeWeekButton.setOnClickListener {
             events.accept(ScheduleView.Event.ChangeWeek)
         }
-
-        TabLayoutMediator(binding.scheduleTabLayout, binding.scheduleTabsViewPager) { tab, position ->
-            tab.text = KlockLocale.default.daysOfWeekShort[position]
-        }.attach()
     }
 
     override fun openWeekPickerDialog(weeks: List<String>, selectedWeek: Int) {
@@ -67,7 +66,7 @@ internal class ScheduleViewTabsImpl(
         }
     }
 
-    override fun accept(vm: ScheduleView.ViewModel) = with(binding) {
+    override fun accept(vm: ViewModel) = with(binding) {
         scheduleStubView.apply {
             isVisible = vm.isError
             textRes = R.string.schedule_loading_error
@@ -87,6 +86,10 @@ internal class ScheduleViewTabsImpl(
                 scheduleHeaderTitle.text = schedule.groupTitle
                 scheduleHeaderSubtitle.text = schedule.semester
             }
+
+            TabLayoutMediator(binding.scheduleTabLayout, binding.scheduleTabsViewPager) { tab, position ->
+                tab.text = KlockLocale.default.daysOfWeekShort[position]
+            }.attach()
 
             schedule.weekSchedule[vm.selectedWeek]?.forEachIndexed { dayIndex, list ->
                 classes.add(
