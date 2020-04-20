@@ -2,7 +2,6 @@
 
 package com.alefimenko.iuttimetable.settings.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.data.DataModule
 import com.alefimenko.iuttimetable.settings.Settings
 import com.alefimenko.iuttimetable.settings.Settings.Output
@@ -10,6 +9,7 @@ import com.alefimenko.iuttimetable.settings.SettingsInteractor
 import com.alefimenko.iuttimetable.settings.SettingsNode
 import com.alefimenko.iuttimetable.settings.SettingsRouter
 import com.alefimenko.iuttimetable.settings.feature.SettingsFeature
+import com.badoo.ribs.core.builder.BuildParams
 import dagger.Provides
 import io.reactivex.functions.Consumer
 
@@ -21,10 +21,10 @@ internal object SettingsModule {
     @JvmStatic
     internal fun router(
         component: SettingsComponent,
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         customisation: Settings.Customisation
     ): SettingsRouter = SettingsRouter(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         transitionHandler = null
     )
 
@@ -32,12 +32,12 @@ internal object SettingsModule {
     @Provides
     @JvmStatic
     internal fun interactor(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         router: SettingsRouter,
         output: Consumer<Output>,
         feature: SettingsFeature
     ): SettingsInteractor = SettingsInteractor(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         router = router,
         output = output,
         feature = feature
@@ -47,14 +47,14 @@ internal object SettingsModule {
     @Provides
     @JvmStatic
     internal fun node(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         customisation: Settings.Customisation,
         router: SettingsRouter,
         interactor: SettingsInteractor,
         output: Consumer<Output>,
         feature: SettingsFeature
     ): SettingsNode = SettingsNode(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         viewFactory = customisation.viewFactory(null),
         router = router,
         interactor = interactor,

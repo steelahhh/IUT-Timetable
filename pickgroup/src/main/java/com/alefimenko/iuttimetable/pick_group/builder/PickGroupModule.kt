@@ -2,7 +2,6 @@
 
 package com.alefimenko.iuttimetable.pick_group.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.data.DataModule
 import com.alefimenko.iuttimetable.pick_group.PickGroup.Input
 import com.alefimenko.iuttimetable.pick_group.PickGroup.Output
@@ -12,6 +11,7 @@ import com.alefimenko.iuttimetable.pick_group.PickGroupRouter
 import com.alefimenko.iuttimetable.pick_group.PickGroupViewImpl
 import com.alefimenko.iuttimetable.pick_group.feature.PickGroupFeature
 import com.badoo.mvicore.android.AndroidTimeCapsule
+import com.badoo.ribs.core.builder.BuildParams
 import dagger.Provides
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
@@ -24,16 +24,18 @@ internal object PickGroupModule {
     @Provides
     @Named(PickGroupFeature.CAPSULE_KEY)
     @JvmStatic
-    internal fun timeCapsule(savedInstanceState: Bundle?) = AndroidTimeCapsule(savedInstanceState)
+    internal fun timeCapsule(
+        buildParams: BuildParams<Nothing?>
+    ) = AndroidTimeCapsule(buildParams.savedInstanceState)
 
     @PickGroupScope
     @Provides
     @JvmStatic
     internal fun router(
         component: PickGroupComponent,
-        savedInstanceState: Bundle?
+        buildParams: BuildParams<Nothing?>
     ): PickGroupRouter = PickGroupRouter(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         transitionHandler = null
     )
 
@@ -41,7 +43,7 @@ internal object PickGroupModule {
     @Provides
     @JvmStatic
     internal fun interactor(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         router: PickGroupRouter,
         @Named(PickGroupFeature.CAPSULE_KEY)
         timeCapsule: AndroidTimeCapsule,
@@ -49,7 +51,7 @@ internal object PickGroupModule {
         output: Consumer<Output>,
         feature: PickGroupFeature
     ): PickGroupInteractor = PickGroupInteractor(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         router = router,
         timeCapsule = timeCapsule,
         input = input,
@@ -61,14 +63,14 @@ internal object PickGroupModule {
     @Provides
     @JvmStatic
     internal fun node(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         router: PickGroupRouter,
         interactor: PickGroupInteractor,
         input: ObservableSource<Input>,
         output: Consumer<Output>,
         feature: PickGroupFeature
     ): PickGroupNode = PickGroupNode(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         viewFactory = PickGroupViewImpl.Factory().invoke(null),
         router = router,
         interactor = interactor,

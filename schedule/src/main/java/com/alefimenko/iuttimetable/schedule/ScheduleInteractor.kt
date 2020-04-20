@@ -18,19 +18,20 @@ import com.badoo.mvicore.android.lifecycle.startStop
 import com.badoo.mvicore.binder.named
 import com.badoo.mvicore.binder.using
 import com.badoo.ribs.core.Interactor
+import com.badoo.ribs.core.builder.BuildParams
 import io.reactivex.Observable.wrap
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 
 internal class ScheduleInteractor(
-    savedInstanceState: Bundle?,
+    buildParams: BuildParams<Nothing?>,
     private val timeCapsule: AndroidTimeCapsule,
     private val router: ScheduleRouter,
     private val input: ObservableSource<Schedule.Input>,
     private val output: Consumer<Schedule.Output>,
     private val feature: ScheduleFeature
 ) : Interactor<ScheduleView>(
-    savedInstanceState = savedInstanceState,
+    buildParams = buildParams,
     disposables = feature
 ) {
     val groupsOutputConsumer: Consumer<Groups.Output> = Consumer { event ->

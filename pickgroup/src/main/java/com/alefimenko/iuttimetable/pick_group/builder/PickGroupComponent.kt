@@ -1,8 +1,8 @@
 package com.alefimenko.iuttimetable.pick_group.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.pick_group.PickGroup
 import com.alefimenko.iuttimetable.pick_group.PickGroupNode
+import com.badoo.ribs.core.builder.BuildParams
 import dagger.BindsInstance
 
 @PickGroupScope
@@ -16,7 +16,7 @@ internal interface PickGroupComponent {
     interface Factory {
         fun create(
             dependency: PickGroup.Dependency,
-            @BindsInstance savedInstanceState: Bundle?
+            @BindsInstance buildParams: BuildParams<Nothing?>
         ): PickGroupComponent
     }
 

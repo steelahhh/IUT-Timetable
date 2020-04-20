@@ -4,10 +4,10 @@ import android.view.View
 import com.alefimenko.iuttimetable.schedule.R
 import com.alefimenko.iuttimetable.schedule.databinding.ItemDayTabBinding
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder as BasicGroupieViewHolder
 import com.xwray.groupie.Item
 import com.xwray.groupie.viewbinding.BindableItem
 import com.xwray.groupie.viewbinding.GroupieViewHolder
-import com.xwray.groupie.GroupieViewHolder as BasicGroupieViewHolder
 
 data class DayTabItem(
     val classes: List<Item<*>>

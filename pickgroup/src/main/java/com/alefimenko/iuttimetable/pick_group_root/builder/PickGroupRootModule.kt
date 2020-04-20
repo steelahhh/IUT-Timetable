@@ -2,7 +2,6 @@
 
 package com.alefimenko.iuttimetable.pick_group_root.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.pick_group.PickGroup
 import com.alefimenko.iuttimetable.pick_group.builder.PickGroupBuilder
 import com.alefimenko.iuttimetable.pick_group_root.PickGroupRoot.Input
@@ -12,6 +11,7 @@ import com.alefimenko.iuttimetable.pick_group_root.PickGroupRootNode
 import com.alefimenko.iuttimetable.pick_group_root.PickGroupRootRouter
 import com.alefimenko.iuttimetable.pick_institute.PickInstitute
 import com.alefimenko.iuttimetable.pick_institute.builder.PickInstituteBuilder
+import com.badoo.ribs.core.builder.BuildParams
 import com.badoo.ribs.core.routing.transition.handler.Slider
 import dagger.Provides
 import io.reactivex.Observable
@@ -26,9 +26,9 @@ internal object PickGroupRootModule {
     @JvmStatic
     internal fun router(
         component: PickGroupRootComponent,
-        savedInstanceState: Bundle?
+        buildParams: BuildParams<Boolean>
     ): PickGroupRootRouter = PickGroupRootRouter(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         transitionHandler = Slider(),
         pickGroupBuilder = PickGroupBuilder(component),
         pickInstituteBuilder = PickInstituteBuilder(component)
@@ -38,12 +38,12 @@ internal object PickGroupRootModule {
     @Provides
     @JvmStatic
     internal fun interactor(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Boolean>,
         router: PickGroupRootRouter,
         input: ObservableSource<Input>,
         output: Consumer<Output>
     ): PickGroupRootInteractor = PickGroupRootInteractor(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         router = router,
         input = input,
         output = output
@@ -53,13 +53,13 @@ internal object PickGroupRootModule {
     @Provides
     @JvmStatic
     internal fun node(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Boolean>,
         router: PickGroupRootRouter,
         interactor: PickGroupRootInteractor,
         input: ObservableSource<Input>,
         output: Consumer<Output>
     ): PickGroupRootNode = PickGroupRootNode(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         router = router,
         interactor = interactor,
         input = input,

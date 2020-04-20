@@ -15,15 +15,16 @@ import com.alefimenko.iuttimetable.root.feature.RootFeature.News
 import com.alefimenko.iuttimetable.schedule.Schedule
 import com.badoo.mvicore.android.lifecycle.startStop
 import com.badoo.ribs.core.Interactor
+import com.badoo.ribs.core.builder.BuildParams
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
 
 internal class RootInteractor(
-    savedInstanceState: Bundle?,
+    buildParams: BuildParams<Nothing?>,
     private val router: RootRouter,
     private val feature: RootFeature
 ) : Interactor<Nothing>(
-    savedInstanceState = savedInstanceState,
+    buildParams = buildParams,
     disposables = feature
 ) {
     val scheduleInput = PublishSubject.create<Schedule.Input>()

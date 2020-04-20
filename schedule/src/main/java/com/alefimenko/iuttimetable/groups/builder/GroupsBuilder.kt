@@ -1,27 +1,28 @@
 package com.alefimenko.iuttimetable.groups.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.groups.Groups
 import com.alefimenko.iuttimetable.groups.GroupsNode
-import com.badoo.ribs.core.Builder
+import com.badoo.ribs.core.builder.BuildParams
+import com.badoo.ribs.core.builder.SimpleBuilder
 import com.badoo.ribs.customisation.customisationsBranchFor
 import com.badoo.ribs.customisation.getOrDefault
 
 class GroupsBuilder(
     dependency: Groups.Dependency
-) : Builder<Groups.Dependency>() {
+) : SimpleBuilder<Groups.Dependency, GroupsNode>(
+    rib = object : Groups {}
+) {
 
     override val dependency: Groups.Dependency = object : Groups.Dependency by dependency {
         override fun ribCustomisation() = dependency.customisationsBranchFor(Groups::class)
     }
 
-    fun build(savedInstanceState: Bundle?): GroupsNode =
-        DaggerGroupsComponent
-            .factory()
-            .create(
-                dependency = dependency,
-                customisation = dependency.getOrDefault(Groups.Customisation()),
-                savedInstanceState = savedInstanceState
-            )
-            .node()
+    override fun build(buildParams: BuildParams<Nothing?>): GroupsNode = DaggerGroupsComponent
+        .factory()
+        .create(
+            dependency = dependency,
+            customisation = dependency.getOrDefault(Groups.Customisation()),
+            buildParams = buildParams
+        )
+        .node()
 }

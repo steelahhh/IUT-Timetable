@@ -1,8 +1,5 @@
 package com.alefimenko.iuttimetable.settings
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DividerItemDecoration

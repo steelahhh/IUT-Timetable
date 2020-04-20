@@ -1,8 +1,8 @@
 package com.alefimenko.iuttimetable.pick_institute.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.pick_institute.PickInstitute
 import com.alefimenko.iuttimetable.pick_institute.PickInstituteNode
+import com.badoo.ribs.core.builder.BuildParams
 import dagger.BindsInstance
 
 @PickInstituteScope
@@ -16,7 +16,7 @@ internal interface PickInstituteComponent {
     interface Factory {
         fun create(
             dependency: PickInstitute.Dependency,
-            @BindsInstance savedInstanceState: Bundle?
+            @BindsInstance buildParams: BuildParams<Nothing?>
         ): PickInstituteComponent
     }
 

@@ -12,18 +12,19 @@ import com.badoo.mvicore.android.lifecycle.createDestroy
 import com.badoo.mvicore.android.lifecycle.startStop
 import com.badoo.mvicore.binder.using
 import com.badoo.ribs.core.Interactor
+import com.badoo.ribs.core.builder.BuildParams
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 
 internal class PickGroupInteractor(
-    savedInstanceState: Bundle?,
+    buildParams: BuildParams<Nothing?>,
     private val router: PickGroupRouter,
     private val timeCapsule: AndroidTimeCapsule,
     private val input: ObservableSource<PickGroup.Input>,
     private val output: Consumer<PickGroup.Output>,
     private val feature: PickGroupFeature
 ) : Interactor<PickGroupView>(
-    savedInstanceState = savedInstanceState,
+    buildParams = buildParams,
     disposables = feature
 ) {
 

@@ -12,18 +12,19 @@ import com.badoo.mvicore.android.lifecycle.createDestroy
 import com.badoo.mvicore.android.lifecycle.startStop
 import com.badoo.mvicore.binder.using
 import com.badoo.ribs.core.Interactor
+import com.badoo.ribs.core.builder.BuildParams
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 
 internal class PickInstituteInteractor(
-    savedInstanceState: Bundle?,
+    buildParams: BuildParams<Nothing?>,
     private val router: PickInstituteRouter,
     private val timeCapsule: AndroidTimeCapsule,
     private val input: ObservableSource<PickInstitute.Input>,
     private val output: Consumer<PickInstitute.Output>,
     private val feature: PickInstituteFeature
 ) : Interactor<PickInstituteView>(
-    savedInstanceState = savedInstanceState,
+    buildParams = buildParams,
     disposables = feature
 ) {
 

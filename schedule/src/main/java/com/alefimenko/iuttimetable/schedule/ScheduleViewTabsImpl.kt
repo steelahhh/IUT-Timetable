@@ -8,14 +8,12 @@ import androidx.core.view.isVisible
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.extension.changeMenuColors
-import com.alefimenko.iuttimetable.groups.Groups
 import com.alefimenko.iuttimetable.schedule.ScheduleView.ViewModel
 import com.alefimenko.iuttimetable.schedule.data.model.ClassItem
 import com.alefimenko.iuttimetable.schedule.data.model.DayTabItem
 import com.alefimenko.iuttimetable.schedule.data.model.Position
 import com.alefimenko.iuttimetable.schedule.data.model.toClassItem
 import com.alefimenko.iuttimetable.schedule.databinding.RibScheduleTabsBinding
-import com.badoo.ribs.core.Node
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jakewharton.rxrelay2.PublishRelay
 import com.soywiz.klock.KlockLocale

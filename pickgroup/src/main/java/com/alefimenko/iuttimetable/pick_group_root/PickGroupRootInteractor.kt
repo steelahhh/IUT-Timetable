@@ -1,21 +1,21 @@
 package com.alefimenko.iuttimetable.pick_group_root
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.pick_group.PickGroup
 import com.alefimenko.iuttimetable.pick_group_root.PickGroupRootRouter.Configuration.Content
 import com.alefimenko.iuttimetable.pick_institute.PickInstitute
 import com.badoo.ribs.core.Interactor
+import com.badoo.ribs.core.builder.BuildParams
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
 
 internal class PickGroupRootInteractor(
-    savedInstanceState: Bundle?,
+    buildParams: BuildParams<Boolean>,
     private val router: PickGroupRootRouter,
     private val input: ObservableSource<PickGroupRoot.Input>,
     private val output: Consumer<PickGroupRoot.Output>
 ) : Interactor<Nothing>(
-    savedInstanceState = savedInstanceState,
+    buildParams = buildParams,
     disposables = null
 ) {
     val pickGroupInput = PublishSubject.create<PickGroup.Input>()

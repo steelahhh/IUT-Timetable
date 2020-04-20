@@ -23,7 +23,7 @@ object Versions {
     const val appVersionName = "3.1.0"
 
     const val kotlin = "1.3.71"
-    const val androidPlugin = "4.0.0-beta03"
+    const val androidPlugin = "4.0.0-beta04"
 
     const val mviCore = "1.1.6"
     const val aac = "2.2.0"
@@ -100,7 +100,7 @@ object Deps {
     val ribs = RIBs
 
     object RIBs {
-        const val android = "com.github.badoo.RIBs:rib-android:0.11.2"
+        const val android = "com.github.badoo.RIBs:rib-android:0.12.0"
     }
 
     val dagger = Dagger

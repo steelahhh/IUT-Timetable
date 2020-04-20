@@ -1,14 +1,14 @@
 package com.alefimenko.iuttimetable.pick_group
 
-import android.os.Bundle
 import android.view.ViewGroup
 import com.alefimenko.iuttimetable.pick_group.feature.PickGroupFeature
 import com.badoo.ribs.core.Node
+import com.badoo.ribs.core.builder.BuildParams
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 
 class PickGroupNode internal constructor(
-    savedInstanceState: Bundle?,
+    buildParams: BuildParams<Nothing?>,
     viewFactory: ((ViewGroup) -> PickGroupView?)?,
     private val router: PickGroupRouter,
     private val input: ObservableSource<PickGroup.Input>,
@@ -16,8 +16,7 @@ class PickGroupNode internal constructor(
     private val feature: PickGroupFeature,
     private val interactor: PickGroupInteractor
 ) : Node<PickGroupView>(
-    savedInstanceState = savedInstanceState,
-    identifier = object : PickGroup {},
+    buildParams = buildParams,
     viewFactory = viewFactory,
     router = router,
     interactor = interactor

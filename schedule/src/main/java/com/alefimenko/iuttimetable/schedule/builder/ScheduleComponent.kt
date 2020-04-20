@@ -1,10 +1,10 @@
 package com.alefimenko.iuttimetable.schedule.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.groups.Groups
 import com.alefimenko.iuttimetable.schedule.Schedule
 import com.alefimenko.iuttimetable.schedule.ScheduleNode
 import com.alefimenko.iuttimetable.settings.Settings
+import com.badoo.ribs.core.builder.BuildParams
 import dagger.BindsInstance
 
 @ScheduleScope
@@ -19,7 +19,7 @@ internal interface ScheduleComponent : Settings.Dependency, Groups.Dependency {
         fun create(
             dependency: Schedule.Dependency,
             @BindsInstance customisation: Schedule.Customisation,
-            @BindsInstance savedInstanceState: Bundle?
+            @BindsInstance buildParams: BuildParams<Nothing?>
         ): ScheduleComponent
     }
 

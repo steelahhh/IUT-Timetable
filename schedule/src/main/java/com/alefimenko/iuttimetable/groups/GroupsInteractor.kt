@@ -11,18 +11,19 @@ import com.badoo.mvicore.android.lifecycle.createDestroy
 import com.badoo.mvicore.android.lifecycle.startStop
 import com.badoo.mvicore.binder.using
 import com.badoo.ribs.core.Interactor
+import com.badoo.ribs.core.builder.BuildParams
 import io.reactivex.Observable.wrap
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 
 internal class GroupsInteractor(
-    savedInstanceState: Bundle?,
+    buildParams: BuildParams<Nothing?>,
     private val router: GroupsRouter,
     private val input: ObservableSource<Groups.Input>,
     private val output: Consumer<Groups.Output>,
     private val feature: GroupsFeature
 ) : Interactor<GroupsView>(
-    savedInstanceState = savedInstanceState,
+    buildParams = buildParams,
     disposables = feature
 ) {
 

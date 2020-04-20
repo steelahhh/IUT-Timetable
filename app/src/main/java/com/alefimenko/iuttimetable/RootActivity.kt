@@ -7,6 +7,7 @@ import com.alefimenko.iuttimetable.extension.updateNavigationColor
 import com.alefimenko.iuttimetable.root.builder.RootBuilder
 import com.badoo.ribs.android.RibActivity
 import com.badoo.ribs.core.Node
+import com.badoo.ribs.core.builder.BuildContext.Companion.root
 
 /*
  * Created by Alexander Efimenko on 22/11/18.
@@ -17,7 +18,7 @@ class RootActivity : RibActivity() {
 
     override fun createRib(
         savedInstanceState: Bundle?
-    ): Node<*> = RootBuilder(component).build(savedInstanceState)
+    ): Node<*> = RootBuilder(component).build(root(savedInstanceState))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)

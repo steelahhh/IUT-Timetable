@@ -1,20 +1,22 @@
 package com.alefimenko.iuttimetable.pick_group.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.pick_group.PickGroup
 import com.alefimenko.iuttimetable.pick_group.PickGroupNode
-import com.badoo.ribs.core.Builder
+import com.badoo.ribs.core.builder.BuildParams
+import com.badoo.ribs.core.builder.SimpleBuilder
 
 class PickGroupBuilder(
     override val dependency: PickGroup.Dependency
-) : Builder<PickGroup.Dependency>() {
+) : SimpleBuilder<PickGroup.Dependency, PickGroupNode>(
+    rib = object : PickGroup {}
+) {
 
-    fun build(savedInstanceState: Bundle?): PickGroupNode =
+    override fun build(buildParams: BuildParams<Nothing?>): PickGroupNode =
         DaggerPickGroupComponent
             .factory()
             .create(
                 dependency = dependency,
-                savedInstanceState = savedInstanceState
+                buildParams = buildParams
             )
             .node()
 }

@@ -1,8 +1,8 @@
 package com.alefimenko.iuttimetable.settings.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.settings.Settings
 import com.alefimenko.iuttimetable.settings.SettingsNode
+import com.badoo.ribs.core.builder.BuildParams
 import dagger.BindsInstance
 
 @SettingsScope
@@ -17,7 +17,7 @@ internal interface SettingsComponent {
         fun create(
             dependency: Settings.Dependency,
             @BindsInstance customisation: Settings.Customisation,
-            @BindsInstance savedInstanceState: Bundle?
+            @BindsInstance buildParams: BuildParams<Nothing?>
         ): SettingsComponent
     }
 

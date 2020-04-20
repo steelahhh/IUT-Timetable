@@ -1,20 +1,21 @@
 package com.alefimenko.iuttimetable.pick_institute.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.pick_institute.PickInstitute
 import com.alefimenko.iuttimetable.pick_institute.PickInstituteNode
-import com.badoo.ribs.core.Builder
+import com.badoo.ribs.core.builder.BuildParams
+import com.badoo.ribs.core.builder.SimpleBuilder
 
 class PickInstituteBuilder(
     override val dependency: PickInstitute.Dependency
-) : Builder<PickInstitute.Dependency>() {
+) : SimpleBuilder<PickInstitute.Dependency, PickInstituteNode>(
+    rib = object : PickInstitute {}
+) {
 
-    fun build(savedInstanceState: Bundle?): PickInstituteNode =
-        DaggerPickInstituteComponent
-            .factory()
-            .create(
-                dependency = dependency,
-                savedInstanceState = savedInstanceState
-            )
-            .node()
+    override fun build(buildParams: BuildParams<Nothing?>): PickInstituteNode = DaggerPickInstituteComponent
+        .factory()
+        .create(
+            dependency = dependency,
+            buildParams = buildParams
+        )
+        .node()
 }

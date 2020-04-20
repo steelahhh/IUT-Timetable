@@ -2,7 +2,6 @@
 
 package com.alefimenko.iuttimetable.groups.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.data.DataModule
 import com.alefimenko.iuttimetable.groups.Groups
 import com.alefimenko.iuttimetable.groups.Groups.Input
@@ -11,6 +10,7 @@ import com.alefimenko.iuttimetable.groups.GroupsInteractor
 import com.alefimenko.iuttimetable.groups.GroupsNode
 import com.alefimenko.iuttimetable.groups.GroupsRouter
 import com.alefimenko.iuttimetable.groups.feature.GroupsFeature
+import com.badoo.ribs.core.builder.BuildParams
 import dagger.Provides
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
@@ -23,51 +23,48 @@ internal object GroupsModule {
     @JvmStatic
     internal fun router(
         component: GroupsComponent,
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         customisation: Groups.Customisation
-    ): GroupsRouter =
-        GroupsRouter(
-            savedInstanceState = savedInstanceState,
-            transitionHandler = null
-        )
+    ): GroupsRouter = GroupsRouter(
+        buildParams = buildParams,
+        transitionHandler = null
+    )
 
     @GroupsScope
     @Provides
     @JvmStatic
     internal fun interactor(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         router: GroupsRouter,
         input: ObservableSource<Input>,
         output: Consumer<Output>,
         feature: GroupsFeature
-    ): GroupsInteractor =
-        GroupsInteractor(
-            savedInstanceState = savedInstanceState,
-            router = router,
-            input = input,
-            output = output,
-            feature = feature
-        )
+    ): GroupsInteractor = GroupsInteractor(
+        buildParams = buildParams,
+        router = router,
+        input = input,
+        output = output,
+        feature = feature
+    )
 
     @GroupsScope
     @Provides
     @JvmStatic
     internal fun node(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         customisation: Groups.Customisation,
         router: GroupsRouter,
         interactor: GroupsInteractor,
         input: ObservableSource<Input>,
         output: Consumer<Output>,
         feature: GroupsFeature
-    ): GroupsNode =
-        GroupsNode(
-            savedInstanceState = savedInstanceState,
-            viewFactory = customisation.viewFactory(null),
-            router = router,
-            interactor = interactor,
-            input = input,
-            output = output,
-            feature = feature
-        )
+    ): GroupsNode = GroupsNode(
+        buildParams = buildParams,
+        viewFactory = customisation.viewFactory(null),
+        router = router,
+        interactor = interactor,
+        input = input,
+        output = output,
+        feature = feature
+    )
 }

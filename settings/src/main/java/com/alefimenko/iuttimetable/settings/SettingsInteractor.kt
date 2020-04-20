@@ -11,16 +11,17 @@ import com.badoo.mvicore.android.lifecycle.createDestroy
 import com.badoo.mvicore.android.lifecycle.startStop
 import com.badoo.mvicore.binder.using
 import com.badoo.ribs.core.Interactor
+import com.badoo.ribs.core.builder.BuildParams
 import io.reactivex.Observable.wrap
 import io.reactivex.functions.Consumer
 
 internal class SettingsInteractor(
-    savedInstanceState: Bundle?,
+    buildParams: BuildParams<Nothing?>,
     private val router: SettingsRouter,
     private val output: Consumer<Settings.Output>,
     private val feature: SettingsFeature
 ) : Interactor<SettingsView>(
-    savedInstanceState = savedInstanceState,
+    buildParams = buildParams,
     disposables = feature
 ) {
 

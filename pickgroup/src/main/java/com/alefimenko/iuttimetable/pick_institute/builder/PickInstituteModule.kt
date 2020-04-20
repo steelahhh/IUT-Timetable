@@ -2,7 +2,6 @@
 
 package com.alefimenko.iuttimetable.pick_institute.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.data.DataModule
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.pick_institute.PickInstitute.Input
@@ -13,6 +12,7 @@ import com.alefimenko.iuttimetable.pick_institute.PickInstituteRouter
 import com.alefimenko.iuttimetable.pick_institute.PickInstituteViewImpl
 import com.alefimenko.iuttimetable.pick_institute.feature.PickInstituteFeature
 import com.badoo.mvicore.android.AndroidTimeCapsule
+import com.badoo.ribs.core.builder.BuildParams
 import dagger.Provides
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
@@ -25,16 +25,18 @@ internal object PickInstituteModule {
     @Provides
     @Named(PickInstituteFeature.CAPSULE_KEY)
     @JvmStatic
-    internal fun timeCapsule(savedInstanceState: Bundle?) = AndroidTimeCapsule(savedInstanceState)
+    internal fun timeCapsule(
+        buildParams: BuildParams<Nothing?>
+    ) = AndroidTimeCapsule(buildParams.savedInstanceState)
 
     @PickInstituteScope
     @Provides
     @JvmStatic
     internal fun router(
         component: PickInstituteComponent,
-        savedInstanceState: Bundle?
+        buildParams: BuildParams<Nothing?>
     ): PickInstituteRouter = PickInstituteRouter(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         transitionHandler = null
     )
 
@@ -42,7 +44,7 @@ internal object PickInstituteModule {
     @Provides
     @JvmStatic
     internal fun interactor(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         router: PickInstituteRouter,
         input: ObservableSource<Input>,
         output: Consumer<Output>,
@@ -50,7 +52,7 @@ internal object PickInstituteModule {
         timeCapsule: AndroidTimeCapsule,
         feature: PickInstituteFeature
     ): PickInstituteInteractor = PickInstituteInteractor(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         router = router,
         input = input,
         output = output,
@@ -64,14 +66,14 @@ internal object PickInstituteModule {
     internal fun node(
         @Named(Constants.PICK_GROUP_ROOT)
         isRoot: Boolean,
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         router: PickInstituteRouter,
         interactor: PickInstituteInteractor,
         input: ObservableSource<Input>,
         output: Consumer<Output>,
         feature: PickInstituteFeature
     ): PickInstituteNode = PickInstituteNode(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         viewFactory = PickInstituteViewImpl.Factory().invoke(isRoot),
         router = router,
         interactor = interactor,

@@ -1,8 +1,8 @@
 package com.alefimenko.iuttimetable.groups.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.groups.Groups
 import com.alefimenko.iuttimetable.groups.GroupsNode
+import com.badoo.ribs.core.builder.BuildParams
 import dagger.BindsInstance
 
 @GroupsScope
@@ -17,7 +17,7 @@ internal interface GroupsComponent {
         fun create(
             dependency: Groups.Dependency,
             @BindsInstance customisation: Groups.Customisation,
-            @BindsInstance savedInstanceState: Bundle?
+            @BindsInstance buildParams: BuildParams<Nothing?>
         ): GroupsComponent
     }
 

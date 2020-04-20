@@ -1,11 +1,11 @@
 package com.alefimenko.iuttimetable.root.builder
 
 import android.content.Context
-import android.os.Bundle
 import com.alefimenko.iuttimetable.pick_group_root.PickGroupRoot
 import com.alefimenko.iuttimetable.root.Root
 import com.alefimenko.iuttimetable.root.RootNode
 import com.alefimenko.iuttimetable.schedule.Schedule
+import com.badoo.ribs.core.builder.BuildParams
 import dagger.BindsInstance
 
 @RootScope
@@ -19,7 +19,7 @@ internal interface RootComponent : PickGroupRoot.Dependency, Schedule.Dependency
     interface Factory {
         fun create(
             dependency: Root.Dependency,
-            @BindsInstance savedInstanceState: Bundle?
+            @BindsInstance buildParams: BuildParams<Nothing?>
         ): RootComponent
     }
 

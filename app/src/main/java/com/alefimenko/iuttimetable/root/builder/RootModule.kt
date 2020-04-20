@@ -2,7 +2,6 @@
 
 package com.alefimenko.iuttimetable.root.builder
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.AppRibCustomisations
 import com.alefimenko.iuttimetable.data.DataModule
 import com.alefimenko.iuttimetable.pick_group_root.PickGroupRoot
@@ -13,6 +12,7 @@ import com.alefimenko.iuttimetable.root.RootRouter
 import com.alefimenko.iuttimetable.root.feature.RootFeature
 import com.alefimenko.iuttimetable.schedule.Schedule
 import com.alefimenko.iuttimetable.schedule.builder.ScheduleBuilder
+import com.badoo.ribs.core.builder.BuildParams
 import com.badoo.ribs.customisation.RibCustomisationDirectory
 import dagger.Provides
 import io.reactivex.Observable
@@ -27,9 +27,9 @@ internal object RootModule {
     @JvmStatic
     internal fun router(
         component: RootComponent,
-        savedInstanceState: Bundle?
+        buildParams: BuildParams<Nothing?>
     ): RootRouter = RootRouter(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         pickGroupRootBuilder = PickGroupRootBuilder(component),
         scheduleBuilder = ScheduleBuilder(component)
     )
@@ -38,11 +38,11 @@ internal object RootModule {
     @Provides
     @JvmStatic
     internal fun interactor(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         router: RootRouter,
         feature: RootFeature
     ): RootInteractor = RootInteractor(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         router = router,
         feature = feature
     )
@@ -51,12 +51,12 @@ internal object RootModule {
     @Provides
     @JvmStatic
     internal fun node(
-        savedInstanceState: Bundle?,
+        buildParams: BuildParams<Nothing?>,
         router: RootRouter,
         interactor: RootInteractor,
         feature: RootFeature
     ): RootNode = RootNode(
-        savedInstanceState = savedInstanceState,
+        buildParams = buildParams,
         router = router,
         interactor = interactor,
         feature = feature

@@ -1,17 +1,16 @@
 package com.alefimenko.iuttimetable.root
 
-import android.os.Bundle
 import com.alefimenko.iuttimetable.root.feature.RootFeature
 import com.badoo.ribs.core.Node
+import com.badoo.ribs.core.builder.BuildParams
 
 class RootNode internal constructor(
-    savedInstanceState: Bundle?,
+    buildParams: BuildParams<Nothing?>,
     private val router: RootRouter,
     private val feature: RootFeature,
     private val interactor: RootInteractor
 ) : Node<Nothing>(
-    savedInstanceState = savedInstanceState,
-    identifier = object : Root {},
+    buildParams = buildParams,
     viewFactory = null,
     router = router,
     interactor = interactor

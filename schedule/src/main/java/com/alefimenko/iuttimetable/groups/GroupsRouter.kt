@@ -1,21 +1,21 @@
 package com.alefimenko.iuttimetable.groups
 
-import android.os.Bundle
 import android.os.Parcelable
 import com.alefimenko.iuttimetable.groups.GroupsRouter.Configuration
 import com.alefimenko.iuttimetable.groups.GroupsRouter.Configuration.Content
 import com.alefimenko.iuttimetable.groups.GroupsRouter.Configuration.Overlay
 import com.alefimenko.iuttimetable.groups.GroupsRouter.Configuration.Permanent
 import com.badoo.ribs.core.Router
+import com.badoo.ribs.core.builder.BuildParams
 import com.badoo.ribs.core.routing.action.RoutingAction
 import com.badoo.ribs.core.routing.transition.handler.TransitionHandler
 import kotlinx.android.parcel.Parcelize
 
 class GroupsRouter(
-    savedInstanceState: Bundle?,
+    buildParams: BuildParams<Nothing?>,
     transitionHandler: TransitionHandler<Configuration>? = null
 ) : Router<Configuration, Permanent, Content, Overlay, GroupsView>(
-    savedInstanceState = savedInstanceState,
+    buildParams = buildParams,
     transitionHandler = transitionHandler,
     initialConfiguration = Content.Default,
     permanentParts = emptyList()
