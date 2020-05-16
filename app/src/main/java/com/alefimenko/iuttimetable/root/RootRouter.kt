@@ -30,7 +30,7 @@ class RootRouter(
 
     override fun resolveConfiguration(
         configuration: Configuration
-    ): RoutingAction<Nothing> = when (configuration) {
+    ): RoutingAction = when (configuration) {
         is Configuration.PickGroup -> attach { pickGroupRootBuilder.build(it, configuration.isRoot) }
         is Configuration.Schedule -> attach { scheduleBuilder.build(it) }
         else -> RoutingAction.noop()

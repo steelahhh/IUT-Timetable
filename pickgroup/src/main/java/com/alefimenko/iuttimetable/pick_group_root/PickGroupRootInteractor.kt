@@ -5,6 +5,7 @@ import com.alefimenko.iuttimetable.pick_group_root.PickGroupRootRouter.Configura
 import com.alefimenko.iuttimetable.pick_institute.PickInstitute
 import com.badoo.ribs.core.Interactor
 import com.badoo.ribs.core.builder.BuildParams
+import com.badoo.ribs.core.routing.configuration.feature.operation.push
 import io.reactivex.ObservableSource
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
@@ -36,9 +37,7 @@ internal class PickGroupRootInteractor(
         when (it) {
             is PickGroup.Output.GoBack -> router.popBackStack()
             is PickGroup.Output.GoToSchedule -> output.accept(
-                PickGroupRoot.Output.OpenSchedule(
-                    it.groupInfo
-                )
+                PickGroupRoot.Output.OpenSchedule(it.groupInfo)
             )
         }
     }

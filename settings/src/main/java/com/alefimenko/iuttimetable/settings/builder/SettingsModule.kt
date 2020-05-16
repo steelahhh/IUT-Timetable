@@ -21,8 +21,7 @@ internal object SettingsModule {
     @JvmStatic
     internal fun router(
         component: SettingsComponent,
-        buildParams: BuildParams<Nothing?>,
-        customisation: Settings.Customisation
+        buildParams: BuildParams<Nothing?>
     ): SettingsRouter = SettingsRouter(
         buildParams = buildParams,
         transitionHandler = null

@@ -100,7 +100,7 @@ object Deps {
     val ribs = RIBs
 
     object RIBs {
-        const val android = "com.github.badoo.RIBs:rib-android:0.12.0"
+        const val android = "com.github.badoo.RIBs:rib-android:0.19.0"
     }
 
     val dagger = Dagger

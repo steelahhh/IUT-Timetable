@@ -1,22 +1,21 @@
 package com.alefimenko.iuttimetable.root.builder
 
 import com.alefimenko.iuttimetable.root.Root
-import com.alefimenko.iuttimetable.root.RootNode
-import com.badoo.ribs.core.Rib
+import com.badoo.ribs.core.Node
 import com.badoo.ribs.core.builder.BuildParams
 import com.badoo.ribs.core.builder.SimpleBuilder
 
 class RootBuilder(
-    override val dependency: Root.Dependency
-) : SimpleBuilder<Root.Dependency, RootNode>(
-    rib = object : Rib {}
-) {
+    private val dependency: Root.Dependency
+) : SimpleBuilder<Root>() {
 
-    override fun build(buildParams: BuildParams<Nothing?>): RootNode = DaggerRootComponent
-        .factory()
-        .create(
-            dependency = dependency,
-            buildParams = buildParams
-        )
-        .node()
+    override fun build(buildParams: BuildParams<Nothing?>): Root = object : Root {
+        override val node: Node<*> = DaggerRootComponent
+            .factory()
+            .create(
+                dependency = dependency,
+                buildParams = buildParams
+            )
+            .node()
+    }
 }

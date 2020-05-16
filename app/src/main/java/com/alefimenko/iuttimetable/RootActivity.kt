@@ -18,7 +18,7 @@ class RootActivity : RibActivity() {
 
     override fun createRib(
         savedInstanceState: Bundle?
-    ): Node<*> = RootBuilder(component).build(root(savedInstanceState))
+    ): Node<*> = RootBuilder(component).build(root(savedInstanceState)).node
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)

@@ -36,7 +36,7 @@ class ScheduleRouter(
 
     override fun resolveConfiguration(
         configuration: Configuration
-    ): RoutingAction<ScheduleView> = when (configuration) {
+    ): RoutingAction = when (configuration) {
         is Content.Settings -> attach { settingsBuilder.build(it) }
         is Overlay.GroupsPicker -> attach { groupsBuilder.build(it) }
         else -> RoutingAction.noop()

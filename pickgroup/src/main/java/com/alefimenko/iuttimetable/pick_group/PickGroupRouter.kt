@@ -30,5 +30,5 @@ class PickGroupRouter(
 
     override fun resolveConfiguration(
         configuration: Configuration
-    ): RoutingAction<PickGroupView> = RoutingAction.noop()
+    ): RoutingAction = RoutingAction.noop()
 }

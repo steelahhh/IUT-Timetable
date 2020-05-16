@@ -30,5 +30,5 @@ class PickInstituteRouter(
 
     override fun resolveConfiguration(
         configuration: Configuration
-    ): RoutingAction<PickInstituteView> = RoutingAction.noop()
+    ): RoutingAction = RoutingAction.noop()
 }

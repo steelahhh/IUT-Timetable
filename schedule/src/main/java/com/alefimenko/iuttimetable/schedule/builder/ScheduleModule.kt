@@ -49,17 +49,24 @@ internal object ScheduleModule {
     @JvmStatic
     internal fun router(
         component: ScheduleComponent,
-        buildParams: BuildParams<Nothing?>,
-        customisation: Schedule.Customisation
-    ): ScheduleRouter = ScheduleRouter(
-        settingsBuilder = SettingsBuilder(component),
-        groupsBuilder = GroupsBuilder(component),
-        buildParams = buildParams,
-        transitionHandler = TransitionHandler.multiple(
-            CrossFader(condition = { it.identifier.rib is Groups }),
-            Slider(condition = { it.identifier.rib is Settings })
+        buildParams: BuildParams<Nothing?>
+    ): ScheduleRouter {
+        val settings = SettingsBuilder(component)
+        val groups = GroupsBuilder(component)
+        return ScheduleRouter(
+            settingsBuilder = settings,
+            groupsBuilder = groups,
+            buildParams = buildParams,
+            transitionHandler = TransitionHandler.multiple(
+                CrossFader(condition = {
+                    it.configuration == ScheduleRouter.Configuration.Overlay.GroupsPicker
+                }),
+                Slider(condition = {
+                    it.configuration == ScheduleRouter.Configuration.Content.Settings
+                })
+            )
         )
-    )
+    }
 
     @ScheduleScope
     @Provides

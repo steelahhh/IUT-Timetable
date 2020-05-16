@@ -28,6 +28,5 @@ class GroupsRouter(
         sealed class Overlay : Configuration()
     }
 
-    override fun resolveConfiguration(configuration: Configuration): RoutingAction<GroupsView> =
-        RoutingAction.noop()
+    override fun resolveConfiguration(configuration: Configuration): RoutingAction = RoutingAction.noop()
 }

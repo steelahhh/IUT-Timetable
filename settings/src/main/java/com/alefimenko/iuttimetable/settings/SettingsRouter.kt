@@ -30,5 +30,5 @@ class SettingsRouter(
 
     override fun resolveConfiguration(
         configuration: Configuration
-    ): RoutingAction<SettingsView> = RoutingAction.noop()
+    ): RoutingAction = RoutingAction.noop()
 }

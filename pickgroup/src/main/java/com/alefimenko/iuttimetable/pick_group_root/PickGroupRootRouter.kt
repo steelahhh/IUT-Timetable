@@ -37,7 +37,7 @@ class PickGroupRootRouter(
 
     override fun resolveConfiguration(
         configuration: Configuration
-    ): RoutingAction<Nothing> = when (configuration) {
+    ): RoutingAction = when (configuration) {
         is Content.PickGroup -> attach { pickGroupBuilder.build(it) }
         is Content.PickInstitute -> attach { pickInstituteBuilder.build(it) }
         else -> RoutingAction.noop()
