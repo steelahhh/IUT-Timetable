@@ -51,7 +51,7 @@ dependencies {
     }
 
     arrayOf(
-        kotlin("stdlib-jdk7", Versions.kotlin),
+        kotlin("stdlib-jdk8", Versions.kotlin),
         Deps.timber,
         Deps.ribs.android,
         Deps.rxRelay,
@@ -63,7 +63,6 @@ dependencies {
         Deps.groupie.core,
         Deps.groupie.viewBinding,
         Deps.materialDialogs,
-        Deps.klock.core,
         Deps.klock.android,
         Deps.rxKotlin,
         Deps.rxAndroid,

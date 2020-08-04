@@ -22,8 +22,8 @@ object Versions {
     const val appVersionCode = 4204
     const val appVersionName = "3.1.0"
 
-    const val kotlin = "1.3.71"
-    const val androidPlugin = "4.0.0-beta05"
+    const val kotlin = "1.4.0-rc"
+    const val androidPlugin = "4.2.0-alpha07"
 
     const val mviCore = "1.1.6"
     const val aac = "2.2.0"
@@ -38,7 +38,7 @@ object Versions {
 
     const val leakCanary = "2.0"
 
-    const val klock = "1.4.0"
+    const val klock = "2.0.0-alpha-1.4.0-rc"
 
     const val jsoup = "1.11.3"
 
@@ -77,9 +77,8 @@ object Deps {
     val klock = Klock
 
     object Klock {
-        const val core = "com.soywiz:klock-metadata:${vers.klock}"
-        const val jvm = "com.soywiz:klock-jvm:${vers.klock}"
-        const val android = "com.soywiz:klock-android:${vers.klock}"
+        const val jvm = "com.soywiz.korlibs.klock:klock-jvm:${vers.klock}"
+        const val android = "com.soywiz.korlibs.klock:klock-android:${vers.klock}"
     }
 
     val groupie = Groupie

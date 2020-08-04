@@ -33,10 +33,9 @@ android {
 
 dependencies {
     arrayOf(
-        kotlin("stdlib-jdk7", Versions.kotlin),
+        kotlin("stdlib-jdk8", Versions.kotlin),
         Deps.timber,
         Deps.dagger.core,
-        Deps.klock.core,
         Deps.klock.android,
         Deps.rxKotlin,
         Deps.rxAndroid

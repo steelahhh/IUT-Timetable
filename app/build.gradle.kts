@@ -88,14 +88,13 @@ dependencies {
     }
 
     arrayOf(
-        kotlin("stdlib-jdk7", Versions.kotlin),
+        kotlin("stdlib-jdk8", Versions.kotlin),
         Deps.timber,
         Deps.ribs.android,
         Deps.dagger.core,
         Deps.multidex,
         Deps.firebase.core,
         Deps.firebase.crashlytics,
-        Deps.klock.core,
         Deps.klock.android,
         Deps.retrofit,
         Deps.room

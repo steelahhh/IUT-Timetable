@@ -7,3 +7,5 @@ include(
     ":schedule",
     ":settings"
 )
+
+enableFeaturePreview("GRADLE_METADATA")

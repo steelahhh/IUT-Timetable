@@ -49,7 +49,7 @@ dependencies {
     }
 
     arrayOf(
-        kotlin("stdlib-jdk7", Versions.kotlin),
+        kotlin("stdlib-jdk8", Versions.kotlin),
         Deps.timber,
         Deps.ribs.android,
         Deps.rxRelay,

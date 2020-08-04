@@ -40,7 +40,7 @@ dependencies {
     implementation(project(Modules.common))
 
     arrayOf(
-        kotlin("stdlib-jdk7", Versions.kotlin),
+        kotlin("stdlib-jdk8", Versions.kotlin),
         Deps.timber,
         Deps.constraint,
         Deps.androidxCore,
