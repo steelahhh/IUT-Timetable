@@ -11,7 +11,7 @@ buildscript {
         classpath(kotlin("gradle-plugin", version = Versions.kotlin))
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0")
         classpath("com.google.gms:google-services:${Versions.googleServices}")
-        classpath("io.fabric.tools:gradle:1.31.0")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.3.0")
     }
 }
 

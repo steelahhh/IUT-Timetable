@@ -22,8 +22,8 @@ object Versions {
     const val appVersionCode = 4204
     const val appVersionName = "3.1.0"
 
-    const val kotlin = "1.4.0-rc"
-    const val androidPlugin = "4.2.0-alpha07"
+    const val kotlin = "1.4.0"
+    const val androidPlugin = "4.2.0-alpha11"
 
     const val mviCore = "1.1.6"
     const val aac = "2.2.0"
@@ -52,7 +52,7 @@ object Versions {
     const val junit = "4.12"
     const val testRunner = "1.1.0"
     const val espresso = "3.1.0"
-    const val googleServices = "4.3.1"
+    const val googleServices = "4.3.4"
 }
 
 object Deps {
@@ -131,7 +131,7 @@ object Deps {
 
     object Firebase {
         const val core = "com.google.firebase:firebase-core:17.1.0"
-        const val crashlytics = "com.crashlytics.sdk.android:crashlytics:2.10.1"
+        const val crashlytics = "com.google.firebase:firebase-crashlytics:17.2.2"
     }
 
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"

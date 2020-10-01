@@ -7,7 +7,7 @@ plugins {
     kotlin("kapt")
     kotlin("android.extensions")
     id("com.google.gms.google-services")
-    id("io.fabric")
+    id("com.google.firebase.crashlytics")
 }
 
 fun getProperty(fileName: String, prop: String): Any? {

@@ -5,10 +5,8 @@ import com.alefimenko.iuttimetable.common.RussianLocale
 import com.alefimenko.iuttimetable.di.ApplicationComponent
 import com.alefimenko.iuttimetable.di.DaggerApplicationComponent
 import com.alefimenko.iuttimetable.di.InjectorProvider
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.soywiz.klock.KlockLocale
-import io.fabric.sdk.android.Fabric
 import timber.log.Timber
 
 /*
@@ -34,10 +32,7 @@ class IUTApplication : MultiDexApplication(), InjectorProvider {
     }
 
     private fun initializeCrashlytics() {
-        val core = CrashlyticsCore.Builder()
-            .disabled(BuildConfig.DEBUG)
-            .build()
-        Fabric.with(this, Crashlytics.Builder().core(core).build())
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
     }
 
     private fun initializeKlock() {
