@@ -17,8 +17,8 @@ object Modules {
 
 object Versions {
     const val minSdk = 19
-    const val targetSdk = 29
-    const val compileSdk = 29
+    const val targetSdk = 30
+    const val compileSdk = 30
     const val appVersionCode = 4204
     const val appVersionName = "3.1.0"
 
@@ -58,10 +58,10 @@ object Versions {
 object Deps {
     val vers = Versions
 
-    const val appcompat = "androidx.appcompat:appcompat:1.1.0"
-    const val androidxCore = "androidx.core:core-ktx:1.1.0"
-    const val recyclerView = "androidx.recyclerview:recyclerview:1.1.0"
-    const val material = "com.google.android.material:material:1.2.0-alpha04"
+    const val appcompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
+    const val androidxCore = "androidx.core:core-ktx:1.5.0-alpha03"
+    const val recyclerView = "androidx.recyclerview:recyclerview:1.2.0-alpha05"
+    const val material = "com.google.android.material:material:1.2.1"
     const val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
 
     const val multidex = "com.android.support:multidex:1.0.3"

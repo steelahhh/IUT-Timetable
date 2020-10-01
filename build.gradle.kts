@@ -52,5 +52,20 @@ tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 
+subprojects {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).configureEach {
+        kotlinOptions {
+            // freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+            // freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.FlowPreview"
+            // freeCompilerArgs += "-Xopt-in=kotlin.Experimental"
+            // freeCompilerArgs += "-Xallow-jvm-ir-dependencies"
+            // freeCompilerArgs += "-Xskip-prerelease-check"
+            // freeCompilerArgs += "-Xskip-metadata-version-check"
+            // freeCompilerArgs += "-Xjvm-default=enable"
+
+            jvmTarget = "1.8"
+        }
+    }
+}
+
 apply(plugin = "io.gitlab.arturbosch.detekt")
-apply(plugin = "org.jetbrains.kotlin.android.extensions")
