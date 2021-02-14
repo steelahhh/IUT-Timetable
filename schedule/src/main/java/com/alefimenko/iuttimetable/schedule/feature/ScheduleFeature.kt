@@ -71,6 +71,8 @@ internal class ScheduleFeature @Inject constructor(
         data class DownloadSchedule(val info: GroupInfo) : Wish()
         data class ChangeClassVisibility(val classIndex: Int, val dayIndex: Int, val weekIndex: Int) : Wish()
         data class UpdateCurrentWeek(val week: Int) : Wish()
+        data class RestoreAll(val title: String) : Wish()
+        data class HideAll(val title: String) : Wish()
         object LoadSchedule : Wish()
         object RequestWeekChange : Wish()
         object RouteToSettings : Wish()
@@ -158,6 +160,14 @@ internal class ScheduleFeature @Inject constructor(
                 .startWith(Effect.StartLoading)
                 .onErrorReturnItem(Effect.LoadedWithError())
             Wish.RouteToGroupPicker -> justOnMain(Effect.RouteToGroupPicker)
+            is Wish.HideAll -> repository.changeAll(
+                title = wish.title,
+                hidden = true,
+            ).ioMainSchedulers().map<Effect> { Effect.ScheduleUpdated(schedule = it) }
+            is Wish.RestoreAll -> repository.changeAll(
+                title = wish.title,
+                hidden = false,
+            ).ioMainSchedulers().map<Effect> { Effect.ScheduleUpdated(schedule = it) }
         }
 
         private fun downloadSchedule(info: GroupInfo) = repository.downloadSchedule(info)

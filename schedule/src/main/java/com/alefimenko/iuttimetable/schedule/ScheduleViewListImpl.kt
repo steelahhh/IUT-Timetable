@@ -1,18 +1,13 @@
 package com.alefimenko.iuttimetable.schedule
 
-import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.schedule.ScheduleView.Event
-import com.alefimenko.iuttimetable.schedule.data.model.ClassItem
 import com.alefimenko.iuttimetable.schedule.data.model.EmptyDayItem
 import com.alefimenko.iuttimetable.schedule.data.model.HeaderItem
 import com.alefimenko.iuttimetable.schedule.data.model.Position
@@ -33,7 +28,7 @@ import io.reactivex.functions.Consumer
 
 internal class ScheduleViewListImpl(
     override val androidView: ViewGroup,
-    private val events: PublishRelay<Event> = PublishRelay.create()
+    override val events: PublishRelay<Event> = PublishRelay.create()
 ) : ScheduleView,
     ObservableSource<Event> by events,
     Consumer<ScheduleView.ViewModel> {
@@ -59,19 +54,6 @@ internal class ScheduleViewListImpl(
 
         binding.scheduleChangeWeekButton.setOnClickListener {
             events.accept(Event.ChangeWeek)
-        }
-    }
-
-    override fun openWeekPickerDialog(weeks: List<String>, selectedWeek: Int) {
-        MaterialDialog(androidView.context).show {
-            title(res = R.string.pick_week_dialog_title)
-            listItemsSingleChoice(
-                items = weeks,
-                initialSelection = selectedWeek,
-                selection = { _, index, _ ->
-                    events.accept(Event.SwitchToWeek(index))
-                }
-            )
         }
     }
 
@@ -134,22 +116,5 @@ internal class ScheduleViewListImpl(
             smoothScroller.targetPosition = headerIndices[vm.currentDay]
             recyclerView.layoutManager?.startSmoothScroll(smoothScroller)
         }
-    }
-
-    private fun openPopupMenu(
-        classItem: ClassItem,
-        view: View,
-        classIndex: Int,
-        dayIndex: Int,
-        weekIndex: Int
-    ) = PopupMenu(view.context, view).run {
-        menuInflater.inflate(R.menu.class_entry_menu, menu)
-        setOnMenuItemClickListener {
-            events.accept(Event.ChangeClassVisibility(classIndex, dayIndex, weekIndex))
-            true
-        }
-        show()
-        menu.findItem(R.id.hide_class).isVisible = !classItem.hidden
-        menu.findItem(R.id.restore_class).isVisible = classItem.hidden
     }
 }

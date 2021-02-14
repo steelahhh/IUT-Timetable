@@ -4,9 +4,18 @@
         android:id="@+id/hide_class"
         android:orderInCategory="100"
         android:title="@string/class_entry_hide" />
+    <item
+        android:id="@+id/hide_class_all"
+        android:orderInCategory="100"
+        android:title="@string/class_entry_hide_all" />
 
     <item
         android:id="@+id/restore_class"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="@string/class_entry_restore" />
+
+    <item
+        android:id="@+id/restore_class_all"
+        android:orderInCategory="200"
+        android:title="@string/class_entry_restore_all" />
 </menu>

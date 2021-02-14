@@ -13,7 +13,9 @@
     <string name="class_entry_hidden">Class entry is hidden</string>
     <string name="class_entry_menu">Class entry menu</string>
     <string name="class_entry_restore">Восстановить</string>
+    <string name="class_entry_restore_all">Восстановить все</string>
     <string name="class_entry_hide">Скрыть</string>
+    <string name="class_entry_hide_all">Скрыть все</string>
 
     <string name="groups_title">Группы</string>
     <string name="groups_add_group">Добавить группу</string>

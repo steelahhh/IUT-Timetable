@@ -1,15 +1,10 @@
 package com.alefimenko.iuttimetable.schedule
 
-import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.alefimenko.iuttimetable.extension.changeMenuColors
 import com.alefimenko.iuttimetable.schedule.ScheduleView.ViewModel
-import com.alefimenko.iuttimetable.schedule.data.model.ClassItem
 import com.alefimenko.iuttimetable.schedule.data.model.DayTabItem
 import com.alefimenko.iuttimetable.schedule.data.model.Position
 import com.alefimenko.iuttimetable.schedule.data.model.toClassItem
@@ -25,7 +20,7 @@ import io.reactivex.functions.Consumer
 
 internal class ScheduleViewTabsImpl(
     override val androidView: ViewGroup,
-    private val events: PublishRelay<ScheduleView.Event> = PublishRelay.create()
+    override val events: PublishRelay<ScheduleView.Event> = PublishRelay.create()
 ) : ScheduleView,
     ObservableSource<ScheduleView.Event> by events,
     Consumer<ViewModel> {
@@ -48,19 +43,6 @@ internal class ScheduleViewTabsImpl(
 
         binding.scheduleChangeWeekButton.setOnClickListener {
             events.accept(ScheduleView.Event.ChangeWeek)
-        }
-    }
-
-    override fun openWeekPickerDialog(weeks: List<String>, selectedWeek: Int) {
-        MaterialDialog(androidView.context).show {
-            title(res = R.string.pick_week_dialog_title)
-            listItemsSingleChoice(
-                items = weeks,
-                initialSelection = selectedWeek,
-                selection = { _, index, _ ->
-                    events.accept(ScheduleView.Event.SwitchToWeek(index))
-                }
-            )
         }
     }
 
@@ -118,22 +100,5 @@ internal class ScheduleViewTabsImpl(
         } else {
             scheduleTabsViewPager.currentItem = 0
         }
-    }
-
-    private fun openPopupMenu(
-        classItem: ClassItem,
-        view: View,
-        classIndex: Int,
-        dayIndex: Int,
-        weekIndex: Int
-    ) = PopupMenu(view.context, view).run {
-        menuInflater.inflate(R.menu.class_entry_menu, menu)
-        setOnMenuItemClickListener {
-            events.accept(ScheduleView.Event.ChangeClassVisibility(classIndex, dayIndex, weekIndex))
-            true
-        }
-        show()
-        menu.findItem(R.id.hide_class).isVisible = !classItem.hidden
-        menu.findItem(R.id.restore_class).isVisible = classItem.hidden
     }
 }

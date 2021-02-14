@@ -88,6 +88,27 @@ class ScheduleRepository @Inject constructor(
                     .toSingleDefault(newSchedule).toObservable()
             }
 
+
+    fun changeAll(title: String, hidden: Boolean): Observable<Schedule> =
+        schedulesDao.getByGroupId(preferences.currentGroup)
+            .zipWith(groupsDao.getById(preferences.currentGroup))
+            .flatMapObservable { (scheduleEntity, group) ->
+                val schedule = scheduleEntity.schedule.copy(groupTitle = group.name)
+
+                val newSchedule = schedule.copy(
+                    weekSchedule = schedule.weekSchedule.mapValues { entry ->
+                        entry.value.map { classes ->
+                            classes.map {
+                                it.copy(hidden = if (it.subject == title) hidden else it.hidden)
+                            }
+                        }.toMutableList()
+                    }
+                )
+
+                schedulesDao.insert(scheduleEntity.copy(scheduleStr = gson.toJson(newSchedule)))
+                    .toSingleDefault(newSchedule).toObservable()
+            }
+
     private fun Schedule.createWithHiddenClass(
         weekIndex: Int,
         dayIndex: Int,
