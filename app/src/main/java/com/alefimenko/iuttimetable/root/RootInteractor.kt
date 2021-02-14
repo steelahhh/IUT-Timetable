@@ -3,10 +3,7 @@ package com.alefimenko.iuttimetable.root
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.lifecycle.Lifecycle
 import com.alefimenko.iuttimetable.pick_group_root.PickGroupRoot
 import com.alefimenko.iuttimetable.root.RootRouter.Configuration
@@ -69,13 +66,11 @@ internal class RootInteractor(
     }
 
     private fun updateTheme(isNightMode: Boolean) {
-        when (Build.VERSION.SDK_INT) {
-            VERSION_CODES.Q -> AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
-            else -> if (isNightMode) {
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
-            }
+        val mode = when {
+            Build.VERSION.SDK_INT >= VERSION_CODES.Q -> MODE_NIGHT_FOLLOW_SYSTEM
+            isNightMode -> MODE_NIGHT_YES
+            else -> MODE_NIGHT_NO
         }
+        setDefaultNightMode(mode)
     }
 }

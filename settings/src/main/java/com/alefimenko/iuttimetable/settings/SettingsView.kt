@@ -86,7 +86,7 @@ class SettingsViewImpl private constructor(
 
     override fun onAboutClick() {
         MaterialDialog(androidView.context).show {
-            title(text = androidView.context.getString(R.string.about_title, "3.1.0"))
+            title(text = androidView.context.getString(R.string.about_title, "3.1.1"))
             message(
                 res = R.string.about_body
             ) {

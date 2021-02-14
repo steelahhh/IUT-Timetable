@@ -19,11 +19,11 @@ object Versions {
     const val minSdk = 19
     const val targetSdk = 30
     const val compileSdk = 30
-    const val appVersionCode = 4205
+    const val appVersionCode = 300101
     const val appVersionName = "3.1.1"
 
-    const val kotlin = "1.4.0"
-    const val androidPlugin = "4.2.0-alpha11"
+    const val kotlin = "1.4.21"
+    const val androidPlugin = "7.0.0-alpha05"
 
     const val mviCore = "1.1.6"
     const val aac = "2.2.0"
@@ -42,10 +42,10 @@ object Versions {
 
     const val jsoup = "1.11.3"
 
-    const val dagger = "2.27"
+    const val dagger = "2.32"
 
     const val groupie = "2.8.0"
-    const val retrofit = "2.7.0"
+    const val retrofit = "2.9.0"
     const val gson = "2.8.5"
     const val timber = "4.7.1"
     const val materialDialogs = "3.2.1"

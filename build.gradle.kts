@@ -9,9 +9,9 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:${Versions.androidPlugin}")
         classpath(kotlin("gradle-plugin", version = Versions.kotlin))
-        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0")
-        classpath("com.google.gms:google-services:${Versions.googleServices}")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.3.0")
+        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.1")
+        classpath("com.google.gms:google-services:4.3.5")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.4.1")
     }
 }
 

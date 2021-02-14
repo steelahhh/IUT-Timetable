@@ -103,7 +103,7 @@ tailrec fun Context?.activity(): Activity? = when (this) {
 }
 
 val Context.isDarkModeEnabled
-    get(): Boolean = if (SDK_INT == Q) {
+    get(): Boolean = if (SDK_INT >= Q) {
         resources.configuration.uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
     } else {
         AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES

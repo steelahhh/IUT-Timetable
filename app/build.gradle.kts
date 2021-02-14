@@ -1,3 +1,4 @@
+import com.github.triplet.gradle.play.PlayPublisherExtension
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -8,6 +9,7 @@ plugins {
     kotlin("android.extensions")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("com.github.triplet.play") version "3.2.0-agp4.2-2"
 }
 
 fun getProperty(fileName: String, prop: String): Any? {
@@ -73,6 +75,14 @@ android {
             versionNameSuffix = "d"
         }
     }
+}
+
+configure<PlayPublisherExtension> {
+    serviceAccountCredentials.set(file("google-publisher-key.json"))
+
+    track.set("internal")
+
+    releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.DRAFT)
 }
 
 dependencies {

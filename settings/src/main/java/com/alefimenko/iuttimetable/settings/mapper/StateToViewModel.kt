@@ -22,7 +22,7 @@ internal object StateToViewModel : (State) -> ViewModel {
             titleRes = R.string.settings_theme_title,
             isChecked = isDarkTheme,
             switcherVisible = true
-        ).takeUnless { Build.VERSION.SDK_INT == Build.VERSION_CODES.Q },
+        ).takeUnless { Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q },
         SettingsItem(
             key = SettingsItemKey.ScheduleAsTabs,
             titleRes = R.string.settings_schedule_as_tabs_title,
