@@ -1,5 +1,7 @@
 package com.alefimenko.iuttimetable.schedule.data.model
 
+import android.content.res.ColorStateList
+import android.graphics.Color.parseColor
 import android.graphics.PorterDuff
 import android.os.Build
 import android.text.TextUtils
@@ -12,7 +14,9 @@ import androidx.constraintlayout.widget.ConstraintSet.PARENT_ID
 import androidx.constraintlayout.widget.ConstraintSet.START
 import androidx.constraintlayout.widget.ConstraintSet.TOP
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.isGone
+import com.alefimenko.iuttimetable.data.ClassType
 import com.alefimenko.iuttimetable.data.local.Constants
 import com.alefimenko.iuttimetable.data.remote.model.ClassEntry
 import com.alefimenko.iuttimetable.extension.getColorCompat
@@ -32,7 +36,7 @@ typealias OnClassMenuClick = (classItem: ClassItem, view: View) -> Unit
 data class ClassItem(
     val subject: String = "",
     val teacher: String = "",
-    val classType: String = "",
+    val classType: ClassType = ClassType.Unknown,
     val startTime: String = "",
     val finishTime: String = "",
     val location: String = "",
@@ -53,7 +57,10 @@ data class ClassItem(
         startTimeTv.text = startTime
         subjectTv.text = subject
         teacherTv.text = teacher
-        typeTv.text = classType
+
+        typeTv.text = classType.title
+        ViewCompat.setBackgroundTintList(typeTv, ColorStateList.valueOf(parseColor(classType.color)))
+
         locationTv.text = location
         innerGroupTv.isGone = hidden || innerGroup == Constants.EMPTY_ENTRY
         innerGroupTv.text = innerGroup
@@ -67,9 +74,8 @@ data class ClassItem(
         typeTv.isGone = hidden
         hiddenIv.isGone = !hidden
 
-        val textColor = if (hidden) root.context.getColorCompat(R.color.gray_smooth) else {
-            root.context.getPrimaryTextColor()
-        }
+        val textColor = if (hidden) root.context.getColorCompat(R.color.gray_smooth)
+        else root.context.getPrimaryTextColor()
 
         startTimeTv.setTextColor(textColor)
         subjectTv.setTextColor(textColor)

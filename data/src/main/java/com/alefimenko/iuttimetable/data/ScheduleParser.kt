@@ -154,15 +154,15 @@ class ScheduleParser {
             return "${loc.substring(0, loc.indexOf('('))} ${loc.substring(loc.indexOf('('))}"
         }
 
-    private val String.classType: String
+    private val String.classType: ClassType
         get() = when {
-            contains("(пр)") -> "прак"
-            contains("(л)") -> "лек"
-            contains("(лаб)") -> "лаб"
-            contains("(зач)") -> "зач"
-            contains("(экз)") -> "экз"
-            contains("(ул)") -> "ул"
-            else -> "---"
+            contains("(пр)") -> ClassType.Practicum
+            contains("(л)") -> ClassType.Lecture
+            contains("(лаб)") -> ClassType.LabWork
+            contains("(зач)") -> ClassType.FakeExam
+            contains("(экз)") -> ClassType.Exam
+            contains("(ул)") -> ClassType.Outside
+            else -> ClassType.Unknown
         }
 
     private val String.subjectTeacher: Pair<String, String>

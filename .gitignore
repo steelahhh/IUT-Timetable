@@ -84,3 +84,4 @@ fastlane/readme.md
 gradle/wrapper/gradle-wrapper.jar
 *.keystore
 /app/google-publisher-key.json
+/app/src/stable/play

@@ -1,6 +1,7 @@
 package com.alefimenko.iuttimetable.data.remote.model
 
 import android.os.Parcelable
+import com.alefimenko.iuttimetable.data.ClassType
 import com.alefimenko.iuttimetable.data.local.Constants.EMPTY_ENTRY
 import kotlinx.android.parcel.Parcelize
 
@@ -20,7 +21,7 @@ data class Time(
 data class ClassEntry(
     val subject: String = "",
     val teacher: String = "",
-    val classType: String = "",
+    val classType: ClassType = ClassType.Unknown,
     val time: Time = Time(),
     val location: String = "",
     val date: String = EMPTY_ENTRY,
