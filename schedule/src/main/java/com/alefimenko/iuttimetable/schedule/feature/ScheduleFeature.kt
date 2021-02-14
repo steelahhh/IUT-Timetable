@@ -24,9 +24,10 @@ import com.badoo.mvicore.element.Reducer
 import com.badoo.mvicore.feature.BaseFeature
 import io.reactivex.Observable
 import io.reactivex.Observable.empty
+import io.reactivex.Single
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 import javax.inject.Named
-import kotlinx.android.parcel.Parcelize
 
 @ScheduleScope
 internal class ScheduleFeature @Inject constructor(
@@ -42,9 +43,11 @@ internal class ScheduleFeature @Inject constructor(
     actor = ActorImpl(
         scheduleRepository,
         dateInteractor,
-        preferences
+        preferences,
     ),
-    reducer = ReducerImpl(),
+    reducer = ReducerImpl(
+        repository = scheduleRepository,
+    ),
     postProcessor = PostProcessorImpl(),
     newsPublisher = NewsPublisherImpl()
 ) {
@@ -78,6 +81,7 @@ internal class ScheduleFeature @Inject constructor(
     sealed class Action {
         data class Execute(val wish: Wish) : Action()
         object SwitchToCurrentDay : Action()
+        object SaveCurrentWeek : Action()
     }
 
     sealed class Effect {
@@ -114,9 +118,20 @@ internal class ScheduleFeature @Inject constructor(
         override fun invoke(state: State, action: Action): Observable<Effect> = when (action) {
             is Execute -> handleWish(state, action.wish)
             Action.SwitchToCurrentDay -> if (repository.shouldSwitchToDay)
-                justOnMain<Effect>(Effect.ChangeCurrentDay(dateInteractor.currentDay))
+                justOnMain(Effect.ChangeCurrentDay(dateInteractor.currentDay))
             else
-                empty<Effect>()
+                empty()
+            Action.SaveCurrentWeek -> if (
+                state.schedule?.weeks?.size == 2 && !repository.shouldSaveWeek
+            ) {
+                empty()
+            } else {
+                Single
+                    .fromCallable {
+                        repository.saveCurrentWeek(state.schedule?.groupTitle, state.selectedWeek)
+                    }
+                    .flatMapObservable { empty() }
+            }
         }
 
         private fun handleWish(state: State, wish: Wish): Observable<Effect> = when (wish) {
@@ -156,7 +171,9 @@ internal class ScheduleFeature @Inject constructor(
             .onErrorReturnItem(Effect.LoadedWithError(info))
     }
 
-    class ReducerImpl : Reducer<State, Effect> {
+    class ReducerImpl(
+        private val repository: ScheduleRepository
+    ) : Reducer<State, Effect> {
         override fun invoke(state: State, effect: Effect): State = when (effect) {
             is Effect.StartLoading -> state.copy(
                 isLoading = true,
@@ -171,7 +188,10 @@ internal class ScheduleFeature @Inject constructor(
                 isLoading = false,
                 isError = false,
                 schedule = effect.schedule,
-                selectedWeek = effect.currentWeek,
+                selectedWeek = if (repository.shouldSaveWeek && effect.schedule.weeks.size != 2)
+                    repository.lastSelectedWeek(effect.schedule.groupTitle)
+                else
+                    effect.currentWeek,
                 currentWeek = effect.currentWeek
             )
             is Effect.ChangeCurrentDay -> state.copy(currentDay = effect.day)
@@ -184,6 +204,7 @@ internal class ScheduleFeature @Inject constructor(
     class PostProcessorImpl : PostProcessor<Action, Effect, State> {
         override fun invoke(action: Action, effect: Effect, state: State): Action? = when {
             effect is Effect.ScheduleLoaded -> Action.SwitchToCurrentDay
+            effect is Effect.ChangeCurrentWeek -> Action.SaveCurrentWeek
             else -> null
         }
     }

@@ -17,6 +17,7 @@ internal object ViewEventToWish : (Event) -> Wish? {
             SettingsItemKey.Feedback -> Wish.SendFeedback
             SettingsItemKey.About -> Wish.ShowAboutDialog
             SettingsItemKey.ScheduleAsTabs -> Wish.ChangeScheduleDisplayMode
+            SettingsItemKey.SaveLastSelectedWeek -> Wish.ChangeSaveLastWeek
         }
     }
 }

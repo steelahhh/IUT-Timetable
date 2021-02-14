@@ -8,6 +8,7 @@ enum class SettingsItemKey {
     Language,
     DarkTheme,
     RelevantSchedule,
+    SaveLastSelectedWeek,
     UpdateSchedule,
     WeekCountDown,
     ScheduleAsTabs,

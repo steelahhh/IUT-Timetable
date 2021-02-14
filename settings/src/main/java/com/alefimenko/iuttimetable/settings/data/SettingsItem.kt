@@ -23,13 +23,17 @@ data class SettingsItem(
     @DrawableRes
     val iconRes: Int? = null,
     val isChecked: Boolean = false,
+    val enabled: Boolean = true,
     val switcherVisible: Boolean
 ) : BindableItem<ItemSettingsBinding>() {
     override fun initializeViewBinding(view: View): ItemSettingsBinding = ItemSettingsBinding.bind(view)
 
+    override fun isClickable(): Boolean = enabled
+
     override fun getLayout() = R.layout.item_settings
 
     override fun bind(viewHolder: ItemSettingsBinding, position: Int) = with(viewHolder) {
+        settingsSwitch.isEnabled = enabled
         settingsTextSubtitle.isGone = subtitleRes == null
         subtitleRes?.let {
             settingsTextSubtitle.text = root.context.getString(it)

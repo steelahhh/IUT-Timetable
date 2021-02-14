@@ -47,6 +47,7 @@ internal class SettingsFeature @Inject constructor(
     data class State(
         val isDarkTheme: Boolean = false,
         val alwaysRelevantSchedule: Boolean = false,
+        val isSaveLastSelectedWeek: Boolean = false,
         val changeWeekCountdown: Boolean = false,
         val isTabsSchedule: Boolean = false
     ) : Parcelable
@@ -55,6 +56,7 @@ internal class SettingsFeature @Inject constructor(
         object GoBack : Wish()
         object ChangeTheme : Wish()
         object ChangeRelevantSchedule : Wish()
+        object ChangeSaveLastWeek : Wish()
         object ChangeWeekCountDown : Wish()
         object ChangeLanguage : Wish()
         object UpdateSchedule : Wish()
@@ -76,6 +78,7 @@ internal class SettingsFeature @Inject constructor(
         data class PreferencesLoaded(
             val isDarkTheme: Boolean,
             val alwaysRelevantSchedule: Boolean,
+            val saveLastWeek: Boolean,
             val changeWeekCountdown: Boolean,
             val isTabsSchedule: Boolean
         ) : Effect()
@@ -109,6 +112,7 @@ internal class SettingsFeature @Inject constructor(
                 Effect.PreferencesLoaded(
                     isDarkTheme = preferences.isNightMode,
                     alwaysRelevantSchedule = preferences.switchDay,
+                    saveLastWeek = preferences.saveLastSelectedWeek,
                     changeWeekCountdown = preferences.switchWeek,
                     isTabsSchedule = preferences.isTabsEnabled
                 )
@@ -147,6 +151,10 @@ internal class SettingsFeature @Inject constructor(
                     Effect.NoOp
                 }
             Wish.ShowAboutDialog -> justOnMain(Effect.OpenAboutDialog)
+            Wish.ChangeSaveLastWeek -> {
+                preferences.saveLastSelectedWeek = !preferences.saveLastSelectedWeek
+                justOnMain(Effect.SettingsChanged)
+            }
         }
     }
 
@@ -155,6 +163,7 @@ internal class SettingsFeature @Inject constructor(
             is Effect.PreferencesLoaded -> state.copy(
                 isDarkTheme = effect.isDarkTheme,
                 changeWeekCountdown = effect.changeWeekCountdown,
+                isSaveLastSelectedWeek = effect.saveLastWeek,
                 alwaysRelevantSchedule = effect.alwaysRelevantSchedule,
                 isTabsSchedule = effect.isTabsSchedule
             )

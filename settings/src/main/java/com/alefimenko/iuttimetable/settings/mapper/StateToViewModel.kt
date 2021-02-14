@@ -38,6 +38,13 @@ internal object StateToViewModel : (State) -> ViewModel {
             switcherVisible = true
         ),
         SettingsItem(
+            key = SettingsItemKey.SaveLastSelectedWeek,
+            titleRes = R.string.settings_last_selected_week_title,
+            subtitleRes = R.string.settings_last_selected_week_subtitle,
+            isChecked = isSaveLastSelectedWeek,
+            switcherVisible = true
+        ),
+        SettingsItem(
             key = SettingsItemKey.WeekCountDown,
             titleRes = R.string.settings_week_countdown_title,
             subtitleRes = R.string.settings_week_countdown_subtitle,

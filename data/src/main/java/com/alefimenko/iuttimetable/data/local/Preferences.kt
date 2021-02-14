@@ -50,11 +50,30 @@ class Preferences(private val prefs: SharedPreferences) {
             prefs.edit().putBoolean(SWITCH_TO_DAY, value).commit()
         }
 
+    var saveLastSelectedWeek: Boolean
+        get() = prefs.getBoolean(SAVE_LAST_WEEK, false)
+        set(value) {
+            prefs.edit().putBoolean(SAVE_LAST_WEEK, value).commit()
+        }
+
     var currentGroup: Int
         get() = prefs.getInt(CURRENT_GROUP_ID, ITEM_DOESNT_EXIST)
         set(value) {
             prefs.edit().putInt(CURRENT_GROUP_ID, value).apply()
         }
+
+    fun putLastSelectedWeekForGroup(
+        group: String?,
+        week: Int
+    ) {
+        if (group == null) return
+
+        prefs.edit().putInt(group, week).apply()
+    }
+
+    fun lastSelectedWeekForGroup(
+        group: String?,
+    ): Int = prefs.getInt(group, 0)
 
     fun clearPreferences() {
         prefs.edit().clear().apply()
@@ -65,6 +84,7 @@ class Preferences(private val prefs: SharedPreferences) {
         const val NIGHT_MODE = "THEME_MODE"
         const val FIRST_LAUNCH = "PREF_KEY_IS_FIRST_LAUNCH"
         const val SWITCH_TO_WEEK = "PREF_KEY_SWITCH_TO_WEEK"
+        const val SAVE_LAST_WEEK = "PREF_KEY_SAVE_LAST_WEEK"
         const val SWITCH_TO_DAY = "PREF_KEY_SWITCH_TO_DAY"
         const val CURRENT_GROUP_ID = "PREF_KEY_CURRENT_GROUP_ID"
         const val VERSION_CODE = "version_code"

@@ -44,7 +44,15 @@ class ScheduleRepository @Inject constructor(
 
     val shouldSwitchToDay: Boolean get() = preferences.switchDay
 
+    val shouldSaveWeek: Boolean get() = preferences.saveLastSelectedWeek
+
     fun getGroups() = groupsDao.getGroupsWithInstitute().ioMainSchedulers()
+
+    fun lastSelectedWeek(group: String?) = preferences.lastSelectedWeekForGroup(group)
+
+    fun saveCurrentWeek(group: String?, week: Int) {
+        preferences.putLastSelectedWeekForGroup(group, week)
+    }
 
     fun getSchedule(groupId: Int): Observable<Schedule> = schedulesDao
         .getByGroupId(groupId)
